@@ -41,6 +41,7 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_NETWORK;
     private static final ModConfigSpec.BooleanValue SWITCHES_NEED_POWER;
     private static final ModConfigSpec.BooleanValue CABLE_REACH_LIMITS;
+    private static final ModConfigSpec.BooleanValue INSTALL_QUESTS;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -82,6 +83,14 @@ public final class Config {
                 .define("cableReachLimits", true);
         builder.pop();
 
+        builder.comment("FTB Quests guide and release calendar.").push("quests");
+        INSTALL_QUESTS = builder
+                .comment("Add the add-on's chapters (a guide and a release calendar) to the FTB Quests quest book when a",
+                        "world starts. They are only rewritten when the add-on brings a new version of them; other",
+                        "chapters are never touched. Turn this off to keep your own edits of these chapters.")
+                .define("installQuests", true);
+        builder.pop();
+
         SPEC = builder.build();
     }
 
@@ -120,6 +129,10 @@ public final class Config {
 
     public static boolean cableReachLimits() {
         return !SPEC.isLoaded() || CABLE_REACH_LIMITS.get();
+    }
+
+    public static boolean installQuests() {
+        return !SPEC.isLoaded() || INSTALL_QUESTS.get();
     }
 
     public static double hostingStorageBoost() {

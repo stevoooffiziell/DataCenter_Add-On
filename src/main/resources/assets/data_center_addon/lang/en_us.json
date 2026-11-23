@@ -183,5 +183,9 @@
   "data_center_addon.hosting.overview.network": "Network",
   "data_center_addon.hosting.overview.compute": "Compute/t",
   "data_center_addon.hosting.overview.unpowered": "%s switches without power: the network is cut.",
-  "data_center_addon.hosting.overview.overlong": "%s cable runs are longer than their reach and run at a tenth of their speed."
+  "data_center_addon.hosting.overview.overlong": "%s cable runs are longer than their reach and run at a tenth of their speed.",
+  "data_center_addon.configuration.quests": "Quests",
+  "data_center_addon.configuration.quests.tooltip": "FTB Quests guide and release calendar.",
+  "data_center_addon.configuration.installQuests": "Install Quests",
+  "data_center_addon.configuration.installQuests.tooltip": "Add the add-on's chapters (a guide and a release calendar) to the FTB Quests quest book when a world starts. Only rewritten when the add-on brings a new version of them; other chapters are never touched."
 }

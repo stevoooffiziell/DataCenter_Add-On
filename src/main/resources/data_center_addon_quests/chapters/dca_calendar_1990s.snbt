@@ -1,0 +1,232 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_calendar_1990s"
+	group: "4E4EF0C6C634F03F"
+	icon: {
+		id: "data_center_addon:cable_cat3"
+	}
+	id: "766F92FB524292A1"
+	images: [ ]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "data_center_addon:cable_cat3"
+			}
+			id: "3B704D090E562701"
+			shape: "gear"
+			size: 1.5d
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3B704D090E562701"]
+			icon: {
+				id: "data_center_addon:cable_cat3"
+			}
+			id: "42120200EA0F0FD8"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "24F94914A5E60FA1"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_cat3"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["3B704D090E562701"]
+			icon: {
+				id: "data_center_addon:switch_hub_3com_superstack_ii"
+			}
+			id: "42AE3FA91590B430"
+			shape: "gear"
+			size: 1.5d
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["42AE3FA91590B430"]
+			icon: {
+				id: "data_center_addon:switch_hub_3com_superstack_ii"
+			}
+			id: "7EF9516D5BFF7B87"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "51A51EE61C6EA82B"
+					item: {
+						count: 1
+						id: "data_center_addon:switch_hub_3com_superstack_ii"
+					}
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["42AE3FA91590B430"]
+			icon: {
+				id: "data_center_addon:cable_cat5"
+			}
+			id: "259CAC641E3FFD30"
+			shape: "gear"
+			size: 1.5d
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["259CAC641E3FFD30"]
+			icon: {
+				id: "data_center_addon:cable_cat5"
+			}
+			id: "23E1A6A4072E4A3F"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "671374BC90795F73"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_cat5"
+					}
+					type: "item"
+				}
+			]
+			x: 5.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["259CAC641E3FFD30"]
+			icon: {
+				id: "minecraft:paper"
+			}
+			id: "42EE33AD97D74E67"
+			shape: "gear"
+			size: 1.5d
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["42EE33AD97D74E67"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_celeron_300a"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "4073CC2600B362D7"
+			shape: "gear"
+			size: 1.5d
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["4073CC2600B362D7"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_celeron_300a"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "7F482343E0FC1999"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "38C018628A749263"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_celeron_300a"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 10.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["4073CC2600B362D7"]
+			icon: {
+				id: "data_center_addon:cable_cat5e"
+			}
+			id: "6E2F143AC8421054"
+			shape: "gear"
+			size: 1.5d
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6E2F143AC8421054"]
+			icon: {
+				id: "data_center_addon:cable_cat5e"
+			}
+			id: "6BC7EEFC930D0496"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "340D610B227C92BD"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_cat5e"
+					}
+					type: "item"
+				}
+			]
+			x: 12.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["6E2F143AC8421054"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_600"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "2F9E11DBE290BFFB"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "6516812A4C8A7DFC"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_athlon_600"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 13.0d
+			y: 2.35d
+		}
+	]
+}

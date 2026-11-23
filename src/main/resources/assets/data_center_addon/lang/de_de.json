@@ -183,5 +183,9 @@
   "data_center_addon.hosting.overview.network": "Netz",
   "data_center_addon.hosting.overview.compute": "Compute/t",
   "data_center_addon.hosting.overview.unpowered": "%s Switches ohne Strom: Das Netz ist unterbrochen.",
-  "data_center_addon.hosting.overview.overlong": "%s Kabelstränge sind länger als ihre Reichweite und laufen mit einem Zehntel der Geschwindigkeit."
+  "data_center_addon.hosting.overview.overlong": "%s Kabelstränge sind länger als ihre Reichweite und laufen mit einem Zehntel der Geschwindigkeit.",
+  "data_center_addon.configuration.quests": "Quests",
+  "data_center_addon.configuration.quests.tooltip": "FTB-Quests-Leitfaden und Release-Kalender.",
+  "data_center_addon.configuration.installQuests": "Quests installieren",
+  "data_center_addon.configuration.installQuests.tooltip": "Fügt beim Weltstart die Kapitel des Add-ons (Leitfaden und Release-Kalender) zum FTB-Quests-Questbuch hinzu. Sie werden nur neu geschrieben, wenn das Add-on eine neue Version davon mitbringt; andere Kapitel bleiben unberührt."
 }

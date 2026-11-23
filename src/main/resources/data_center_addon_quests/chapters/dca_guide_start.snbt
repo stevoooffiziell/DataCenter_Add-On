@@ -1,0 +1,164 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_guide_start"
+	group: "51C4EDBC1DD75764"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "439430D1CB472F57"
+	images: [ ]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:book"
+			}
+			id: "761C6441E915056E"
+			rewards: [
+				{
+					id: "7261941B164898E4"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					id: "78A4C53A3C3A38E6"
+					type: "checkmark"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["761C6441E915056E"]
+			icon: {
+				id: "datacenter:shop"
+			}
+			id: "539FFFB7F44EC076"
+			rewards: [
+				{
+					id: "3AA7314F035515B7"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "5C379719A3F94E09"
+					type: "checkmark"
+				}
+			]
+			x: 1.75d
+			y: 1.25d
+		}
+		{
+			dependencies: ["539FFFB7F44EC076"]
+			icon: {
+				id: "minecraft:amethyst_shard"
+			}
+			id: "36598A2ED55214D7"
+			rewards: [
+				{
+					id: "500FA7B6A96D0C6C"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "23176AC94181352B"
+					type: "checkmark"
+				}
+			]
+			x: 3.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["36598A2ED55214D7"]
+			icon: {
+				id: "minecraft:clock"
+			}
+			id: "6C42271D8ED7634B"
+			rewards: [
+				{
+					id: "645793FF35ECF978"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3D721B71AA962EDA"
+					type: "checkmark"
+				}
+			]
+			x: 5.25d
+			y: 1.25d
+		}
+		{
+			dependencies: ["6C42271D8ED7634B"]
+			icon: {
+				id: "minecraft:comparator"
+			}
+			id: "32280DC0FDA19769"
+			rewards: [
+				{
+					id: "3D3E67435576CC1B"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "286FA5900DB99D89"
+					type: "checkmark"
+				}
+			]
+			x: 7.0d
+			y: 0.0d
+		}
+	]
+}

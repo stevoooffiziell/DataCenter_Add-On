@@ -1,0 +1,140 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_guide_parts"
+	group: "51C4EDBC1DD75764"
+	icon: {
+		id: "datacenter:server"
+	}
+	id: "3D858016E91BDFF7"
+	images: [ ]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "datacenter:server"
+			}
+			id: "22FC8A010BDC11D8"
+			rewards: [
+				{
+					id: "3470D10546BB1571"
+					item: {
+						components: {
+							"datacenter:payment_cents": 5000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					consume_items: false
+					id: "54C6C34993B484EC"
+					item: {
+						count: 1
+						id: "datacenter:server"
+					}
+					type: "item"
+					match_components: "none"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["22FC8A010BDC11D8"]
+			icon: {
+				id: "minecraft:iron_ingot"
+			}
+			id: "210CCD2E50E927D6"
+			rewards: [
+				{
+					id: "551722707BF3FFB2"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "4A7E9A1BFE84E571"
+					type: "checkmark"
+				}
+			]
+			x: 1.75d
+			y: 1.25d
+		}
+		{
+			dependencies: ["210CCD2E50E927D6"]
+			icon: {
+				id: "minecraft:barrier"
+			}
+			id: "3B58CB3283D8E252"
+			rewards: [
+				{
+					id: "77A190285E89AD21"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "6CB1F31F346F524F"
+					type: "checkmark"
+				}
+			]
+			x: 3.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3B58CB3283D8E252"]
+			icon: {
+				id: "minecraft:chest"
+			}
+			id: "32B185B86D490813"
+			rewards: [
+				{
+					id: "65A03A448D066AEC"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "3E868A83002B3DEF"
+					type: "checkmark"
+				}
+			]
+			x: 5.25d
+			y: 1.25d
+		}
+	]
+}

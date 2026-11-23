@@ -1,0 +1,329 @@
+{
+	chapter.23A15EEFB45AA39A.title: "3 · Network: Cables & Switches"
+	chapter.24C9EFF729B260AB.title: "2000s"
+	chapter.2920980B9EF5D35D.title: "2020s"
+	chapter.3D858016E91BDFF7.title: "2 · Real Parts"
+	chapter.439430D1CB472F57.title: "1 · Getting Started"
+	chapter.766F92FB524292A1.title: "1990s"
+	chapter.76B5015FD4945FBB.title: "4 · Hosting Manager"
+	chapter.7A85A1D30E754FD4.title: "2010s"
+	chapter_group.4E4EF0C6C634F03F.title: "Release Calendar"
+	chapter_group.51C4EDBC1DD75764.title: "Data Center AddOn"
+	quest.20A92B1FC77EDF7F.quest_desc: ["The first quad-core desktop processor.", "", "&7Own one to complete this milestone."]
+	quest.20A92B1FC77EDF7F.quest_subtitle: "2006-11-01 · $999"
+	quest.20A92B1FC77EDF7F.title: "Intel Core 2 Extreme QX6700"
+	quest.210CCD2E50E927D6.quest_desc: ["A CPU only fits a mainboard with its &fsocket&r, and the RAM must match the board's &fmemory generation&r (SDRAM, DDR, DDR2 ... DDR5).", "", "Every CPU socket has a real board from the day its first CPU comes out. Mining boards carry up to 19 graphics cards."]
+	quest.210CCD2E50E927D6.title: "The right mainboard"
+	quest.222027F73A08570E.quest_desc: ["The &fPowered Server Room Panel&r seals a server room like any wall block and carries &fFE&r straight through.", "Place it in the wall and connect a cable or battery on each side."]
+	quest.222027F73A08570E.title: "Power through the wall"
+	quest.2269FBB31582DFEF.quest_desc: ["A switch ends every cable run plugged into it. From then on each run counts &fon its own&r: it carries the traffic of its own devices, and the switch's &fbackplane&r limits the total.", "", "&aA star beats a chain:&r give each rack its own cable to the switch.", "Switches also reset the cable reach."]
+	quest.2269FBB31582DFEF.title: "A real switch"
+	quest.22E69348E38AF678.quest_desc: ["&6Intel CPUs", "&701-03 &fIntel Celeron 800 &8$170", "&704-23 &fIntel Pentium 4 1.7 GHz &8$352", "&708-27 &fIntel Pentium 4 2.0 GHz (Socket 423) &8$562", "&710-02 &fIntel Celeron 1.2 GHz (Tualatin) &8$103", "", "&6AMD CPUs", "&703-21 &fAMD Athlon 1.33 GHz (Thunderbird) &8$350", "&706-06 &fAMD Athlon 1.4 GHz (Thunderbird) &8$253", "&708-20 &fAMD Duron 1.0 GHz &8$89", "&710-09 &fAMD Athlon XP 1800+ &8$252", "", "&6Server CPUs", "&705-21 &fIntel Xeon 1.7 GHz (Foster) &8$406", "&706-05 &fAMD Athlon MP 1.2 GHz &8$224", "", "&6NVIDIA graphics cards", "&702-27 &fNVIDIA GeForce3 &8$449", "&710-01 &fNVIDIA GeForce3 Ti 500 &8$349", "", "&6Radeon & Arc graphics cards", "&707-01 &fATI FireGL 8800 &8$999", "&708-14 &fATI Radeon 8500 &8$299", "", "&6Mainboards", "&705-21 &fSupermicro P4DC6 &8$549", "&706-05 &fTyan Tiger MP S2460 &8$239", "&708-01 &fECS K7S5A &8$69", "", "&6Memory", "&701-23 &fCrucial 128MB DDR PC1600 &8$146", "&703-30 &fCrucial 256MB DDR PC2100 &8$186", "&706-05 &fKingston 1GB DDR PC2100 ECC Registered &8$421", "", "&6Storage", "&706-08 &fSeagate Barracuda 180 SCSI 181GB &8$1,399", "&707-01 &fSeagate Cheetah 73LP 73GB &8$677", "&707-02 &fWestern Digital Caviar 60GB &8$165", "", "&6Power supplies", "&706-01 &fEnermax EG465P-VE 430W &8$27", "", "&6Network cables & switches", "&701-15 &fCisco Catalyst 2950-24 &8$1,095"]
+	quest.22E69348E38AF678.quest_subtitle: "25 releases"
+	quest.22E69348E38AF678.title: "2001"
+	quest.22FC8A010BDC11D8.quest_desc: ["Assemble a server at the &fAssembly Bench&r from a mainboard, CPU, RAM, storage and a power supply.", "", "Hover over it: the tooltip lists its &fbuilt-in components&r, each coloured by its tier, and the server gets a tier of its own."]
+	quest.22FC8A010BDC11D8.title: "Assemble a server"
+	quest.23E1A6A4072E4A3F.quest_desc: ["Fast Ethernet: ten times the speed of CAT3 at the same 100 metres.", "", "&7Own one to complete this milestone."]
+	quest.23E1A6A4072E4A3F.quest_subtitle: "1995-10-01 · $0.50"
+	quest.23E1A6A4072E4A3F.title: "CAT5 Data Cable"
+	quest.259CAC641E3FFD30.quest_desc: ["&6Network cables & switches", "&710-01 &fCAT5 Data Cable &8$0.50"]
+	quest.259CAC641E3FFD30.quest_subtitle: "1 releases"
+	quest.259CAC641E3FFD30.title: "1995"
+	quest.25DA207F0D0D635C.quest_desc: ["The &fCustomers&r tab lists every customer segment - company websites, online shops, game servers, streaming and more - with its number of customers, share and income.", "", "The income is split by what each segment pays."]
+	quest.25DA207F0D0D635C.title: "Customers"
+	quest.268436823971DEA1.quest_desc: ["Blackwell: two dies, one accelerator.", "", "&7Own one to complete this milestone."]
+	quest.268436823971DEA1.quest_subtitle: "2024-11-01 · $35,000"
+	quest.268436823971DEA1.title: "NVIDIA B200"
+	quest.2796152E44FB6510.quest_desc: ["&6Intel CPUs", "&706-02 &fIntel Core i5-4670K &8$242", "&706-02 &fIntel Core i7-4770K &8$339", "", "&6AMD CPUs", "&706-11 &fAMD FX-9590 &8$880", "", "&6Server CPUs", "&709-10 &fIntel Xeon E5-2697 v2 &8$2,614", "", "&6NVIDIA graphics cards", "&702-21 &fNVIDIA GeForce GTX TITAN &8$999", "&705-23 &fNVIDIA GeForce GTX 780 &8$649", "&705-30 &fNVIDIA GeForce GTX 770 &8$399", "&706-25 &fNVIDIA GeForce GTX 760 &8$249", "&711-07 &fNVIDIA GeForce GTX 780 Ti &8$699", "", "&6Radeon & Arc graphics cards", "&704-24 &fAMD Radeon HD 7990 &8$999", "&710-08 &fAMD Radeon R9 270X &8$199", "&710-08 &fAMD Radeon R9 280X &8$299", "&710-24 &fAMD Radeon R9 290X &8$549", "&711-05 &fAMD Radeon R9 290 &8$399", "", "&6Mainboards", "&706-02 &fASUS ROG Maximus VI Hero &8$209", "", "&6Storage", "&707-01 &fSamsung 840 EVO 250GB &8$190", "", "&6Fans", "&701-01 &fNoctua NF-A14 PWM &8$25"]
+	quest.2796152E44FB6510.quest_subtitle: "17 releases"
+	quest.2796152E44FB6510.title: "2013"
+	quest.2806AE19A3C66782.quest_desc: ["The &fOverview&r tab: customers, income per day and month, number of racks, reputation and customer class.", "", "The &fNetwork&r bar shows how much of the network's capacity is used. It warns you about switches without power and cable runs that are too long."]
+	quest.2806AE19A3C66782.title: "Overview"
+	quest.29C231E37B49246A.quest_desc: ["Every switch draws its &freal wattage&r in FE per tick, e.g. 30 FE/t for a Catalyst 2950 and 700 FE/t for a Spectrum SN4700.", "", "&cA switch without power cuts its network.&r The Hosting Manager warns you about it.", "Turn it off under &7Config → Network → Switches Need Power&r."]
+	quest.29C231E37B49246A.title: "Switches need power"
+	quest.29D2D9172C141BD2.quest_desc: ["3D V-Cache: stacked cache for games.", "", "&7Own one to complete this milestone."]
+	quest.29D2D9172C141BD2.quest_subtitle: "2022-04-20 · $449"
+	quest.29D2D9172C141BD2.title: "AMD Ryzen 7 5800X3D"
+	quest.2A3E577058405A40.quest_desc: ["Blackwell for the desktop.", "", "&7Own one to complete this milestone."]
+	quest.2A3E577058405A40.quest_subtitle: "2025-01-30 · $1,999"
+	quest.2A3E577058405A40.title: "NVIDIA GeForce RTX 5090"
+	quest.2B4C955AFF27BBA1.quest_desc: ["&6Intel CPUs", "&706-01 &fIntel Core i7-4790K &8$339", "&708-29 &fIntel Core i7-5960X Extreme Edition &8$999", "", "&6Server CPUs", "&709-08 &fIntel Xeon E5-2699 v3 &8$4,115", "", "&6NVIDIA graphics cards", "&702-18 &fNVIDIA GeForce GTX 750 Ti &8$149", "&709-18 &fNVIDIA GeForce GTX 970 &8$329", "&709-18 &fNVIDIA GeForce GTX 980 &8$549", "", "&6Radeon & Arc graphics cards", "&704-21 &fAMD Radeon R9 295X2 &8$1,499", "", "&6Data center accelerators", "&711-17 &fNVIDIA Tesla K80 &8$5,000", "", "&6Mainboards", "&708-29 &fASUS X99-Deluxe &8$399", "&709-08 &fSupermicro X10DRi &8$459", "", "&6Mining boards", "&701-01 &fASRock H61 Pro BTC &8$69", "&701-01 &fASRock H81 Pro BTC &8$75", "", "&6Memory", "&708-29 &fCrucial 16GB DDR4-2133 &8$249", "&709-08 &fSamsung 16GB DDR4 ECC RDIMM &8$249", "", "&6Storage", "&701-01 &fWestern Digital Red 4TB &8$190", "&707-01 &fSamsung 850 PRO 512GB &8$400", "&712-01 &fSamsung 850 EVO 500GB &8$295", "", "&6Power supplies", "&701-01 &fSupermicro PWS-2K04A 2000W &8$175", "&703-01 &fCorsair AX1500i &8$449"]
+	quest.2B4C955AFF27BBA1.quest_subtitle: "19 releases"
+	quest.2B4C955AFF27BBA1.title: "2014"
+	quest.2B791A61B2770EB6.quest_desc: ["&6Intel CPUs", "&704-30 &fIntel Core i3-10100 &8$122", "&704-30 &fIntel Core i5-10400 &8$182", "&705-20 &fIntel Core i5-10600K &8$262", "&705-20 &fIntel Core i9-10900K &8$488", "", "&6AMD CPUs", "&705-21 &fAMD Ryzen 3 3300X &8$120", "&711-05 &fAMD Ryzen 5 5600X &8$299", "&711-05 &fAMD Ryzen 7 5800X &8$449", "&711-05 &fAMD Ryzen 9 5900X &8$549", "&711-05 &fAMD Ryzen 9 5950X &8$799", "", "&6NVIDIA graphics cards", "&709-17 &fNVIDIA GeForce RTX 3080 &8$699", "&709-24 &fNVIDIA GeForce RTX 3090 &8$1,499", "&710-05 &fNVIDIA RTX A6000 &8$4,650", "&710-29 &fNVIDIA GeForce RTX 3070 &8$499", "&712-02 &fNVIDIA GeForce RTX 3060 Ti &8$399", "", "&6Radeon & Arc graphics cards", "&701-21 &fAMD Radeon RX 5600 XT &8$279", "&711-18 &fAMD Radeon RX 6800 &8$579", "&711-18 &fAMD Radeon RX 6800 XT &8$649", "&712-08 &fAMD Radeon RX 6900 XT &8$999", "", "&6Data center accelerators", "&706-22 &fNVIDIA A100 &8$10,000", "&710-05 &fNVIDIA A40 &8$4,500", "&711-16 &fAMD Instinct MI100 &8$6,400", "", "&6Mainboards", "&704-30 &fASUS ROG Maximus XII Hero (Wi-Fi) &8$399", "", "&6Storage", "&701-01 &fWestern Digital Gold 16TB &8$570", "&706-30 &fSamsung 870 QVO 8TB &8$900", "&709-22 &fSamsung 980 PRO 1TB NVMe &8$230", "", "&6Network cables & switches", "&706-01 &fNVIDIA Spectrum SN4700 &8$60,000"]
+	quest.2B791A61B2770EB6.quest_subtitle: "26 releases"
+	quest.2B791A61B2770EB6.title: "2020"
+	quest.2B80183EEB5EC3EF.quest_desc: ["Bulldozer: eight cores, a bold bet.", "", "&7Own one to complete this milestone."]
+	quest.2B80183EEB5EC3EF.quest_subtitle: "2011-10-12 · $245"
+	quest.2B80183EEB5EC3EF.title: "AMD FX-8150"
+	quest.2C1C9A94C607E558.quest_desc: ["AMD64 enters the server room.", "", "&7Own one to complete this milestone."]
+	quest.2C1C9A94C607E558.quest_subtitle: "2003-04-22 · $794"
+	quest.2C1C9A94C607E558.title: "AMD Opteron 244"
+	quest.2D290FD62B02B1C1.quest_desc: ["The first DirectX 9 card - ATI takes the crown.", "", "&7Own one to complete this milestone."]
+	quest.2D290FD62B02B1C1.quest_subtitle: "2002-07-18 · $399"
+	quest.2D290FD62B02B1C1.title: "ATI Radeon 9700 Pro"
+	quest.2D9310223E0092F3.quest_desc: ["The first TITAN: a consumer card with data-centre power.", "", "&7Own one to complete this milestone."]
+	quest.2D9310223E0092F3.quest_subtitle: "2013-02-21 · $999"
+	quest.2D9310223E0092F3.title: "NVIDIA GeForce GTX TITAN"
+	quest.2F0ED0DCD22D8C04.quest_desc: ["Two GPUs on one board, made for clusters.", "", "&7Own one to complete this milestone."]
+	quest.2F0ED0DCD22D8C04.quest_subtitle: "2014-11-17 · $5,000"
+	quest.2F0ED0DCD22D8C04.title: "NVIDIA Tesla K80"
+	quest.2F1587D0AC3A667A.quest_desc: ["A real switch: every port gets its own bandwidth.", "", "&7Own one to complete this milestone."]
+	quest.2F1587D0AC3A667A.quest_subtitle: "2001-01-15 · $1,095"
+	quest.2F1587D0AC3A667A.title: "Cisco Catalyst 2950-24"
+	quest.2F9E11DBE290BFFB.quest_desc: ["AMD's first Athlon - from now on AMD races Intel at the top.", "", "&7Own one to complete this milestone."]
+	quest.2F9E11DBE290BFFB.quest_subtitle: "1999-06-23 · $699"
+	quest.2F9E11DBE290BFFB.title: "AMD Athlon 600 (Slot A)"
+	quest.300533B8D4E5777A.quest_desc: ["HBM2 memory and NVLink for deep learning.", "", "&7Own one to complete this milestone."]
+	quest.300533B8D4E5777A.quest_subtitle: "2016-06-20 · $5,699"
+	quest.300533B8D4E5777A.title: "NVIDIA Tesla P100"
+	quest.30B23C526A3C49AD.quest_desc: ["&6Intel CPUs", "&703-08 &fIntel Pentium III 1.0 GHz &8$990", "&706-26 &fIntel Celeron 700 &8$192", "&707-31 &fIntel Pentium III 1.13 GHz &8$990", "&711-20 &fIntel Pentium 4 1.5 GHz (Willamette) &8$819", "", "&6AMD CPUs", "&703-06 &fAMD Athlon 1.0 GHz (Slot A) &8$1,299", "&706-19 &fAMD Duron 700 &8$192", "&708-14 &fAMD Athlon 1.1 GHz (Thunderbird) &8$853", "&710-17 &fAMD Duron 800 &8$170", "", "&6Server CPUs", "&708-22 &fIntel Pentium III Xeon 1.0 GHz &8$719", "", "&6Mainboards", "&706-19 &fASUS A7V &8$159", "&708-01 &fASUS CUSL2 &8$149", "&711-20 &fASUS P4T &8$199", "", "&6Memory", "&704-06 &fSamsung 128MB PC800 RDRAM RIMM &8$585", "&704-08 &fCorsair 256MB PC133 SDRAM &8$204", "&705-19 &fSamsung 256MB PC800 RDRAM RIMM &8$979", "&705-31 &fKingston 128MB PC100 ECC &8$120", "&708-14 &fKingston ValueRAM 512MB PC133 &8$593", "&711-04 &fMicron 1GB PC133 ECC Registered &8$1,995", "", "&6Storage", "&701-01 &fSeagate Elite 47GB &8$695", "&701-31 &fSeagate Barracuda ATA II 30.6GB &8$270", "&702-23 &fSeagate Cheetah X15 18GB &8$430", "", "&6Power supplies", "&701-01 &fEnermax EG365P-VE 350W &8$24"]
+	quest.30B23C526A3C49AD.quest_subtitle: "22 releases"
+	quest.30B23C526A3C49AD.title: "2000"
+	quest.3114E28D5FD85E5F.quest_desc: ["&6Intel CPUs", "&701-09 &fIntel Core i5-2400 &8$184", "&701-09 &fIntel Core i5-2500K &8$216", "&701-09 &fIntel Core i7-2600K &8$317", "&710-23 &fIntel Core i7-2700K &8$332", "&711-14 &fIntel Core i7-3960X Extreme Edition &8$990", "", "&6AMD CPUs", "&702-01 &fAMD Phenom II X6 1100T Black Edition &8$265", "&710-12 &fAMD FX-8150 &8$245", "", "&6Server CPUs", "&702-14 &fIntel Xeon X5690 &8$1,663", "&711-14 &fAMD Opteron 6272 &8$523", "", "&6NVIDIA graphics cards", "&701-25 &fNVIDIA GeForce GTX 560 Ti &8$249", "&703-24 &fNVIDIA GeForce GTX 590 &8$699", "", "&6Radeon & Arc graphics cards", "&704-19 &fAMD Radeon HD 6670 &8$99", "", "&6Mainboards", "&701-09 &fASUS P8P67 Deluxe &8$209", "&705-11 &fASUS P8Z68-V PRO &8$209", "&706-01 &fASUS ROG Crosshair V Formula &8$239", "&711-14 &fASUS P9X79 Deluxe &8$329", "", "&6Memory", "&710-01 &fG.Skill Ripjaws X 32GB DDR3 &8$500", "&710-01 &fKingston ValueRAM 32GB DDR3 &8$400", "", "&6Storage", "&708-01 &fSeagate Barracuda 3TB &8$190", "", "&6Power supplies", "&701-01 &fHP 1200W Common Slot Platinum &8$75", "&701-01 &fHP 750W Common Slot Platinum &8$40"]
+	quest.3114E28D5FD85E5F.quest_subtitle: "21 releases"
+	quest.3114E28D5FD85E5F.title: "2011"
+	quest.3154105ED4F476B3.quest_desc: ["The Ethereum miner's card.", "", "&7Own one to complete this milestone."]
+	quest.3154105ED4F476B3.quest_subtitle: "2016-06-29 · $239"
+	quest.3154105ED4F476B3.title: "AMD Radeon RX 480 8GB"
+	quest.32280DC0FDA19769.quest_desc: ["Everything is set under &7Mods → Data Center AddOn → Config&r:", "", "&e• &fReal Parts&r: hide Data Center's own (fictional) parts in the Shop.", "&e• &fNetwork&r: hide Data Center's cables and switches, switch power, cable reach.", "&e• &fHosting&r: storage boost of the add-on's drives.", "&e• &fClient&r: overlay, tooltips, Shop width.", "", "Changes to parts and network take effect the next time a world is loaded."]
+	quest.32280DC0FDA19769.title: "Settings"
+	quest.3274CED72F1532E3.quest_desc: ["&6Intel CPUs", "&702-02 &fIntel Pentium 4 3.4 GHz HT &8$417", "&706-21 &fIntel Pentium 4 560 &8$637", "&709-22 &fIntel Celeron D 340 &8$117", "&710-01 &fIntel Pentium 4 520J &8$178", "", "&6AMD CPUs", "&701-06 &fAMD Athlon 64 3400+ (Socket 754) &8$417", "&706-01 &fAMD Athlon 64 3700+ (Socket 754) &8$710", "&706-01 &fAMD Athlon 64 FX-53 (Socket 939) &8$799", "&707-28 &fAMD Sempron 3100+ &8$89", "&710-14 &fAMD Athlon 64 3200+ (Socket 939) &8$208", "", "&6Server CPUs", "&705-18 &fAMD Opteron 150 &8$637", "&706-28 &fIntel Xeon 3.6 GHz (Nocona) &8$851", "", "&6NVIDIA graphics cards", "&704-14 &fNVIDIA GeForce 6800 Ultra &8$499", "&706-08 &fNVIDIA GeForce 6800 GT &8$399", "&708-12 &fNVIDIA GeForce 6600 GT &8$199", "", "&6Radeon & Arc graphics cards", "&705-04 &fATI Radeon X800 Pro &8$399", "&705-04 &fATI Radeon X800 XT Platinum Edition &8$499", "&712-21 &fATI Radeon X850 XT Platinum Edition &8$549", "", "&6Mainboards", "&706-01 &fASUS A8V Deluxe &8$159", "&706-21 &fASUS P5AD2 Premium &8$299", "&706-28 &fSupermicro X6DH8-G &8$429", "&711-01 &fASUS A8N-SLI Deluxe &8$199", "", "&6Memory", "&701-01 &fCorsair XMS 1GB DDR400 &8$190", "&701-01 &fKingston ValueRAM 1GB DDR400 &8$150", "&706-01 &fCorsair XMS2 1GB DDR2 &8$312", "&706-01 &fKingston ValueRAM 1GB DDR2 &8$250", "&706-21 &fKingston ValueRAM 512MB DDR2-533 &8$84", "", "&6Storage", "&701-01 &fSeagate Barracuda 7200.7 120GB &8$111", "&702-17 &fSeagate Savvio 10K.1 73GB &8$183", "&706-14 &fSeagate Cheetah 15K.4 147GB &8$433"]
+	quest.3274CED72F1532E3.quest_subtitle: "29 releases"
+	quest.3274CED72F1532E3.title: "2004"
+	quest.32B185B86D490813.quest_desc: ["The add-on's drives get &f+10 % capacity&r while their server runs in a Hosting Rack: more storage to rent out, more shared capacity.", "", "Set the bonus under &7Config → Hosting → Storage Boost&r."]
+	quest.32B185B86D490813.title: "Storage for hosting"
+	quest.33AD396D90657275.quest_desc: ["The quad-core that everyone bought.", "", "&7Own one to complete this milestone."]
+	quest.33AD396D90657275.quest_subtitle: "2007-01-07 · $851"
+	quest.33AD396D90657275.title: "Intel Core 2 Quad Q6600"
+	quest.34982183F1B841BE.quest_desc: ["Nehalem: integrated memory controller and Hyper-Threading are back.", "", "&7Own one to complete this milestone."]
+	quest.34982183F1B841BE.quest_subtitle: "2008-11-17 · $284"
+	quest.34982183F1B841BE.title: "Intel Core i7-920"
+	quest.35B95E1F8ACCDE37.quest_desc: ["Dual-core for everyone.", "", "&7Own one to complete this milestone."]
+	quest.35B95E1F8ACCDE37.quest_subtitle: "2005-05-31 · $354"
+	quest.35B95E1F8ACCDE37.title: "AMD Athlon 64 X2 3800+"
+	quest.36598A2ED55214D7.quest_desc: ["Every part is ranked against all parts of its kind:", "&fCommon&r, &aUncommon&r, &9Rare&r, &5Epic&r, &6Legendary&r.", "", "CPUs and GPUs are compared by compute (mining cards by hashrate), RAM by size, storage by capacity, power supplies by usable output, fans by airflow and mainboards by their slots.", "", "The tooltip border shows the tier at a glance. Turn it off under &7Config → Client → Tooltips&r."]
+	quest.36598A2ED55214D7.title: "Tiers: Common to Legendary"
+	quest.378FA746E7E2BB94.quest_desc: ["&6Intel CPUs", "&710-19 &fIntel Core i5-9600K &8$262", "&710-19 &fIntel Core i7-9700K &8$374", "&710-19 &fIntel Core i9-9900K &8$488", "", "&6AMD CPUs", "&704-19 &fAMD Ryzen 5 2600 &8$199", "&704-19 &fAMD Ryzen 7 2700X &8$329", "&709-06 &fAMD Athlon 200GE &8$55", "", "&6NVIDIA graphics cards", "&708-13 &fNVIDIA Quadro RTX 8000 &8$10,000", "&709-20 &fNVIDIA GeForce RTX 2080 &8$699", "&709-27 &fNVIDIA GeForce RTX 2080 Ti &8$999", "&710-17 &fNVIDIA GeForce RTX 2070 &8$499", "&712-18 &fNVIDIA TITAN RTX &8$2,499", "", "&6Radeon & Arc graphics cards", "&711-15 &fAMD Radeon RX 590 &8$279", "", "&6Data center accelerators", "&709-12 &fNVIDIA Tesla T4 &8$2,299", "", "&6Mining cards", "&703-01 &fNVIDIA P102-100 &8$499", "", "&6Mainboards", "&710-19 &fASUS ROG Maximus XI Hero &8$279", "", "&6Mining boards", "&704-01 &fBiostar TB360-BTC PRO &8$140", "", "&6Storage", "&701-23 &fSamsung 860 EVO 1TB &8$330", "&704-01 &fSamsung 970 EVO 1TB NVMe &8$450", "&705-03 &fIntel Optane SSD 905P 960GB &8$1,299", "", "&6Power supplies", "&706-01 &fCorsair SF750 Platinum &8$185", "&709-01 &fSeasonic FOCUS GX-750 &8$119", "", "&6Fans", "&706-01 &fNoctua NF-A12x25 PWM &8$30"]
+	quest.378FA746E7E2BB94.quest_subtitle: "22 releases"
+	quest.378FA746E7E2BB94.title: "2018"
+	quest.37F423C498CF6E18.quest_desc: ["&6Intel CPUs", "&704-29 &fIntel Core i5-3570K &8$225", "&704-29 &fIntel Core i7-3770K &8$313", "", "&6AMD CPUs", "&710-23 &fAMD FX-8350 &8$195", "", "&6Server CPUs", "&703-06 &fIntel Xeon E5-2670 &8$1,552", "&703-06 &fIntel Xeon E5-2690 &8$2,057", "&711-05 &fAMD Opteron 6380 &8$1,088", "", "&6NVIDIA graphics cards", "&703-22 &fNVIDIA GeForce GTX 680 &8$499", "&705-03 &fNVIDIA GeForce GTX 690 &8$999", "&705-10 &fNVIDIA GeForce GTX 670 &8$399", "&708-16 &fNVIDIA GeForce GTX 660 Ti &8$299", "", "&6Radeon & Arc graphics cards", "&701-09 &fAMD Radeon HD 7970 &8$549", "&701-31 &fAMD Radeon HD 7950 &8$449", "&702-15 &fAMD Radeon HD 7770 &8$159", "&703-05 &fAMD Radeon HD 7870 &8$349", "", "&6Data center accelerators", "&711-12 &fNVIDIA Tesla K20X &8$4,500", "", "&6Mainboards", "&703-06 &fSupermicro X9DRi-F &8$389", "", "&6Memory", "&703-06 &fSamsung 16GB DDR3 ECC RDIMM &8$249", "&704-23 &fCorsair Vengeance 16GB DDR3 &8$112", "&704-23 &fKingston ValueRAM 16GB DDR3 &8$90", "", "&6Power supplies", "&711-01 &fCorsair AX1200i &8$349", "", "&6Fans", "&703-01 &fNoctua NF-F12 PWM &8$20", "", "&6Network cables & switches", "&704-01 &fArista 7050S-64 &8$34,000"]
+	quest.37F423C498CF6E18.quest_subtitle: "22 releases"
+	quest.37F423C498CF6E18.title: "2012"
+	quest.38EBFE8773B9E646.quest_desc: ["&6Intel CPUs", "&701-07 &fIntel Pentium 4 2.2 GHz (Northwood) &8$562", "&705-15 &fIntel Celeron 1.7 GHz &8$83", "&708-26 &fIntel Pentium 4 2.8 GHz &8$508", "&711-14 &fIntel Pentium 4 3.06 GHz HT &8$637", "", "&6AMD CPUs", "&701-07 &fAMD Athlon XP 2000+ &8$339", "&706-10 &fAMD Athlon XP 2200+ &8$241", "&708-21 &fAMD Athlon XP 2600+ &8$297", "&710-01 &fAMD Athlon XP 2800+ &8$397", "", "&6Server CPUs", "&703-13 &fAMD Athlon MP 2000+ &8$280", "&704-23 &fIntel Xeon 2.4 GHz (Prestonia) &8$615", "&711-18 &fIntel Xeon 2.8 GHz (Socket 604) &8$455", "", "&6NVIDIA graphics cards", "&702-06 &fNVIDIA GeForce4 Ti 4200 &8$199", "&702-06 &fNVIDIA GeForce4 Ti 4600 &8$399", "", "&6Radeon & Arc graphics cards", "&707-18 &fATI Radeon 9700 Pro &8$399", "&708-01 &fATI Radeon 9000 Pro &8$129", "&710-24 &fATI Radeon 9500 Pro &8$199", "", "&6Mainboards", "&701-07 &fASUS P4B266 &8$149", "&711-18 &fSupermicro X5DPE-G2 &8$449", "&712-01 &fABIT NF7-S &8$125", "", "&6Memory", "&702-05 &fKingston ValueRAM 512MB DDR PC2100 &8$114", "", "&6Storage", "&705-06 &fSeagate Cheetah 15K.3 73GB &8$423", "&706-24 &fSeagate Barracuda Serial ATA V 120GB &8$206", "", "&6Power supplies", "&706-01 &fAntec TruePower 480W &8$31", "", "&6Network cables & switches", "&706-01 &fCAT6 Data Cable &8$1.00", "&706-01 &fOM3 Fibre Cable (Multimode) &8$2.00"]
+	quest.38EBFE8773B9E646.quest_subtitle: "25 releases"
+	quest.38EBFE8773B9E646.title: "2002"
+	quest.3A7BF80480D7C914.quest_desc: ["&6Intel CPUs", "&703-14 &fIntel Core i9-14900KS &8$689", "&710-24 &fIntel Core Ultra 5 245K &8$309", "&710-24 &fIntel Core Ultra 7 265K &8$394", "&710-24 &fIntel Core Ultra 9 285K &8$589", "", "&6AMD CPUs", "&701-31 &fAMD Ryzen 5 8600G &8$229", "&701-31 &fAMD Ryzen 7 8700G &8$329", "&708-08 &fAMD Ryzen 5 9600X &8$279", "&708-08 &fAMD Ryzen 7 9700X &8$359", "&708-15 &fAMD Ryzen 9 9900X &8$499", "&708-15 &fAMD Ryzen 9 9950X &8$649", "&711-07 &fAMD Ryzen 7 9800X3D &8$479", "", "&6Server CPUs", "&705-21 &fAMD EPYC 4564P &8$699", "&710-10 &fAMD EPYC 9755 &8$12,984", "&710-10 &fAMD EPYC 9965 &8$14,813", "", "&6NVIDIA graphics cards", "&701-17 &fNVIDIA GeForce RTX 4070 SUPER &8$599", "&701-24 &fNVIDIA GeForce RTX 4070 Ti SUPER &8$799", "&701-31 &fNVIDIA GeForce RTX 4080 SUPER &8$999", "", "&6Radeon & Arc graphics cards", "&701-24 &fAMD Radeon RX 7600 XT &8$329", "&702-27 &fAMD Radeon RX 7900 GRE &8$549", "&712-13 &fIntel Arc B580 &8$249", "", "&6Data center accelerators", "&711-01 &fNVIDIA B200 &8$35,000", "&711-18 &fNVIDIA H200 NVL &8$32,000", "", "&6Mainboards", "&710-24 &fASUS ROG Maximus Z890 Hero &8$679"]
+	quest.3A7BF80480D7C914.quest_subtitle: "23 releases"
+	quest.3A7BF80480D7C914.title: "2024"
+	quest.3B4A7F55E3589045.quest_desc: ["&6AMD CPUs", "&703-12 &fAMD Ryzen 9 9900X3D &8$599", "&703-12 &fAMD Ryzen 9 9950X3D &8$699", "", "&6NVIDIA graphics cards", "&701-30 &fNVIDIA GeForce RTX 5080 &8$999", "&701-30 &fNVIDIA GeForce RTX 5090 &8$1,999", "&702-20 &fNVIDIA GeForce RTX 5070 Ti &8$749", "&703-05 &fNVIDIA GeForce RTX 5070 &8$549", "&704-16 &fNVIDIA GeForce RTX 5060 Ti 16GB &8$429", "&704-16 &fNVIDIA GeForce RTX 5060 Ti 8GB &8$379", "&705-19 &fNVIDIA GeForce RTX 5060 &8$299", "&707-01 &fNVIDIA GeForce RTX 5050 &8$249", "", "&6Radeon & Arc graphics cards", "&701-16 &fIntel Arc B570 &8$219", "&703-06 &fAMD Radeon RX 9070 &8$549", "&703-06 &fAMD Radeon RX 9070 XT &8$599", "&706-05 &fAMD Radeon RX 9060 XT 16GB &8$349", "", "&6Storage", "&703-18 &fSamsung 9100 PRO 4TB NVMe &8$550"]
+	quest.3B4A7F55E3589045.quest_subtitle: "15 releases"
+	quest.3B4A7F55E3589045.title: "2025"
+	quest.3B58CB3283D8E252.quest_desc: ["With &fHide Original Parts&r Data Center's fictional brands leave the Shop, and only real parts are for sale.", "&fHidden Categories&r decides which Shop categories are affected.", "", "Parts you already own keep working. Hidden parts are no longer announced in chat either."]
+	quest.3B58CB3283D8E252.title: "Only real parts"
+	quest.3B704D090E562701.quest_desc: ["&6Network cables & switches", "&707-01 &fCAT3 Data Cable &8$0.30"]
+	quest.3B704D090E562701.quest_subtitle: "1 releases"
+	quest.3B704D090E562701.title: "1991"
+	quest.3B748E0F963C492B.quest_desc: ["Like Mekanism: &f8 cables around one material&r give 8 cables of the next tier.", "", "&7CAT3 → CAT5: &fredstone   &7→ CAT5e: &firon   &7→ CAT6: &fgold", "&7→ CAT6a: &fquartz   &7→ CAT8: &fdiamond", "&7OM3 → OM4: &famethyst   &7→ OS2: &fender pearl"]
+	quest.3B748E0F963C492B.title: "Upgrading cables"
+	quest.3BE1E52F2F0D4228.quest_desc: ["Ampere: the accelerator of the AI boom.", "", "&7Own one to complete this milestone."]
+	quest.3BE1E52F2F0D4228.quest_subtitle: "2020-06-22 · $10,000"
+	quest.3BE1E52F2F0D4228.title: "NVIDIA A100"
+	quest.3BE9FD6EA2B57957.quest_desc: ["Hyper-Threading arrives on the desktop: two threads on one core.", "", "&7Own one to complete this milestone."]
+	quest.3BE9FD6EA2B57957.quest_subtitle: "2002-11-14 · $637"
+	quest.3BE9FD6EA2B57957.title: "Intel Pentium 4 3.06 GHz HT"
+	quest.3BF39391A2E3257B.quest_desc: ["&6AMD CPUs", "&707-07 &fAMD Ryzen 5 3600 &8$199", "&707-07 &fAMD Ryzen 5 3600X &8$249", "&707-07 &fAMD Ryzen 7 3700X &8$329", "&707-07 &fAMD Ryzen 7 3800X &8$399", "&707-07 &fAMD Ryzen 9 3900X &8$499", "&711-25 &fAMD Ryzen 9 3950X &8$749", "", "&6Server CPUs", "&704-02 &fIntel Xeon Platinum 8280 &8$10,009", "&704-02 &fIntel Xeon Silver 4214 &8$694", "&708-07 &fAMD EPYC 7302 &8$978", "&708-07 &fAMD EPYC 7742 &8$6,950", "", "&6NVIDIA graphics cards", "&701-15 &fNVIDIA GeForce RTX 2060 &8$349", "&702-22 &fNVIDIA GeForce GTX 1660 Ti &8$279", "&704-23 &fNVIDIA GeForce GTX 1650 &8$149", "&707-09 &fNVIDIA GeForce RTX 2060 SUPER &8$399", "&707-09 &fNVIDIA GeForce RTX 2070 SUPER &8$499", "&707-23 &fNVIDIA GeForce RTX 2080 SUPER &8$699", "&710-29 &fNVIDIA GeForce GTX 1660 SUPER &8$229", "", "&6Radeon & Arc graphics cards", "&702-07 &fAMD Radeon VII &8$699", "&707-07 &fAMD Radeon RX 5700 &8$349", "&707-07 &fAMD Radeon RX 5700 XT &8$399", "&712-12 &fAMD Radeon RX 5500 XT 8GB &8$199", "", "&6Memory", "&704-02 &fSamsung 64GB DDR4 ECC RDIMM &8$599", "&707-07 &fG.Skill Trident Z Neo 32GB DDR4 &8$189", "", "&6Storage", "&701-22 &fSamsung 970 EVO Plus 1TB NVMe &8$250", "", "&6Fans", "&706-01 &fARCTIC P12 PWM &8$7.99"]
+	quest.3BF39391A2E3257B.quest_subtitle: "25 releases"
+	quest.3BF39391A2E3257B.title: "2019"
+	quest.3D3F27BBD4AAE282.quest_desc: ["&6Intel CPUs", "&701-07 &fIntel Core 2 Quad Q6600 &8$851", "&704-01 &fIntel Core 2 Duo E6420 &8$183", "&707-01 &fIntel Core 2 Duo E4500 &8$133", "&711-01 &fIntel Core 2 Extreme QX9650 &8$999", "", "&6AMD CPUs", "&701-22 &fAMD Athlon 64 X2 3600+ (Brisbane) &8$138", "&705-23 &fAMD Athlon 64 X2 6400+ Black Edition &8$240", "&709-25 &fAMD Athlon 64 X2 5000+ Black Edition &8$136", "&711-19 &fAMD Phenom X4 9600 &8$283", "", "&6Server CPUs", "&702-01 &fAMD Opteron 2220 &8$698", "&709-10 &fAMD Opteron 2350 &8$389", "&711-11 &fIntel Xeon E5405 &8$209", "", "&6NVIDIA graphics cards", "&703-05 &fNVIDIA Quadro FX 5600 &8$2,700", "&704-17 &fNVIDIA GeForce 8500 GT &8$129", "&704-17 &fNVIDIA GeForce 8600 GTS &8$199", "&705-02 &fNVIDIA GeForce 8800 Ultra &8$829", "&710-29 &fNVIDIA GeForce 8800 GT &8$249", "&712-11 &fNVIDIA GeForce 8800 GTS 512MB &8$349", "", "&6Radeon & Arc graphics cards", "&705-14 &fATI Radeon HD 2900 XT &8$399", "&706-28 &fATI Radeon HD 2600 XT &8$119", "&711-15 &fATI Radeon HD 3850 &8$179", "&711-15 &fATI Radeon HD 3870 &8$219", "", "&6Data center accelerators", "&706-01 &fNVIDIA Tesla C870 &8$2,700", "", "&6Mainboards", "&709-10 &fSupermicro H8DME-2 &8$399", "&711-19 &fGigabyte GA-MA790X-DS4 &8$135", "", "&6Memory", "&707-20 &fCorsair XMS3 2GB DDR3-1333 &8$417", "", "&6Storage", "&701-05 &fHitachi Deskstar 7K1000 1TB &8$399", "&706-25 &fSeagate Barracuda 7200.11 1TB &8$400"]
+	quest.3D3F27BBD4AAE282.quest_subtitle: "27 releases"
+	quest.3D3F27BBD4AAE282.title: "2007"
+	quest.3D41062D9269C014.quest_desc: ["&6Intel CPUs", "&701-20 &fIntel Core 2 Duo E8400 &8$183", "&703-01 &fIntel Core 2 Quad Q9550 &8$530", "&704-01 &fIntel Core 2 Duo E7200 &8$133", "&708-10 &fIntel Core 2 Quad Q8200 &8$224", "&708-10 &fIntel Core 2 Quad Q9400 &8$266", "&708-10 &fIntel Core 2 Quad Q9650 &8$530", "&710-01 &fIntel Core 2 Duo E7400 &8$133", "&711-17 &fIntel Core i7-920 &8$284", "&711-17 &fIntel Core i7-965 Extreme Edition &8$999", "", "&6AMD CPUs", "&703-05 &fAMD Phenom X4 9950 Black Edition &8$235", "&703-27 &fAMD Phenom X4 9850 Black Edition &8$235", "&704-23 &fAMD Phenom X3 8750 &8$165", "&707-01 &fAMD Phenom X4 9150e &8$160", "&712-15 &fAMD Athlon X2 7750 Black Edition &8$120", "", "&6Server CPUs", "&704-09 &fAMD Opteron 2352 &8$316", "&709-08 &fIntel Xeon X5492 &8$1,493", "&711-13 &fAMD Opteron 2384 &8$989", "", "&6NVIDIA graphics cards", "&702-21 &fNVIDIA GeForce 9600 GT &8$179", "&703-18 &fNVIDIA GeForce 9800 GX2 &8$599", "&703-28 &fNVIDIA GeForce 9800 GTX &8$299", "&706-16 &fNVIDIA GeForce GTX 280 &8$649", "&706-17 &fNVIDIA GeForce GTX 260 &8$399", "&711-11 &fNVIDIA Quadro FX 5800 &8$3,299", "", "&6Radeon & Arc graphics cards", "&701-28 &fATI Radeon HD 3870 X2 &8$449", "&706-25 &fATI Radeon HD 4850 &8$199", "&706-25 &fATI Radeon HD 4870 &8$299", "&708-12 &fATI Radeon HD 4870 X2 &8$449", "&709-10 &fATI Radeon HD 4350 &8$49", "&709-10 &fATI Radeon HD 4670 &8$79", "&710-21 &fATI Radeon HD 4830 &8$130", "", "&6Data center accelerators", "&706-16 &fNVIDIA Tesla C1060 &8$1,699", "", "&6Mainboards", "&703-01 &fASUS M3A32-MVP Deluxe &8$229", "&711-17 &fASUS P6T Deluxe &8$299", "", "&6Memory", "&706-03 &fCorsair Dominator 4GB DDR3 &8$375", "&706-03 &fKingston ValueRAM 4GB DDR3 &8$300", "&707-01 &fCorsair Dominator 4GB DDR2 &8$100", "&707-01 &fKingston ValueRAM 4GB DDR2 &8$80", "&710-01 &fG.Skill PI Series 8GB DDR2 &8$250", "&710-01 &fKingston ValueRAM 8GB DDR2 &8$200", "", "&6Storage", "&701-30 &fWestern Digital Caviar 500GB &8$100", "&704-21 &fWestern Digital VelociRaptor 300GB &8$300", "&707-01 &fSeagate Cheetah 15K.6 450GB &8$200", "&707-10 &fSeagate Barracuda 7200.11 1.5TB &8$199", "&707-31 &fWestern Digital Caviar Blue 640GB &8$85", "&708-01 &fWestern Digital Caviar Black 1TB &8$210", "&709-08 &fIntel X25-M 80GB &8$595", "&710-15 &fIntel X25-E 32GB &8$695", "", "&6Power supplies", "&701-01 &fCorsair HX750W &8$68", "&701-01 &fCorsair TX650 &8$54", "&701-01 &fSeasonic S12II-550 Bronze &8$45", "", "&6Fans", "&701-01 &fDelta AFB1212SHE 120mm &8$25", "", "&6Network cables & switches", "&702-01 &fCAT6a Data Cable &8$1.50", "&704-01 &fCisco Nexus 5010 &8$30,000"]
+	quest.3D41062D9269C014.quest_subtitle: "53 releases"
+	quest.3D41062D9269C014.title: "2008"
+	quest.3D99EC4182615EBF.quest_desc: ["NVIDIA's dedicated mining card at the height of the boom.", "", "&7Own one to complete this milestone."]
+	quest.3D99EC4182615EBF.quest_subtitle: "2021-04-01 · $2,399"
+	quest.3D99EC4182615EBF.title: "NVIDIA CMP 90HX"
+	quest.3E0460BA7261E4A2.quest_desc: ["&6Intel CPUs", "&708-05 &fIntel Core i5-6600K &8$243", "&708-05 &fIntel Core i7-6700K &8$350", "", "&6NVIDIA graphics cards", "&701-22 &fNVIDIA GeForce GTX 960 &8$199", "&703-17 &fNVIDIA GeForce GTX TITAN X &8$999", "&706-02 &fNVIDIA GeForce GTX 980 Ti &8$649", "", "&6Radeon & Arc graphics cards", "&706-18 &fAMD Radeon R9 390X &8$429", "&706-24 &fAMD Radeon R9 Fury X &8$649", "&709-10 &fAMD Radeon R9 Nano &8$649", "&711-19 &fAMD Radeon R9 380X &8$229", "", "&6Mainboards", "&708-05 &fASUS Z170-A &8$165", "", "&6Memory", "&707-29 &fCorsair Vengeance LPX 8GB DDR4 &8$87", "&707-29 &fKingston ValueRAM 8GB DDR4 &8$70", "&709-17 &fCorsair Vengeance LPX 16GB DDR4 &8$150", "&709-17 &fKingston ValueRAM 16GB DDR4 &8$120", "&711-01 &fG.Skill Trident Z 32GB DDR4 &8$275", "&711-01 &fKingston ValueRAM 32GB DDR4 &8$220", "&712-22 &fCorsair Vengeance LPX 64GB DDR4 &8$562", "&712-22 &fKingston ValueRAM 64GB DDR4 &8$450", "", "&6Storage", "&710-01 &fSamsung 950 PRO 512GB NVMe &8$350", "", "&6Power supplies", "&707-01 &fEVGA SuperNOVA 1600 T2 &8$449", "&709-01 &fCorsair RM850x &8$159"]
+	quest.3E0460BA7261E4A2.quest_subtitle: "21 releases"
+	quest.3E0460BA7261E4A2.title: "2015"
+	quest.3E220801F8726332.quest_desc: ["Core 2: Intel is back on top, cooler and faster.", "", "&7Own one to complete this milestone."]
+	quest.3E220801F8726332.quest_subtitle: "2006-07-27 · $316"
+	quest.3E220801F8726332.title: "Intel Core 2 Duo E6600"
+	quest.3E32892DCC99A230.quest_desc: ["&6Intel CPUs", "&701-03 &fIntel Core i5-7600K &8$242", "&701-03 &fIntel Core i7-7700K &8$339", "&710-05 &fIntel Core i3-8100 &8$117", "&710-05 &fIntel Core i5-8600K &8$257", "&710-05 &fIntel Core i7-8700K &8$359", "", "&6AMD CPUs", "&703-02 &fAMD Ryzen 7 1700 &8$329", "&703-02 &fAMD Ryzen 7 1800X &8$499", "&704-11 &fAMD Ryzen 5 1600 &8$219", "&707-27 &fAMD Ryzen 3 1200 &8$109", "", "&6Server CPUs", "&706-29 &fAMD EPYC 7601 &8$4,200", "&707-11 &fIntel Xeon Gold 6148 &8$3,072", "&707-11 &fIntel Xeon Platinum 8180 &8$10,009", "", "&6NVIDIA graphics cards", "&703-10 &fNVIDIA GeForce GTX 1080 Ti &8$699", "&704-06 &fNVIDIA TITAN Xp &8$1,199", "&705-17 &fNVIDIA GeForce GT 1030 &8$79", "&711-02 &fNVIDIA GeForce GTX 1070 Ti &8$449", "&712-07 &fNVIDIA TITAN V &8$2,999", "", "&6Radeon & Arc graphics cards", "&704-18 &fAMD Radeon RX 560 &8$99", "&704-18 &fAMD Radeon RX 570 &8$169", "&704-18 &fAMD Radeon RX 580 &8$229", "&704-20 &fAMD Radeon RX 550 &8$79", "&708-14 &fAMD Radeon RX Vega 64 &8$499", "&708-28 &fAMD Radeon RX Vega 56 &8$399", "", "&6Data center accelerators", "&706-21 &fNVIDIA Tesla V100 &8$8,999", "&706-27 &fAMD Radeon Instinct MI25 &8$4,500", "", "&6Mining cards", "&706-19 &fNVIDIA P104-100 &8$350", "&706-19 &fNVIDIA P106-100 &8$200", "&707-01 &fAMD Radeon RX 470 Mining Edition &8$319", "&707-01 &fAMD Radeon RX 560 Mining Edition &8$218", "", "&6Mainboards", "&703-02 &fASUS ROG Crosshair VI Hero &8$255", "&706-29 &fSupermicro H11DSi &8$589", "&707-11 &fSupermicro X11DPH-T &8$629", "&710-05 &fASUS ROG Strix Z370-E Gaming &8$209", "", "&6Mining boards", "&705-08 &fASRock AB350 Pro4 &8$99", "&707-01 &fASRock H110 Pro BTC+ &8$120", "&708-01 &fBiostar TB250-BTC PRO &8$120", "&711-01 &fASUS B250 Mining Expert &8$180", "", "&6Memory", "&707-11 &fSamsung 32GB DDR4 ECC RDIMM &8$399", "", "&6Storage", "&706-01 &fSeagate BarraCuda 8TB &8$255", "", "&6Power supplies", "&705-01 &fCorsair AX1600i &8$449", "", "&6Network cables & switches", "&712-06 &fOS2 Fibre Cable (Single-mode) &8$5.00"]
+	quest.3E32892DCC99A230.quest_subtitle: "41 releases"
+	quest.3E32892DCC99A230.title: "2017"
+	quest.3E3ABD25B3D3D13F.quest_desc: ["Pascal: a huge leap in efficiency.", "", "&7Own one to complete this milestone."]
+	quest.3E3ABD25B3D3D13F.quest_subtitle: "2016-05-27 · $599"
+	quest.3E3ABD25B3D3D13F.title: "NVIDIA GeForce GTX 1080"
+	quest.3EBB7842C29BE4A3.quest_desc: ["Data Center's cables keep working next to the new ones. With &fHide Original Cables & Switches&r its switch leaves the Shop and its cable recipes are disabled.", "", "The superconducting cable stays and is then crafted with OS2 fibre."]
+	quest.3EBB7842C29BE4A3.title: "Data Center's own cables"
+	quest.3F427496DA3CFB40.quest_desc: ["Sandy Bridge: the processor that lasted a decade.", "", "&7Own one to complete this milestone."]
+	quest.3F427496DA3CFB40.quest_subtitle: "2011-01-09 · $317"
+	quest.3F427496DA3CFB40.title: "Intel Core i7-2600K"
+	quest.3F9B6312C5349B51.quest_desc: ["&6Intel CPUs", "&701-16 &fIntel Pentium D 920 &8$241", "&705-28 &fIntel Celeron D 356 &8$89", "&707-01 &fIntel Core 2 Duo E6300 &8$183", "&707-27 &fIntel Core 2 Duo E6600 &8$316", "&707-27 &fIntel Core 2 Extreme X6800 &8$999", "&711-01 &fIntel Core 2 Extreme QX6700 &8$999", "", "&6AMD CPUs", "&701-09 &fAMD Athlon 64 FX-60 &8$1,031", "&705-01 &fAMD Athlon 64 X2 4000+ (AM2) &8$328", "&709-06 &fAMD Athlon 64 X2 5200+ &8$403", "&712-05 &fAMD Athlon 64 X2 6000+ &8$464", "", "&6Server CPUs", "&703-06 &fAMD Opteron 285 &8$1,051", "&706-26 &fIntel Xeon 5110 &8$209", "&706-26 &fIntel Xeon 5160 &8$851", "&711-14 &fIntel Xeon E5310 &8$455", "&711-14 &fIntel Xeon X5355 &8$1,172", "", "&6NVIDIA graphics cards", "&701-18 &fNVIDIA GeForce 7300 GS &8$99", "&703-09 &fNVIDIA GeForce 7600 GT &8$199", "&703-09 &fNVIDIA GeForce 7900 GTX &8$499", "&706-05 &fNVIDIA GeForce 7950 GX2 &8$599", "&711-08 &fNVIDIA GeForce 8800 GTS 640MB &8$449", "&711-08 &fNVIDIA GeForce 8800 GTX &8$599", "", "&6Radeon & Arc graphics cards", "&701-24 &fATI Radeon X1900 XTX &8$649", "&710-17 &fATI Radeon X1950 Pro &8$199", "&710-17 &fATI Radeon X1950 XTX &8$449", "", "&6Mainboards", "&705-01 &fASUS M2N32-SLI Deluxe &8$229", "&706-26 &fSupermicro X7DBE &8$429", "&707-27 &fASUS P5B Deluxe &8$219", "&708-15 &fSupermicro H8DMR-82 &8$449", "", "&6Memory", "&701-01 &fCorsair XMS2 2GB DDR2-800 &8$250", "&701-01 &fKingston ValueRAM 2GB DDR2 &8$200", "&708-15 &fKingston 2GB DDR2-667 ECC Registered &8$243", "", "&6Storage", "&701-01 &fWestern Digital Raptor X 150GB &8$204", "&704-01 &fSeagate Barracuda 7200.10 750GB &8$559", "&707-01 &fSeagate Cheetah 15K.5 300GB &8$326", "&708-01 &fWestern Digital Caviar SE16 500GB &8$209", "&711-01 &fSeagate Barracuda 7200.10 500GB &8$200", "", "&6Power supplies", "&706-01 &fSeasonic S12-600 &8$47", "&710-01 &fCorsair HX620W &8$179"]
+	quest.3F9B6312C5349B51.quest_subtitle: "38 releases"
+	quest.3F9B6312C5349B51.title: "2006"
+	quest.40344BD84A06E261.quest_desc: ["&6Intel CPUs", "&705-31 &fIntel Core i7-6950X Extreme Edition &8$1,723", "", "&6Server CPUs", "&703-31 &fIntel Xeon E5-2680 v4 &8$1,745", "&703-31 &fIntel Xeon E5-2699 v4 &8$4,115", "", "&6NVIDIA graphics cards", "&705-27 &fNVIDIA GeForce GTX 1080 &8$599", "&706-10 &fNVIDIA GeForce GTX 1070 &8$379", "&707-19 &fNVIDIA GeForce GTX 1060 6GB &8$249", "&708-02 &fNVIDIA TITAN X (Pascal) &8$1,199", "&710-25 &fNVIDIA GeForce GTX 1050 Ti &8$139", "", "&6Radeon & Arc graphics cards", "&706-29 &fAMD Radeon RX 480 8GB &8$239", "&708-04 &fAMD Radeon RX 470 &8$179", "", "&6Data center accelerators", "&706-20 &fNVIDIA Tesla P100 &8$5,699", "", "&6Storage", "&711-15 &fSamsung 960 EVO 1TB NVMe &8$480", "", "&6Power supplies", "&710-01 &fSeasonic PRIME Titanium 850 &8$229", "", "&6Network cables & switches", "&703-01 &fArista 7060CX-32S &8$32,000", "&706-01 &fCAT8 Data Cable &8$4.00"]
+	quest.40344BD84A06E261.quest_subtitle: "15 releases"
+	quest.40344BD84A06E261.title: "2016"
+	quest.40458F4AE9C855C1.quest_desc: ["Hopper: the most wanted chip of the AI era.", "", "&7Own one to complete this milestone."]
+	quest.40458F4AE9C855C1.quest_subtitle: "2023-03-21 · $30,000"
+	quest.40458F4AE9C855C1.title: "NVIDIA H100 SXM"
+	quest.4073CC2600B362D7.quest_desc: ["&6Intel CPUs", "&708-24 &fIntel Celeron 300A &8$149", "&708-24 &fIntel Celeron 333 &8$192", "&708-24 &fIntel Pentium II 450 &8$669", "", "&6AMD CPUs", "&711-16 &fAMD K6-2 400 &8$283", "", "&6Server CPUs", "&710-06 &fIntel Pentium II Xeon 450 &8$824", "", "&6Mainboards", "&704-15 &fASUS P2B &8$149", "&706-01 &fASUS P5A &8$129", "&710-06 &fSupermicro S2DGE &8$499", "", "&6Memory", "&701-01 &fKingston 32MB EDO SIMM &8$46", "&708-01 &fKingston 32MB PC66 SDRAM &8$33", "", "&6Storage", "&710-02 &fSamsung 6GB IDE Hard Drive &8$159", "", "&6Power supplies", "&701-01 &fSeasonic 250W ATX &8$16", "&706-01 &fAntec 300W ATX &8$20"]
+	quest.4073CC2600B362D7.quest_subtitle: "13 releases"
+	quest.4073CC2600B362D7.title: "1998"
+	quest.41E4AA582A74A4C1.quest_desc: ["NetBurst: Intel bets on clock speed.", "", "&7Own one to complete this milestone."]
+	quest.41E4AA582A74A4C1.quest_subtitle: "2000-11-20 · $819"
+	quest.41E4AA582A74A4C1.title: "Intel Pentium 4 1.5 GHz (Willamette)"
+	quest.42120200EA0F0FD8.quest_desc: ["The first twisted-pair standard for 10 Mbit/s Ethernet. Slow, but it gets every early server room online.", "", "&7Own one to complete this milestone."]
+	quest.42120200EA0F0FD8.quest_subtitle: "1991-07-01 · $0.30"
+	quest.42120200EA0F0FD8.title: "CAT3 Data Cable"
+	quest.42AE3FA91590B430.quest_desc: ["&6Network cables & switches", "&703-01 &f3Com SuperStack II Hub 10 &8$395"]
+	quest.42AE3FA91590B430.quest_subtitle: "1 releases"
+	quest.42AE3FA91590B430.title: "1993"
+	quest.42EE33AD97D74E67.quest_desc: ["&6Network cables & switches", "&706-01 &fCisco Catalyst 2924-XL &8$2,495"]
+	quest.42EE33AD97D74E67.quest_subtitle: "1 releases"
+	quest.42EE33AD97D74E67.title: "1997"
+	quest.436A4DEBF0248447.quest_desc: ["The first 64-bit x86 desktop processor.", "", "&7Own one to complete this milestone."]
+	quest.436A4DEBF0248447.quest_subtitle: "2003-09-23 · $417"
+	quest.436A4DEBF0248447.title: "AMD Athlon 64 3200+ (Socket 754)"
+	quest.4398E38A934B4C80.quest_desc: ["&6Intel CPUs", "&702-21 &fIntel Pentium 4 640 &8$273", "&705-26 &fIntel Pentium D 820 &8$241", "&705-26 &fIntel Pentium D 840 &8$530", "&709-01 &fIntel Pentium 4 524 &8$161", "&712-01 &fIntel Pentium D 805 &8$143", "", "&6AMD CPUs", "&702-15 &fAMD Sempron 3000+ &8$117", "&704-04 &fAMD Athlon 64 3500+ &8$272", "&705-31 &fAMD Athlon 64 X2 3800+ &8$354", "&705-31 &fAMD Athlon 64 X2 4400+ &8$581", "&708-01 &fAMD Sempron 3400+ &8$117", "&710-01 &fAMD Sempron 3500+ &8$117", "", "&6Server CPUs", "&702-14 &fAMD Opteron 252 &8$851", "&705-01 &fAMD Opteron 275 &8$1,299", "&710-10 &fIntel Xeon 2.8 GHz (Paxville DP) &8$1,043", "", "&6NVIDIA graphics cards", "&706-22 &fNVIDIA GeForce 7800 GTX &8$599", "", "&6Radeon & Arc graphics cards", "&710-05 &fATI Radeon X1300 Pro &8$149", "&710-05 &fATI Radeon X1800 XT &8$549", "&710-10 &fATI Radeon X1600 XT &8$249", "", "&6Mainboards", "&703-01 &fTyan Thunder K8WE S2895 &8$499", "", "&6Storage", "&706-01 &fWestern Digital Caviar SE 250GB &8$150", "&710-31 &fSeagate Barracuda 7200.8 400GB &8$249", "", "&6Power supplies", "&701-01 &fSeasonic S12-430 &8$31", "&706-01 &fSeasonic S12-500 &8$38"]
+	quest.4398E38A934B4C80.quest_subtitle: "23 releases"
+	quest.4398E38A934B4C80.title: "2005"
+	quest.45FB5863B0543575.quest_desc: ["Every cable also has its &freal maximum length&r:", "&7CAT3/5/5e/6a: &f100 blocks   &7CAT6 (10G): &f55   &7CAT8: &f30", "&7OM3: &f300   &7OM4: &f150   &7OS2: &f10,000", "", "A &frun&r is a stretch of cable between switches. If it is longer than its cable's reach, it falls back to &ca tenth&r of its speed.", "Without a switch the weakest cable limits the whole network."]
+	quest.45FB5863B0543575.title: "Speed and reach"
+	quest.47F93882E8F8E76A.quest_desc: ["19 graphics cards on one mainboard.", "", "&7Own one to complete this milestone."]
+	quest.47F93882E8F8E76A.quest_subtitle: "2017-11-01 · $180"
+	quest.47F93882E8F8E76A.title: "ASUS B250 Mining Expert"
+	quest.49EB9271DC3813E2.quest_desc: ["Ryzen: AMD is back.", "", "&7Own one to complete this milestone."]
+	quest.49EB9271DC3813E2.quest_subtitle: "2017-03-02 · $499"
+	quest.49EB9271DC3813E2.title: "AMD Ryzen 7 1800X"
+	quest.4A597BCCFC30C676.quest_desc: ["64 cores per socket.", "", "&7Own one to complete this milestone."]
+	quest.4A597BCCFC30C676.quest_subtitle: "2019-08-07 · $6,950"
+	quest.4A597BCCFC30C676.title: "AMD EPYC 7742"
+	quest.4A839A17D4A20535.quest_desc: ["&6Intel CPUs", "&703-31 &fIntel Celeron 2.4 GHz &8$127", "&704-14 &fIntel Pentium 4 3.0 GHz HT &8$417", "&709-24 &fIntel Celeron 2.7 GHz &8$103", "&711-03 &fIntel Pentium 4 Extreme Edition 3.2 GHz &8$925", "", "&6AMD CPUs", "&702-10 &fAMD Athlon XP 2500+ (Barton) &8$309", "&705-13 &fAMD Athlon XP 3200+ &8$464", "&709-23 &fAMD Athlon 64 3200+ (Socket 754) &8$417", "&712-15 &fAMD Athlon 64 3000+ (Socket 754) &8$218", "", "&6Server CPUs", "&704-22 &fAMD Opteron 244 &8$794", "&705-06 &fAMD Athlon MP 2800+ &8$578", "", "&6NVIDIA graphics cards", "&703-06 &fNVIDIA GeForce FX 5200 &8$99", "&703-06 &fNVIDIA GeForce FX 5800 Ultra &8$399", "&705-01 &fNVIDIA GeForce FX 5900 Ultra &8$499", "&707-01 &fNVIDIA Quadro FX 3000 &8$2,295", "", "&6Radeon & Arc graphics cards", "&703-01 &fATI Radeon 9800 Pro &8$399", "&709-09 &fATI Radeon 9800 XT &8$499", "&709-30 &fATI Radeon 9600 XT &8$199", "", "&6Mainboards", "&704-14 &fASUS P4C800 Deluxe &8$229", "&704-22 &fTyan Thunder K8S S2880 &8$459", "&709-23 &fMSI K8T Neo &8$135", "", "&6Memory", "&701-01 &fCorsair XMS 256MB DDR333 &8$32", "&701-01 &fKingston ValueRAM 256MB DDR333 &8$25", "&706-01 &fCorsair XMS 512MB DDR400 &8$70", "&706-01 &fKingston ValueRAM 512MB DDR400 &8$55", "", "&6Storage", "&702-10 &fWestern Digital Raptor 36GB &8$158", "&704-01 &fSeagate Barracuda 7200.7 80GB &8$80", "", "&6Power supplies", "&701-01 &fPC Power & Cooling Turbo-Cool 510 &8$36", "", "&6Network cables & switches", "&704-01 &fCisco Catalyst 3750G-24TS &8$7,995"]
+	quest.4A839A17D4A20535.quest_subtitle: "28 releases"
+	quest.4A839A17D4A20535.title: "2003"
+	quest.4BD7266AA216CF2F.quest_desc: ["Ada Lovelace: the fastest graphics card of its time.", "", "&7Own one to complete this milestone."]
+	quest.4BD7266AA216CF2F.quest_subtitle: "2022-10-12 · $1,599"
+	quest.4BD7266AA216CF2F.title: "NVIDIA GeForce RTX 4090"
+	quest.51E0995C43821E6A.quest_desc: ["16 cores on a desktop socket.", "", "&7Own one to complete this milestone."]
+	quest.51E0995C43821E6A.quest_subtitle: "2019-11-25 · $749"
+	quest.51E0995C43821E6A.title: "AMD Ryzen 9 3950X"
+	quest.51FD6FAC5D1BB4F8.quest_desc: ["A Hosting Rack rents out its servers: as &fdedicated servers&r, &fshared hosting&r, &fVPS&r or &fcolocation&r.", "Shared hosting, VPS and colocation win customers over time."]
+	quest.51FD6FAC5D1BB4F8.title: "Hosting racks"
+	quest.5349E20328574E6F.quest_desc: ["EPYC: 32 cores per socket.", "", "&7Own one to complete this milestone."]
+	quest.5349E20328574E6F.quest_subtitle: "2017-06-29 · $4,200"
+	quest.5349E20328574E6F.title: "AMD EPYC 7601"
+	quest.539FFFB7F44EC076.quest_desc: ["Every real part appears in the Shop on its real release date, at its real launch price.", "Data Center announces each new part in chat: &b\"New in the Shop\"&r.", "", "The tabs are called &fAMD&r, &fIntel&r, &fNVIDIA&r and &fRadeon/Arc&r. Network cables, switches and the Hosting Manager are under &fInfrastructure&r.", "", "The Shop window is wider than in Data Center, so long names fit. Adjust it under &7Config → Client → Shop → Extra Width&r."]
+	quest.539FFFB7F44EC076.title: "Real parts in the Shop"
+	quest.53B402C20124A7D6.quest_desc: ["Six cores on the desktop.", "", "&7Own one to complete this milestone."]
+	quest.53B402C20124A7D6.quest_subtitle: "2010-04-27 · $295"
+	quest.53B402C20124A7D6.title: "AMD Phenom II X6 1090T Black Edition"
+	quest.53E6B639D4E53F6B.quest_desc: ["Real-time ray tracing arrives.", "", "&7Own one to complete this milestone."]
+	quest.53E6B639D4E53F6B.quest_subtitle: "2018-09-27 · $999"
+	quest.53E6B639D4E53F6B.title: "NVIDIA GeForce RTX 2080 Ti"
+	quest.55730BE19929791E.quest_desc: ["&6Intel CPUs", "&703-30 &fIntel Core i5-11600K &8$262", "&703-30 &fIntel Core i9-11900K &8$539", "&711-04 &fIntel Core i5-12600K &8$289", "&711-04 &fIntel Core i7-12700K &8$409", "&711-04 &fIntel Core i9-12900K &8$589", "", "&6Server CPUs", "&703-15 &fAMD EPYC 7543 &8$3,761", "&703-15 &fAMD EPYC 7763 &8$7,890", "&704-06 &fIntel Xeon Gold 6338 &8$2,612", "&704-06 &fIntel Xeon Platinum 8380 &8$8,099", "", "&6NVIDIA graphics cards", "&702-25 &fNVIDIA GeForce RTX 3060 &8$329", "&706-03 &fNVIDIA GeForce RTX 3080 Ti &8$1,199", "&706-10 &fNVIDIA GeForce RTX 3070 Ti &8$599", "", "&6Radeon & Arc graphics cards", "&703-18 &fAMD Radeon RX 6700 XT &8$479", "&708-11 &fAMD Radeon RX 6600 XT &8$379", "&710-13 &fAMD Radeon RX 6600 &8$329", "", "&6Data center accelerators", "&704-12 &fNVIDIA A10 &8$3,200", "&704-12 &fNVIDIA A30 &8$5,000", "&711-08 &fAMD Instinct MI250X &8$12,000", "", "&6Mining cards", "&703-01 &fNVIDIA CMP 30HX &8$724", "&703-01 &fNVIDIA CMP 40HX &8$999", "&704-01 &fNVIDIA CMP 50HX &8$1,249", "&704-01 &fNVIDIA CMP 90HX &8$2,399", "", "&6Mainboards", "&704-06 &fSupermicro X12DPi-NT6 &8$799", "&711-04 &fASUS ROG Strix Z690-E Gaming WiFi &8$469", "", "&6Mining boards", "&707-18 &fASRock H510 Pro BTC+ &8$179", "", "&6Memory", "&711-04 &fCorsair Vengeance 16GB DDR5 &8$187", "&711-04 &fG.Skill Trident Z5 32GB DDR5 &8$350", "&711-04 &fKingston FURY Beast 16GB DDR5 &8$150", "&711-04 &fKingston FURY Beast 32GB DDR5 &8$280", "", "&6Storage", "&701-01 &fSamsung 980 PRO 2TB NVMe &8$330", "", "&6Power supplies", "&705-01 &fCorsair HX1500i &8$399", "&709-01 &fSeasonic PRIME TX-1600 &8$549"]
+	quest.55730BE19929791E.quest_subtitle: "32 releases"
+	quest.55730BE19929791E.title: "2021"
+	quest.5624ABA45C9D2568.quest_desc: ["The card of the first GPU mining wave.", "", "&7Own one to complete this milestone."]
+	quest.5624ABA45C9D2568.quest_subtitle: "2009-09-22 · $379"
+	quest.5624ABA45C9D2568.title: "ATI Radeon HD 5870"
+	quest.568500AA1976C133.quest_desc: ["100 Gbit/s over multimode fibre.", "", "&7Own one to complete this milestone."]
+	quest.568500AA1976C133.quest_subtitle: "2009-08-01 · $3.00"
+	quest.568500AA1976C133.title: "OM4 Fibre Cable (Multimode)"
+	quest.584A0C36EEE44B87.quest_desc: ["The first graphics card with programmable shaders.", "", "&7Own one to complete this milestone."]
+	quest.584A0C36EEE44B87.quest_subtitle: "2001-02-27 · $449"
+	quest.584A0C36EEE44B87.title: "NVIDIA GeForce3"
+	quest.59A9AB0F2D5A399B.quest_desc: ["&6Intel CPUs", "&709-08 &fIntel Core i5-750 &8$196", "&709-08 &fIntel Core i7-860 &8$284", "", "&6AMD CPUs", "&701-08 &fAMD Phenom II X4 940 Black Edition &8$275", "&704-23 &fAMD Phenom II X4 955 Black Edition &8$245", "&706-01 &fAMD Athlon II X2 250 &8$87", "&709-01 &fAMD Athlon II X4 630 &8$122", "&709-01 &fAMD Phenom II X4 810 &8$175", "&710-01 &fAMD Phenom II X3 720 Black Edition &8$145", "&711-01 &fAMD Athlon II X2 240e &8$77", "", "&6Server CPUs", "&703-30 &fIntel Xeon X5570 &8$1,386", "", "&6NVIDIA graphics cards", "&701-08 &fNVIDIA GeForce GTX 295 &8$499", "&701-15 &fNVIDIA GeForce GTX 285 &8$399", "&703-03 &fNVIDIA GeForce GTS 250 &8$149", "", "&6Radeon & Arc graphics cards", "&709-22 &fATI Radeon HD 5870 &8$379", "&709-30 &fATI Radeon HD 5850 &8$259", "&710-13 &fATI Radeon HD 5770 &8$159", "", "&6Mainboards", "&703-01 &fASUS M4A79T Deluxe &8$199", "&703-30 &fSupermicro X8DTi-F &8$399", "&709-08 &fASUS P7P55D Deluxe &8$199", "", "&6Memory", "&712-07 &fG.Skill Ripjaws 8GB DDR3 &8$250", "&712-07 &fKingston ValueRAM 8GB DDR3 &8$200", "", "&6Storage", "&701-27 &fWestern Digital Caviar Green 2TB &8$299", "", "&6Power supplies", "&708-01 &fSeasonic X-650 Gold &8$159", "&710-01 &fCorsair AX850 &8$84", "&710-01 &fSeasonic Platinum-760 &8$74", "", "&6Network cables & switches", "&708-01 &fOM4 Fibre Cable (Multimode) &8$3.00"]
+	quest.59A9AB0F2D5A399B.quest_subtitle: "26 releases"
+	quest.59A9AB0F2D5A399B.title: "2009"
+	quest.5BE03A7742292D92.quest_desc: ["&6Intel CPUs", "&701-04 &fIntel Core i3-12100F &8$97", "&701-04 &fIntel Core i5-12400 &8$192", "&704-05 &fIntel Core i9-12900KS &8$739", "&710-20 &fIntel Core i5-13600K &8$319", "&710-20 &fIntel Core i7-13700K &8$409", "&710-20 &fIntel Core i9-13900K &8$589", "", "&6AMD CPUs", "&704-04 &fAMD Ryzen 5 5500 &8$159", "&704-04 &fAMD Ryzen 5 5600 &8$199", "&704-04 &fAMD Ryzen 7 5700X &8$299", "&704-20 &fAMD Ryzen 7 5800X3D &8$449", "&709-27 &fAMD Ryzen 5 7600X &8$299", "&709-27 &fAMD Ryzen 7 7700X &8$399", "&709-27 &fAMD Ryzen 9 7900X &8$549", "&709-27 &fAMD Ryzen 9 7950X &8$699", "", "&6Server CPUs", "&711-10 &fAMD EPYC 9354 &8$3,420", "&711-10 &fAMD EPYC 9474F &8$6,780", "&711-10 &fAMD EPYC 9654 &8$11,805", "", "&6NVIDIA graphics cards", "&701-27 &fNVIDIA GeForce RTX 3050 &8$249", "&703-29 &fNVIDIA GeForce RTX 3090 Ti &8$1,999", "&710-12 &fNVIDIA GeForce RTX 4090 &8$1,599", "&711-16 &fNVIDIA GeForce RTX 4080 &8$1,199", "&712-03 &fNVIDIA RTX 6000 Ada Generation &8$6,800", "", "&6Radeon & Arc graphics cards", "&701-19 &fAMD Radeon RX 6500 XT &8$199", "&705-10 &fAMD Radeon RX 6650 XT &8$399", "&705-10 &fAMD Radeon RX 6750 XT &8$549", "&705-10 &fAMD Radeon RX 6950 XT &8$1,099", "&710-12 &fIntel Arc A750 &8$289", "&710-12 &fIntel Arc A770 16GB &8$349", "&712-13 &fAMD Radeon RX 7900 XT &8$899", "&712-13 &fAMD Radeon RX 7900 XTX &8$999", "", "&6Data center accelerators", "&709-20 &fNVIDIA H100 PCIe &8$25,000", "", "&6Mining cards", "&702-01 &fNVIDIA CMP 170HX &8$4,435", "", "&6Mainboards", "&709-27 &fASUS ROG Crosshair X670E Hero &8$699", "&711-10 &fSupermicro H13DSH &8$1,099", "", "&6Memory", "&706-01 &fCorsair Vengeance 64GB DDR5 &8$562", "&706-01 &fKingston FURY Beast 64GB DDR5 &8$450", "&711-10 &fSamsung 128GB DDR5 ECC RDIMM &8$1,499", "&711-10 &fSamsung 32GB DDR5 ECC RDIMM &8$249", "", "&6Storage", "&705-10 &fWestern Digital Red Pro 22TB &8$600", "&710-01 &fSamsung 990 PRO 2TB NVMe &8$310", "", "&6Power supplies", "&711-01 &fbe quiet! Dark Power Pro 13 1600W &8$469", "", "&6Fans", "&702-01 &fbe quiet! Silent Wings 4 120mm &8$23"]
+	quest.5BE03A7742292D92.quest_subtitle: "42 releases"
+	quest.5BE03A7742292D92.title: "2022"
+	quest.5CEF8CB689157E53.quest_desc: ["The card of the Litecoin mining rush.", "", "&7Own one to complete this milestone."]
+	quest.5CEF8CB689157E53.quest_subtitle: "2013-10-24 · $549"
+	quest.5CEF8CB689157E53.title: "AMD Radeon R9 290X"
+	quest.5EF25089D997782E.quest_desc: ["Single-mode fibre at 400 Gbit/s over 10 kilometres.", "", "&7Own one to complete this milestone."]
+	quest.5EF25089D997782E.quest_subtitle: "2017-12-06 · $5.00"
+	quest.5EF25089D997782E.title: "OS2 Fibre Cable (Single-mode)"
+	quest.5FEAE9E9F4164C6C.quest_desc: ["10 Gbit/s over the full 100 metres of copper.", "", "&7Own one to complete this milestone."]
+	quest.5FEAE9E9F4164C6C.quest_subtitle: "2008-02-01 · $1.50"
+	quest.5FEAE9E9F4164C6C.title: "CAT6a Data Cable"
+	quest.5FF0033C8A471521.quest_desc: ["Multimode fibre at 10 Gbit/s over 300 metres.", "", "&7Own one to complete this milestone."]
+	quest.5FF0033C8A471521.quest_subtitle: "2002-06-01 · $2.00"
+	quest.5FF0033C8A471521.title: "OM3 Fibre Cable (Multimode)"
+	quest.611B9DC4ACBF40C0.quest_desc: ["&6Intel CPUs", "&701-03 &fIntel Core i5-13400 &8$221", "&701-03 &fIntel Core i9-13900KS &8$689", "&710-17 &fIntel Core i5-14600K &8$319", "&710-17 &fIntel Core i7-14700K &8$409", "&710-17 &fIntel Core i9-14900K &8$589", "", "&6AMD CPUs", "&701-10 &fAMD Ryzen 5 7600 &8$229", "&701-10 &fAMD Ryzen 7 7700 &8$329", "&701-10 &fAMD Ryzen 9 7900 &8$429", "&702-28 &fAMD Ryzen 9 7900X3D &8$599", "&702-28 &fAMD Ryzen 9 7950X3D &8$699", "&704-06 &fAMD Ryzen 7 7800X3D &8$449", "", "&6Server CPUs", "&701-10 &fIntel Xeon Platinum 8480+ &8$10,710", "&706-13 &fAMD EPYC 9754 &8$11,900", "&712-14 &fIntel Xeon Platinum 8592+ &8$11,600", "", "&6NVIDIA graphics cards", "&701-05 &fNVIDIA GeForce RTX 4070 Ti &8$799", "&704-13 &fNVIDIA GeForce RTX 4070 &8$599", "&705-24 &fNVIDIA GeForce RTX 4060 Ti &8$399", "&706-29 &fNVIDIA GeForce RTX 4060 &8$299", "&707-18 &fNVIDIA GeForce RTX 4060 Ti 16GB &8$499", "", "&6Radeon & Arc graphics cards", "&704-13 &fAMD Radeon PRO W7900 &8$3,999", "&705-25 &fAMD Radeon RX 7600 &8$269", "&709-06 &fAMD Radeon RX 7700 XT &8$449", "&709-06 &fAMD Radeon RX 7800 XT &8$499", "", "&6Data center accelerators", "&703-21 &fNVIDIA H100 SXM &8$30,000", "&703-21 &fNVIDIA L4 &8$2,500", "&708-08 &fNVIDIA L40S &8$7,500", "&712-06 &fAMD Instinct MI300X &8$15,000", "", "&6Mainboards", "&701-10 &fSupermicro X13DEI &8$899", "&705-01 &fASRock Rack B650D4U &8$299", "", "&6Memory", "&701-01 &fG.Skill Trident Z5 128GB DDR5 &8$1,000", "&701-01 &fKingston FURY Beast 128GB DDR5 &8$800", "&701-10 &fSamsung 64GB DDR5 ECC RDIMM &8$449", "&707-01 &fG.Skill Trident Z5 96GB DDR5 &8$329", "&710-01 &fCorsair Dominator Titanium 64GB DDR5 &8$299", "", "&6Storage", "&703-01 &fWD_BLACK SN850X 4TB NVMe &8$400", "&705-30 &fCrucial T700 2TB NVMe &8$340", "", "&6Power supplies", "&702-01 &fCorsair RM1000x SHIFT &8$219"]
+	quest.611B9DC4ACBF40C0.quest_subtitle: "37 releases"
+	quest.611B9DC4ACBF40C0.title: "2023"
+	quest.615E03E0E73336B0.quest_desc: ["The &fRacks&r tab lists every rack with its product, customers, share, income and status.", "", "Click a rack, then change its &fproduct&r with &e◀ ▶&r and its &ffill&r with &e◀ ▶&r - exactly like in the rack's own menu.", "Racks of other players are counted, but not listed."]
+	quest.615E03E0E73336B0.title: "Remote control"
+	quest.6246E45D9CAED7E4.quest_desc: ["Fibre goes much further than copper: &fOM3&r 10 Gbit/s over 300 blocks, &fOM4&r 100 Gbit/s over 150, &fOS2&r 400 Gbit/s over 10,000.", "", "Craft OM3 from glass panes, string and quartz."]
+	quest.6246E45D9CAED7E4.title: "Fibre"
+	quest.628ACC971E2E3354.quest_desc: ["The first x86 processor to reach 1 GHz.", "", "&7Own one to complete this milestone."]
+	quest.628ACC971E2E3354.quest_subtitle: "2000-03-06 · $1,299"
+	quest.628ACC971E2E3354.title: "AMD Athlon 1.0 GHz (Slot A)"
+	quest.65975970F3B826F3.quest_desc: ["40 Gbit/s over copper - but only 30 metres, for the rack row.", "", "&7Own one to complete this milestone."]
+	quest.65975970F3B826F3.quest_subtitle: "2016-06-01 · $4.00"
+	quest.65975970F3B826F3.title: "CAT8 Data Cable"
+	quest.66D65738FE84C14F.quest_desc: ["Alder Lake: performance and efficiency cores together.", "", "&7Own one to complete this milestone."]
+	quest.66D65738FE84C14F.quest_subtitle: "2021-11-04 · $589"
+	quest.66D65738FE84C14F.title: "Intel Core i9-12900K"
+	quest.673FA3F0DDF05D7F.quest_desc: ["&6Intel CPUs", "&701-07 &fIntel Core i3-530 &8$113", "&701-07 &fIntel Core i5-650 &8$176", "&703-16 &fIntel Core i7-980X Extreme Edition &8$999", "", "&6AMD CPUs", "&704-27 &fAMD Phenom II X6 1055T &8$199", "&704-27 &fAMD Phenom II X6 1090T Black Edition &8$295", "&705-11 &fAMD Phenom II X4 965 Black Edition &8$185", "&709-01 &fAMD Phenom II X6 1075T &8$249", "", "&6Server CPUs", "&703-29 &fAMD Opteron 6174 &8$1,165", "", "&6NVIDIA graphics cards", "&703-26 &fNVIDIA GeForce GTX 470 &8$349", "&703-26 &fNVIDIA GeForce GTX 480 &8$499", "&707-12 &fNVIDIA GeForce GTX 460 &8$229", "&711-09 &fNVIDIA GeForce GTX 580 &8$499", "&712-07 &fNVIDIA GeForce GTX 570 &8$349", "", "&6Radeon & Arc graphics cards", "&701-14 &fATI Radeon HD 5670 &8$99", "&710-22 &fAMD Radeon HD 6870 &8$239", "&712-15 &fAMD Radeon HD 6950 &8$299", "&712-15 &fAMD Radeon HD 6970 &8$369", "", "&6Mainboards", "&703-29 &fSupermicro H8DGi-F &8$489", "&704-01 &fEVGA Classified SR-2 &8$649", "", "&6Storage", "&710-19 &fWestern Digital Caviar Green 3TB &8$240", "", "&6Power supplies", "&702-01 &fCorsair AX1200 &8$299"]
+	quest.673FA3F0DDF05D7F.quest_subtitle: "21 releases"
+	quest.673FA3F0DDF05D7F.title: "2010"
+	quest.6884AC19C75BA030.quest_desc: ["400 Gbit/s per port for the AI data centre.", "", "&7Own one to complete this milestone."]
+	quest.6884AC19C75BA030.quest_subtitle: "2020-06-01 · $60,000"
+	quest.6884AC19C75BA030.title: "NVIDIA Spectrum SN4700"
+	quest.688A7FA40995CBF3.quest_desc: ["The management terminal for all your hosting racks. Plug &fany data cable&r into it and run it to the network of your racks.", "", "It shows every rack on that network - and lets you control them from one place."]
+	quest.688A7FA40995CBF3.title: "The Hosting Manager"
+	quest.6952ABADE2D80B40.quest_desc: ["Data-centre switching at 10 Gbit/s per port.", "", "&7Own one to complete this milestone."]
+	quest.6952ABADE2D80B40.quest_subtitle: "2008-04-01 · $30,000"
+	quest.6952ABADE2D80B40.title: "Cisco Nexus 5010"
+	quest.69B2F8FE5E5F32A8.quest_desc: ["A mining card without a display output.", "", "&7Own one to complete this milestone."]
+	quest.69B2F8FE5E5F32A8.quest_subtitle: "2018-03-01 · $499"
+	quest.69B2F8FE5E5F32A8.title: "NVIDIA P102-100"
+	quest.6B6760D560F1EF43.quest_desc: ["192 cores per socket.", "", "&7Own one to complete this milestone."]
+	quest.6B6760D560F1EF43.quest_subtitle: "2024-10-10 · $14,813"
+	quest.6B6760D560F1EF43.title: "AMD EPYC 9965"
+	quest.6BC7EEFC930D0496.quest_desc: ["Gigabit Ethernet over copper. For years the backbone of every server room.", "", "&7Own one to complete this milestone."]
+	quest.6BC7EEFC930D0496.quest_subtitle: "1999-06-01 · $0.60"
+	quest.6BC7EEFC930D0496.title: "CAT5e Data Cable"
+	quest.6C42271D8ED7634B.quest_desc: ["The overlay shows the &fin-game date&r, your &fwallet&r, what your &fcoins&r are worth and the &fprice of every coin&r with its change since yesterday.", "", "Press &eO&r to show or hide it (rebind under &7Controls → Data Center&r).", "Position, size, colours, date format and the list of coins: &7Config → Client → Overlay&r."]
+	quest.6C42271D8ED7634B.title: "The date & prices overlay"
+	quest.6E2F143AC8421054.quest_desc: ["&6Intel CPUs", "&702-26 &fIntel Pentium III 500 &8$696", "&705-17 &fIntel Pentium III 550 &8$700", "&708-02 &fIntel Celeron 500 &8$167", "&710-25 &fIntel Pentium III 733EB &8$776", "&712-20 &fIntel Pentium III 800EB &8$851", "", "&6AMD CPUs", "&702-26 &fAMD K6-2 450 &8$203", "&706-23 &fAMD Athlon 600 (Slot A) &8$699", "&708-30 &fAMD K6-2 500 &8$167", "&711-29 &fAMD Athlon 750 (Slot A) &8$799", "", "&6Server CPUs", "&708-23 &fIntel Pentium III Xeon 550 &8$931", "", "&6Mainboards", "&706-23 &fASUS K7M &8$169", "&706-28 &fABIT BP6 &8$159", "", "&6Memory", "&703-04 &fCorsair 64MB PC100 SDRAM &8$80", "&707-02 &fKingston ValueRAM 128MB PC100 &8$100", "", "&6Storage", "&710-02 &fSeagate Medalist 17.2GB &8$175", "", "&6Network cables & switches", "&706-01 &fCAT5e Data Cable &8$0.60"]
+	quest.6E2F143AC8421054.quest_subtitle: "16 releases"
+	quest.6E2F143AC8421054.title: "1999"
+	quest.7149BBDFE8B2FA8E.quest_desc: ["G80 and CUDA: graphics cards start to compute.", "", "&7Own one to complete this milestone."]
+	quest.7149BBDFE8B2FA8E.quest_subtitle: "2006-11-08 · $449"
+	quest.7149BBDFE8B2FA8E.title: "NVIDIA GeForce 8800 GTS 640MB"
+	quest.714D03575C5765F2.quest_desc: ["The accelerator behind the Titan supercomputer.", "", "&7Own one to complete this milestone."]
+	quest.714D03575C5765F2.quest_subtitle: "2012-11-12 · $4,500"
+	quest.714D03575C5765F2.title: "NVIDIA Tesla K20X"
+	quest.73AA53EC816DAF82.quest_desc: ["The add-on's cables carry compute through Data Center's network. They connect to racks, machines and Data Center's own cables.", "", "Every cable has the &freal speed&r of its standard: &fCAT5e&r = 1 Gbit/s = 250,000 compute per tick.", "Get them in the Shop or craft them: CAT3 from copper and string."]
+	quest.73AA53EC816DAF82.title: "Your first data cable"
+	quest.761C6441E915056E.quest_desc: ["The add-on brings real hardware, a real network and a management terminal to Data Center:", "", "&e• &f711 real computer parts&r from 1998 to today, each at its real release date and launch price.", "&e• &fReal network cables and switches&r, from CAT3 to single-mode fibre.", "&e• &fThe Hosting Manager&r: customers, income and control of all your hosting racks.", "&e• &fAn overlay&r with the date, your wallet and crypto prices.", "", "This guide explains everything step by step. The &6Release Calendar&r tab shows what comes out when."]
+	quest.761C6441E915056E.title: "Welcome to the Data Center AddOn"
+	quest.7722659C8D94A542.quest_desc: ["192 GB of HBM3 on one accelerator.", "", "&7Own one to complete this milestone."]
+	quest.7722659C8D94A542.quest_subtitle: "2023-12-06 · $15,000"
+	quest.7722659C8D94A542.title: "AMD Instinct MI300X"
+	quest.77CDBC42DEC6C3E8.quest_desc: ["24 GB of GDDR6X for gamers and miners alike.", "", "&7Own one to complete this milestone."]
+	quest.77CDBC42DEC6C3E8.quest_subtitle: "2020-09-24 · $1,499"
+	quest.77CDBC42DEC6C3E8.title: "NVIDIA GeForce RTX 3090"
+	quest.77E06D064B1A7D26.quest_desc: ["The first Tesla: a graphics card without a display output, made only for compute.", "", "&7Own one to complete this milestone."]
+	quest.77E06D064B1A7D26.quest_subtitle: "2007-06-01 · $2,700"
+	quest.77E06D064B1A7D26.title: "NVIDIA Tesla C870"
+	quest.780A178013C241D7.quest_desc: ["GCN arrives - a mining favourite for years.", "", "&7Own one to complete this milestone."]
+	quest.780A178013C241D7.quest_subtitle: "2012-01-09 · $549"
+	quest.780A178013C241D7.title: "AMD Radeon HD 7970"
+	quest.794582DCBC73BDA0.quest_desc: ["Tensor cores: the era of AI accelerators begins.", "", "&7Own one to complete this milestone."]
+	quest.794582DCBC73BDA0.quest_subtitle: "2017-06-21 · $8,999"
+	quest.794582DCBC73BDA0.title: "NVIDIA Tesla V100"
+	quest.7EF9516D5BFF7B87.quest_desc: ["A hub, not a switch: every port shares the same 10 Mbit/s.", "", "&7Own one to complete this milestone."]
+	quest.7EF9516D5BFF7B87.quest_subtitle: "1993-03-01 · $395"
+	quest.7EF9516D5BFF7B87.title: "3Com SuperStack II Hub 10"
+	quest.7F482343E0FC1999.quest_desc: ["The legendary overclocker: a cheap Celeron that ran at 450 MHz for anyone who dared.", "", "&7Own one to complete this milestone."]
+	quest.7F482343E0FC1999.quest_subtitle: "1998-08-24 · $149"
+	quest.7F482343E0FC1999.title: "Intel Celeron 300A"
+}

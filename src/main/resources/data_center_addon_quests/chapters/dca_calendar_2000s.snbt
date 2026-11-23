@@ -1,0 +1,708 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_calendar_2000s"
+	group: "4E4EF0C6C634F03F"
+	icon: {
+		components: {
+			"datacenter:part_id": "data_center_addon:amd_athlon_1000"
+		}
+		count: 1
+		id: "datacenter:part"
+	}
+	id: "24C9EFF729B260AB"
+	images: [ ]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_1000"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "30B23C526A3C49AD"
+			shape: "gear"
+			size: 1.5d
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["30B23C526A3C49AD"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_1000"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "628ACC971E2E3354"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "54849F67DB70CEC7"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_athlon_1000"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: -0.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["30B23C526A3C49AD"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_pentium_4_1500"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "41E4AA582A74A4C1"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "69CC6E75443C4A0E"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_pentium_4_1500"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 0.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["30B23C526A3C49AD"]
+			icon: {
+				id: "data_center_addon:switch_cisco_catalyst_2950"
+			}
+			id: "22E69348E38AF678"
+			shape: "gear"
+			size: 1.5d
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["22E69348E38AF678"]
+			icon: {
+				id: "data_center_addon:switch_cisco_catalyst_2950"
+			}
+			id: "2F1587D0AC3A667A"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "27ACA32D7C3CD673"
+					item: {
+						count: 1
+						id: "data_center_addon:switch_cisco_catalyst_2950"
+					}
+					type: "item"
+				}
+			]
+			x: 2.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["22E69348E38AF678"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce3"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "584A0C36EEE44B87"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "785A12302C80A877"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_geforce3"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 3.0d
+			y: 2.35d
+		}
+		{
+			dependencies: ["22E69348E38AF678"]
+			icon: {
+				id: "data_center_addon:cable_om3"
+			}
+			id: "38EBFE8773B9E646"
+			shape: "gear"
+			size: 1.5d
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["38EBFE8773B9E646"]
+			icon: {
+				id: "data_center_addon:cable_om3"
+			}
+			id: "5FF0033C8A471521"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "22345A24BCDCB1B5"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_om3"
+					}
+					type: "item"
+				}
+			]
+			x: 4.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["38EBFE8773B9E646"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:ati_radeon_9700_pro"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "2D290FD62B02B1C1"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "235787ABD4911A52"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:ati_radeon_9700_pro"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 5.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["38EBFE8773B9E646"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_pentium_4_3060_ht"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3BE9FD6EA2B57957"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3F87218167A78940"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_pentium_4_3060_ht"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 4.5d
+			y: 3.0d
+		}
+		{
+			dependencies: ["38EBFE8773B9E646"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_opteron_244"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "4A839A17D4A20535"
+			shape: "gear"
+			size: 1.5d
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["4A839A17D4A20535"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_opteron_244"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "2C1C9A94C607E558"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3C4426F455B45607"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_opteron_244"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 7.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["4A839A17D4A20535"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_64_3200"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "436A4DEBF0248447"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "2EC08F2147468E0F"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_athlon_64_3200"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 8.0d
+			y: 2.35d
+		}
+		{
+			dependencies: ["4A839A17D4A20535"]
+			icon: {
+				id: "minecraft:paper"
+			}
+			id: "3274CED72F1532E3"
+			shape: "gear"
+			size: 1.5d
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3274CED72F1532E3"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_64_x2_3800"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "4398E38A934B4C80"
+			shape: "gear"
+			size: 1.5d
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["4398E38A934B4C80"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_athlon_64_x2_3800"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "35B95E1F8ACCDE37"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3A977381C063C292"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_athlon_64_x2_3800"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 12.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["4398E38A934B4C80"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_2_duo_e6600"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3F9B6312C5349B51"
+			shape: "gear"
+			size: 1.5d
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3F9B6312C5349B51"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_2_duo_e6600"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3E220801F8726332"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "393139322DFE271D"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_core_2_duo_e6600"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 14.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["3F9B6312C5349B51"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_2_extreme_qx6700"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "20A92B1FC77EDF7F"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "5A2AF99409D62506"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_core_2_extreme_qx6700"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 15.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["3F9B6312C5349B51"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce_8800_gts_640"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "7149BBDFE8B2FA8E"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "2208EEB3A2DDCF4F"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_geforce_8800_gts_640"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 14.5d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3F9B6312C5349B51"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_2_quad_q6600"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3D3F27BBD4AAE282"
+			shape: "gear"
+			size: 1.5d
+			x: 17.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3D3F27BBD4AAE282"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_2_quad_q6600"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "33AD396D90657275"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "48145A05E7290C9D"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_core_2_quad_q6600"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 17.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["3D3F27BBD4AAE282"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_tesla_c870"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "77E06D064B1A7D26"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "70D526F72FA09637"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_tesla_c870"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 18.0d
+			y: 2.35d
+		}
+		{
+			dependencies: ["3D3F27BBD4AAE282"]
+			icon: {
+				id: "data_center_addon:cable_cat6a"
+			}
+			id: "3D41062D9269C014"
+			shape: "gear"
+			size: 1.5d
+			x: 20.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3D41062D9269C014"]
+			icon: {
+				id: "data_center_addon:cable_cat6a"
+			}
+			id: "5FEAE9E9F4164C6C"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "47E00D91AD7AA48C"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_cat6a"
+					}
+					type: "item"
+				}
+			]
+			x: 19.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["3D41062D9269C014"]
+			icon: {
+				id: "data_center_addon:switch_cisco_nexus_5010"
+			}
+			id: "6952ABADE2D80B40"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "6B1AEDF1B8BB957B"
+					item: {
+						count: 1
+						id: "data_center_addon:switch_cisco_nexus_5010"
+					}
+					type: "item"
+				}
+			]
+			x: 20.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["3D41062D9269C014"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_i7_920"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "34982183F1B841BE"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "277734BEA969E90E"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_core_i7_920"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 19.5d
+			y: 3.0d
+		}
+		{
+			dependencies: ["3D41062D9269C014"]
+			icon: {
+				id: "data_center_addon:cable_om4"
+			}
+			id: "59A9AB0F2D5A399B"
+			shape: "gear"
+			size: 1.5d
+			x: 22.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["59A9AB0F2D5A399B"]
+			icon: {
+				id: "data_center_addon:cable_om4"
+			}
+			id: "568500AA1976C133"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "457DA02ABD41DF9F"
+					item: {
+						count: 1
+						id: "data_center_addon:cable_om4"
+					}
+					type: "item"
+				}
+			]
+			x: 22.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["59A9AB0F2D5A399B"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:ati_radeon_hd_5870"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "5624ABA45C9D2568"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "77AED0179B2D9CEB"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:ati_radeon_hd_5870"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 23.0d
+			y: 2.35d
+		}
+	]
+}

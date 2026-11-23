@@ -1,0 +1,452 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_calendar_2020s"
+	group: "4E4EF0C6C634F03F"
+	icon: {
+		id: "data_center_addon:switch_nvidia_spectrum_sn4700"
+	}
+	id: "2920980B9EF5D35D"
+	images: [ ]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "data_center_addon:switch_nvidia_spectrum_sn4700"
+			}
+			id: "2B791A61B2770EB6"
+			shape: "gear"
+			size: 1.5d
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2B791A61B2770EB6"]
+			icon: {
+				id: "data_center_addon:switch_nvidia_spectrum_sn4700"
+			}
+			id: "6884AC19C75BA030"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "49BF72FCFD727417"
+					item: {
+						count: 1
+						id: "data_center_addon:switch_nvidia_spectrum_sn4700"
+					}
+					type: "item"
+				}
+			]
+			x: -0.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["2B791A61B2770EB6"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_a100"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3BE1E52F2F0D4228"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "61C79B118C981742"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_a100"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 0.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["2B791A61B2770EB6"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_3090"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "77CDBC42DEC6C3E8"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "2EE8141249A97437"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_3090"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: -0.5d
+			y: 3.0d
+		}
+		{
+			dependencies: ["2B791A61B2770EB6"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_cmp_90hx"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "55730BE19929791E"
+			shape: "gear"
+			size: 1.5d
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["55730BE19929791E"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_cmp_90hx"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3D99EC4182615EBF"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "6974777FAB389D79"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_cmp_90hx"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 2.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["55730BE19929791E"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:intel_core_i9_12900k"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "66D65738FE84C14F"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "695D137C252B5389"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:intel_core_i9_12900k"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 3.0d
+			y: 2.35d
+		}
+		{
+			dependencies: ["55730BE19929791E"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_ryzen_7_5800x3d"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "5BE03A7742292D92"
+			shape: "gear"
+			size: 1.5d
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5BE03A7742292D92"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_ryzen_7_5800x3d"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "29D2D9172C141BD2"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "4C4D082C3456DD61"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_ryzen_7_5800x3d"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 4.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["5BE03A7742292D92"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_4090"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "4BD7266AA216CF2F"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "254E7372A9FCFE56"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_4090"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 5.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["5BE03A7742292D92"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_h100_sxm"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "611B9DC4ACBF40C0"
+			shape: "gear"
+			size: 1.5d
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["611B9DC4ACBF40C0"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_h100_sxm"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "40458F4AE9C855C1"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "4F331C6ED5E787DF"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_h100_sxm"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 7.0d
+			y: 1.75d
+		}
+		{
+			dependencies: ["611B9DC4ACBF40C0"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_instinct_mi300x"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "7722659C8D94A542"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "47526D63C0349DE3"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_instinct_mi300x"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 8.0d
+			y: 2.35d
+		}
+		{
+			dependencies: ["611B9DC4ACBF40C0"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_epyc_9965"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3A7BF80480D7C914"
+			shape: "gear"
+			size: 1.5d
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3A7BF80480D7C914"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:amd_epyc_9965"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "6B6760D560F1EF43"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3CE0BA3621DA6332"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:amd_epyc_9965"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 9.5d
+			y: 1.75d
+		}
+		{
+			dependencies: ["3A7BF80480D7C914"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_b200"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "268436823971DEA1"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "4AF419CA03192991"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_b200"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 10.5d
+			y: 2.35d
+		}
+		{
+			dependencies: ["3A7BF80480D7C914"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_5090"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "3B4A7F55E3589045"
+			shape: "gear"
+			size: 1.5d
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["3B4A7F55E3589045"]
+			icon: {
+				components: {
+					"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_5090"
+				}
+				count: 1
+				id: "datacenter:part"
+			}
+			id: "2A3E577058405A40"
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "383D10E75B718086"
+					item: {
+						components: {
+							"datacenter:part_id": "data_center_addon:nvidia_geforce_rtx_5090"
+						}
+						count: 1
+						id: "datacenter:part"
+					}
+					type: "item"
+					match_components: "fuzzy"
+				}
+			]
+			x: 12.5d
+			y: 1.75d
+		}
+	]
+}

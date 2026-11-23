@@ -1,0 +1,239 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "dca_guide_network"
+	group: "51C4EDBC1DD75764"
+	icon: {
+		id: "data_center_addon:cable_cat5e"
+	}
+	id: "23A15EEFB45AA39A"
+	images: [ ]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "data_center_addon:cable_cat5e"
+			}
+			id: "73AA53EC816DAF82"
+			rewards: [
+				{
+					id: "41713699F9EADB34"
+					item: {
+						components: {
+							"datacenter:payment_cents": 2000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [
+				{
+					consume_items: false
+					id: "7ECC9B6CBDBD06EF"
+					item: {
+						count: 8
+						id: "data_center_addon:cable_cat5e"
+					}
+					type: "item"
+				}
+			]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["73AA53EC816DAF82"]
+			icon: {
+				id: "minecraft:lead"
+			}
+			id: "45FB5863B0543575"
+			rewards: [
+				{
+					id: "3C957D65BB48F133"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "5FC9971E5ED50F95"
+					type: "checkmark"
+				}
+			]
+			x: 1.75d
+			y: 1.25d
+		}
+		{
+			dependencies: ["45FB5863B0543575"]
+			icon: {
+				id: "data_center_addon:switch_cisco_catalyst_2950"
+			}
+			id: "2269FBB31582DFEF"
+			rewards: [
+				{
+					id: "241BD8919342E00C"
+					item: {
+						components: {
+							"datacenter:payment_cents": 10000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "62A8DA0E42673195"
+					item: {
+						count: 1
+						id: "data_center_addon:switch_cisco_catalyst_2950"
+					}
+					type: "item"
+				}
+			]
+			x: 3.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["2269FBB31582DFEF"]
+			icon: {
+				id: "minecraft:redstone"
+			}
+			id: "29C231E37B49246A"
+			rewards: [
+				{
+					id: "615A1BCFB6D9F310"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "7C8EF03F6723DDB2"
+					type: "checkmark"
+				}
+			]
+			x: 5.25d
+			y: 1.25d
+		}
+		{
+			dependencies: ["29C231E37B49246A"]
+			icon: {
+				id: "data_center_addon:cable_om3"
+			}
+			id: "6246E45D9CAED7E4"
+			rewards: [
+				{
+					id: "59C4502D7F8C33F4"
+					item: {
+						components: {
+							"datacenter:payment_cents": 5000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					consume_items: false
+					id: "3CCFCE79C90DEBC4"
+					item: {
+						count: 8
+						id: "data_center_addon:cable_om3"
+					}
+					type: "item"
+				}
+			]
+			x: 7.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["6246E45D9CAED7E4"]
+			icon: {
+				id: "minecraft:crafting_table"
+			}
+			id: "3B748E0F963C492B"
+			rewards: [
+				{
+					id: "595207083D4F9365"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "6836E419BA1F285F"
+					type: "checkmark"
+				}
+			]
+			x: 8.75d
+			y: 1.25d
+		}
+		{
+			dependencies: ["3B748E0F963C492B"]
+			icon: {
+				id: "datacenter:cable_cat"
+			}
+			id: "3EBB7842C29BE4A3"
+			rewards: [
+				{
+					id: "34C6D0DB8104371F"
+					item: {
+						components: {
+							"datacenter:payment_cents": 1000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "52229E740EA25062"
+					type: "checkmark"
+				}
+			]
+			x: 10.5d
+			y: 0.0d
+		}
+	]
+}
