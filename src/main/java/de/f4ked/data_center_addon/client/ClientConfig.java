@@ -83,6 +83,10 @@ public final class ClientConfig {
     static final ModConfigSpec.BooleanValue SHOW_CHANGE;
     static final ModConfigSpec.IntValue CHANGE_DAYS;
 
+    static final ModConfigSpec.BooleanValue TIERED_TOOLTIPS;
+    static final ModConfigSpec.BooleanValue SERVER_COMPONENTS;
+    static final ModConfigSpec.IntValue SHOP_EXTRA_WIDTH;
+
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
 
@@ -143,6 +147,18 @@ public final class ClientConfig {
                 .define("showChange", true);
         CHANGE_DAYS = b.comment("Period of the price change in in-game days (1 = since yesterday, 7 = since a week ago).")
                 .defineInRange("changeDays", 1, 1, 365);
+        b.pop();
+
+        b.comment("Item tooltips of Data Center parts and servers.").push("tooltips");
+        TIERED_TOOLTIPS = b.comment("Rank parts from Common to Legendary against all parts of their kind and colour their tooltip by tier.")
+                .define("tieredTooltips", true);
+        SERVER_COMPONENTS = b.comment("List the built-in parts in a server's tooltip.")
+                .define("serverComponents", true);
+        b.pop();
+
+        b.comment("Data Center's shop.").push("shop");
+        SHOP_EXTRA_WIDTH = b.comment("Extra width of the shop window in GUI pixels (0 = Data Center's own size). Limited to what fits on the screen.")
+                .defineInRange("extraWidth", 140, 0, 1000);
         b.pop();
 
         SPEC = b.build();

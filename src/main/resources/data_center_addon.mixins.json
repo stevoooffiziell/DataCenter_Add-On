@@ -6,6 +6,13 @@
   "mixins": [
     "HostingRackBlockEntityMixin"
   ],
+  "client": [
+    "AbstractContainerScreenAccessor",
+    "SellScreenMixin",
+    "ShopChromeScreenMixin",
+    "ShopScreenMixin",
+    "WalletScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
