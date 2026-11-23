@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 2800+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 814,
+    "power": 74,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 39700,
+    "date": "2002-10-01"
+  }
+}

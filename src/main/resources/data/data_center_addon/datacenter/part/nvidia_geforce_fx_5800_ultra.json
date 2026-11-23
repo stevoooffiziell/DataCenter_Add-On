@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce FX 5800 Ultra",
+  "stats": {
+    "kind": "GPU",
+    "compute": 36,
+    "power": 66,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2003-03-06"
+  }
+}

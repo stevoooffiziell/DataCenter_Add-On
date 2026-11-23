@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 8500 GT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 34,
+    "power": 30,
+    "sha256": 2400000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 12900,
+    "date": "2007-04-17"
+  }
+}

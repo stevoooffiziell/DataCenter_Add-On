@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Dominator Titanium 64GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.37,
+    "computeMultiplier": 1.11,
+    "generation": "DDR5",
+    "sizeMb": 65536
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 29900,
+    "date": "2023-10-01"
+  }
+}

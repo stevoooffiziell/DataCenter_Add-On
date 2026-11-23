@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Gold 6338",
+  "stats": {
+    "kind": "CPU",
+    "compute": 36000,
+    "power": 205,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA4189",
+    "stability": 0.17,
+    "memBandwidth": 1.08
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 261200,
+    "date": "2021-04-06"
+  }
+}

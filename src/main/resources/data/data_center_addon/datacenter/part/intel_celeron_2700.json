@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 2.7 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 976,
+    "power": 67,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_478"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 10300,
+    "date": "2003-09-24"
+  }
+}

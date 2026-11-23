@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GT 1030",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1302,
+    "power": 30,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 7900,
+    "date": "2017-05-17"
+  }
+}

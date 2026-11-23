@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 1.33 GHz (Thunderbird)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 482,
+    "power": 70,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 35000,
+    "date": "2001-03-21"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 3600X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 10800,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 24900,
+    "date": "2019-07-07"
+  }
+}

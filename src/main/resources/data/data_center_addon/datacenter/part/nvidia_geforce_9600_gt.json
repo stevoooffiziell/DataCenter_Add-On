@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 9600 GT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 241,
+    "power": 95,
+    "sha256": 17100000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 17900,
+    "date": "2008-02-21"
+  }
+}

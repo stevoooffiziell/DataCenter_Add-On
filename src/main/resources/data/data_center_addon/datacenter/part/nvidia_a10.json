@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA A10",
+  "stats": {
+    "kind": "GPU",
+    "compute": 36207,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 70000000,
+    "kheavyhash": 600000000,
+    "stability": 0.12,
+    "memBandwidth": 1.1
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 320000,
+    "date": "2021-04-12"
+  }
+}

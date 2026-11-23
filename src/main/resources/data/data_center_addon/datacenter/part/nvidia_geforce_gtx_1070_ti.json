@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1070 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 9455,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 30000000,
+    "kheavyhash": 260000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 44900,
+    "date": "2017-11-02"
+  }
+}

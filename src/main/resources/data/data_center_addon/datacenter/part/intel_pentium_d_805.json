@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium D 805",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1924,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 14300,
+    "date": "2005-12-01"
+  }
+}

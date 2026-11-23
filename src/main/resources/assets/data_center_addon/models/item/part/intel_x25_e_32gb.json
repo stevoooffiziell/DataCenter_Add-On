@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/storage/flint_ridge_x25_e_32gb"
+    "layer0": "data_center_addon:item/part/ssd_sata"
   }
 }

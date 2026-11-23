@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/ram/kingsley_ddr3_16"
+    "layer0": "data_center_addon:item/part/rdimm_ecc"
   }
 }

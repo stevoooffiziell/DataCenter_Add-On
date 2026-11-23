@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 2200+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 651,
+    "power": 68,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 24100,
+    "date": "2002-06-10"
+  }
+}

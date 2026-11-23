@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Crucial T700 2TB NVMe",
+  "stats": {
+    "capacityGb": 2000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 33999,
+    "date": "2023-05-30"
+  }
+}

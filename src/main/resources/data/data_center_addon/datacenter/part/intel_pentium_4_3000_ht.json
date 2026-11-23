@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 3.0 GHz HT",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1085,
+    "power": 82,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_478"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 41700,
+    "date": "2003-04-14"
+  }
+}

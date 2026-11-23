@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair SF750 Platinum",
+  "stats": {
+    "maxPowerThroughput": 750,
+    "efficiency": 0.92,
+    "wasteHeatPerFe": 0.00533
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 18499,
+    "date": "2018-06-01"
+  }
+}

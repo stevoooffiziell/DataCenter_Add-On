@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 3200+ (Socket 939)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 723,
+    "power": 67,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_939"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 20800,
+    "date": "2004-10-14"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/storage/westdrive_gold_16tb"
+    "layer0": "data_center_addon:item/part/hdd_enterprise"
   }
 }

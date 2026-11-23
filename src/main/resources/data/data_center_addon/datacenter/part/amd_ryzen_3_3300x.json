@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 3 3300X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7600,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 12000,
+    "date": "2020-05-21"
+  }
+}

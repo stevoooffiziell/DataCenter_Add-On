@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium D 920",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2025,
+    "power": 95,
+    "sha256": 2100000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 24100,
+    "date": "2006-01-16"
+  }
+}

@@ -13,5 +13,13 @@
   "data_center_addon.configuration.hosting": "Hosting",
   "data_center_addon.configuration.hosting.tooltip": "Einstellungen für Hosting-Racks.",
   "data_center_addon.configuration.storageBoost": "Speicher-Bonus",
-  "data_center_addon.configuration.storageBoost.tooltip": "Kapazitäts-Faktor für die Speicher-Bauteile dieses Add-ons, solange ihr Server in einem Hosting-Rack läuft. 1.0 schaltet ihn ab."
+  "data_center_addon.configuration.storageBoost.tooltip": "Kapazitäts-Faktor für die Speicher-Bauteile dieses Add-ons, solange ihr Server in einem Hosting-Rack läuft. 1.0 schaltet ihn ab.",
+  "shop.category.cpu_amd": "AMD",
+  "shop.tab.cpu_amd": "AMD",
+  "shop.category.cpu_intel": "Intel",
+  "shop.tab.cpu_intel": "Intel",
+  "shop.category.gpu_nvidia": "NVIDIA",
+  "shop.tab.gpu_nvidia": "NVIDIA",
+  "shop.category.gpu_amd": "AMD Radeon & Intel Arc",
+  "shop.tab.gpu_amd": "Radeon/Arc"
 }

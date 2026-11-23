@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Trident Z5 96GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.42,
+    "computeMultiplier": 1.1,
+    "generation": "DDR5",
+    "sizeMb": 98304
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 32900,
+    "date": "2023-07-01"
+  }
+}

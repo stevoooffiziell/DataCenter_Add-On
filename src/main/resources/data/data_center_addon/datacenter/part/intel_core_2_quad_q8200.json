@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core 2 Quad Q8200",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3371,
+    "power": 95,
+    "sha256": 10900000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 22400,
+    "date": "2008-08-10"
+  }
+}

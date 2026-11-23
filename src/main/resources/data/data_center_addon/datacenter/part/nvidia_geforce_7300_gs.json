@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 7300 GS",
+  "stats": {
+    "kind": "GPU",
+    "compute": 49,
+    "power": 23,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 9900,
+    "date": "2006-01-18"
+  }
+}

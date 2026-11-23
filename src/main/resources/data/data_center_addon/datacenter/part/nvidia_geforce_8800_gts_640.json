@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 8800 GTS 640MB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 264,
+    "power": 143,
+    "sha256": 18400000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 44900,
+    "date": "2006-11-08"
+  }
+}

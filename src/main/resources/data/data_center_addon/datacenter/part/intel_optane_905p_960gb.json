@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Intel Optane SSD 905P 960GB",
+  "stats": {
+    "capacityGb": 960,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 129900,
+    "date": "2018-05-03"
+  }
+}

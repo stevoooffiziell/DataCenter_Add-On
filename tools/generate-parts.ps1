@@ -23,6 +23,7 @@ $csvPath = Join-Path $PSScriptRoot 'parts.csv'
 $partsDir = Join-Path $root 'src/main/resources/data/data_center_addon/datacenter/part'
 $modelsDir = Join-Path $root 'src/main/resources/assets/data_center_addon/models/item/part'
 $hideDir = Join-Path $root 'src/main/resources/data/datacenter/datacenter/part'
+$ownTexturesDir = Join-Path $root 'src/main/resources/assets/data_center_addon/textures/item/part'
 
 $categories = @('CPU_AMD', 'CPU_INTEL', 'CPU_SERVER', 'GPU_NVIDIA', 'GPU_AMD', 'GPU_DATACENTER', 'GPU_MINING',
     'RAM', 'PSU', 'MAINBOARD', 'MAINBOARD_MINING', 'STORAGE', 'FAN')
@@ -151,16 +152,23 @@ foreach ($row in $rows) {
 
     $look = "$($row.look)".Trim()
     if (-not $look) { $look = $from }
-    $folder = if ($type -eq 'processor') { if ($stats['kind'] -eq 'GPU') { 'gpu' } else { 'cpu' } } else { $textureFolder[$type] }
-    $texture = "$folder/$look"
-    if (-not $textures.ContainsKey($texture)) { $errors.Add("${where}: texture 'datacenter:item/$texture' does not exist") }
+    if ($look.StartsWith('@')) {
+        # the add-on's own texture (tools/generate-textures.ps1)
+        $ownName = $look.Substring(1)
+        $textureId = "data_center_addon:item/part/$ownName"
+        if (-not (Test-Path (Join-Path $ownTexturesDir "$ownName.png"))) { $errors.Add("${where}: texture '$textureId' does not exist (run generate-textures.ps1)") }
+    } else {
+        $folder = if ($type -eq 'processor') { if ($stats['kind'] -eq 'GPU') { 'gpu' } else { 'cpu' } } else { $textureFolder[$type] }
+        $textureId = "datacenter:item/$folder/$look"
+        if (-not $textures.ContainsKey("$folder/$look")) { $errors.Add("${where}: texture '$textureId' does not exist") }
+    }
 
     $parts[$id] = [ordered]@{
         type  = $type
         name  = $name
         stats = $stats
         shop  = [ordered]@{ category = $category; price = $price; date = $date }
-        _texture = "datacenter:item/$texture"
+        _texture = $textureId
     }
 }
 

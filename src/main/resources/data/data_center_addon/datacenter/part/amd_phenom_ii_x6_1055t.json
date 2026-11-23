@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X6 1055T",
+  "stats": {
+    "kind": "CPU",
+    "compute": 6075,
+    "power": 95,
+    "sha256": 19700000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 19900,
+    "date": "2010-04-27"
+  }
+}

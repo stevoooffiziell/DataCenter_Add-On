@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-3960X Extreme Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7200,
+    "power": 130,
+    "sha256": 26000000,
+    "ethash": 0,
+    "socket": "LGA2011"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99000,
+    "date": "2011-11-14"
+  }
+}

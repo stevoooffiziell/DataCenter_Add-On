@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-5960X Extreme Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 9500,
+    "power": 140,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA2011_3"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99900,
+    "date": "2014-08-29"
+  }
+}

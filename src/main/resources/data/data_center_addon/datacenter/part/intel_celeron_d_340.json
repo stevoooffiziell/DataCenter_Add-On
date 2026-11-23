@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron D 340",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1061,
+    "power": 73,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_478"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 11700,
+    "date": "2004-09-22"
+  }
+}

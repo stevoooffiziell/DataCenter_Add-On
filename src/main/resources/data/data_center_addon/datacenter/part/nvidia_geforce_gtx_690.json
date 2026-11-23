@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 690",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6493,
+    "power": 300,
+    "sha256": 214000000,
+    "ethash": 30000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 99900,
+    "date": "2012-05-03"
+  }
+}

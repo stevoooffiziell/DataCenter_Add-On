@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III 550",
+  "stats": {
+    "kind": "CPU",
+    "compute": 199,
+    "power": 31,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 70000,
+    "date": "1999-05-17"
+  }
+}

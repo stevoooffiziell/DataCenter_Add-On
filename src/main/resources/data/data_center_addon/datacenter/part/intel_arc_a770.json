@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "Intel Arc A770 16GB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 22707,
+    "power": 225,
+    "sha256": 0,
+    "ethash": 30000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 34900,
+    "date": "2022-10-12"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 750 (Slot A)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 271,
+    "power": 40,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 79900,
+    "date": "1999-11-29"
+  }
+}

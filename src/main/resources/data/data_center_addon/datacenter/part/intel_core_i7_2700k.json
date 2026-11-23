@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-2700K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4906,
+    "power": 95,
+    "sha256": 19200000,
+    "ethash": 0,
+    "socket": "LGA1155"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 33200,
+    "date": "2011-10-23"
+  }
+}

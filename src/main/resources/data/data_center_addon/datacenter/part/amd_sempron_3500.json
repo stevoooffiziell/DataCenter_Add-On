@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Sempron 3500+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 723,
+    "power": 62,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_939"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 11700,
+    "date": "2005-10-01"
+  }
+}

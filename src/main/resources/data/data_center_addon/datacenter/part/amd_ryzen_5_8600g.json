@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 8600G",
+  "stats": {
+    "kind": "CPU",
+    "compute": 13500,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 22900,
+    "date": "2024-01-31"
+  }
+}

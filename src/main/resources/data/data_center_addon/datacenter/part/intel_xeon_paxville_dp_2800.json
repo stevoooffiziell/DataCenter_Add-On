@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon 2.8 GHz (Paxville DP)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2025,
+    "power": 135,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_604",
+    "stability": 0.05
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 104300,
+    "date": "2005-10-10"
+  }
+}

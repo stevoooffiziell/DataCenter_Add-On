@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/storage/samcore_evo_nvme_1tb"
+  }
+}

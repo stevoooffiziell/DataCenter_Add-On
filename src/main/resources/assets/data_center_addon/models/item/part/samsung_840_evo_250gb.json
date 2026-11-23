@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/storage/samcore_evo_250gb"
+    "layer0": "data_center_addon:item/part/ssd_sata"
   }
 }

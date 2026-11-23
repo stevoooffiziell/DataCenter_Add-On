@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 6800 GT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 102,
+    "power": 67,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2004-06-08"
+  }
+}

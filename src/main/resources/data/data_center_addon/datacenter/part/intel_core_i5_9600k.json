@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-9600K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 8800,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1151_V2"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 26200,
+    "date": "2018-10-19"
+  }
+}

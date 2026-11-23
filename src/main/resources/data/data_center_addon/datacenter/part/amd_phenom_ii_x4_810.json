@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X4 810",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3760,
+    "power": 95,
+    "sha256": 8000000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 17500,
+    "date": "2009-09-01"
+  }
+}

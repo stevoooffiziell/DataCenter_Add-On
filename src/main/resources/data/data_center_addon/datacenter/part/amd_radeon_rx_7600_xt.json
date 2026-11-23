@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 7600 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 26158,
+    "power": 190,
+    "sha256": 0,
+    "ethash": 32000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 32900,
+    "date": "2024-01-24"
+  }
+}

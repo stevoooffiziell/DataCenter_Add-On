@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 860 EVO 1TB",
+  "stats": {
+    "capacityGb": 1000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 32999,
+    "date": "2018-01-23"
+  }
+}

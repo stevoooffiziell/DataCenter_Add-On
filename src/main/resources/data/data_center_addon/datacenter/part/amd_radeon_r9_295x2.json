@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 295X2",
+  "stats": {
+    "kind": "GPU",
+    "compute": 13243,
+    "power": 500,
+    "sha256": 2847000000,
+    "ethash": 56000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 149900,
+    "date": "2014-04-21"
+  }
+}

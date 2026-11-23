@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Silver 4214",
+  "stats": {
+    "kind": "CPU",
+    "compute": 15000,
+    "power": 85,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA3647",
+    "stability": 0.14,
+    "memBandwidth": 1.05
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 69400,
+    "date": "2019-04-02"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III 800EB",
+  "stats": {
+    "kind": "CPU",
+    "compute": 289,
+    "power": 21,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_370"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 85100,
+    "date": "1999-12-20"
+  }
+}

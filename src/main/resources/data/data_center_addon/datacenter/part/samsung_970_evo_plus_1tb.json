@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 970 EVO Plus 1TB NVMe",
+  "stats": {
+    "capacityGb": 1000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 24999,
+    "date": "2019-01-22"
+  }
+}

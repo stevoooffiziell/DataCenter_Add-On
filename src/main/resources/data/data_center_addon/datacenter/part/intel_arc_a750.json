@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "Intel Arc A750",
+  "stats": {
+    "kind": "GPU",
+    "compute": 19866,
+    "power": 225,
+    "sha256": 0,
+    "ethash": 27000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 28900,
+    "date": "2022-10-12"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 590",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2874,
+    "power": 365,
+    "sha256": 215500000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 69900,
+    "date": "2011-03-24"
+  }
+}

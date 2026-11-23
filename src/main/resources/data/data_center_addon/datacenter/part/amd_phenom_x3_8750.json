@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom X3 8750",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2604,
+    "power": 95,
+    "sha256": 6440000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 16500,
+    "date": "2008-04-23"
+  }
+}

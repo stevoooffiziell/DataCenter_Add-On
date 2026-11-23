@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 3 1200",
+  "stats": {
+    "kind": "CPU",
+    "compute": 5800,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 10900,
+    "date": "2017-07-27"
+  }
+}

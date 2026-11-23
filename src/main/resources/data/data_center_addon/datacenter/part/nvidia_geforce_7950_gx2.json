@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 7950 GX2",
+  "stats": {
+    "kind": "GPU",
+    "compute": 538,
+    "power": 110,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2006-06-05"
+  }
+}

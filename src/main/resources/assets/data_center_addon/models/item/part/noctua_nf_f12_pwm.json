@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/fan/flowtek_120mm"
+    "layer0": "data_center_addon:item/part/fan_beige_brown"
   }
 }

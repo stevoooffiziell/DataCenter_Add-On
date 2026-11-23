@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/cpu/flint_forge_xeon_platinum_8180"
+    "layer0": "data_center_addon:item/part/xeon_scalable"
   }
 }

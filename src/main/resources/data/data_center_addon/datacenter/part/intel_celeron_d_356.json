@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron D 356",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1205,
+    "power": 86,
+    "sha256": 1250000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 8900,
+    "date": "2006-05-28"
+  }
+}

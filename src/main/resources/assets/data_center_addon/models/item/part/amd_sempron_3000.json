@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/amp_piston_sempron_3000plus_socket_754"
+  }
+}

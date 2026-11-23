@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 2000+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 603,
+    "power": 70,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 33900,
+    "date": "2002-01-07"
+  }
+}

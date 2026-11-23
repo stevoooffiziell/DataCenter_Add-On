@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 1.7 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 615,
+    "power": 64,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_423"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 35200,
+    "date": "2001-04-23"
+  }
+}

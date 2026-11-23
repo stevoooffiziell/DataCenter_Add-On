@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-2400",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4277,
+    "power": 95,
+    "sha256": 4500000,
+    "ethash": 0,
+    "socket": "LGA1155"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 18400,
+    "date": "2011-01-09"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 1.2 GHz (Tualatin)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 434,
+    "power": 30,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_370"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 10300,
+    "date": "2001-10-02"
+  }
+}

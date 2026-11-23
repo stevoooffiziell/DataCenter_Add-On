@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 1.1 GHz (Thunderbird)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 398,
+    "power": 55,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 85300,
+    "date": "2000-08-14"
+  }
+}

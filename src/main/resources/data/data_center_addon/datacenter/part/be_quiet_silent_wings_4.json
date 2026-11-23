@@ -1,0 +1,12 @@
+{
+  "type": "fan",
+  "name": "be quiet! Silent Wings 4 120mm",
+  "stats": {
+    "airflowCfm": 48
+  },
+  "shop": {
+    "category": "FAN",
+    "price": 2290,
+    "date": "2022-02-01"
+  }
+}

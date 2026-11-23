@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon PRO W7900",
+  "stats": {
+    "kind": "GPU",
+    "compute": 71047,
+    "power": 295,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 399900,
+    "date": "2023-04-13"
+  }
+}

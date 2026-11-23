@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 7600",
+  "stats": {
+    "kind": "CPU",
+    "compute": 14800,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 22900,
+    "date": "2023-01-10"
+  }
+}

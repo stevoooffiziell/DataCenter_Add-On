@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/amp_piston_athlon_xp_2800plus_socket_a_thoroughbred_a_b"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair XMS 256MB DDR333",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR1",
+    "sizeMb": 256
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 3200,
+    "date": "2003-01-01"
+  }
+}

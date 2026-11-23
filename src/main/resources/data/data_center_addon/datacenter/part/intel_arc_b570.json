@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "Intel Arc B570",
+  "stats": {
+    "kind": "GPU",
+    "compute": 13860,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 21900,
+    "date": "2025-01-16"
+  }
+}

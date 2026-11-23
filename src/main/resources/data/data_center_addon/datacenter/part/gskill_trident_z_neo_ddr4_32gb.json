@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Trident Z Neo 32GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.27,
+    "computeMultiplier": 1.07,
+    "generation": "DDR4",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 18900,
+    "date": "2019-07-07"
+  }
+}

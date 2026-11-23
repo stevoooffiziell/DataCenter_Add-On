@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon II X2 250",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2170,
+    "power": 65,
+    "sha256": 5600000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 8700,
+    "date": "2009-06-01"
+  }
+}

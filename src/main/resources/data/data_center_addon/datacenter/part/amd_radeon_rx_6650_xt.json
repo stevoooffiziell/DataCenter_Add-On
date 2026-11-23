@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6650 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 12462,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 33000000,
+    "kheavyhash": 430000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2022-05-10"
+  }
+}

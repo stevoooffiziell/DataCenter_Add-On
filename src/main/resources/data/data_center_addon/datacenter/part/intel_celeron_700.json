@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 700",
+  "stats": {
+    "kind": "CPU",
+    "compute": 253,
+    "power": 18,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_370"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 19200,
+    "date": "2000-06-26"
+  }
+}

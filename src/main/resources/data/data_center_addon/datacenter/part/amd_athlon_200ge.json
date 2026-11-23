@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 200GE",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2900,
+    "power": 35,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 5500,
+    "date": "2018-09-06"
+  }
+}

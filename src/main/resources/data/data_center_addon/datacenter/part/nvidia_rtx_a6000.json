@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA RTX A6000",
+  "stats": {
+    "kind": "GPU",
+    "compute": 44710,
+    "power": 300,
+    "sha256": 0,
+    "ethash": 100000000,
+    "kheavyhash": 900000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 465000,
+    "date": "2020-10-05"
+  }
+}

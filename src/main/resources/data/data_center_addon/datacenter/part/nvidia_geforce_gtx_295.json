@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 295",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1180,
+    "power": 289,
+    "sha256": 91200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2009-01-08"
+  }
+}

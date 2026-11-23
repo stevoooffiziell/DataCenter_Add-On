@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "AMD Opteron 2352",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3038,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_F_1207",
+    "stability": 0.065
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 31600,
+    "date": "2008-04-09"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III 1.13 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 409,
+    "power": 33,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_370"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99000,
+    "date": "2000-07-31"
+  }
+}

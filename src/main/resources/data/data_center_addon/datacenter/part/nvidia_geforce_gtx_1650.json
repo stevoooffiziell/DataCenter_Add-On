@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1650",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3447,
+    "power": 75,
+    "sha256": 0,
+    "ethash": 13000000,
+    "kheavyhash": 120000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 14900,
+    "date": "2019-04-23"
+  }
+}

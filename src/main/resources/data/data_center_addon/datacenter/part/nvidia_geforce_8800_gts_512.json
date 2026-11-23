@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 8800 GTS 512MB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 482,
+    "power": 135,
+    "sha256": 34200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 34900,
+    "date": "2007-12-11"
+  }
+}

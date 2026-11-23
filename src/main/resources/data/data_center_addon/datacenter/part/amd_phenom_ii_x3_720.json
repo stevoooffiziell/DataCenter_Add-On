@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X3 720 Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3038,
+    "power": 95,
+    "sha256": 5500000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 14500,
+    "date": "2009-10-01"
+  }
+}

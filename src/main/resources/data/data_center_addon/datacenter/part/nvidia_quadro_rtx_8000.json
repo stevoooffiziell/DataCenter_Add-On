@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Quadro RTX 8000",
+  "stats": {
+    "kind": "GPU",
+    "compute": 18840,
+    "power": 295,
+    "sha256": 0,
+    "ethash": 60000000,
+    "kheavyhash": 800000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 1000000,
+    "date": "2018-08-13"
+  }
+}

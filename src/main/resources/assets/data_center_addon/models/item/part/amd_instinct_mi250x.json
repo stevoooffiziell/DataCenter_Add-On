@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/gpu/amp_impulse_mi250x"
+    "layer0": "data_center_addon:item/part/sxm_module"
   }
 }

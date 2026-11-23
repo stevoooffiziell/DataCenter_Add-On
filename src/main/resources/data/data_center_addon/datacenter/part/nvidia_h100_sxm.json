@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA H100 SXM",
+  "stats": {
+    "kind": "GPU",
+    "compute": 77537,
+    "power": 700,
+    "sha256": 0,
+    "ethash": 0,
+    "kheavyhash": 1600000000,
+    "stability": 0.16,
+    "memBandwidth": 1.25
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 3000000,
+    "date": "2023-03-21"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 2500+ (Barton)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 663,
+    "power": 68,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 30900,
+    "date": "2003-02-10"
+  }
+}

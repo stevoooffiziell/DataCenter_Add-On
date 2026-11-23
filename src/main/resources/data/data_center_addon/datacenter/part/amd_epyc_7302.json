@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 7302",
+  "stats": {
+    "kind": "CPU",
+    "compute": 30000,
+    "power": 155,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP3",
+    "stability": 0.15,
+    "memBandwidth": 1.1
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 97800,
+    "date": "2019-08-07"
+  }
+}

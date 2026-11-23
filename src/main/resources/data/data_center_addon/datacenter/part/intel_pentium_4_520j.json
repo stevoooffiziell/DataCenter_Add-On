@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 520J",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1013,
+    "power": 84,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 17800,
+    "date": "2004-10-01"
+  }
+}

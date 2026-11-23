@@ -13,5 +13,13 @@
   "data_center_addon.configuration.hosting": "Hosting",
   "data_center_addon.configuration.hosting.tooltip": "Hosting Rack settings.",
   "data_center_addon.configuration.storageBoost": "Storage Boost",
-  "data_center_addon.configuration.storageBoost.tooltip": "Capacity multiplier for this add-on's storage parts while their server runs in a Hosting Rack. 1.0 turns it off."
+  "data_center_addon.configuration.storageBoost.tooltip": "Capacity multiplier for this add-on's storage parts while their server runs in a Hosting Rack. 1.0 turns it off.",
+  "shop.category.cpu_amd": "AMD",
+  "shop.tab.cpu_amd": "AMD",
+  "shop.category.cpu_intel": "Intel",
+  "shop.tab.cpu_intel": "Intel",
+  "shop.category.gpu_nvidia": "NVIDIA",
+  "shop.tab.gpu_nvidia": "NVIDIA",
+  "shop.category.gpu_amd": "AMD Radeon & Intel Arc",
+  "shop.tab.gpu_amd": "Radeon/Arc"
 }

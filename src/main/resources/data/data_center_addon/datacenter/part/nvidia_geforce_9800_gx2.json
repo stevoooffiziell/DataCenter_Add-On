@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 9800 GX2",
+  "stats": {
+    "kind": "GPU",
+    "compute": 890,
+    "power": 197,
+    "sha256": 63200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2008-03-18"
+  }
+}

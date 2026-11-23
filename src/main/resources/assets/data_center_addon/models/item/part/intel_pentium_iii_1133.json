@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/flint_ridge_pentium_iii_1133_socket_370_coppermine"
+  }
+}

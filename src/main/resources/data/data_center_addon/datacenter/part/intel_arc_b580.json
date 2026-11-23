@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "Intel Arc B580",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15789,
+    "power": 190,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 24900,
+    "date": "2024-12-13"
+  }
+}

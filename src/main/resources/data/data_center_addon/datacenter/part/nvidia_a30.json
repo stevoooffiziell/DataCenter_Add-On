@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA A30",
+  "stats": {
+    "kind": "GPU",
+    "compute": 11961,
+    "power": 165,
+    "sha256": 0,
+    "ethash": 100000000,
+    "kheavyhash": 400000000,
+    "stability": 0.12,
+    "memBandwidth": 1.14
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 500000,
+    "date": "2021-04-12"
+  }
+}

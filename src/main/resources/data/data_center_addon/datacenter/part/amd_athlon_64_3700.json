@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 3700+ (Socket 754)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 868,
+    "power": 89,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_754"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 71000,
+    "date": "2004-06-01"
+  }
+}

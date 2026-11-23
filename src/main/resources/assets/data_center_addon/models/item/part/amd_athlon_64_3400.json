@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/amp_piston_athlon_64_3400plus_socket_754"
+  }
+}

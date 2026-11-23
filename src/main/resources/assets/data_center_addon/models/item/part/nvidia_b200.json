@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "datacenter:item/gpu/invidia_tensor_b200"
+    "layer0": "data_center_addon:item/part/sxm_module"
   }
 }

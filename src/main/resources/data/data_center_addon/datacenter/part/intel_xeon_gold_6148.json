@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Gold 6148",
+  "stats": {
+    "kind": "CPU",
+    "compute": 30000,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA3647",
+    "stability": 0.15,
+    "memBandwidth": 1.06
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 307200,
+    "date": "2017-07-11"
+  }
+}

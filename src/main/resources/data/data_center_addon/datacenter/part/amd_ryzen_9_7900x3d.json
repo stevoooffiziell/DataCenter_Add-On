@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 9 7900X3D",
+  "stats": {
+    "kind": "CPU",
+    "compute": 23500,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 59900,
+    "date": "2023-02-28"
+  }
+}

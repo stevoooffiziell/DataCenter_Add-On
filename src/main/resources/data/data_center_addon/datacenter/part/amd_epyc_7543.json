@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 7543",
+  "stats": {
+    "kind": "CPU",
+    "compute": 52000,
+    "power": 225,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP3",
+    "stability": 0.17,
+    "memBandwidth": 1.11
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 376100,
+    "date": "2021-03-15"
+  }
+}

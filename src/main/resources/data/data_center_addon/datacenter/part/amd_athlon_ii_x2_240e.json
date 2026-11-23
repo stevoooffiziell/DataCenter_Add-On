@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon II X2 240e",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2025,
+    "power": 45,
+    "sha256": 2710000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 7700,
+    "date": "2009-11-01"
+  }
+}

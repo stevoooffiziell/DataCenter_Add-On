@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6750 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15375,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 48000000,
+    "kheavyhash": 540000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 54900,
+    "date": "2022-05-10"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6500 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6661,
+    "power": 107,
+    "sha256": 0,
+    "ethash": 0,
+    "kheavyhash": 200000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 19900,
+    "date": "2022-01-19"
+  }
+}

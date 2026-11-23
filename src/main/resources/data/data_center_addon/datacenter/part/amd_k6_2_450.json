@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD K6-2 450",
+  "stats": {
+    "kind": "CPU",
+    "compute": 163,
+    "power": 28,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SUPER_SOCKET_7"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 20300,
+    "date": "1999-02-26"
+  }
+}

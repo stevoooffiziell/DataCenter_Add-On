@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i3-10100",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7000,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1200"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 12200,
+    "date": "2020-04-30"
+  }
+}

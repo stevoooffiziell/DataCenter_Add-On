@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 8600 GTS",
+  "stats": {
+    "kind": "GPU",
+    "compute": 108,
+    "power": 60,
+    "sha256": 7500000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 19900,
+    "date": "2007-04-17"
+  }
+}

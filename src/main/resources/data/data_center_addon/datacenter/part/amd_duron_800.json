@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Duron 800",
+  "stats": {
+    "kind": "CPU",
+    "compute": 289,
+    "power": 35,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 17000,
+    "date": "2000-10-17"
+  }
+}

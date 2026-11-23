@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon X2 7750 Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1953,
+    "power": 95,
+    "sha256": 4830000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 12000,
+    "date": "2008-12-15"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i9-12900KS",
+  "stats": {
+    "kind": "CPU",
+    "compute": 27500,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 73900,
+    "date": "2022-04-05"
+  }
+}

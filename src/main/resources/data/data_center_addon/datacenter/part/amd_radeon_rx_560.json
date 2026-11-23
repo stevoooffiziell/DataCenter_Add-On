@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 560",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3016,
+    "power": 80,
+    "sha256": 0,
+    "ethash": 12500000,
+    "kheavyhash": 90000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 9900,
+    "date": "2017-04-18"
+  }
+}

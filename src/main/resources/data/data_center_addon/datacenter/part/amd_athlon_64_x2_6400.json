@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 X2 6400+ Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2315,
+    "power": 125,
+    "sha256": 2900000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 24000,
+    "date": "2007-05-23"
+  }
+}

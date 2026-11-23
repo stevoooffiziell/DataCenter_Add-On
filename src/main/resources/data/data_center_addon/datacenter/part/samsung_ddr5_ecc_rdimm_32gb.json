@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Samsung 32GB DDR5 ECC RDIMM",
+  "stats": {
+    "crashChanceReduction": 0.4,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 24900,
+    "date": "2022-11-10"
+  }
+}
