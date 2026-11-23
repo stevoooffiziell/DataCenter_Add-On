@@ -1,0 +1,11 @@
+{
+  "parent": "datacenter:block/switch",
+  "textures": {
+    "front": "datacenter:block/switch_backbone_front",
+    "back": "datacenter:block/switch_backbone_back",
+    "side": "datacenter:block/switch_backbone_side",
+    "top": "datacenter:block/switch_backbone_top",
+    "steel": "datacenter:block/machine_steel",
+    "particle": "datacenter:block/switch_backbone_side"
+  }
+}

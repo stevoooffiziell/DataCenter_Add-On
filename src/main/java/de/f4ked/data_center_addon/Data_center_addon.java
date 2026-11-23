@@ -2,6 +2,9 @@ package de.f4ked.data_center_addon;
 
 import com.mojang.serialization.MapCodec;
 import de.f4ked.data_center_addon.block.PoweredServerPanelBlock;
+import de.f4ked.data_center_addon.hosting.HostingContent;
+import de.f4ked.data_center_addon.network.HideOriginalNetworkCondition;
+import de.f4ked.data_center_addon.network.NetworkContent;
 import de.f4ked.data_center_addon.part.HideOriginalPartCondition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -48,7 +51,11 @@ public class Data_center_addon {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_MODE_TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.data_center_addon"))
             .icon(() -> POWERED_SERVER_PANEL_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> output.accept(POWERED_SERVER_PANEL_ITEM.get()))
+            .displayItems((parameters, output) -> {
+                output.accept(POWERED_SERVER_PANEL_ITEM.get());
+                output.accept(HostingContent.MANAGER_ITEM.get());
+                output.acceptAll(NetworkContent.creativeStacks());
+            })
             .build());
 
     /** Data-pack conditions; {@code hide_original} hides Data Center's own parts when the config says so. */
@@ -56,8 +63,12 @@ public class Data_center_addon {
             DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
     public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<HideOriginalPartCondition>> HIDE_ORIGINAL =
             CONDITIONS.register("hide_original", () -> HideOriginalPartCondition.CODEC);
+    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<HideOriginalNetworkCondition>> HIDE_ORIGINAL_NETWORK =
+            CONDITIONS.register("hide_original_network", () -> HideOriginalNetworkCondition.CODEC);
 
     public Data_center_addon(IEventBus modEventBus, ModContainer modContainer) {
+        NetworkContent.register(modEventBus);
+        HostingContent.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

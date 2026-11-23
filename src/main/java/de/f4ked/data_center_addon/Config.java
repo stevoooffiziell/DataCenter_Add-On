@@ -38,6 +38,9 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_PARTS;
     private static final ModConfigSpec.ConfigValue<List<? extends String>> HIDDEN_CATEGORIES;
     private static final ModConfigSpec.DoubleValue HOSTING_STORAGE_BOOST;
+    private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_NETWORK;
+    private static final ModConfigSpec.BooleanValue SWITCHES_NEED_POWER;
+    private static final ModConfigSpec.BooleanValue CABLE_REACH_LIMITS;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -62,6 +65,21 @@ public final class Config {
                         "(more storage to rent out in dedicated mode, more shared capacity in shared mode).",
                         "1.0 turns the boost off.")
                 .defineInRange("storageBoost", 1.10, 1.0, 2.0);
+        builder.pop();
+
+        builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
+        HIDE_ORIGINAL_NETWORK = builder
+                .comment("Hide Data Center's own cables and switches: its switch leaves the Shop and its cable recipes",
+                        "are disabled. Cables and switches already placed keep working.",
+                        "Takes effect the next time a world is loaded.")
+                .define("hideOriginalNetwork", false);
+        SWITCHES_NEED_POWER = builder
+                .comment("Switches need power (FE, their real wattage). A switch without power cuts its network.")
+                .define("switchesNeedPower", true);
+        CABLE_REACH_LIMITS = builder
+                .comment("A cable run longer than the cable's real reach (e.g. 100 blocks for CAT5e, 30 for CAT8)",
+                        "falls back to a tenth of its speed. Switches start a new run.")
+                .define("cableReachLimits", true);
         builder.pop();
 
         SPEC = builder.build();
@@ -90,6 +108,18 @@ public final class Config {
             return false;
         }
         return HIDE_ORIGINAL_PARTS.get() && HIDDEN_CATEGORIES.get().contains(category);
+    }
+
+    public static boolean hidesOriginalNetwork() {
+        return SPEC.isLoaded() && HIDE_ORIGINAL_NETWORK.get();
+    }
+
+    public static boolean switchesNeedPower() {
+        return !SPEC.isLoaded() || SWITCHES_NEED_POWER.get();
+    }
+
+    public static boolean cableReachLimits() {
+        return !SPEC.isLoaded() || CABLE_REACH_LIMITS.get();
     }
 
     public static double hostingStorageBoost() {

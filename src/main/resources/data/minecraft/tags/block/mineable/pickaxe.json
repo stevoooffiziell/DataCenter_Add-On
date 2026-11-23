@@ -1,3 +1,14 @@
 {
-  "values": [ "data_center_addon:powered_server_panel" ]
+  "values": [
+    "data_center_addon:powered_server_panel",
+    "data_center_addon:switch_hub_3com_superstack_ii",
+    "data_center_addon:switch_cisco_catalyst_2924xl",
+    "data_center_addon:switch_cisco_catalyst_2950",
+    "data_center_addon:switch_cisco_catalyst_3750g",
+    "data_center_addon:switch_cisco_nexus_5010",
+    "data_center_addon:switch_arista_7050s_64",
+    "data_center_addon:switch_arista_7060cx_32s",
+    "data_center_addon:switch_nvidia_spectrum_sn4700",
+    "data_center_addon:hosting_manager"
+  ]
 }

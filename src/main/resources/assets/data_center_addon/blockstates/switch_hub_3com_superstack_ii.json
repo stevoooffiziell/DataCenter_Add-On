@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "data_center_addon:block/switch_hub_3com_superstack_ii"
+    },
+    "facing=east": {
+      "model": "data_center_addon:block/switch_hub_3com_superstack_ii",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "data_center_addon:block/switch_hub_3com_superstack_ii",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "data_center_addon:block/switch_hub_3com_superstack_ii",
+      "y": 270
+    }
+  }
+}

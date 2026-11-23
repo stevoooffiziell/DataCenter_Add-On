@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "data_center_addon:block/switch_arista_7060cx_32s"
+    },
+    "facing=east": {
+      "model": "data_center_addon:block/switch_arista_7060cx_32s",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "data_center_addon:block/switch_arista_7060cx_32s",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "data_center_addon:block/switch_arista_7060cx_32s",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "data_center_addon:hide_original_network"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "F": {
+      "item": "datacenter:cable_lwl"
+    },
+    "I": {
+      "item": "minecraft:packed_ice"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "IFI",
+    "CNC",
+    "IFI"
+  ],
+  "result": {
+    "count": 8,
+    "id": "datacenter:cable_superconductor"
+  }
+}

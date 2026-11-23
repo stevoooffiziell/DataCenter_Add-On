@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "data_center_addon:block/switch_cisco_catalyst_3750g"
+    },
+    "facing=east": {
+      "model": "data_center_addon:block/switch_cisco_catalyst_3750g",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "data_center_addon:block/switch_cisco_catalyst_3750g",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "data_center_addon:block/switch_cisco_catalyst_3750g",
+      "y": 270
+    }
+  }
+}

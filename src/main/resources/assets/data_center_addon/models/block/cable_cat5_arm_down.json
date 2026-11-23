@@ -1,0 +1,6 @@
+{
+  "parent": "datacenter:block/cable/arm_down",
+  "textures": {
+    "texture": "data_center_addon:block/network/cable_cat5"
+  }
+}

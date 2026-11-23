@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CCC",
+    "CXC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "data_center_addon:cable_om4"
+    },
+    "X": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "data_center_addon:cable_os2"
+  }
+}

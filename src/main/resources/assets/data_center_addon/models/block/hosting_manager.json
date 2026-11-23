@@ -1,0 +1,6 @@
+{
+  "parent": "datacenter:block/mining_dashboard",
+  "textures": {
+    "screen": "data_center_addon:block/network/hosting_manager_screen"
+  }
+}

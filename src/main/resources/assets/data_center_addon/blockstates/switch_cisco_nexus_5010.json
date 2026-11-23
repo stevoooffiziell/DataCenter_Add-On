@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "data_center_addon:block/switch_cisco_nexus_5010"
+    },
+    "facing=east": {
+      "model": "data_center_addon:block/switch_cisco_nexus_5010",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "data_center_addon:block/switch_cisco_nexus_5010",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "data_center_addon:block/switch_cisco_nexus_5010",
+      "y": 270
+    }
+  }
+}
