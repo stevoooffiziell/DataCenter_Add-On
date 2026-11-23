@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD K6-2 400",
+  "stats": {
+    "kind": "CPU",
+    "compute": 145,
+    "power": 23,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SUPER_SOCKET_7"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 28300,
+    "date": "1998-11-16"
+  }
+}

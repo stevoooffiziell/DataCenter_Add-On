@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 4564P",
+  "stats": {
+    "kind": "CPU",
+    "compute": 33000,
+    "power": 170,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5",
+    "stability": 0.12,
+    "memBandwidth": 1.05
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 69900,
+    "date": "2024-05-21"
+  }
+}

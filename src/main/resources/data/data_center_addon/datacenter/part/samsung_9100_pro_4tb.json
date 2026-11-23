@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 9100 PRO 4TB NVMe",
+  "stats": {
+    "capacityGb": 4000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 54999,
+    "date": "2025-03-18"
+  }
+}

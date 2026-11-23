@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6800 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 24036,
+    "power": 300,
+    "sha256": 8743500000,
+    "ethash": 63500000,
+    "kheavyhash": 870000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 64900,
+    "date": "2020-11-18"
+  }
+}

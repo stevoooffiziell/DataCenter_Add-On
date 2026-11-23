@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla T4",
+  "stats": {
+    "kind": "GPU",
+    "compute": 9388,
+    "power": 70,
+    "sha256": 0,
+    "ethash": 25000000,
+    "kheavyhash": 300000000,
+    "stability": 0.09,
+    "memBandwidth": 1.06
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 229900,
+    "date": "2018-09-12"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 750 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1604,
+    "power": 60,
+    "sha256": 0,
+    "ethash": 7000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 14900,
+    "date": "2014-02-18"
+  }
+}

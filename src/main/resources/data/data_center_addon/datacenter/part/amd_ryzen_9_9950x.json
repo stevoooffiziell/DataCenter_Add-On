@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 9 9950X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 34800,
+    "power": 170,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 64900,
+    "date": "2024-08-15"
+  }
+}

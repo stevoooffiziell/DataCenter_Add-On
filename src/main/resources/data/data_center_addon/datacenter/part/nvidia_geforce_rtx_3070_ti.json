@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3070 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 25206,
+    "power": 290,
+    "sha256": 5807800000,
+    "ethash": 58000000,
+    "kheavyhash": 546000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2021-06-10"
+  }
+}

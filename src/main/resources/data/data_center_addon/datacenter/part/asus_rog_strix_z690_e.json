@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS ROG Strix Z690-E Gaming WiFi",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "LGA1700",
+    "ramGenerations": [
+      "DDR5"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 46900,
+    "date": "2021-11-04"
+  }
+}

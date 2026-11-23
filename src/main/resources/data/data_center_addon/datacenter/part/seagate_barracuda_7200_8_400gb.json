@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 7200.8 400GB",
+  "stats": {
+    "capacityGb": 400,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 24920,
+    "date": "2005-10-31"
+  }
+}

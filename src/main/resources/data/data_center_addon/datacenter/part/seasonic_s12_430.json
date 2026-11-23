@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic S12-430",
+  "stats": {
+    "maxPowerThroughput": 430,
+    "wasteHeatPerFe": 0.01333,
+    "efficiency": 0.8
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 3080,
+    "date": "2005-01-01"
+  }
+}

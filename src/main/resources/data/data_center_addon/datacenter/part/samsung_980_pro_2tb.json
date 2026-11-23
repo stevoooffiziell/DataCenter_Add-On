@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 980 PRO 2TB NVMe",
+  "stats": {
+    "capacityGb": 2000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 32999,
+    "date": "2021-01-01"
+  }
+}

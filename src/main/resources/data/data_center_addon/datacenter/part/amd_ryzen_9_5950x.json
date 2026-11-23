@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 9 5950X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 28352,
+    "power": 105,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 79900,
+    "date": "2020-11-05"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3090",
+  "stats": {
+    "kind": "GPU",
+    "compute": 41235,
+    "power": 350,
+    "sha256": 9713200000,
+    "ethash": 121000000,
+    "kheavyhash": 910000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 149900,
+    "date": "2020-09-24"
+  }
+}

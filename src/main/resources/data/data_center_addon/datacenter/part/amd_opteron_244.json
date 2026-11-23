@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "AMD Opteron 244",
+  "stats": {
+    "kind": "CPU",
+    "compute": 651,
+    "power": 85,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_940",
+    "stability": 0.04
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 79400,
+    "date": "2003-04-22"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Ripjaws X 32GB DDR3",
+  "stats": {
+    "crashChanceReduction": 0.27,
+    "computeMultiplier": 1.06,
+    "generation": "DDR3",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 50000,
+    "date": "2011-10-01"
+  }
+}

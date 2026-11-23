@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 4350",
+  "stats": {
+    "kind": "GPU",
+    "compute": 74,
+    "power": 22,
+    "sha256": 8800000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 4900,
+    "date": "2008-09-10"
+  }
+}

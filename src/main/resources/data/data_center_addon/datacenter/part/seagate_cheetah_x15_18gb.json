@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Cheetah X15 18GB",
+  "stats": {
+    "capacityGb": 18,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 43032,
+    "date": "2000-02-23"
+  }
+}

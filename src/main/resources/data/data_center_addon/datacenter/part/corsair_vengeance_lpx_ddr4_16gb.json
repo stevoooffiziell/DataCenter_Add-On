@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Vengeance LPX 16GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.17,
+    "computeMultiplier": 1.03,
+    "generation": "DDR4",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 15000,
+    "date": "2015-09-17"
+  }
+}

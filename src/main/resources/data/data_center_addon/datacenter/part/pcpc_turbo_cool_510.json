@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "PC Power & Cooling Turbo-Cool 510",
+  "stats": {
+    "maxPowerThroughput": 510,
+    "wasteHeatPerFe": 0.01667,
+    "efficiency": 0.75
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 3610,
+    "date": "2003-01-01"
+  }
+}

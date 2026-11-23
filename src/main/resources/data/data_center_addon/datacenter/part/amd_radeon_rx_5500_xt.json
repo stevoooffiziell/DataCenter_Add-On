@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 5500 XT 8GB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6001,
+    "power": 130,
+    "sha256": 0,
+    "ethash": 27000000,
+    "kheavyhash": 180000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 19900,
+    "date": "2019-12-12"
+  }
+}

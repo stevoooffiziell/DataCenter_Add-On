@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2080",
+  "stats": {
+    "kind": "GPU",
+    "compute": 11671,
+    "power": 215,
+    "sha256": 5519100000,
+    "ethash": 42000000,
+    "kheavyhash": 510000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 69900,
+    "date": "2018-09-20"
+  }
+}

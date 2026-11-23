@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston 32MB PC66 SDRAM",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "SDRAM",
+    "sizeMb": 32
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 3300,
+    "date": "1998-08-01"
+  }
+}

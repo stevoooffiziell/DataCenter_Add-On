@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 3870 X2",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1224,
+    "power": 165,
+    "sha256": 110800000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 44900,
+    "date": "2008-01-28"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3080",
+  "stats": {
+    "kind": "GPU",
+    "compute": 34502,
+    "power": 320,
+    "sha256": 0,
+    "ethash": 100000000,
+    "kheavyhash": 750000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 69900,
+    "date": "2020-09-17"
+  }
+}

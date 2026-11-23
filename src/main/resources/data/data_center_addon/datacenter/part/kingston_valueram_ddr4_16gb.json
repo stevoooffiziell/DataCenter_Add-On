@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 16GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.25,
+    "computeMultiplier": 1.0,
+    "generation": "DDR4",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 12000,
+    "date": "2015-09-17"
+  }
+}

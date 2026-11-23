@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Raptor X 150GB",
+  "stats": {
+    "capacityGb": 150,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 20429,
+    "date": "2006-01-01"
+  }
+}

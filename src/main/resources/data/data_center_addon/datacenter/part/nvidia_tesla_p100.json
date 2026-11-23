@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla P100",
+  "stats": {
+    "kind": "GPU",
+    "compute": 10778,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 38800000,
+    "kheavyhash": 367000000,
+    "stability": 0.08,
+    "memBandwidth": 1.06
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 569900,
+    "date": "2016-06-20"
+  }
+}

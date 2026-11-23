@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon E5-2699 v4",
+  "stats": {
+    "kind": "CPU",
+    "compute": 28642,
+    "power": 145,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA2011_3",
+    "stability": 0.14,
+    "memBandwidth": 1.03
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 411500,
+    "date": "2016-03-31"
+  }
+}

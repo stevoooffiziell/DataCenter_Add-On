@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 5600X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 12500,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 29900,
+    "date": "2020-11-05"
+  }
+}

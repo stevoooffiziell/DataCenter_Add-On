@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "be quiet! Dark Power Pro 13 1600W",
+  "stats": {
+    "maxPowerThroughput": 1600,
+    "efficiency": 0.94,
+    "wasteHeatPerFe": 0.004
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 46900,
+    "date": "2022-11-01"
+  }
+}

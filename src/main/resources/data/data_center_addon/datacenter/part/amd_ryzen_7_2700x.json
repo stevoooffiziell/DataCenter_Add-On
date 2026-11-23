@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 2700X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 12441,
+    "power": 105,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 32900,
+    "date": "2018-04-19"
+  }
+}

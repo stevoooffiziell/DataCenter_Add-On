@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda ATA II 30.6GB",
+  "stats": {
+    "capacityGb": 31,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 27042,
+    "date": "2000-01-31"
+  }
+}

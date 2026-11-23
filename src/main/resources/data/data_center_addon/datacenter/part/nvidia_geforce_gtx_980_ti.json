@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 980 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6525,
+    "power": 250,
+    "sha256": 6426800000,
+    "ethash": 22000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 64900,
+    "date": "2015-06-02"
+  }
+}

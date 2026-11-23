@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5070",
+  "stats": {
+    "kind": "GPU",
+    "compute": 35811,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 54900,
+    "date": "2025-03-05"
+  }
+}

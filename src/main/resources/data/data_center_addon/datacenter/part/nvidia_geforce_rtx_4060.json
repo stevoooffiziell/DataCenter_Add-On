@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4060",
+  "stats": {
+    "kind": "GPU",
+    "compute": 17500,
+    "power": 115,
+    "sha256": 0,
+    "ethash": 33420000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 29900,
+    "date": "2023-06-29"
+  }
+}

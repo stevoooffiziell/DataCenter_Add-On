@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon E5-2690",
+  "stats": {
+    "kind": "CPU",
+    "compute": 10994,
+    "power": 135,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA2011",
+    "stability": 0.11,
+    "memBandwidth": 1.03
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 205700,
+    "date": "2012-03-06"
+  }
+}

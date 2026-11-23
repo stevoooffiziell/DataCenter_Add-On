@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III Xeon 550",
+  "stats": {
+    "kind": "CPU",
+    "compute": 199,
+    "power": 34,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_2",
+    "stability": 0.02
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 93100,
+    "date": "1999-08-23"
+  }
+}

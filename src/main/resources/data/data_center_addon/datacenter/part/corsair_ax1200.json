@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair AX1200",
+  "stats": {
+    "maxPowerThroughput": 1200,
+    "efficiency": 0.9,
+    "wasteHeatPerFe": 0.00667
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 29900,
+    "date": "2010-02-01"
+  }
+}

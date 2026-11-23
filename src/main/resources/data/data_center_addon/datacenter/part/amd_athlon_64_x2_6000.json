@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 X2 6000+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2170,
+    "power": 125,
+    "sha256": 2810000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 46400,
+    "date": "2006-12-05"
+  }
+}

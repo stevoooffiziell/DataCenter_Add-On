@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1070",
+  "stats": {
+    "kind": "GPU",
+    "compute": 7487,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 29170000,
+    "kheavyhash": 230000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 37900,
+    "date": "2016-06-10"
+  }
+}

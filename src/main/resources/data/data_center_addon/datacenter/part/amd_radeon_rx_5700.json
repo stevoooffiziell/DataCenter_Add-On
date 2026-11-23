@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 5700",
+  "stats": {
+    "kind": "GPU",
+    "compute": 9214,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 54000000,
+    "kheavyhash": 250000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 34900,
+    "date": "2019-07-07"
+  }
+}

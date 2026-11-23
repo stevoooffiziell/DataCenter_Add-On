@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 380X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 4613,
+    "power": 190,
+    "sha256": 0,
+    "ethash": 20630000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 22900,
+    "date": "2015-11-19"
+  }
+}

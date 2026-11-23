@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon X800 Pro",
+  "stats": {
+    "kind": "GPU",
+    "compute": 86,
+    "power": 49,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2004-05-04"
+  }
+}

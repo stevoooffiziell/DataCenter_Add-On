@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-860",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4500,
+    "power": 95,
+    "sha256": 16000000,
+    "ethash": 0,
+    "socket": "LGA1156"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 28400,
+    "date": "2009-09-08"
+  }
+}

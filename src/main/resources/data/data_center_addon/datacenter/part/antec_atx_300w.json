@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Antec 300W ATX",
+  "stats": {
+    "maxPowerThroughput": 300,
+    "wasteHeatPerFe": 0.02133,
+    "efficiency": 0.68
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 1964,
+    "date": "1998-06-01"
+  }
+}

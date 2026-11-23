@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 480",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1553,
+    "power": 250,
+    "sha256": 120900000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2010-03-26"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "AMD Radeon RX 560 Mining Edition",
+  "stats": {
+    "compute": 3013,
+    "power": 80,
+    "sha256": 0,
+    "ethash": 12500000,
+    "kheavyhash": 90000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 21800,
+    "date": "2017-07-01"
+  }
+}

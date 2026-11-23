@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar Black 1TB",
+  "stats": {
+    "capacityGb": 1000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 20999,
+    "date": "2008-08-01"
+  }
+}

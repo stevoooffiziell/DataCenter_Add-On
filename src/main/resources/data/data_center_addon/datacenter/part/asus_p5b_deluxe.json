@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P5B Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "LGA775",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 21900,
+    "date": "2006-07-27"
+  }
+}

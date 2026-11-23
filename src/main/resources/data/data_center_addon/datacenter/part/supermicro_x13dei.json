@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X13DEI",
+  "stats": {
+    "psuSlots": 3,
+    "cpuSlots": 2,
+    "gpuSlots": 6,
+    "ramSlots": 16,
+    "storageSlots": 12,
+    "fanSlots": 3,
+    "socket": "LGA4677",
+    "ramGenerations": [
+      "DDR5"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 89900,
+    "date": "2023-01-10"
+  }
+}

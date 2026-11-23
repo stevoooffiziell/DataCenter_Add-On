@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTS 250",
+  "stats": {
+    "kind": "GPU",
+    "compute": 450,
+    "power": 150,
+    "sha256": 35000000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 14900,
+    "date": "2009-03-03"
+  }
+}

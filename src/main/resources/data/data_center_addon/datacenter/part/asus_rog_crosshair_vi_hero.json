@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS ROG Crosshair VI Hero",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 2,
+    "socket": "SOCKET_AM4",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 25500,
+    "date": "2017-03-02"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Vengeance LPX 8GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.07,
+    "computeMultiplier": 1.0,
+    "generation": "DDR4",
+    "sizeMb": 8192
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 8700,
+    "date": "2015-07-29"
+  }
+}

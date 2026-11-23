@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 1700",
+  "stats": {
+    "kind": "CPU",
+    "compute": 10500,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 32900,
+    "date": "2017-03-02"
+  }
+}

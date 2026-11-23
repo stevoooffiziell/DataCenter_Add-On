@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA A100",
+  "stats": {
+    "kind": "GPU",
+    "compute": 22599,
+    "power": 250,
+    "sha256": 5300000000,
+    "ethash": 170000000,
+    "kheavyhash": 500000000,
+    "stability": 0.12,
+    "memBandwidth": 1.12
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 1000000,
+    "date": "2020-06-22"
+  }
+}

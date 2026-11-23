@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 560 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1460,
+    "power": 170,
+    "sha256": 83900000,
+    "ethash": 27380000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 24900,
+    "date": "2011-01-25"
+  }
+}

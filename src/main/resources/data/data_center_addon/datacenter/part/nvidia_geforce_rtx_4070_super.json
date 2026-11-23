@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4070 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 41120,
+    "power": 220,
+    "sha256": 0,
+    "ethash": 65980000,
+    "kheavyhash": 1061000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2024-01-17"
+  }
+}

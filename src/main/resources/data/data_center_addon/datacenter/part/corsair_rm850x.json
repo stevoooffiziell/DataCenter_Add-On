@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair RM850x",
+  "stats": {
+    "maxPowerThroughput": 850,
+    "efficiency": 0.9,
+    "wasteHeatPerFe": 0.00667
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 15900,
+    "date": "2015-09-01"
+  }
+}

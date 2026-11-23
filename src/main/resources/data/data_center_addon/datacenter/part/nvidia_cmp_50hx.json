@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA CMP 50HX",
+  "stats": {
+    "compute": 12630,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 45000000,
+    "kheavyhash": 620000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 124900,
+    "date": "2021-04-01"
+  }
+}

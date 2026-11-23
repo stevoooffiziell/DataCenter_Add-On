@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD Opteron 6380",
+  "stats": {
+    "kind": "CPU",
+    "compute": 18500,
+    "power": 115,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_G34",
+    "stability": 0.11,
+    "memBandwidth": 1.03
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 108800,
+    "date": "2012-11-05"
+  }
+}

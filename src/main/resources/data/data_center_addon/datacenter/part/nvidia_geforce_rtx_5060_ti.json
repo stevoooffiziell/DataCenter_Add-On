@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5060 Ti 8GB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 27470,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 37900,
+    "date": "2025-04-16"
+  }
+}

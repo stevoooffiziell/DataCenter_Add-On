@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla C1060",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1078,
+    "power": 188,
+    "sha256": 80800000,
+    "ethash": 0,
+    "stability": 0.03,
+    "memBandwidth": 1.01
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 169900,
+    "date": "2008-06-16"
+  }
+}

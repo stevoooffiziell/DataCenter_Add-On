@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-6700K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 5283,
+    "power": 91,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1151_V1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 35000,
+    "date": "2015-08-05"
+  }
+}

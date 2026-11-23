@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic S12-500",
+  "stats": {
+    "maxPowerThroughput": 500,
+    "wasteHeatPerFe": 0.01333,
+    "efficiency": 0.8
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 3850,
+    "date": "2005-06-01"
+  }
+}

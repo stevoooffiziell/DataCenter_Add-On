@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon E5-2697 v2",
+  "stats": {
+    "kind": "CPU",
+    "compute": 14500,
+    "power": 130,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA2011",
+    "stability": 0.12,
+    "memBandwidth": 1.03
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 261400,
+    "date": "2013-09-10"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon HD 6970",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3129,
+    "power": 250,
+    "sha256": 378000000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 36900,
+    "date": "2010-12-15"
+  }
+}

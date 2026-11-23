@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 9965",
+  "stats": {
+    "kind": "CPU",
+    "compute": 190000,
+    "power": 500,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP5",
+    "stability": 0.2,
+    "memBandwidth": 1.18
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 1481300,
+    "date": "2024-10-10"
+  }
+}

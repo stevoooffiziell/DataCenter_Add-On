@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA P104-100",
+  "stats": {
+    "compute": 7487,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 35000000,
+    "kheavyhash": 340000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 35000,
+    "date": "2017-06-19"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon HD 6870",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2341,
+    "power": 151,
+    "sha256": 303700000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 23900,
+    "date": "2010-10-22"
+  }
+}

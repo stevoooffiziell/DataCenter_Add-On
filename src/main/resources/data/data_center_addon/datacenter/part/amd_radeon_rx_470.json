@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 470",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5706,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 25000000,
+    "kheavyhash": 170000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 17900,
+    "date": "2016-08-04"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 7600",
+  "stats": {
+    "kind": "GPU",
+    "compute": 25207,
+    "power": 165,
+    "sha256": 0,
+    "ethash": 32020000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 26900,
+    "date": "2023-05-25"
+  }
+}

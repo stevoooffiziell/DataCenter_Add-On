@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X11DPH-T",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 6,
+    "ramSlots": 16,
+    "storageSlots": 12,
+    "fanSlots": 3,
+    "socket": "LGA3647",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 62900,
+    "date": "2017-07-11"
+  }
+}

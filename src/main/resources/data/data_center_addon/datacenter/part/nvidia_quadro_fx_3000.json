@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Quadro FX 3000",
+  "stats": {
+    "kind": "GPU",
+    "compute": 29,
+    "power": 52,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 229500,
+    "date": "2003-07-01"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2080 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 12923,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 46180000,
+    "kheavyhash": 565000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 69900,
+    "date": "2019-07-23"
+  }
+}

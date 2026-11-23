@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD FX-8350",
+  "stats": {
+    "kind": "CPU",
+    "compute": 10566,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM3_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 19500,
+    "date": "2012-10-23"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Vengeance 16GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.17,
+    "computeMultiplier": 1.03,
+    "generation": "DDR5",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 18700,
+    "date": "2021-11-04"
+  }
+}

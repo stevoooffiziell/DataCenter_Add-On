@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom X4 9600",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3327,
+    "power": 95,
+    "sha256": 8220000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 28300,
+    "date": "2007-11-19"
+  }
+}

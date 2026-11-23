@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 950 PRO 512GB NVMe",
+  "stats": {
+    "capacityGb": 512,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 34999,
+    "date": "2015-10-01"
+  }
+}

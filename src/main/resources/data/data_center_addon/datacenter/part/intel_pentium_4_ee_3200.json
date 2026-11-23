@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 Extreme Edition 3.2 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1157,
+    "power": 92,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_478"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 92500,
+    "date": "2003-11-03"
+  }
+}

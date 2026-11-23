@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 990 PRO 2TB NVMe",
+  "stats": {
+    "capacityGb": 2000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 30999,
+    "date": "2022-10-01"
+  }
+}

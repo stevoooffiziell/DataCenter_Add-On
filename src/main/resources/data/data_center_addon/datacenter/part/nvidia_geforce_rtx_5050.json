@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5050",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15246,
+    "power": 130,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 24900,
+    "date": "2025-07-01"
+  }
+}

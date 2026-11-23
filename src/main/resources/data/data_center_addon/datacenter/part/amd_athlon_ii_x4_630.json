@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon II X4 630",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4050,
+    "power": 95,
+    "sha256": 10700000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 12200,
+    "date": "2009-09-01"
+  }
+}

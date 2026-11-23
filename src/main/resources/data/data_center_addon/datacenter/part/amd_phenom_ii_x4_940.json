@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X4 940 Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4300,
+    "power": 125,
+    "sha256": 10000000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 27500,
+    "date": "2009-01-08"
+  }
+}

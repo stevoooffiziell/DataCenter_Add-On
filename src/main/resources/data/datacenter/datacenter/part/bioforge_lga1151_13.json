@@ -1,0 +1,11 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "data_center_addon:hide_original",
+      "category": "MAINBOARD_MINING"
+    }
+  ],
+  "shop": {
+    "hidden": true
+  }
+}

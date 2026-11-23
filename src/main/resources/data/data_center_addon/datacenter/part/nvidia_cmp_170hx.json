@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA CMP 170HX",
+  "stats": {
+    "compute": 14640,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 164000000,
+    "kheavyhash": 310000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 443500,
+    "date": "2022-02-01"
+  }
+}

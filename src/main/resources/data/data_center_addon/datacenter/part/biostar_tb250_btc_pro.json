@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "Biostar TB250-BTC PRO",
+  "stats": {
+    "psuSlots": 3,
+    "cpuSlots": 1,
+    "gpuSlots": 12,
+    "nativeGpuSlots": 1,
+    "ramSlots": 2,
+    "storageSlots": 1,
+    "fanSlots": 4,
+    "socket": "LGA1151_V1",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 12000,
+    "date": "2017-08-01"
+  }
+}

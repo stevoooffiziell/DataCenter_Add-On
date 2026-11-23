@@ -1,0 +1,17 @@
+{
+  "itemGroup.data_center_addon": "Data Center AddOn",
+  "block.data_center_addon.powered_server_panel": "Serverraum-Panel mit Stromdurchführung",
+  "tooltip.data_center_addon.powered_server_panel": "Dichtet einen Serverraum ab wie jeder Wandblock und leitet Energie (FE) hindurch.",
+  "tooltip.data_center_addon.powered_server_panel.ports": "Anschlüsse an beiden Enden: an die Wandseite setzen, auf jeder Seite Kabel oder Batterie anschließen.",
+  "data_center_addon.configuration.title": "Data Center AddOn",
+  "data_center_addon.configuration.parts": "Echte Bauteile",
+  "data_center_addon.configuration.parts.tooltip": "Echte Computer-Bauteile aus diesem Add-on.",
+  "data_center_addon.configuration.hideOriginalParts": "Original-Bauteile ausblenden",
+  "data_center_addon.configuration.hideOriginalParts.tooltip": "Blendet die eigenen Bauteile von Data Center (fiktive Marken) im Shop aus. Bereits gekaufte Teile funktionieren weiter. Wirkt beim nächsten Laden einer Welt.",
+  "data_center_addon.configuration.hiddenCategories": "Ausgeblendete Kategorien",
+  "data_center_addon.configuration.hiddenCategories.tooltip": "Shop-Kategorien, in denen die Original-Bauteile ausgeblendet werden, wenn 'Original-Bauteile ausblenden' an ist.",
+  "data_center_addon.configuration.hosting": "Hosting",
+  "data_center_addon.configuration.hosting.tooltip": "Einstellungen für Hosting-Racks.",
+  "data_center_addon.configuration.storageBoost": "Speicher-Bonus",
+  "data_center_addon.configuration.storageBoost.tooltip": "Kapazitäts-Faktor für die Speicher-Bauteile dieses Add-ons, solange ihr Server in einem Hosting-Rack läuft. 1.0 schaltet ihn ab."
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 960",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2793,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 9900000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 19900,
+    "date": "2015-01-22"
+  }
+}

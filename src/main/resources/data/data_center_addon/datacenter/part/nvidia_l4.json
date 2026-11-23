@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA L4",
+  "stats": {
+    "kind": "GPU",
+    "compute": 35118,
+    "power": 72,
+    "sha256": 0,
+    "ethash": 0,
+    "kheavyhash": 500000000,
+    "stability": 0.14,
+    "memBandwidth": 1.12
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 250000,
+    "date": "2023-03-21"
+  }
+}

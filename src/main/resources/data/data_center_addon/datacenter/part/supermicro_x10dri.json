@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X10DRi",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 6,
+    "ramSlots": 16,
+    "storageSlots": 10,
+    "fanSlots": 3,
+    "socket": "LGA2011_3",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 45900,
+    "date": "2014-09-08"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 7200.7 120GB",
+  "stats": {
+    "capacityGb": 120,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 11100,
+    "date": "2004-01-01"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    { "item": "datacenter:server_panel" },
+    { "item": "minecraft:copper_ingot" },
+    { "item": "minecraft:redstone" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "data_center_addon:powered_server_panel"
+  }
+}

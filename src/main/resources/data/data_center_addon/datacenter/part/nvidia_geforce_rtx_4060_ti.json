@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4060 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 25571,
+    "power": 160,
+    "sha256": 0,
+    "ethash": 38670000,
+    "kheavyhash": 660000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2023-05-24"
+  }
+}

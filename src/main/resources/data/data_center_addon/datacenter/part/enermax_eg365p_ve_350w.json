@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Enermax EG365P-VE 350W",
+  "stats": {
+    "maxPowerThroughput": 350,
+    "wasteHeatPerFe": 0.02,
+    "efficiency": 0.7
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 2358,
+    "date": "2000-01-01"
+  }
+}

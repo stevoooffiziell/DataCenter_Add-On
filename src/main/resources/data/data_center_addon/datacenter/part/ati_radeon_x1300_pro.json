@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon X1300 Pro",
+  "stats": {
+    "kind": "GPU",
+    "compute": 36,
+    "power": 31,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 14900,
+    "date": "2005-10-05"
+  }
+}

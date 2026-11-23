@@ -1,0 +1,15 @@
+{
+  "type": "psu",
+  "name": "HP 750W Common Slot Platinum",
+  "stats": {
+    "maxPowerThroughput": 750,
+    "wasteHeatPerFe": 0.004,
+    "efficiency": 0.94,
+    "twelveVoltOnly": true
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 4000,
+    "date": "2011-01-01"
+  }
+}

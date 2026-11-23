@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Quadro FX 5800",
+  "stats": {
+    "kind": "GPU",
+    "compute": 721,
+    "power": 189,
+    "sha256": 55700000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 329900,
+    "date": "2008-11-11"
+  }
+}

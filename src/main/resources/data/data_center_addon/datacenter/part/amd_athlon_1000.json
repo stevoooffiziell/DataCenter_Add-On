@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 1.0 GHz (Slot A)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 362,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 129900,
+    "date": "2000-03-06"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar SE16 500GB",
+  "stats": {
+    "capacityGb": 500,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 20900,
+    "date": "2006-08-01"
+  }
+}

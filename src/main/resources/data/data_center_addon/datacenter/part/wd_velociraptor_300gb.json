@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital VelociRaptor 300GB",
+  "stats": {
+    "capacityGb": 300,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 29999,
+    "date": "2008-04-21"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon X5690",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7500,
+    "power": 130,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1366_XEON",
+    "stability": 0.09,
+    "memBandwidth": 1.02
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 166300,
+    "date": "2011-02-14"
+  }
+}

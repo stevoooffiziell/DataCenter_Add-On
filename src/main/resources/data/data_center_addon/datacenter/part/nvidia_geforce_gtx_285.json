@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 285",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1228,
+    "power": 204,
+    "sha256": 59100000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2009-01-15"
+  }
+}

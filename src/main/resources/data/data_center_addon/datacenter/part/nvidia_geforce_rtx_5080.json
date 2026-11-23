@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5080",
+  "stats": {
+    "kind": "GPU",
+    "compute": 65248,
+    "power": 360,
+    "sha256": 26823300000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 99900,
+    "date": "2025-01-30"
+  }
+}

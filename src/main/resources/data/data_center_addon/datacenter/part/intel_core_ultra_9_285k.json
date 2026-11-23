@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core Ultra 9 285K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 49472,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1851"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 58900,
+    "date": "2024-10-24"
+  }
+}

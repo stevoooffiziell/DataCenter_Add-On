@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA L40S",
+  "stats": {
+    "kind": "GPU",
+    "compute": 106164,
+    "power": 350,
+    "sha256": 0,
+    "ethash": 0,
+    "kheavyhash": 1500000000,
+    "stability": 0.15,
+    "memBandwidth": 1.15
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 750000,
+    "date": "2023-08-08"
+  }
+}

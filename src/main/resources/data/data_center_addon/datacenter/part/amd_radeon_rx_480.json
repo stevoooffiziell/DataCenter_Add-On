@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 480 8GB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5911,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 27000000,
+    "kheavyhash": 200000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 23900,
+    "date": "2016-06-29"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston FURY Beast 16GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.25,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 15000,
+    "date": "2021-11-04"
+  }
+}

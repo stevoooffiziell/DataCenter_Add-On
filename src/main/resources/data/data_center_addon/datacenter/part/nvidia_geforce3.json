@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce3",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2,
+    "power": 24,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 44900,
+    "date": "2001-02-27"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic FOCUS GX-750",
+  "stats": {
+    "maxPowerThroughput": 750,
+    "efficiency": 0.9,
+    "wasteHeatPerFe": 0.00667
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 11900,
+    "date": "2018-09-01"
+  }
+}

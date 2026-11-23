@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 6GB IDE Hard Drive",
+  "stats": {
+    "capacityGb": 6,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 15900,
+    "date": "1998-10-02"
+  }
+}

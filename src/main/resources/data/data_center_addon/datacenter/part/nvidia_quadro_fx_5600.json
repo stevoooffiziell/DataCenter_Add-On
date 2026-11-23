@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Quadro FX 5600",
+  "stats": {
+    "kind": "GPU",
+    "compute": 401,
+    "power": 171,
+    "sha256": 28000000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 270000,
+    "date": "2007-03-05"
+  }
+}

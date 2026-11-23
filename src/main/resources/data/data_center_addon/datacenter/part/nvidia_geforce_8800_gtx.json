@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 8800 GTX",
+  "stats": {
+    "kind": "GPU",
+    "compute": 401,
+    "power": 155,
+    "sha256": 28000000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2006-11-08"
+  }
+}

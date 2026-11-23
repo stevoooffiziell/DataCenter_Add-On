@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon X5355",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3500,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA771",
+    "stability": 0.06
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 117200,
+    "date": "2006-11-14"
+  }
+}

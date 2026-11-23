@@ -1,0 +1,12 @@
+{
+  "type": "fan",
+  "name": "Noctua NF-A14 PWM",
+  "stats": {
+    "airflowCfm": 82
+  },
+  "shop": {
+    "category": "FAN",
+    "price": 2490,
+    "date": "2013-01-01"
+  }
+}

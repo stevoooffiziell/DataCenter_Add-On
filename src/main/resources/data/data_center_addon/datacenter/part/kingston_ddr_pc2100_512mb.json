@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 512MB DDR PC2100",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR1",
+    "sizeMb": 512
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 11400,
+    "date": "2002-02-05"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2060",
+  "stats": {
+    "kind": "GPU",
+    "compute": 7475,
+    "power": 160,
+    "sha256": 3966900000,
+    "ethash": 27920000,
+    "kheavyhash": 340000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 34900,
+    "date": "2019-01-15"
+  }
+}

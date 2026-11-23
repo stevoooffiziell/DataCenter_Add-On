@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston FURY Beast 64GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.45,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 65536
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 45000,
+    "date": "2022-06-01"
+  }
+}

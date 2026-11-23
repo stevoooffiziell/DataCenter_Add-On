@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 16GB DDR3",
+  "stats": {
+    "crashChanceReduction": 0.25,
+    "computeMultiplier": 1.0,
+    "generation": "DDR3",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 9000,
+    "date": "2012-04-23"
+  }
+}

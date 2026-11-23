@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-12700K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 21500,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 40900,
+    "date": "2021-11-04"
+  }
+}

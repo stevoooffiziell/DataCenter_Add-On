@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 850 PRO 512GB",
+  "stats": {
+    "capacityGb": 512,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 39999,
+    "date": "2014-07-01"
+  }
+}

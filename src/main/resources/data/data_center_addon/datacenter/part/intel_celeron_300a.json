@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 300A",
+  "stats": {
+    "kind": "CPU",
+    "compute": 110,
+    "power": 19,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 14900,
+    "date": "1998-08-24"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1080",
+  "stats": {
+    "kind": "GPU",
+    "compute": 10280,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 37000000,
+    "kheavyhash": 350000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 59900,
+    "date": "2016-05-27"
+  }
+}

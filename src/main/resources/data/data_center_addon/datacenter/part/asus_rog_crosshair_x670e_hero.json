@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS ROG Crosshair X670E Hero",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_AM5",
+    "ramGenerations": [
+      "DDR5"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 69900,
+    "date": "2022-09-27"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA CMP 90HX",
+  "stats": {
+    "compute": 25150,
+    "power": 320,
+    "sha256": 0,
+    "ethash": 86000000,
+    "kheavyhash": 530000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 239900,
+    "date": "2021-04-01"
+  }
+}

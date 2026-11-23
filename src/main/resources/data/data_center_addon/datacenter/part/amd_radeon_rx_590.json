@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 590",
+  "stats": {
+    "kind": "GPU",
+    "compute": 8222,
+    "power": 225,
+    "sha256": 0,
+    "ethash": 31000000,
+    "kheavyhash": 210000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 27900,
+    "date": "2018-11-15"
+  }
+}

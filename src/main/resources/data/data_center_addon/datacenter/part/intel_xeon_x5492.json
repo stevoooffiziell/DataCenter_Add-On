@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon X5492",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4918,
+    "power": 150,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA771",
+    "stability": 0.065
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 149300,
+    "date": "2008-09-08"
+  }
+}

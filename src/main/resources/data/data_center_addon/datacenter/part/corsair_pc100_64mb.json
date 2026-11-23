@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair 64MB PC100 SDRAM",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "SDRAM",
+    "sizeMb": 64
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 7999,
+    "date": "1999-03-04"
+  }
+}

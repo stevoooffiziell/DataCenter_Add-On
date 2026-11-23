@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Crucial 128MB DDR PC1600",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR1",
+    "sizeMb": 128
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 14600,
+    "date": "2001-01-23"
+  }
+}

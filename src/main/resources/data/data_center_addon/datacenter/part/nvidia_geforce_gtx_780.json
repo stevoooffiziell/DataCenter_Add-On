@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 780",
+  "stats": {
+    "kind": "GPU",
+    "compute": 4821,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 18500000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 64900,
+    "date": "2013-05-23"
+  }
+}

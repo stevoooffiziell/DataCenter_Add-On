@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-980X Extreme Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7000,
+    "power": 130,
+    "sha256": 25000000,
+    "ethash": 0,
+    "socket": "LGA1366"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99900,
+    "date": "2010-03-16"
+  }
+}

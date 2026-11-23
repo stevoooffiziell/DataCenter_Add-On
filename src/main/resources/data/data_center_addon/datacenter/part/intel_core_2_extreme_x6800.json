@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core 2 Extreme X6800",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1900,
+    "power": 75,
+    "sha256": 6300000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99900,
+    "date": "2006-07-27"
+  }
+}

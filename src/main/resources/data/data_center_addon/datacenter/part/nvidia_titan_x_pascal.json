@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA TITAN X (Pascal)",
+  "stats": {
+    "kind": "GPU",
+    "compute": 12675,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 37000000,
+    "kheavyhash": 420000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 119900,
+    "date": "2016-08-02"
+  }
+}

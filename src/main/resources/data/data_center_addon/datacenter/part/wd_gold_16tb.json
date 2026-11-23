@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Gold 16TB",
+  "stats": {
+    "capacityGb": 16000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 56999,
+    "date": "2020-01-01"
+  }
+}

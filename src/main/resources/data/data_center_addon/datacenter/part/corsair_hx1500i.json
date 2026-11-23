@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair HX1500i",
+  "stats": {
+    "maxPowerThroughput": 1500,
+    "efficiency": 0.92,
+    "wasteHeatPerFe": 0.00533
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 39900,
+    "date": "2021-05-01"
+  }
+}

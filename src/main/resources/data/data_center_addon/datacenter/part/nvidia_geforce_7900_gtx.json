@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 7900 GTX",
+  "stats": {
+    "kind": "GPU",
+    "compute": 350,
+    "power": 84,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2006-03-09"
+  }
+}

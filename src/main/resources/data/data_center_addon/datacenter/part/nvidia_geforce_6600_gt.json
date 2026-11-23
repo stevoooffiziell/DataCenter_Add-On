@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 6600 GT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 73,
+    "power": 47,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 19900,
+    "date": "2004-08-12"
+  }
+}

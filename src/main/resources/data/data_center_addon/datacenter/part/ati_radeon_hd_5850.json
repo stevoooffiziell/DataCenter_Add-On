@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 5850",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2422,
+    "power": 151,
+    "sha256": 336500000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 25900,
+    "date": "2009-09-30"
+  }
+}

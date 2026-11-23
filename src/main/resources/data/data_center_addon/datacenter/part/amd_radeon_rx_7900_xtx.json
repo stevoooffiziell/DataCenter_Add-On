@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 7900 XTX",
+  "stats": {
+    "kind": "GPU",
+    "compute": 71159,
+    "power": 355,
+    "sha256": 12575400000,
+    "ethash": 101100000,
+    "kheavyhash": 1200000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 99900,
+    "date": "2022-12-13"
+  }
+}

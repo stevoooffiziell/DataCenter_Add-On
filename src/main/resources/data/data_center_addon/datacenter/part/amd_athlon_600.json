@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 600 (Slot A)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 217,
+    "power": 50,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 69900,
+    "date": "1999-06-23"
+  }
+}

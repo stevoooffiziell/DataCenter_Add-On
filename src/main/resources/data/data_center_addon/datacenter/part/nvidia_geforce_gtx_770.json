@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 770",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3859,
+    "power": 230,
+    "sha256": 0,
+    "ethash": 14400000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2013-05-30"
+  }
+}

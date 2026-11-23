@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-3770K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4906,
+    "power": 77,
+    "sha256": 18500000,
+    "ethash": 0,
+    "socket": "LGA1155"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 31300,
+    "date": "2012-04-29"
+  }
+}

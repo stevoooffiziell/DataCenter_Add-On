@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 4850",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1159,
+    "power": 110,
+    "sha256": 88200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 19900,
+    "date": "2008-06-25"
+  }
+}

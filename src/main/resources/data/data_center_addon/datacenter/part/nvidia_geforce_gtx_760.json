@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 760",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2619,
+    "power": 170,
+    "sha256": 0,
+    "ethash": 12300000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 24900,
+    "date": "2013-06-25"
+  }
+}

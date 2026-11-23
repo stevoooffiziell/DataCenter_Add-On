@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA CMP 30HX",
+  "stats": {
+    "compute": 5830,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 26000000,
+    "kheavyhash": 250000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 72384,
+    "date": "2021-03-01"
+  }
+}

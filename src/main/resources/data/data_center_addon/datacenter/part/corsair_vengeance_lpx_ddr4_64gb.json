@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Vengeance LPX 64GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.37,
+    "computeMultiplier": 1.09,
+    "generation": "DDR4",
+    "sizeMb": 65536
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 56200,
+    "date": "2015-12-22"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Savvio 10K.1 73GB",
+  "stats": {
+    "capacityGb": 73,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 18305,
+    "date": "2004-02-17"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 333",
+  "stats": {
+    "kind": "CPU",
+    "compute": 120,
+    "power": 20,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 19200,
+    "date": "1998-08-24"
+  }
+}

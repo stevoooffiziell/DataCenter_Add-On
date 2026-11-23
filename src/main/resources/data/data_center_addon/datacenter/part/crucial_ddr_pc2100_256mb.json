@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Crucial 256MB DDR PC2100",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR1",
+    "sizeMb": 256
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 18600,
+    "date": "2001-03-30"
+  }
+}

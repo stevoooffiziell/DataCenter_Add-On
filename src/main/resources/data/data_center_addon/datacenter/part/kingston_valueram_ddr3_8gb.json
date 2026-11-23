@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 8GB DDR3",
+  "stats": {
+    "crashChanceReduction": 0.15,
+    "computeMultiplier": 1.0,
+    "generation": "DDR3",
+    "sizeMb": 8192
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 20000,
+    "date": "2009-12-07"
+  }
+}

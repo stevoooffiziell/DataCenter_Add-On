@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/flint_forge_pentium_iii_xeon_1_00"
+  }
+}

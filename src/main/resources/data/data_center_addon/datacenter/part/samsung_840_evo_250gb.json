@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 840 EVO 250GB",
+  "stats": {
+    "capacityGb": 250,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 18999,
+    "date": "2013-07-01"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/cpu/amp_piston_athlon_xp_3200plus_socket_a_barton_2003_2200mhz"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Antec TruePower 480W",
+  "stats": {
+    "maxPowerThroughput": 480,
+    "wasteHeatPerFe": 0.01867,
+    "efficiency": 0.72
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 3119,
+    "date": "2002-06-01"
+  }
+}

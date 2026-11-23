@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Platinum 8180",
+  "stats": {
+    "kind": "CPU",
+    "compute": 38478,
+    "power": 205,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA3647",
+    "stability": 0.15,
+    "memBandwidth": 1.06
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 1000900,
+    "date": "2017-07-11"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i3-12100F",
+  "stats": {
+    "kind": "CPU",
+    "compute": 9500,
+    "power": 58,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 9700,
+    "date": "2022-01-04"
+  }
+}

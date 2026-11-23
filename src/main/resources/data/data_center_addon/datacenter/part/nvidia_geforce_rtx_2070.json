@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2070",
+  "stats": {
+    "kind": "GPU",
+    "compute": 8646,
+    "power": 175,
+    "sha256": 9989200000,
+    "ethash": 40000000,
+    "kheavyhash": 400000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2018-10-17"
+  }
+}

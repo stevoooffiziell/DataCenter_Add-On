@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 7900 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 59801,
+    "power": 315,
+    "sha256": 0,
+    "ethash": 83170000,
+    "kheavyhash": 940000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 89900,
+    "date": "2022-12-13"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium D 840",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2314,
+    "power": 130,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 53000,
+    "date": "2005-05-26"
+  }
+}

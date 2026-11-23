@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 7742",
+  "stats": {
+    "kind": "CPU",
+    "compute": 78000,
+    "power": 225,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP3",
+    "stability": 0.16,
+    "memBandwidth": 1.1
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 695000,
+    "date": "2019-08-07"
+  }
+}

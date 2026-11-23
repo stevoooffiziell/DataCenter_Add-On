@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair XMS3 2GB DDR3-1333",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR3",
+    "sizeMb": 2048
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 41700,
+    "date": "2007-07-20"
+  }
+}

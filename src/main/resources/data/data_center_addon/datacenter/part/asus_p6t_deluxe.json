@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P6T Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 3,
+    "ramSlots": 6,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "LGA1366",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 29900,
+    "date": "2008-11-17"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 1600",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7811,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 21900,
+    "date": "2017-04-11"
+  }
+}

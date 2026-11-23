@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2060 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 8322,
+    "power": 175,
+    "sha256": 0,
+    "ethash": 41000000,
+    "kheavyhash": 379000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2019-07-09"
+  }
+}

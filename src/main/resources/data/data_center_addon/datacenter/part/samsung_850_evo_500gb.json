@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 850 EVO 500GB",
+  "stats": {
+    "capacityGb": 500,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 29499,
+    "date": "2014-12-01"
+  }
+}

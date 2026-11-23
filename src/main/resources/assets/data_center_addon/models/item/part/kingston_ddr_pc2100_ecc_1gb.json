@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/ram/kingsley_pc2100_ecc_1024"
+  }
+}

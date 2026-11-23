@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 5700 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 11300,
+    "power": 225,
+    "sha256": 4052300000,
+    "ethash": 55000000,
+    "kheavyhash": 330000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2019-07-07"
+  }
+}

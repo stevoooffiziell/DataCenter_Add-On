@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Samsung 256MB PC800 RDRAM RIMM",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "RDRAM",
+    "sizeMb": 256
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 97900,
+    "date": "2000-05-19"
+  }
+}

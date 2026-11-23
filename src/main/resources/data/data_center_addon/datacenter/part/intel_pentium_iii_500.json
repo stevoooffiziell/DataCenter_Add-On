@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III 500",
+  "stats": {
+    "kind": "CPU",
+    "compute": 181,
+    "power": 28,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 69600,
+    "date": "1999-02-26"
+  }
+}

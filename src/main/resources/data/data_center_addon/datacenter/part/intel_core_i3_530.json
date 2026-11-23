@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i3-530",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1843,
+    "power": 73,
+    "sha256": 8310000,
+    "ethash": 0,
+    "socket": "LGA1156"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 11300,
+    "date": "2010-01-07"
+  }
+}

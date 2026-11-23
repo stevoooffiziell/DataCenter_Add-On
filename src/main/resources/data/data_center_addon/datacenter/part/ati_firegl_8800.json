@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI FireGL 8800",
+  "stats": {
+    "kind": "GPU",
+    "compute": 7,
+    "power": 36,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 99900,
+    "date": "2001-07-01"
+  }
+}

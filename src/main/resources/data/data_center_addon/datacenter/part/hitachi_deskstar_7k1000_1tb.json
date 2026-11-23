@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Hitachi Deskstar 7K1000 1TB",
+  "stats": {
+    "capacityGb": 1000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 39900,
+    "date": "2007-01-05"
+  }
+}

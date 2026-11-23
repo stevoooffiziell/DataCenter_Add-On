@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA H100 PCIe",
+  "stats": {
+    "kind": "GPU",
+    "compute": 59106,
+    "power": 350,
+    "sha256": 13600000000,
+    "ethash": 0,
+    "kheavyhash": 1230000000,
+    "stability": 0.15,
+    "memBandwidth": 1.18
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 2500000,
+    "date": "2022-09-20"
+  }
+}

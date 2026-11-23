@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 390X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6838,
+    "power": 275,
+    "sha256": 0,
+    "ethash": 27500000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 42900,
+    "date": "2015-06-18"
+  }
+}

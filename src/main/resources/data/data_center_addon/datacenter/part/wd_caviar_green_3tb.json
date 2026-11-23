@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar Green 3TB",
+  "stats": {
+    "capacityGb": 3000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 23999,
+    "date": "2010-10-19"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD FX-8150",
+  "stats": {
+    "kind": "CPU",
+    "compute": 10566,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM3_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 24500,
+    "date": "2011-10-12"
+  }
+}

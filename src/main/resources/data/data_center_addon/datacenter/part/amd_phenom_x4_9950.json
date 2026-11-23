@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom X4 9950 Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3760,
+    "power": 126,
+    "sha256": 9300000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2_PLUS"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 23500,
+    "date": "2008-03-05"
+  }
+}

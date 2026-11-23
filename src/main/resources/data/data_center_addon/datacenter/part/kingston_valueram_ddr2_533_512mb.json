@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 512MB DDR2-533",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR2",
+    "sizeMb": 512
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 8448,
+    "date": "2004-06-21"
+  }
+}

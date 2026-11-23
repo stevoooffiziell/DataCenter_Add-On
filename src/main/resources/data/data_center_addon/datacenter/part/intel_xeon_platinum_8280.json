@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Platinum 8280",
+  "stats": {
+    "kind": "CPU",
+    "compute": 42000,
+    "power": 205,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA3647",
+    "stability": 0.16,
+    "memBandwidth": 1.07
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 1000900,
+    "date": "2019-04-02"
+  }
+}

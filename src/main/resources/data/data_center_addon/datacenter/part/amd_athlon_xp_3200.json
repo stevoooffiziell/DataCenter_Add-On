@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 3200+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 796,
+    "power": 77,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 46400,
+    "date": "2003-05-13"
+  }
+}

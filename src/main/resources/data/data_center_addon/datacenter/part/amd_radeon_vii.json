@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon VII",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15939,
+    "power": 300,
+    "sha256": 3666000000,
+    "ethash": 90000000,
+    "kheavyhash": 400000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 69900,
+    "date": "2019-02-07"
+  }
+}

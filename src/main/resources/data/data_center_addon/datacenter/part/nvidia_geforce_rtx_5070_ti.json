@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5070 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 50877,
+    "power": 300,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 74900,
+    "date": "2025-02-20"
+  }
+}

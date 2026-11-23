@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-965 Extreme Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4300,
+    "power": 130,
+    "sha256": 46000000,
+    "ethash": 0,
+    "socket": "LGA1366"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99900,
+    "date": "2008-11-17"
+  }
+}

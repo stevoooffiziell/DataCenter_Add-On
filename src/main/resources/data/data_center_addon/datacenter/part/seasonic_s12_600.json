@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic S12-600",
+  "stats": {
+    "maxPowerThroughput": 600,
+    "wasteHeatPerFe": 0.012,
+    "efficiency": 0.82
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 4736,
+    "date": "2006-06-01"
+  }
+}

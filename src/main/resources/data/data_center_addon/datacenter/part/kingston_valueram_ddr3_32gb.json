@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 32GB DDR3",
+  "stats": {
+    "crashChanceReduction": 0.35,
+    "computeMultiplier": 1.0,
+    "generation": "DDR3",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 40000,
+    "date": "2011-10-01"
+  }
+}

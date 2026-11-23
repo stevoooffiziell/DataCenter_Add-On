@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA TITAN V",
+  "stats": {
+    "kind": "GPU",
+    "compute": 17208,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 82000000,
+    "kheavyhash": 600000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 299900,
+    "date": "2017-12-07"
+  }
+}

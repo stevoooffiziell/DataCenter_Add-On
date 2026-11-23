@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 980",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5772,
+    "power": 165,
+    "sha256": 0,
+    "ethash": 19800000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 54900,
+    "date": "2014-09-18"
+  }
+}

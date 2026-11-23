@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5090",
+  "stats": {
+    "kind": "GPU",
+    "compute": 121457,
+    "power": 575,
+    "sha256": 27190700000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 199900,
+    "date": "2025-01-30"
+  }
+}

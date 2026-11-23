@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 870 QVO 8TB",
+  "stats": {
+    "capacityGb": 8000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 89999,
+    "date": "2020-06-30"
+  }
+}

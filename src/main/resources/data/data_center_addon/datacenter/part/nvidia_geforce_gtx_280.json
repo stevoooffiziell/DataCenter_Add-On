@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 280",
+  "stats": {
+    "kind": "GPU",
+    "compute": 719,
+    "power": 236,
+    "sha256": 55600000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 64900,
+    "date": "2008-06-16"
+  }
+}

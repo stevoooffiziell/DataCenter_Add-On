@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX TITAN",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5197,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 20000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 99900,
+    "date": "2013-02-21"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6800",
+  "stats": {
+    "kind": "GPU",
+    "compute": 18740,
+    "power": 250,
+    "sha256": 7260700000,
+    "ethash": 62000000,
+    "kheavyhash": 730000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 57900,
+    "date": "2020-11-18"
+  }
+}

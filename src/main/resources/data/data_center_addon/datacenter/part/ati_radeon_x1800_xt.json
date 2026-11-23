@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon X1800 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 151,
+    "power": 113,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 54900,
+    "date": "2005-10-05"
+  }
+}

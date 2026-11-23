@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core 2 Extreme QX6700",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3862,
+    "power": 130,
+    "sha256": 12280000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 99900,
+    "date": "2006-11-01"
+  }
+}

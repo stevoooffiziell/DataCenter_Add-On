@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic PRIME Titanium 850",
+  "stats": {
+    "maxPowerThroughput": 850,
+    "efficiency": 0.94,
+    "wasteHeatPerFe": 0.004
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 22900,
+    "date": "2016-10-01"
+  }
+}

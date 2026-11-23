@@ -1,0 +1,12 @@
+{
+  "type": "fan",
+  "name": "Noctua NF-A12x25 PWM",
+  "stats": {
+    "airflowCfm": 60
+  },
+  "shop": {
+    "category": "FAN",
+    "price": 2990,
+    "date": "2018-06-01"
+  }
+}

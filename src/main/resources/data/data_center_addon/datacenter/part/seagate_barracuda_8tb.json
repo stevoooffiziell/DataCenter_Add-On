@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate BarraCuda 8TB",
+  "stats": {
+    "capacityGb": 8000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 25499,
+    "date": "2017-06-01"
+  }
+}

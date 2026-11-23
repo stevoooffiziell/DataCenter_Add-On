@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon X850 XT Platinum Edition",
+  "stats": {
+    "kind": "GPU",
+    "compute": 118,
+    "power": 87,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 54900,
+    "date": "2004-12-21"
+  }
+}

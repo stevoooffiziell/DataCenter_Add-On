@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2070 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 10502,
+    "power": 215,
+    "sha256": 4598400000,
+    "ethash": 41180000,
+    "kheavyhash": 486000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2019-07-09"
+  }
+}

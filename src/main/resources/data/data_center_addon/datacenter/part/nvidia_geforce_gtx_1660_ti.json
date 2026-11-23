@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1660 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6280,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 30000000,
+    "kheavyhash": 250000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 27900,
+    "date": "2019-02-22"
+  }
+}

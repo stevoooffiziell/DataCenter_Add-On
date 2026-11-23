@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar 60GB",
+  "stats": {
+    "capacityGb": 60,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 16500,
+    "date": "2001-07-02"
+  }
+}

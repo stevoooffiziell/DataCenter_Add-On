@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon E5310",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2314,
+    "power": 80,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA771",
+    "stability": 0.055
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 45500,
+    "date": "2006-11-14"
+  }
+}

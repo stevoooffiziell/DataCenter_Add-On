@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 X2 5200+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1881,
+    "power": 89,
+    "sha256": 2390000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 40300,
+    "date": "2006-09-06"
+  }
+}

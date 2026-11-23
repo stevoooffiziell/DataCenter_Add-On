@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon 9800 Pro",
+  "stats": {
+    "kind": "GPU",
+    "compute": 46,
+    "power": 53,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2003-03-01"
+  }
+}

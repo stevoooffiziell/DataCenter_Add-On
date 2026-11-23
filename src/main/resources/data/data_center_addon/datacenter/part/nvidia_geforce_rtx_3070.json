@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3070",
+  "stats": {
+    "kind": "GPU",
+    "compute": 23538,
+    "power": 220,
+    "sha256": 5349100000,
+    "ethash": 62000000,
+    "kheavyhash": 510000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2020-10-29"
+  }
+}

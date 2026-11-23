@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6950 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 27316,
+    "power": 335,
+    "sha256": 0,
+    "ethash": 65000000,
+    "kheavyhash": 1000000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 109900,
+    "date": "2022-05-10"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-14600K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 24000,
+    "power": 181,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 31900,
+    "date": "2023-10-17"
+  }
+}

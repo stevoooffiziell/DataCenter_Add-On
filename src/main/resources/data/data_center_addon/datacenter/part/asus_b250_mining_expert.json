@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "ASUS B250 Mining Expert",
+  "stats": {
+    "psuSlots": 3,
+    "cpuSlots": 1,
+    "gpuSlots": 19,
+    "nativeGpuSlots": 1,
+    "ramSlots": 2,
+    "storageSlots": 1,
+    "fanSlots": 4,
+    "socket": "LGA1151_V1",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 18000,
+    "date": "2017-11-01"
+  }
+}

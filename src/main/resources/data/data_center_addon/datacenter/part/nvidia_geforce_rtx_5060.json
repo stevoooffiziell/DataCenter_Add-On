@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 5060",
+  "stats": {
+    "kind": "GPU",
+    "compute": 22224,
+    "power": 145,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 29900,
+    "date": "2025-05-19"
+  }
+}

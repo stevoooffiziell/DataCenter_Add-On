@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Cheetah 15K.3 73GB",
+  "stats": {
+    "capacityGb": 73,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 42301,
+    "date": "2002-05-06"
+  }
+}

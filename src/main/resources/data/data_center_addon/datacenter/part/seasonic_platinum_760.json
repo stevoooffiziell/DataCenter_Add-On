@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic Platinum-760",
+  "stats": {
+    "maxPowerThroughput": 760,
+    "wasteHeatPerFe": 0.00534,
+    "efficiency": 0.92
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 7400,
+    "date": "2009-10-01"
+  }
+}

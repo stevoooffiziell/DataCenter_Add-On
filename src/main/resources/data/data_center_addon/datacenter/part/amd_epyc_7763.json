@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 7763",
+  "stats": {
+    "kind": "CPU",
+    "compute": 88000,
+    "power": 280,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP3",
+    "stability": 0.17,
+    "memBandwidth": 1.11
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 789000,
+    "date": "2021-03-15"
+  }
+}

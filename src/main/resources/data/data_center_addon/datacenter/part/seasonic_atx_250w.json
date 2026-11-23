@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic 250W ATX",
+  "stats": {
+    "maxPowerThroughput": 250,
+    "wasteHeatPerFe": 0.02333,
+    "efficiency": 0.65
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 1564,
+    "date": "1998-01-01"
+  }
+}

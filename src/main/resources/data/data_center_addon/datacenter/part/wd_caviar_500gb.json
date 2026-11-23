@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar 500GB",
+  "stats": {
+    "capacityGb": 500,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 9999,
+    "date": "2008-01-30"
+  }
+}

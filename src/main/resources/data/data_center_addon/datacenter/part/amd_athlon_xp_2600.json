@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon XP 2600+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 771,
+    "power": 68,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 29700,
+    "date": "2002-08-21"
+  }
+}

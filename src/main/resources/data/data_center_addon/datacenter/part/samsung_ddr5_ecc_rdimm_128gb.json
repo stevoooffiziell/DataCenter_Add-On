@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Samsung 128GB DDR5 ECC RDIMM",
+  "stats": {
+    "crashChanceReduction": 0.6,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 131072
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 149900,
+    "date": "2022-11-10"
+  }
+}

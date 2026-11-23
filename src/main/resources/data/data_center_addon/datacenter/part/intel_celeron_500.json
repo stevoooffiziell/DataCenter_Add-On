@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Celeron 500",
+  "stats": {
+    "kind": "CPU",
+    "compute": 181,
+    "power": 27,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_370"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 16700,
+    "date": "1999-08-02"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 280X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 4752,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 14420000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 29900,
+    "date": "2013-10-08"
+  }
+}

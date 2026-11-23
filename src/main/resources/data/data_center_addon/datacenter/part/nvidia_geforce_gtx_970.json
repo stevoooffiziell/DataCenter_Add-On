@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 970",
+  "stats": {
+    "kind": "GPU",
+    "compute": 4543,
+    "power": 145,
+    "sha256": 1367700000,
+    "ethash": 19000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 32900,
+    "date": "2014-09-18"
+  }
+}

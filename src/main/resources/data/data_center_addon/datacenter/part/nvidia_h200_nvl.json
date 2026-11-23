@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA H200 NVL",
+  "stats": {
+    "kind": "GPU",
+    "compute": 69540,
+    "power": 600,
+    "sha256": 0,
+    "ethash": 0,
+    "kheavyhash": 1400000000,
+    "stability": 0.17,
+    "memBandwidth": 1.3
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 3200000,
+    "date": "2024-11-18"
+  }
+}

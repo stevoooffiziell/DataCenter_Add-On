@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Dominator 4GB DDR3",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR3",
+    "sizeMb": 4096
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 37500,
+    "date": "2008-06-03"
+  }
+}

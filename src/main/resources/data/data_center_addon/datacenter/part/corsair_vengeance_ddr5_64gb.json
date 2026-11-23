@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Vengeance 64GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.37,
+    "computeMultiplier": 1.09,
+    "generation": "DDR5",
+    "sizeMb": 65536
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 56200,
+    "date": "2022-06-01"
+  }
+}

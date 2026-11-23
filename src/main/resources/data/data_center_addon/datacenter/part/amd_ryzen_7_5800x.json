@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 5800X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 16500,
+    "power": 105,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 44900,
+    "date": "2020-11-05"
+  }
+}

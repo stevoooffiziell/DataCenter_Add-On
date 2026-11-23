@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA RTX 6000 Ada Generation",
+  "stats": {
+    "kind": "GPU",
+    "compute": 105220,
+    "power": 300,
+    "sha256": 0,
+    "ethash": 90000000,
+    "kheavyhash": 1300000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 680000,
+    "date": "2022-12-03"
+  }
+}

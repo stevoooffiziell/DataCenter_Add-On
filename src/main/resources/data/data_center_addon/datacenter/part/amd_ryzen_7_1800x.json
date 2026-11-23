@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 1800X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 11572,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 49900,
+    "date": "2017-03-02"
+  }
+}

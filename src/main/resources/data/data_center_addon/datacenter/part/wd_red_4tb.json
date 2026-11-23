@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Red 4TB",
+  "stats": {
+    "capacityGb": 4000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 18999,
+    "date": "2014-01-01"
+  }
+}

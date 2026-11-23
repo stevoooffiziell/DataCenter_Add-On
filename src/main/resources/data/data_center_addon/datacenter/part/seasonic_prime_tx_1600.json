@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic PRIME TX-1600",
+  "stats": {
+    "maxPowerThroughput": 1600,
+    "efficiency": 0.94,
+    "wasteHeatPerFe": 0.004
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 54900,
+    "date": "2021-09-01"
+  }
+}

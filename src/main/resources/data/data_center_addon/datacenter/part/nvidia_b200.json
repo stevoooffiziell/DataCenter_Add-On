@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "NVIDIA B200",
+  "stats": {
+    "kind": "GPU",
+    "compute": 92715,
+    "power": 1000,
+    "sha256": 20700000000,
+    "ethash": 0,
+    "stability": 0.18,
+    "memBandwidth": 1.25
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 3500000,
+    "date": "2024-11-01"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-3570K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4550,
+    "power": 77,
+    "sha256": 15000000,
+    "ethash": 0,
+    "socket": "LGA1155"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 22500,
+    "date": "2012-04-29"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon 9600 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 30,
+    "power": 20,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 19900,
+    "date": "2003-09-30"
+  }
+}

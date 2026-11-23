@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Seasonic S12II-550 Bronze",
+  "stats": {
+    "maxPowerThroughput": 550,
+    "wasteHeatPerFe": 0.01001,
+    "efficiency": 0.85
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 4500,
+    "date": "2008-01-01"
+  }
+}

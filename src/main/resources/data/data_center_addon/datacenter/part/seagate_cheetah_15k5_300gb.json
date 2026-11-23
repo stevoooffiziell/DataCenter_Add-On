@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Cheetah 15K.5 300GB",
+  "stats": {
+    "capacityGb": 300,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 32581,
+    "date": "2006-07-01"
+  }
+}

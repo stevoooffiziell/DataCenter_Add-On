@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium II 450",
+  "stats": {
+    "kind": "CPU",
+    "compute": 163,
+    "power": 27,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 66900,
+    "date": "1998-08-24"
+  }
+}

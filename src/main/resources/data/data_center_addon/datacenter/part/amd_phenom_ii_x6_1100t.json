@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X6 1100T Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 8028,
+    "power": 125,
+    "sha256": 22000000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 26500,
+    "date": "2011-02-01"
+  }
+}

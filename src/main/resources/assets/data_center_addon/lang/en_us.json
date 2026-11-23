@@ -1,5 +1,17 @@
 {
-  "itemGroup.data_center_addon": "Example Mod Tab",
-  "block.data_center_addon.example_block": "Example Block",
-  "item.data_center_addon.example_item": "Example Item"
+  "itemGroup.data_center_addon": "Data Center AddOn",
+  "block.data_center_addon.powered_server_panel": "Powered Server Room Panel",
+  "tooltip.data_center_addon.powered_server_panel": "Seals a server room like any wall block and carries energy (FE) through it.",
+  "tooltip.data_center_addon.powered_server_panel.ports": "Ports on both ends: place it against the wall face, connect a cable or battery on each side.",
+  "data_center_addon.configuration.title": "Data Center AddOn",
+  "data_center_addon.configuration.parts": "Real Parts",
+  "data_center_addon.configuration.parts.tooltip": "Real computer parts added by this add-on.",
+  "data_center_addon.configuration.hideOriginalParts": "Hide Original Parts",
+  "data_center_addon.configuration.hideOriginalParts.tooltip": "Hide Data Center's own (fictional brand) parts from the Shop. Parts you already own keep working. Takes effect the next time a world is loaded.",
+  "data_center_addon.configuration.hiddenCategories": "Hidden Categories",
+  "data_center_addon.configuration.hiddenCategories.tooltip": "Shop categories in which the original parts are hidden when 'Hide Original Parts' is on.",
+  "data_center_addon.configuration.hosting": "Hosting",
+  "data_center_addon.configuration.hosting.tooltip": "Hosting Rack settings.",
+  "data_center_addon.configuration.storageBoost": "Storage Boost",
+  "data_center_addon.configuration.storageBoost.tooltip": "Capacity multiplier for this add-on's storage parts while their server runs in a Hosting Rack. 1.0 turns it off."
 }

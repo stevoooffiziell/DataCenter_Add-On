@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-4670K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4750,
+    "power": 84,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1150"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 24200,
+    "date": "2013-06-02"
+  }
+}

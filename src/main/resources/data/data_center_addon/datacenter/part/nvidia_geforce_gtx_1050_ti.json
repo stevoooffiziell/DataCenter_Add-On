@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1050 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2470,
+    "power": 75,
+    "sha256": 0,
+    "ethash": 13000000,
+    "kheavyhash": 90000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 13900,
+    "date": "2016-10-25"
+  }
+}

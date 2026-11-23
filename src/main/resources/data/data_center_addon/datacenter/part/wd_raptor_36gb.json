@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Raptor 36GB",
+  "stats": {
+    "capacityGb": 36,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 15770,
+    "date": "2003-02-10"
+  }
+}

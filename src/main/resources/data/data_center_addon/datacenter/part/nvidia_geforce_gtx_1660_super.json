@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1660 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5806,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 31000000,
+    "kheavyhash": 230000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 22900,
+    "date": "2019-10-29"
+  }
+}

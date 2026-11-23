@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "AMD Radeon RX 470 Mining Edition",
+  "stats": {
+    "compute": 5679,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 24000000,
+    "kheavyhash": 170000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 31900,
+    "date": "2017-07-01"
+  }
+}

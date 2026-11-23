@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Crucial 16GB DDR4-2133",
+  "stats": {
+    "crashChanceReduction": 0.25,
+    "computeMultiplier": 1.0,
+    "generation": "DDR4",
+    "sizeMb": 16384
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 24900,
+    "date": "2014-08-29"
+  }
+}

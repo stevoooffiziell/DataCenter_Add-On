@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4070 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 46460,
+    "power": 285,
+    "sha256": 0,
+    "ethash": 62980000,
+    "kheavyhash": 1199000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 79900,
+    "date": "2023-01-05"
+  }
+}

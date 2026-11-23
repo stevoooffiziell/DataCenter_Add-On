@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair AX1500i",
+  "stats": {
+    "maxPowerThroughput": 1500,
+    "efficiency": 0.94,
+    "wasteHeatPerFe": 0.004
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 44900,
+    "date": "2014-03-01"
+  }
+}

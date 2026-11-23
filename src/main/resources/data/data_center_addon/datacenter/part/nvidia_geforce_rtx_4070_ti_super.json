@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4070 Ti SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 51106,
+    "power": 285,
+    "sha256": 0,
+    "ethash": 74090000,
+    "kheavyhash": 1318000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 79900,
+    "date": "2024-01-24"
+  }
+}

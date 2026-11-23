@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX Vega 64",
+  "stats": {
+    "kind": "GPU",
+    "compute": 14672,
+    "power": 295,
+    "sha256": 8843600000,
+    "ethash": 31500000,
+    "kheavyhash": 300000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 49900,
+    "date": "2017-08-14"
+  }
+}

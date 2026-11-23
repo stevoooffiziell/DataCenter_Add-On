@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon 3.6 GHz (Nocona)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1302,
+    "power": 103,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_604",
+    "stability": 0.045
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 85100,
+    "date": "2004-06-28"
+  }
+}

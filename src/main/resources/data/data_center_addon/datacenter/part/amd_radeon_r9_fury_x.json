@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 Fury X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 9967,
+    "power": 275,
+    "sha256": 0,
+    "ethash": 33400000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 64900,
+    "date": "2015-06-24"
+  }
+}

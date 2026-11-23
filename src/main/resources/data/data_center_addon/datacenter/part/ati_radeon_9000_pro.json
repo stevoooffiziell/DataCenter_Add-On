@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon 9000 Pro",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3,
+    "power": 33,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 12900,
+    "date": "2002-08-01"
+  }
+}

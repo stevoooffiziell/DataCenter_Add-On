@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla K80",
+  "stats": {
+    "kind": "GPU",
+    "compute": 10117,
+    "power": 300,
+    "sha256": 0,
+    "ethash": 38000000,
+    "stability": 0.06
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 500000,
+    "date": "2014-11-17"
+  }
+}

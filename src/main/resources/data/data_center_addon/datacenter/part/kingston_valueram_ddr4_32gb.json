@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 32GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.35,
+    "computeMultiplier": 1.0,
+    "generation": "DDR4",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 22000,
+    "date": "2015-11-01"
+  }
+}

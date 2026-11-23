@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon X800 XT Platinum Edition",
+  "stats": {
+    "kind": "GPU",
+    "compute": 113,
+    "power": 87,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 49900,
+    "date": "2004-05-04"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair RM1000x SHIFT",
+  "stats": {
+    "maxPowerThroughput": 1000,
+    "efficiency": 0.9,
+    "wasteHeatPerFe": 0.00667
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 21900,
+    "date": "2023-02-01"
+  }
+}

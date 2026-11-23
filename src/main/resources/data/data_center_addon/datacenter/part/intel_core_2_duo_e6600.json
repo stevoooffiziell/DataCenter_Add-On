@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core 2 Duo E6600",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1650,
+    "power": 65,
+    "sha256": 5500000,
+    "ethash": 0,
+    "socket": "LGA775"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 31600,
+    "date": "2006-07-27"
+  }
+}

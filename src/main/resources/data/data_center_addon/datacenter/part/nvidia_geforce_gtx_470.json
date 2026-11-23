@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 470",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1263,
+    "power": 215,
+    "sha256": 98500000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 34900,
+    "date": "2010-03-26"
+  }
+}

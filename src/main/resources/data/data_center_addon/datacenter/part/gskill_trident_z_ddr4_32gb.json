@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Trident Z 32GB DDR4",
+  "stats": {
+    "crashChanceReduction": 0.27,
+    "computeMultiplier": 1.06,
+    "generation": "DDR4",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 27500,
+    "date": "2015-11-01"
+  }
+}

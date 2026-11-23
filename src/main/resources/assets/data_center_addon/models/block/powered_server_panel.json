@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "datacenter:block/server_panel",
+    "panel": "datacenter:block/server_panel",
+    "port": "data_center_addon:block/power_port"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": { "texture": "#panel", "cullface": "north" },
+        "south": { "texture": "#panel", "cullface": "south" },
+        "east":  { "texture": "#panel", "cullface": "east" },
+        "west":  { "texture": "#panel", "cullface": "west" },
+        "up":    { "texture": "#panel", "cullface": "up" },
+        "down":  { "texture": "#panel", "cullface": "down" }
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "up":   { "texture": "#port", "cullface": "up" },
+        "down": { "texture": "#port", "cullface": "down" }
+      }
+    }
+  ]
+}

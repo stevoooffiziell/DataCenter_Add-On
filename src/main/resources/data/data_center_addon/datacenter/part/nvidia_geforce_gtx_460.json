@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 460",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1055,
+    "power": 160,
+    "sha256": 73600000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 22900,
+    "date": "2010-07-12"
+  }
+}

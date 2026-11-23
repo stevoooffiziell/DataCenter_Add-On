@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 9800 GTX",
+  "stats": {
+    "kind": "GPU",
+    "compute": 501,
+    "power": 140,
+    "sha256": 35600000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 29900,
+    "date": "2008-03-28"
+  }
+}

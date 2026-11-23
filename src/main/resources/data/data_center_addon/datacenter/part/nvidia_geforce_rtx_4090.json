@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4090",
+  "stats": {
+    "kind": "GPU",
+    "compute": 95728,
+    "power": 450,
+    "sha256": 21975500000,
+    "ethash": 124700000,
+    "kheavyhash": 2000000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 159900,
+    "date": "2022-10-12"
+  }
+}

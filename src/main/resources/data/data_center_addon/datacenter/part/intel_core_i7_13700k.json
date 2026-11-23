@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-13700K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 27170,
+    "power": 253,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 40900,
+    "date": "2022-10-20"
+  }
+}

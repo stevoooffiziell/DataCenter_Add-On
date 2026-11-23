@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon 5160",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2170,
+    "power": 80,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA771",
+    "stability": 0.06
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 85100,
+    "date": "2006-06-26"
+  }
+}

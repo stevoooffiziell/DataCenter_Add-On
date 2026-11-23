@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston FURY Beast 32GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.35,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 28000,
+    "date": "2021-11-04"
+  }
+}

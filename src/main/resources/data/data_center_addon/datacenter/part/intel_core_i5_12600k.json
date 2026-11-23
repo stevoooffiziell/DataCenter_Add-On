@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-12600K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 17500,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1700"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 28900,
+    "date": "2021-11-04"
+  }
+}

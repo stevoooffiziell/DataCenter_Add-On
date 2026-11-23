@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar SE 250GB",
+  "stats": {
+    "capacityGb": 250,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 14999,
+    "date": "2005-06-01"
+  }
+}

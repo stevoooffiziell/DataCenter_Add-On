@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston ValueRAM 1GB DDR2",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR2",
+    "sizeMb": 1024
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 25000,
+    "date": "2004-06-01"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Medalist 17.2GB",
+  "stats": {
+    "capacityGb": 17,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 17500,
+    "date": "1999-10-02"
+  }
+}

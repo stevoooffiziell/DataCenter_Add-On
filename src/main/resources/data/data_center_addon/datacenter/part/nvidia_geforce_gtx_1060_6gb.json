@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1060 6GB",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5065,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 24000000,
+    "kheavyhash": 210000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 24900,
+    "date": "2016-07-19"
+  }
+}

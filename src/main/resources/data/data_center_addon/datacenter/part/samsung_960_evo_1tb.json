@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Samsung 960 EVO 1TB NVMe",
+  "stats": {
+    "capacityGb": 1000,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 47999,
+    "date": "2016-11-15"
+  }
+}

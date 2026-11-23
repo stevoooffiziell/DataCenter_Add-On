@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce4 Ti 4200",
+  "stats": {
+    "kind": "GPU",
+    "compute": 6,
+    "power": 33,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 19900,
+    "date": "2002-02-06"
+  }
+}

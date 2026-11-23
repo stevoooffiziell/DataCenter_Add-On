@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill PI Series 8GB DDR2",
+  "stats": {
+    "crashChanceReduction": 0.07,
+    "computeMultiplier": 1.0,
+    "generation": "DDR2",
+    "sizeMb": 8192
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 25000,
+    "date": "2008-10-01"
+  }
+}

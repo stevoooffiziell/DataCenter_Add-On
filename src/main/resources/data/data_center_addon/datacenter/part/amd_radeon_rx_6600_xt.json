@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6600 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 12243,
+    "power": 160,
+    "sha256": 0,
+    "ethash": 32000000,
+    "kheavyhash": 420000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 37900,
+    "date": "2021-08-11"
+  }
+}

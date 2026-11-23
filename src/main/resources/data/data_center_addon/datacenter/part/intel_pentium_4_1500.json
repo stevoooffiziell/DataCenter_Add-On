@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 1.5 GHz (Willamette)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 542,
+    "power": 55,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_423"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 81900,
+    "date": "2000-11-20"
+  }
+}

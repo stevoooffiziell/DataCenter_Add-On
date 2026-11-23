@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 3TB",
+  "stats": {
+    "capacityGb": 3000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 18999,
+    "date": "2011-08-01"
+  }
+}

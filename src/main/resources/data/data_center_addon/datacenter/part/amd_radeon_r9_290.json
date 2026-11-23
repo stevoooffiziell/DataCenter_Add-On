@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 290",
+  "stats": {
+    "kind": "GPU",
+    "compute": 5600,
+    "power": 275,
+    "sha256": 1204000000,
+    "ethash": 28000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2013-11-05"
+  }
+}

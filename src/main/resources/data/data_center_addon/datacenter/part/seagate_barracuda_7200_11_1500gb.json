@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 7200.11 1.5TB",
+  "stats": {
+    "capacityGb": 1500,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 19920,
+    "date": "2008-07-10"
+  }
+}

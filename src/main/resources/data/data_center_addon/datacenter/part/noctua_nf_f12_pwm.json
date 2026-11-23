@@ -1,0 +1,12 @@
+{
+  "type": "fan",
+  "name": "Noctua NF-F12 PWM",
+  "stats": {
+    "airflowCfm": 55
+  },
+  "shop": {
+    "category": "FAN",
+    "price": 1990,
+    "date": "2012-03-01"
+  }
+}

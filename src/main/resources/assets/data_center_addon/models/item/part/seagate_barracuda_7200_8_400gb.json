@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/storage/seacrest_barracuda_7200_8_400gb"
+  }
+}

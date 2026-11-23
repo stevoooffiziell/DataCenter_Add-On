@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASRock Rack B650D4U",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_AM5",
+    "ramGenerations": [
+      "DDR5"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 29900,
+    "date": "2023-05-01"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 X2 4400+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1592,
+    "power": 65,
+    "sha256": 2090000,
+    "ethash": 0,
+    "socket": "SOCKET_939"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 58100,
+    "date": "2005-05-31"
+  }
+}

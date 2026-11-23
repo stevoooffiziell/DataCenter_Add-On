@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon Platinum 8480+",
+  "stats": {
+    "kind": "CPU",
+    "compute": 76957,
+    "power": 350,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA4677",
+    "stability": 0.2,
+    "memBandwidth": 1.09
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 1071000,
+    "date": "2023-01-10"
+  }
+}

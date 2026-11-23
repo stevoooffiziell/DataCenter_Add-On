@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair HX620W",
+  "stats": {
+    "maxPowerThroughput": 620,
+    "efficiency": 0.82,
+    "wasteHeatPerFe": 0.012
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 17900,
+    "date": "2006-10-01"
+  }
+}

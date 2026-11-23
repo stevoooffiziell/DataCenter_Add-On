@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro H11DSi",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 5,
+    "ramSlots": 16,
+    "storageSlots": 12,
+    "fanSlots": 3,
+    "socket": "SOCKET_SP3",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 58900,
+    "date": "2017-06-29"
+  }
+}

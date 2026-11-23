@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III 733EB",
+  "stats": {
+    "kind": "CPU",
+    "compute": 265,
+    "power": 24,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_1"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 77600,
+    "date": "1999-10-25"
+  }
+}

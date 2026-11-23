@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Enermax EG465P-VE 430W",
+  "stats": {
+    "maxPowerThroughput": 430,
+    "wasteHeatPerFe": 0.02,
+    "efficiency": 0.7
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 2695,
+    "date": "2001-06-01"
+  }
+}

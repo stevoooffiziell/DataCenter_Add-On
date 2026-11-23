@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 260",
+  "stats": {
+    "kind": "GPU",
+    "compute": 590,
+    "power": 182,
+    "sha256": 45600000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2008-06-17"
+  }
+}

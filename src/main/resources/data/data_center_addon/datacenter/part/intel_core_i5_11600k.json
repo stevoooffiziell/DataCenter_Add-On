@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-11600K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 11000,
+    "power": 125,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1200"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 26200,
+    "date": "2021-03-30"
+  }
+}

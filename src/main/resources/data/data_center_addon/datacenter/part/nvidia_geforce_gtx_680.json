@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 680",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3581,
+    "power": 195,
+    "sha256": 118700000,
+    "ethash": 17400000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2012-03-22"
+  }
+}

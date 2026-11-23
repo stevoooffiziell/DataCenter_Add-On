@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla K20X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 4578,
+    "power": 235,
+    "sha256": 152000000,
+    "ethash": 22200000,
+    "stability": 0.05
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 450000,
+    "date": "2012-11-12"
+  }
+}

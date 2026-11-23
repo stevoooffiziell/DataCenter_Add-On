@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3090 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 46353,
+    "power": 450,
+    "sha256": 0,
+    "ethash": 130300000,
+    "kheavyhash": 1023000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 199900,
+    "date": "2022-03-29"
+  }
+}

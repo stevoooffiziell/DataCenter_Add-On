@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce 6800 Ultra",
+  "stats": {
+    "kind": "GPU",
+    "compute": 124,
+    "power": 52,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2004-04-14"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon HD 6950",
+  "stats": {
+    "kind": "GPU",
+    "compute": 2608,
+    "power": 200,
+    "sha256": 363200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 29900,
+    "date": "2010-12-15"
+  }
+}

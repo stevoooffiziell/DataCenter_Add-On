@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Red Pro 22TB",
+  "stats": {
+    "capacityGb": 22000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 59999,
+    "date": "2022-05-10"
+  }
+}

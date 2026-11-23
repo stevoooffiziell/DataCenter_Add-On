@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 4830",
+  "stats": {
+    "kind": "GPU",
+    "compute": 853,
+    "power": 95,
+    "sha256": 64900000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 13000,
+    "date": "2008-10-21"
+  }
+}

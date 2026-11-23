@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda Serial ATA V 120GB",
+  "stats": {
+    "capacityGb": 120,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 20626,
+    "date": "2002-06-24"
+  }
+}

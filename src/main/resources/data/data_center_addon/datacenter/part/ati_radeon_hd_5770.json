@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 5770",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1576,
+    "power": 108,
+    "sha256": 200400000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 15900,
+    "date": "2009-10-13"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar Green 2TB",
+  "stats": {
+    "capacityGb": 2000,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 29900,
+    "date": "2009-01-27"
+  }
+}

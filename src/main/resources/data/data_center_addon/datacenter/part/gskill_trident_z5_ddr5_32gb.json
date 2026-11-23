@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Trident Z5 32GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.27,
+    "computeMultiplier": 1.06,
+    "generation": "DDR5",
+    "sizeMb": 32768
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 35000,
+    "date": "2021-11-04"
+  }
+}

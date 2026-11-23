@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA TITAN RTX",
+  "stats": {
+    "kind": "GPU",
+    "compute": 18840,
+    "power": 280,
+    "sha256": 0,
+    "ethash": 60000000,
+    "kheavyhash": 800000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 249900,
+    "date": "2018-12-18"
+  }
+}

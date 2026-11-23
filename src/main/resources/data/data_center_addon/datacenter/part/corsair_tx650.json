@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair TX650",
+  "stats": {
+    "maxPowerThroughput": 650,
+    "wasteHeatPerFe": 0.01134,
+    "efficiency": 0.83
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 5400,
+    "date": "2008-01-01"
+  }
+}

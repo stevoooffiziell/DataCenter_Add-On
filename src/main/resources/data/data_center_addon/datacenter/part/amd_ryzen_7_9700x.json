@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 9700X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 21500,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 35900,
+    "date": "2024-08-08"
+  }
+}

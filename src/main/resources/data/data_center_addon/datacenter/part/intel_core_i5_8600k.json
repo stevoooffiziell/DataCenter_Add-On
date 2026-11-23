@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i5-8600K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 7300,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1151_V2"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 25700,
+    "date": "2017-10-05"
+  }
+}

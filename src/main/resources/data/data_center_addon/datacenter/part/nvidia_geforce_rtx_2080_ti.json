@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 2080 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15588,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 57460000,
+    "kheavyhash": 750000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 99900,
+    "date": "2018-09-27"
+  }
+}

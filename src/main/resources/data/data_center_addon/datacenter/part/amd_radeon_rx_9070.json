@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 9070",
+  "stats": {
+    "kind": "GPU",
+    "compute": 41838,
+    "power": 220,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 54900,
+    "date": "2025-03-06"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro H13DSH",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 4,
+    "ramSlots": 24,
+    "storageSlots": 12,
+    "fanSlots": 3,
+    "socket": "SOCKET_SP5",
+    "ramGenerations": [
+      "DDR5"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 109900,
+    "date": "2022-11-10"
+  }
+}

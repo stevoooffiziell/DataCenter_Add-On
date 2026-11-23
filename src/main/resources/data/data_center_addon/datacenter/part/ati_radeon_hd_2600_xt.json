@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 2600 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 223,
+    "power": 45,
+    "sha256": 20200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 11900,
+    "date": "2007-06-28"
+  }
+}

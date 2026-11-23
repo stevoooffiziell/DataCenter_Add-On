@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "G.Skill Trident Z5 128GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.47,
+    "computeMultiplier": 1.12,
+    "generation": "DDR5",
+    "sizeMb": 131072
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 100000,
+    "date": "2023-01-01"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium 4 2.8 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1013,
+    "power": 68,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_478"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 50800,
+    "date": "2002-08-26"
+  }
+}

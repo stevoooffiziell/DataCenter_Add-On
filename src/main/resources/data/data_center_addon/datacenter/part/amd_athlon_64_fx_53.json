@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 FX-53 (Socket 939)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 868,
+    "power": 89,
+    "sha256": 1300000,
+    "ethash": 0,
+    "socket": "SOCKET_939"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 79900,
+    "date": "2004-06-01"
+  }
+}

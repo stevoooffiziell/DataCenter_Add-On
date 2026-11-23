@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6700 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 15258,
+    "power": 230,
+    "sha256": 0,
+    "ethash": 47000000,
+    "kheavyhash": 520000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 47900,
+    "date": "2021-03-18"
+  }
+}

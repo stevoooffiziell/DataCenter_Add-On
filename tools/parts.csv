@@ -1,0 +1,550 @@
+# Real computer parts of the Data Center AddOn.
+# Run tools/generate-parts.ps1 after editing (needs PowerShell 7: pwsh).
+#
+# Columns (separator ';'):
+#   id        part id in the data_center_addon namespace (a-z, 0-9, _)
+#   category  Shop category (empty = same as 'from')
+#   type      processor | mininggpu | ram | storage | psu | mainboard | fan (empty = same as 'from')
+#   date      release date YYYY-MM-DD; the part is sold from this in-game date on (empty = from 'from')
+#   price     launch price in US dollars (empty = from 'from')
+#   from      Data Center part this one is the real counterpart of: its stats, date and price are copied
+#   look      Data Center item texture used as icon (empty = the 'from' part's texture)
+#   name      display name (max 64 characters)
+#   stats     key=value pairs separated by ','; they override copied stats. Lists use '|'.
+#             PSUs: wasteHeatPerFe is derived from efficiency when not given.
+#
+# Stat scale (same as Data Center): GPU compute = FP32 GFLOPS x ~1.155; sha256/ethash/kheavyhash in H/s;
+# power in W; server parts add stability and memBandwidth.
+id;category;type;date;price;from;look;name;stats
+# ---------------------------------------------------------------- Intel desktop CPUs
+intel_celeron_300a;CPU_INTEL;processor;1998-08-24;149;;flint_ridge_celeron_333;Intel Celeron 300A;kind=CPU,compute=110,power=19,sha256=0,ethash=0,socket=SLOT_1
+intel_celeron_333;;;;;flint_ridge_celeron_333;;Intel Celeron 333;
+intel_pentium_ii_450;;;;;flint_ridge_pentium_ii_450;;Intel Pentium II 450;
+intel_pentium_iii_500;;;;;flint_ridge_pentium_iii_500;;Intel Pentium III 500;
+intel_celeron_500;;;;;flint_ridge_celeron_500;;Intel Celeron 500;
+intel_pentium_iii_733;CPU_INTEL;processor;1999-10-25;776;;flint_ridge_pentium_iii_550;Intel Pentium III 733EB;kind=CPU,compute=265,power=24,sha256=0,ethash=0,socket=SLOT_1
+intel_pentium_iii_1000;;;;;flint_ridge_pentium_iii_1000_socket_370;;Intel Pentium III 1.0 GHz;
+intel_celeron_800;;;;;flint_ridge_celeron_800;;Intel Celeron 800;
+intel_pentium_4_1500;;;;;flint_ridge_pentium_4_1_5_socket_423;;Intel Pentium 4 1.5 GHz (Willamette);
+intel_pentium_4_2000_s423;;;;;flint_ridge_pentium_4_2_0_socket_423;;Intel Pentium 4 2.0 GHz (Socket 423);
+intel_pentium_4_2200;;;;;flint_ridge_pentium_4_2_2;;Intel Pentium 4 2.2 GHz (Northwood);
+intel_celeron_1700;;;;;flint_ridge_celeron_1_7;;Intel Celeron 1.7 GHz;
+intel_pentium_4_2800;;;;;flint_ridge_pentium_4_2_8;;Intel Pentium 4 2.8 GHz;
+intel_pentium_4_3060_ht;;;;;flint_ridge_pentium_4_ht_3_06;;Intel Pentium 4 3.06 GHz HT;
+intel_pentium_4_ee_3200;;;;;flint_ridge_pentium_4_extreme_edition_3_2;;Intel Pentium 4 Extreme Edition 3.2 GHz;
+intel_pentium_4_560;;;;;flint_ridge_pentium_4_ht_560;;Intel Pentium 4 560;
+intel_pentium_4_640;;;;;flint_ridge_pentium_4_640;;Intel Pentium 4 640;
+intel_pentium_d_820;CPU_INTEL;processor;2005-05-26;241;;flint_ridge_pentium_d_805;Intel Pentium D 820;kind=CPU,compute=2025,power=95,sha256=2000000,ethash=0,socket=LGA775
+intel_pentium_d_840;;;;;flint_ridge_pentium_d_840;;Intel Pentium D 840;
+intel_core_2_duo_e6300;;;;;flint_ridge_core_2_duo_e6300;;Intel Core 2 Duo E6300;
+intel_core_2_duo_e6600;;;;;flint_ridge_core_2_duo_e6600;;Intel Core 2 Duo E6600;
+intel_core_2_extreme_x6800;CPU_INTEL;processor;2006-07-27;999;;flint_ridge_core_2_duo_e6600;Intel Core 2 Extreme X6800;kind=CPU,compute=1900,power=75,sha256=6300000,ethash=0,socket=LGA775
+intel_core_2_extreme_qx6700;;;;;flint_ridge_core_2_extreme_qx6700;;Intel Core 2 Extreme QX6700;
+intel_core_2_quad_q6600;;;;;flint_ridge_core_2_quad_q6600;;Intel Core 2 Quad Q6600;
+intel_core_2_duo_e8400;;;;;flint_ridge_core_2_duo_e8400;;Intel Core 2 Duo E8400;
+intel_core_2_quad_q9550;;;;;flint_ridge_core_2_quad_q9550;;Intel Core 2 Quad Q9550;
+intel_core_2_extreme_qx9650;;;;;flint_ridge_core_2_extreme_qx9650;;Intel Core 2 Extreme QX9650;
+intel_core_i7_920;;;;;flint_ridge_core_i7-920;;Intel Core i7-920;
+intel_core_i7_965;CPU_INTEL;processor;2008-11-17;999;;flint_ridge_core_i7-920;Intel Core i7-965 Extreme Edition;kind=CPU,compute=4300,power=130,sha256=46000000,ethash=0,socket=LGA1366
+intel_core_i5_750;;;;;flint_ridge_core_i5-750;;Intel Core i5-750;
+intel_core_i7_860;CPU_INTEL;processor;2009-09-08;284;;flint_ridge_core_i5-750;Intel Core i7-860;kind=CPU,compute=4500,power=95,sha256=16000000,ethash=0,socket=LGA1156
+intel_core_i3_530;;;;;flint_ridge_core_i3-530;;Intel Core i3-530;
+intel_core_i7_980x;CPU_INTEL;processor;2010-03-16;999;;flint_ridge_core_i7-920;Intel Core i7-980X Extreme Edition;kind=CPU,compute=7000,power=130,sha256=25000000,ethash=0,socket=LGA1366
+intel_core_i5_2500k;;;;;flint_ridge_core_i5-2500k;;Intel Core i5-2500K;
+intel_core_i7_2600k;;;;;flint_ridge_core_i7-2600k;;Intel Core i7-2600K;
+intel_core_i5_3570k;CPU_INTEL;processor;2012-04-29;225;;flint_ridge_core_i7-3770k;Intel Core i5-3570K;kind=CPU,compute=4550,power=77,sha256=15000000,ethash=0,socket=LGA1155
+intel_core_i7_3770k;;;;;flint_ridge_core_i7-3770k;;Intel Core i7-3770K;
+intel_core_i5_4670k;CPU_INTEL;processor;2013-06-02;242;;flint_ridge_core_i7-4790k;Intel Core i5-4670K;kind=CPU,compute=4750,power=84,sha256=0,ethash=0,socket=LGA1150
+intel_core_i7_4770k;CPU_INTEL;processor;2013-06-02;339;;flint_ridge_core_i7-4790k;Intel Core i7-4770K;kind=CPU,compute=5300,power=84,sha256=0,ethash=0,socket=LGA1150
+intel_core_i7_4790k;;;;;flint_ridge_core_i7-4790k;;Intel Core i7-4790K;
+intel_core_i5_6600k;CPU_INTEL;processor;2015-08-05;243;;flint_ridge_core_i7-6700k;Intel Core i5-6600K;kind=CPU,compute=4300,power=91,sha256=0,ethash=0,socket=LGA1151_V1
+intel_core_i7_6700k;;;;;flint_ridge_core_i7-6700k;;Intel Core i7-6700K;
+intel_core_i7_7700k;CPU_INTEL;processor;2017-01-03;339;;flint_ridge_core_i7-6700k;Intel Core i7-7700K;kind=CPU,compute=5800,power=91,sha256=0,ethash=0,socket=LGA1151_V1
+intel_core_i5_8600k;CPU_INTEL;processor;2017-10-05;257;;flint_ridge_core_i7-8700k;Intel Core i5-8600K;kind=CPU,compute=7300,power=95,sha256=0,ethash=0,socket=LGA1151_V2
+intel_core_i7_8700k;;;;;flint_ridge_core_i7-8700k;;Intel Core i7-8700K;
+intel_core_i7_9700k;CPU_INTEL;processor;2018-10-19;374;;flint_ridge_core_i9-9900k;Intel Core i7-9700K;kind=CPU,compute=10300,power=95,sha256=0,ethash=0,socket=LGA1151_V2
+intel_core_i9_9900k;;;;;flint_ridge_core_i9-9900k;;Intel Core i9-9900K;
+intel_core_i5_10600k;CPU_INTEL;processor;2020-05-20;262;;flint_ridge_core_i9-10900k;Intel Core i5-10600K;kind=CPU,compute=10500,power=125,sha256=0,ethash=0,socket=LGA1200
+intel_core_i9_10900k;;;;;flint_ridge_core_i9-10900k;;Intel Core i9-10900K;
+intel_core_i5_11600k;CPU_INTEL;processor;2021-03-30;262;;flint_ridge_core_i9-11900k;Intel Core i5-11600K;kind=CPU,compute=11000,power=125,sha256=0,ethash=0,socket=LGA1200
+intel_core_i9_11900k;;;;;flint_ridge_core_i9-11900k;;Intel Core i9-11900K;
+intel_core_i5_12600k;CPU_INTEL;processor;2021-11-04;289;;flint_ridge_core_i9-12900k;Intel Core i5-12600K;kind=CPU,compute=17500,power=125,sha256=0,ethash=0,socket=LGA1700
+intel_core_i7_12700k;CPU_INTEL;processor;2021-11-04;409;;flint_ridge_core_i9-12900k;Intel Core i7-12700K;kind=CPU,compute=21500,power=125,sha256=0,ethash=0,socket=LGA1700
+intel_core_i9_12900k;;;;;flint_ridge_core_i9-12900k;;Intel Core i9-12900K;
+intel_core_i3_12100f;CPU_INTEL;processor;2022-01-04;97;;flint_ridge_core_i5-13600k;Intel Core i3-12100F;kind=CPU,compute=9500,power=58,sha256=0,ethash=0,socket=LGA1700
+intel_core_i5_13600k;;;;;flint_ridge_core_i5-13600k;;Intel Core i5-13600K;
+intel_core_i7_13700k;;;;;flint_ridge_core_i7-13700k;;Intel Core i7-13700K;
+intel_core_i9_13900k;;;;;flint_ridge_core_i9-13900k;;Intel Core i9-13900K;
+intel_core_i9_13900ks;;;;;flint_ridge_core_i9-13900ks;;Intel Core i9-13900KS;
+intel_core_i5_14600k;CPU_INTEL;processor;2023-10-17;319;;flint_ridge_core_i7-14700k;Intel Core i5-14600K;kind=CPU,compute=24000,power=181,sha256=0,ethash=0,socket=LGA1700
+intel_core_i7_14700k;;;;;flint_ridge_core_i7-14700k;;Intel Core i7-14700K;
+intel_core_i9_14900k;CPU_INTEL;processor;2023-10-17;589;;flint_ridge_core_i9-14900ks;Intel Core i9-14900K;kind=CPU,compute=45500,power=253,sha256=0,ethash=0,socket=LGA1700
+intel_core_i9_14900ks;;;;;flint_ridge_core_i9-14900ks;;Intel Core i9-14900KS;
+intel_core_ultra_5_245k;CPU_INTEL;processor;2024-10-24;309;;flint_ridge_core_ultra_9_285k;Intel Core Ultra 5 245K;kind=CPU,compute=30000,power=159,sha256=0,ethash=0,socket=LGA1851
+intel_core_ultra_7_265k;CPU_INTEL;processor;2024-10-24;394;;flint_ridge_core_ultra_9_285k;Intel Core Ultra 7 265K;kind=CPU,compute=41000,power=250,sha256=0,ethash=0,socket=LGA1851
+intel_core_ultra_9_285k;;;;;flint_ridge_core_ultra_9_285k;;Intel Core Ultra 9 285K;
+# ---------------------------------------------------------------- AMD desktop CPUs
+amd_k6_2_400;;;;;amp_piston_k6_2_400;;AMD K6-2 400;
+amd_k6_2_500;;;;;amp_piston_k6_2_500;;AMD K6-2 500;
+amd_athlon_600;;;;;amp_piston_athlon_600_slot_a;;AMD Athlon 600 (Slot A);
+amd_athlon_1000;;;;;amp_piston_athlon_1000;;AMD Athlon 1.0 GHz (Slot A);
+amd_duron_700;;;;;amp_piston_duron_700;;AMD Duron 700;
+amd_athlon_1400;;;;;amp_piston_athlon_1400b;;AMD Athlon 1.4 GHz (Thunderbird);
+amd_duron_1000;;;;;amp_piston_duron_1000;;AMD Duron 1.0 GHz;
+amd_athlon_xp_1800;;;;;amp_piston_athlon_xp_1800plus;;AMD Athlon XP 1800+;
+amd_athlon_xp_2600;;;;;amp_piston_athlon_xp_2600plus_socket_a_thoroughbred_a_b;;AMD Athlon XP 2600+;
+amd_athlon_xp_3200;;;;;amp_piston_athlon_xp_3200plus_socket_a_barton_2003_2200mhz;;AMD Athlon XP 3200+;
+amd_athlon_64_3200;;;;;amp_piston_athlon_64_3200plus_socket_754;;AMD Athlon 64 3200+ (Socket 754);
+amd_sempron_3100;;;;;amp_piston_sempron_3100plus;;AMD Sempron 3100+;
+amd_athlon_64_fx_53;CPU_AMD;processor;2004-06-01;799;;amp_piston_athlon_64_fx_60;AMD Athlon 64 FX-53 (Socket 939);kind=CPU,compute=868,power=89,sha256=1300000,ethash=0,socket=SOCKET_939
+amd_athlon_64_3500;;;;;amp_piston_athlon_64_3500plus;;AMD Athlon 64 3500+;
+amd_athlon_64_x2_3800;;;;;amp_piston_athlon_64_x2_3800plus;;AMD Athlon 64 X2 3800+;
+amd_athlon_64_x2_4400;;;;;amp_piston_athlon_64_x2_4400plus;;AMD Athlon 64 X2 4400+;
+amd_athlon_64_fx_60;;;;;amp_piston_athlon_64_fx_60;;AMD Athlon 64 FX-60;
+amd_athlon_64_x2_4000;;;;;amp_piston_athlon_64_x2_4000plus;;AMD Athlon 64 X2 4000+ (AM2);
+amd_athlon_64_x2_5200;;;;;amp_piston_athlon_64_x2_5200plus_socket_am2_windsor;;AMD Athlon 64 X2 5200+;
+amd_athlon_64_x2_6000;;;;;amp_piston_athlon_64_x2_6000plus;;AMD Athlon 64 X2 6000+;
+amd_phenom_x4_9600;;;;;amp_piston_phenom_x4_9600;;AMD Phenom X4 9600;
+amd_phenom_x4_9950;;;;;amp_piston_phenom_x4_9950_black_edition;;AMD Phenom X4 9950 Black Edition;
+amd_phenom_ii_x4_940;CPU_AMD;processor;2009-01-08;275;;amp_piston_phenom_ii_x4_955;AMD Phenom II X4 940 Black Edition;kind=CPU,compute=4300,power=125,sha256=10000000,ethash=0,socket=SOCKET_AM2_PLUS
+amd_phenom_ii_x4_955;;;2009-04-23;;amp_piston_phenom_ii_x4_955;;AMD Phenom II X4 955 Black Edition;
+amd_athlon_ii_x4_630;;;;;amp_piston_athlon_ii_x4_630;;AMD Athlon II X4 630;
+amd_phenom_ii_x6_1090t;;;;;amp_piston_phenom_ii_x6_1090t_black_edition;;AMD Phenom II X6 1090T Black Edition;
+amd_phenom_ii_x6_1100t;;;;;amp_piston_phenom_ii_x6_1100t_black_edition;;AMD Phenom II X6 1100T Black Edition;
+amd_fx_8150;;;;;amp_piston_fx-8150;;AMD FX-8150;
+amd_fx_8350;;;;;amp_piston_fx-8350;;AMD FX-8350;
+amd_fx_9590;;;;;amp_piston_fx-9590;;AMD FX-9590;
+amd_ryzen_7_1700;CPU_AMD;processor;2017-03-02;329;;amp_piston_ryzen_7_1800x;AMD Ryzen 7 1700;kind=CPU,compute=10500,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_7_1800x;;;;;amp_piston_ryzen_7_1800x;;AMD Ryzen 7 1800X;
+amd_ryzen_5_1600;;;;;amp_piston_ryzen_5_1600;;AMD Ryzen 5 1600;
+amd_ryzen_5_2600;CPU_AMD;processor;2018-04-19;199;;amp_piston_ryzen_7_2700x;AMD Ryzen 5 2600;kind=CPU,compute=8500,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_7_2700x;;;;;amp_piston_ryzen_7_2700x;;AMD Ryzen 7 2700X;
+amd_ryzen_5_3600;CPU_AMD;processor;2019-07-07;199;;amp_piston_ryzen_9_3900x;AMD Ryzen 5 3600;kind=CPU,compute=10300,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_7_3700x;CPU_AMD;processor;2019-07-07;329;;amp_piston_ryzen_9_3900x;AMD Ryzen 7 3700X;kind=CPU,compute=14500,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_9_3900x;;;;;amp_piston_ryzen_9_3900x;;AMD Ryzen 9 3900X;
+amd_ryzen_9_3950x;;;;;amp_piston_ryzen_9_3950x;;AMD Ryzen 9 3950X;
+amd_ryzen_5_5600x;CPU_AMD;processor;2020-11-05;299;;amp_piston_ryzen_9_5900x;AMD Ryzen 5 5600X;kind=CPU,compute=12500,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_7_5800x;CPU_AMD;processor;2020-11-05;449;;amp_piston_ryzen_9_5900x;AMD Ryzen 7 5800X;kind=CPU,compute=16500,power=105,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_9_5900x;;;;;amp_piston_ryzen_9_5900x;;AMD Ryzen 9 5900X;
+amd_ryzen_9_5950x;;;;;amp_piston_ryzen_9_5950x;;AMD Ryzen 9 5950X;
+amd_ryzen_5_5600;CPU_AMD;processor;2022-04-04;199;;amp_piston_ryzen_9_5900x;AMD Ryzen 5 5600;kind=CPU,compute=11800,power=65,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_7_5800x3d;CPU_AMD;processor;2022-04-20;449;;amp_piston_ryzen_9_5950x;AMD Ryzen 7 5800X3D;kind=CPU,compute=15800,power=105,sha256=0,ethash=0,socket=SOCKET_AM4
+amd_ryzen_5_7600x;CPU_AMD;processor;2022-09-27;299;;amp_piston_ryzen_9_7900x;AMD Ryzen 5 7600X;kind=CPU,compute=15500,power=105,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_7_7700x;CPU_AMD;processor;2022-09-27;399;;amp_piston_ryzen_9_7900x;AMD Ryzen 7 7700X;kind=CPU,compute=20000,power=105,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_9_7900x;;;;;amp_piston_ryzen_9_7900x;;AMD Ryzen 9 7900X;
+amd_ryzen_9_7950x;;;;;amp_piston_ryzen_9_7950x;;AMD Ryzen 9 7950X;
+amd_ryzen_9_7950x3d;CPU_AMD;processor;2023-02-28;699;;amp_piston_ryzen_9_7950x;AMD Ryzen 9 7950X3D;kind=CPU,compute=31500,power=120,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_7_7800x3d;CPU_AMD;processor;2023-04-06;449;;amp_piston_ryzen_9_7900x;AMD Ryzen 7 7800X3D;kind=CPU,compute=18500,power=120,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_5_9600x;CPU_AMD;processor;2024-08-08;279;;amp_piston_ryzen_9_9950x;AMD Ryzen 5 9600X;kind=CPU,compute=17000,power=65,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_7_9700x;CPU_AMD;processor;2024-08-08;359;;amp_piston_ryzen_9_9950x;AMD Ryzen 7 9700X;kind=CPU,compute=21500,power=65,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_9_9900x;CPU_AMD;processor;2024-08-15;499;;amp_piston_ryzen_9_9950x;AMD Ryzen 9 9900X;kind=CPU,compute=27000,power=120,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_9_9950x;;;;;amp_piston_ryzen_9_9950x;;AMD Ryzen 9 9950X;compute=34800
+amd_ryzen_7_9800x3d;CPU_AMD;processor;2024-11-07;479;;amp_piston_ryzen_9_9950x;AMD Ryzen 7 9800X3D;kind=CPU,compute=22500,power=120,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_9_9900x3d;CPU_AMD;processor;2025-03-12;599;;amp_piston_ryzen_9_9950x;AMD Ryzen 9 9900X3D;kind=CPU,compute=27500,power=120,sha256=0,ethash=0,socket=SOCKET_AM5
+amd_ryzen_9_9950x3d;CPU_AMD;processor;2025-03-12;699;;amp_piston_ryzen_9_9950x;AMD Ryzen 9 9950X3D;kind=CPU,compute=35500,power=170,sha256=0,ethash=0,socket=SOCKET_AM5
+# ---------------------------------------------------------------- Server CPUs
+intel_pentium_ii_xeon_450;;;;;flint_forge_pentium_ii_xeon_450;;Intel Pentium II Xeon 450;
+intel_pentium_iii_xeon_550;;;;;flint_forge_pentium_iii_xeon_550;;Intel Pentium III Xeon 550;
+intel_pentium_iii_xeon_1000;;;;;flint_forge_pentium_iii_xeon_1_00;;Intel Pentium III Xeon 1.0 GHz;
+intel_xeon_1700;;;;;flint_forge_xeon_1_7;;Intel Xeon 1.7 GHz (Foster);
+amd_athlon_mp_1200;;;;;amp_threadwhip_athlon_mp_1200;;AMD Athlon MP 1.2 GHz;
+amd_athlon_mp_2000;;;;;amp_threadwhip_athlon_mp_2000plus;;AMD Athlon MP 2000+;
+intel_xeon_2400;;;;;flint_forge_xeon_2_4_socket_603;;Intel Xeon 2.4 GHz (Prestonia);
+intel_xeon_2800_s604;;;;;flint_forge_xeon_2_8b;;Intel Xeon 2.8 GHz (Socket 604);
+amd_opteron_244;;;;;amp_threadwhip_opteron_244;;AMD Opteron 244;
+amd_opteron_252;;;;;amp_threadwhip_opteron_252;;AMD Opteron 252;
+amd_opteron_275;;;;;amp_threadwhip_opteron_275;;AMD Opteron 275;
+intel_xeon_3600;;;;;flint_forge_xeon_3_6;;Intel Xeon 3.6 GHz (Nocona);
+intel_xeon_5160;;;;;flint_forge_xeon_5160;;Intel Xeon 5160;
+intel_xeon_e5310;;;;;flint_forge_xeon_e5310;;Intel Xeon E5310;
+intel_xeon_x5355;CPU_SERVER;processor;2006-11-14;1172;;flint_forge_xeon_e5310;Intel Xeon X5355;kind=CPU,compute=3500,power=120,sha256=0,ethash=0,socket=LGA771,stability=0.06
+amd_opteron_2350;;;;;amp_threadwhip_opteron_2350;;AMD Opteron 2350;
+intel_xeon_e5405;;;;;flint_forge_xeon_e5405;;Intel Xeon E5405;
+intel_xeon_x5492;;;;;flint_forge_xeon_x5492;;Intel Xeon X5492;
+amd_opteron_2384;;;;;amp_threadwhip_opteron_2384;;AMD Opteron 2384;
+intel_xeon_x5570;;;;;flint_forge_xeon_x5570;;Intel Xeon X5570;
+amd_opteron_6174;CPU_SERVER;processor;2010-03-29;1165;;amp_threadwhip_opteron_6272;AMD Opteron 6174;kind=CPU,compute=13000,power=80,sha256=0,ethash=0,socket=SOCKET_G34,stability=0.09,memBandwidth=1.02
+intel_xeon_x5690;CPU_SERVER;processor;2011-02-14;1663;;flint_forge_xeon_x5570;Intel Xeon X5690;kind=CPU,compute=7500,power=130,sha256=0,ethash=0,socket=LGA1366_XEON,stability=0.09,memBandwidth=1.02
+amd_opteron_6272;;;;;amp_threadwhip_opteron_6272;;AMD Opteron 6272;
+intel_xeon_e5_2670;CPU_SERVER;processor;2012-03-06;1552;;flint_forge_xeon_e5_2690;Intel Xeon E5-2670;kind=CPU,compute=9500,power=115,sha256=0,ethash=0,socket=LGA2011,stability=0.11,memBandwidth=1.03
+intel_xeon_e5_2690;;;;;flint_forge_xeon_e5_2690;;Intel Xeon E5-2690;
+amd_opteron_6380;CPU_SERVER;processor;2012-11-05;1088;;amp_threadwhip_opteron_6272;AMD Opteron 6380;kind=CPU,compute=18500,power=115,sha256=0,ethash=0,socket=SOCKET_G34,stability=0.11,memBandwidth=1.03
+intel_xeon_e5_2697_v2;CPU_SERVER;processor;2013-09-10;2614;;flint_forge_xeon_e5_2690;Intel Xeon E5-2697 v2;kind=CPU,compute=14500,power=130,sha256=0,ethash=0,socket=LGA2011,stability=0.12,memBandwidth=1.03
+intel_xeon_e5_2699_v3;CPU_SERVER;processor;2014-09-08;4115;;flint_forge_xeon_e5_2699_v4;Intel Xeon E5-2699 v3;kind=CPU,compute=24000,power=145,sha256=0,ethash=0,socket=LGA2011_3,stability=0.13,memBandwidth=1.03
+intel_xeon_e5_2699_v4;;;;;flint_forge_xeon_e5_2699_v4;;Intel Xeon E5-2699 v4;
+amd_epyc_7601;;;;;amp_threadwhip_epyc_7601;;AMD EPYC 7601;
+intel_xeon_platinum_8180;;;;;flint_forge_xeon_platinum_8180;;Intel Xeon Platinum 8180;
+intel_xeon_platinum_8280;CPU_SERVER;processor;2019-04-02;10009;;flint_forge_xeon_platinum_8180;Intel Xeon Platinum 8280;kind=CPU,compute=42000,power=205,sha256=0,ethash=0,socket=LGA3647,stability=0.16,memBandwidth=1.07
+amd_epyc_7742;CPU_SERVER;processor;2019-08-07;6950;;amp_threadwhip_epyc_7601;AMD EPYC 7742;kind=CPU,compute=78000,power=225,sha256=0,ethash=0,socket=SOCKET_SP3,stability=0.16,memBandwidth=1.10
+amd_epyc_7763;CPU_SERVER;processor;2021-03-15;7890;;amp_threadwhip_epyc_7601;AMD EPYC 7763;kind=CPU,compute=88000,power=280,sha256=0,ethash=0,socket=SOCKET_SP3,stability=0.17,memBandwidth=1.11
+intel_xeon_platinum_8380;;;;;flint_forge_xeon_platinum_8380;;Intel Xeon Platinum 8380;
+amd_epyc_9654;;;;;amp_threadwhip_epyc_9654;;AMD EPYC 9654;
+intel_xeon_platinum_8480_plus;;;;;flint_forge_xeon_platinum_8480_plus;;Intel Xeon Platinum 8480+;
+amd_epyc_9754;CPU_SERVER;processor;2023-06-13;11900;;amp_threadwhip_epyc_9654;AMD EPYC 9754;kind=CPU,compute=150000,power=360,sha256=0,ethash=0,socket=SOCKET_SP5,stability=0.19,memBandwidth=1.15
+intel_xeon_platinum_8592_plus;CPU_SERVER;processor;2023-12-14;11600;;flint_forge_xeon_platinum_8480_plus;Intel Xeon Platinum 8592+;kind=CPU,compute=90000,power=350,sha256=0,ethash=0,socket=LGA4677,stability=0.20,memBandwidth=1.10
+amd_epyc_4564p;CPU_SERVER;processor;2024-05-21;699;;amp_piston_ryzen_9_7950x;AMD EPYC 4564P;kind=CPU,compute=33000,power=170,sha256=0,ethash=0,socket=SOCKET_AM5,stability=0.12,memBandwidth=1.05
+amd_epyc_9755;CPU_SERVER;processor;2024-10-10;12984;;amp_threadwhip_epyc_9654;AMD EPYC 9755;kind=CPU,compute=175000,power=500,sha256=0,ethash=0,socket=SOCKET_SP5,stability=0.20,memBandwidth=1.18
+amd_epyc_9965;CPU_SERVER;processor;2024-10-10;14813;;amp_threadwhip_epyc_9654;AMD EPYC 9965;kind=CPU,compute=190000,power=500,sha256=0,ethash=0,socket=SOCKET_SP5,stability=0.20,memBandwidth=1.18
+# ---------------------------------------------------------------- NVIDIA GPUs
+nvidia_geforce3;;;;;invidia_vtx_3;;NVIDIA GeForce3;
+nvidia_geforce3_ti_500;;;;;invidia_vtx_3_ti_500;;NVIDIA GeForce3 Ti 500;
+nvidia_geforce4_ti_4200;;;;;invidia_vtx_ti_4200;;NVIDIA GeForce4 Ti 4200;
+nvidia_geforce4_ti_4600;;;;;invidia_vtx_ti_4600;;NVIDIA GeForce4 Ti 4600;
+nvidia_geforce_fx_5200;;;;;invidia_vtx_fx_5200;;NVIDIA GeForce FX 5200;
+nvidia_geforce_fx_5900_ultra;;;;;invidia_vtx_fx_5900_ultra;;NVIDIA GeForce FX 5900 Ultra;
+nvidia_quadro_fx_3000;;;;;invidia_quadra_fx_3000;;NVIDIA Quadro FX 3000;
+nvidia_geforce_6800_ultra;;;;;invidia_vtx_6800_ultra;;NVIDIA GeForce 6800 Ultra;
+nvidia_geforce_6600_gt;;;;;invidia_vtx_6600_gt;;NVIDIA GeForce 6600 GT;
+nvidia_geforce_7800_gtx;;;;;invidia_vtx_7800_gtx;;NVIDIA GeForce 7800 GTX;
+nvidia_geforce_7600_gt;;;;;invidia_vtx_7600_gt;;NVIDIA GeForce 7600 GT;
+nvidia_geforce_7900_gtx;;;;;invidia_vtx_7900_gtx;;NVIDIA GeForce 7900 GTX;
+nvidia_geforce_8800_gtx;;;;;invidia_vtx_8800_gtx;;NVIDIA GeForce 8800 GTX;
+nvidia_quadro_fx_5600;;;;;invidia_quadra_fx_5600;;NVIDIA Quadro FX 5600;
+nvidia_geforce_8800_ultra;;;;;invidia_vtx_8800_ultra;;NVIDIA GeForce 8800 Ultra;
+nvidia_geforce_8800_gt;;;;;invidia_vtx_8800_gt;;NVIDIA GeForce 8800 GT;
+nvidia_geforce_9800_gtx;;;;;invidia_vtx_9800_gtx;;NVIDIA GeForce 9800 GTX;
+nvidia_geforce_gtx_280;;;;;invidia_vtx_gtx_280;;NVIDIA GeForce GTX 280;
+nvidia_geforce_gtx_260;;;;;invidia_vtx_gtx_260;;NVIDIA GeForce GTX 260;
+nvidia_quadro_fx_5800;;;;;invidia_quadra_fx_5800;;NVIDIA Quadro FX 5800;
+nvidia_geforce_gtx_285;;;;;invidia_vtx_gtx_285;;NVIDIA GeForce GTX 285;
+nvidia_geforce_gts_250;;;;;invidia_vtx_gts_250;;NVIDIA GeForce GTS 250;
+nvidia_geforce_gtx_480;;;;;invidia_vtx_gtx_480;;NVIDIA GeForce GTX 480;
+nvidia_geforce_gtx_470;;;;;invidia_vtx_gtx_470;;NVIDIA GeForce GTX 470;
+nvidia_geforce_gtx_460;;;;;invidia_vtx_gtx_460;;NVIDIA GeForce GTX 460;
+nvidia_geforce_gtx_580;;;;;invidia_vtx_gtx_580;;NVIDIA GeForce GTX 580;
+nvidia_geforce_gtx_570;;;;;invidia_vtx_gtx_570;;NVIDIA GeForce GTX 570;
+nvidia_geforce_gtx_560_ti;;;;;invidia_vtx_gtx_560_ti;;NVIDIA GeForce GTX 560 Ti;
+nvidia_geforce_gtx_680;;;;;invidia_vtx_gtx_680;;NVIDIA GeForce GTX 680;
+nvidia_geforce_gtx_670;;;;;invidia_vtx_gtx_670;;NVIDIA GeForce GTX 670;
+nvidia_geforce_gtx_660_ti;GPU_NVIDIA;processor;2012-08-16;299;;invidia_vtx_gtx_670;NVIDIA GeForce GTX 660 Ti;kind=GPU,compute=2841,power=150,sha256=93800000,ethash=14000000
+nvidia_geforce_gtx_titan;GPU_NVIDIA;processor;2013-02-21;999;;invidia_vtx_gtx_780;NVIDIA GeForce GTX TITAN;kind=GPU,compute=5197,power=250,sha256=0,ethash=20000000
+nvidia_geforce_gtx_780;;;;;invidia_vtx_gtx_780;;NVIDIA GeForce GTX 780;
+nvidia_geforce_gtx_770;;;;;invidia_vtx_gtx_770;;NVIDIA GeForce GTX 770;
+nvidia_geforce_gtx_760;;;;;invidia_vtx_gtx_760;;NVIDIA GeForce GTX 760;
+nvidia_geforce_gtx_780_ti;;;;;invidia_vtx_gtx_780_ti;;NVIDIA GeForce GTX 780 Ti;
+nvidia_geforce_gtx_750_ti;GPU_NVIDIA;processor;2014-02-18;149;;invidia_vtx_gtx_960;NVIDIA GeForce GTX 750 Ti;kind=GPU,compute=1604,power=60,sha256=0,ethash=7000000
+nvidia_geforce_gtx_970;;;;;invidia_vtx_gtx_970;;NVIDIA GeForce GTX 970;
+nvidia_geforce_gtx_980;;;;;invidia_vtx_gtx_980;;NVIDIA GeForce GTX 980;
+nvidia_geforce_gtx_960;;;;;invidia_vtx_gtx_960;;NVIDIA GeForce GTX 960;
+nvidia_geforce_gtx_titan_x;GPU_NVIDIA;processor;2015-03-17;999;;invidia_vtx_gtx_980_ti;NVIDIA GeForce GTX TITAN X;kind=GPU,compute=7728,power=250,sha256=0,ethash=21000000
+nvidia_geforce_gtx_980_ti;;;;;invidia_vtx_gtx_980_ti;;NVIDIA GeForce GTX 980 Ti;
+nvidia_geforce_gtx_1080;;;;;invidia_vtx_gtx_1080;;NVIDIA GeForce GTX 1080;
+nvidia_geforce_gtx_1070;;;;;invidia_vtx_gtx_1070;;NVIDIA GeForce GTX 1070;
+nvidia_geforce_gtx_1060_6gb;;;;;invidia_vtx_gtx_1060_6gb;;NVIDIA GeForce GTX 1060 6GB;
+nvidia_titan_x_pascal;GPU_NVIDIA;processor;2016-08-02;1199;;invidia_vtx_gtx_1080_ti;NVIDIA TITAN X (Pascal);kind=GPU,compute=12675,power=250,sha256=0,ethash=37000000,kheavyhash=420000000
+nvidia_geforce_gtx_1050_ti;GPU_NVIDIA;processor;2016-10-25;139;;invidia_vtx_gtx_1060_6gb;NVIDIA GeForce GTX 1050 Ti;kind=GPU,compute=2470,power=75,sha256=0,ethash=13000000,kheavyhash=90000000
+nvidia_geforce_gtx_1080_ti;;;;;invidia_vtx_gtx_1080_ti;;NVIDIA GeForce GTX 1080 Ti;
+nvidia_titan_xp;GPU_NVIDIA;processor;2017-04-06;1199;;invidia_vtx_gtx_1080_ti;NVIDIA TITAN Xp;kind=GPU,compute=14033,power=250,sha256=0,ethash=40000000,kheavyhash=460000000
+nvidia_titan_v;GPU_NVIDIA;processor;2017-12-07;2999;;invidia_tensor_v100;NVIDIA TITAN V;kind=GPU,compute=17208,power=250,sha256=0,ethash=82000000,kheavyhash=600000000
+nvidia_geforce_rtx_2080;;;;;invidia_vtx_rtx_2080;;NVIDIA GeForce RTX 2080;
+nvidia_geforce_rtx_2080_ti;;;;;invidia_vtx_rtx_2080_ti;;NVIDIA GeForce RTX 2080 Ti;
+nvidia_geforce_rtx_2070;;;;;invidia_vtx_rtx_2070;;NVIDIA GeForce RTX 2070;
+nvidia_titan_rtx;GPU_NVIDIA;processor;2018-12-18;2499;;invidia_vtx_rtx_2080_ti;NVIDIA TITAN RTX;kind=GPU,compute=18840,power=280,sha256=0,ethash=60000000,kheavyhash=800000000
+nvidia_geforce_rtx_2060;;;;;invidia_vtx_rtx_2060;;NVIDIA GeForce RTX 2060;
+nvidia_geforce_gtx_1660_ti;GPU_NVIDIA;processor;2019-02-22;279;;invidia_vtx_rtx_2060;NVIDIA GeForce GTX 1660 Ti;kind=GPU,compute=6280,power=120,sha256=0,ethash=30000000,kheavyhash=250000000
+nvidia_geforce_rtx_2060_super;;;;;invidia_vtx_rtx_2060_super;;NVIDIA GeForce RTX 2060 SUPER;
+nvidia_geforce_rtx_2070_super;;;;;invidia_vtx_rtx_2070_super;;NVIDIA GeForce RTX 2070 SUPER;
+nvidia_geforce_rtx_2080_super;;;;;invidia_vtx_rtx_2080_super;;NVIDIA GeForce RTX 2080 SUPER;
+nvidia_geforce_gtx_1660_super;GPU_NVIDIA;processor;2019-10-29;229;;invidia_vtx_rtx_2060;NVIDIA GeForce GTX 1660 SUPER;kind=GPU,compute=5806,power=125,sha256=0,ethash=31000000,kheavyhash=230000000
+nvidia_geforce_rtx_3080;;;;;invidia_vtx_rtx_3080;;NVIDIA GeForce RTX 3080;
+nvidia_geforce_rtx_3090;;;;;invidia_vtx_rtx_3090;;NVIDIA GeForce RTX 3090;
+nvidia_geforce_rtx_3070;;;;;invidia_vtx_rtx_3070;;NVIDIA GeForce RTX 3070;
+nvidia_geforce_rtx_3060_ti;;;;;invidia_vtx_rtx_3060_ti;;NVIDIA GeForce RTX 3060 Ti;
+nvidia_geforce_rtx_3060;;;;;invidia_vtx_rtx_3060;;NVIDIA GeForce RTX 3060;
+nvidia_geforce_rtx_3080_ti;;;;;invidia_vtx_rtx_3080_ti;;NVIDIA GeForce RTX 3080 Ti;
+nvidia_geforce_rtx_3070_ti;;;;;invidia_vtx_rtx_3070_ti;;NVIDIA GeForce RTX 3070 Ti;
+nvidia_geforce_rtx_3050;GPU_NVIDIA;processor;2022-01-27;249;;invidia_vtx_rtx_3060;NVIDIA GeForce RTX 3050;kind=GPU,compute=10508,power=130,sha256=0,ethash=25000000,kheavyhash=280000000
+nvidia_geforce_rtx_3090_ti;;;;;invidia_vtx_rtx_3090_ti;;NVIDIA GeForce RTX 3090 Ti;
+nvidia_geforce_rtx_4090;;;;;invidia_vtx_rtx_4090;;NVIDIA GeForce RTX 4090;
+nvidia_geforce_rtx_4080;;;;;invidia_vtx_rtx_4080;;NVIDIA GeForce RTX 4080;
+nvidia_rtx_6000_ada;GPU_NVIDIA;processor;2022-12-03;6800;;invidia_vtx_rtx_4090;NVIDIA RTX 6000 Ada Generation;kind=GPU,compute=105220,power=300,sha256=0,ethash=90000000,kheavyhash=1300000000
+nvidia_geforce_rtx_4070_ti;;;;;invidia_vtx_rtx_4070_ti;;NVIDIA GeForce RTX 4070 Ti;
+nvidia_geforce_rtx_4070;;;;;invidia_vtx_rtx_4070;;NVIDIA GeForce RTX 4070;
+nvidia_geforce_rtx_4060_ti;;;;;invidia_vtx_rtx_4060_ti;;NVIDIA GeForce RTX 4060 Ti;
+nvidia_geforce_rtx_4060;;;;;invidia_vtx_rtx_4060;;NVIDIA GeForce RTX 4060;
+nvidia_geforce_rtx_4070_super;;;;;invidia_vtx_rtx_4070_super;;NVIDIA GeForce RTX 4070 SUPER;
+nvidia_geforce_rtx_4070_ti_super;;;;;invidia_vtx_rtx_4070_ti_super;;NVIDIA GeForce RTX 4070 Ti SUPER;
+nvidia_geforce_rtx_4080_super;;;;;invidia_vtx_rtx_4080_super;;NVIDIA GeForce RTX 4080 SUPER;
+nvidia_geforce_rtx_5090;;;;;invidia_vtx_rtx_5090;;NVIDIA GeForce RTX 5090;
+nvidia_geforce_rtx_5080;;;;;invidia_vtx_rtx_5080;;NVIDIA GeForce RTX 5080;
+nvidia_geforce_rtx_5070_ti;;;;;invidia_vtx_rtx_5070_ti;;NVIDIA GeForce RTX 5070 Ti;
+nvidia_geforce_rtx_5070;;;;;invidia_vtx_rtx_5070;;NVIDIA GeForce RTX 5070;
+nvidia_geforce_rtx_5060_ti;;;;;invidia_vtx_rtx_5060_ti;;NVIDIA GeForce RTX 5060 Ti 8GB;
+nvidia_geforce_rtx_5060;;;;;invidia_vtx_rtx_5060;;NVIDIA GeForce RTX 5060;
+nvidia_geforce_rtx_5050;GPU_NVIDIA;processor;2025-07-01;249;;invidia_vtx_rtx_5060;NVIDIA GeForce RTX 5050;kind=GPU,compute=15246,power=130,sha256=0,ethash=0
+# ---------------------------------------------------------------- ATI / AMD GPUs
+ati_radeon_8500;;;;;amp_meridian_8500;;ATI Radeon 8500;
+ati_firegl_8800;;;;;amp_meridian_firegrid_8800;;ATI FireGL 8800;
+ati_radeon_9000_pro;;;;;amp_meridian_9000_pro;;ATI Radeon 9000 Pro;
+ati_radeon_9700_pro;;;;;amp_meridian_9700_pro;;ATI Radeon 9700 Pro;
+ati_radeon_9500_pro;;;;;amp_meridian_9500_pro;;ATI Radeon 9500 Pro;
+ati_radeon_9800_pro;;;;;amp_meridian_9800_pro;;ATI Radeon 9800 Pro;
+ati_radeon_9800_xt;;;;;amp_meridian_9800_xt;;ATI Radeon 9800 XT;
+ati_radeon_9600_xt;;;;;amp_meridian_9600_xt;;ATI Radeon 9600 XT;
+ati_radeon_x800_pro;;;;;amp_meridian_x800_pro;;ATI Radeon X800 Pro;
+ati_radeon_x800_xt_pe;;;;;amp_meridian_x800_xt_pe;;ATI Radeon X800 XT Platinum Edition;
+ati_radeon_x850_xt_pe;;;;;amp_meridian_x850_xt_pe;;ATI Radeon X850 XT Platinum Edition;
+ati_radeon_x1300_pro;;;;;amp_meridian_x1300_pro;;ATI Radeon X1300 Pro;
+ati_radeon_x1800_xt;;;;;amp_meridian_x1800_xt;;ATI Radeon X1800 XT;
+ati_radeon_x1600_xt;;;;;amp_meridian_x1600_xt;;ATI Radeon X1600 XT;
+ati_radeon_x1900_xtx;;;;;amp_meridian_x1900_xtx;;ATI Radeon X1900 XTX;
+ati_radeon_x1950_pro;;;;;amp_meridian_x1950_pro;;ATI Radeon X1950 Pro;
+ati_radeon_x1950_xtx;;;;;amp_meridian_x1950_xtx;;ATI Radeon X1950 XTX;
+ati_radeon_hd_2900_xt;;;;;amp_meridian_hd_2900_xt;;ATI Radeon HD 2900 XT;
+ati_radeon_hd_2600_xt;;;;;amp_meridian_hd_2600_xt;;ATI Radeon HD 2600 XT;
+ati_radeon_hd_3850;;;;;amp_meridian_hd_3850;;ATI Radeon HD 3850;
+ati_radeon_hd_3870;;;;;amp_meridian_hd_3870;;ATI Radeon HD 3870;
+ati_radeon_hd_3870_x2;;;;;amp_meridian_hd_3870_x2;;ATI Radeon HD 3870 X2;
+ati_radeon_hd_4850;;;;;amp_meridian_hd_4850;;ATI Radeon HD 4850;
+ati_radeon_hd_4870;;;;;amp_meridian_hd_4870;;ATI Radeon HD 4870;
+ati_radeon_hd_4870_x2;;;;;amp_meridian_hd_4870_x2;;ATI Radeon HD 4870 X2;
+ati_radeon_hd_4350;;;;;amp_meridian_hd_4350;;ATI Radeon HD 4350;
+ati_radeon_hd_4670;;;;;amp_meridian_hd_4670;;ATI Radeon HD 4670;
+ati_radeon_hd_4830;;;;;amp_meridian_hd_4830;;ATI Radeon HD 4830;
+ati_radeon_hd_5870;;;;;amp_meridian_hd_5870;;ATI Radeon HD 5870;
+ati_radeon_hd_5850;;;;;amp_meridian_hd_5850;;ATI Radeon HD 5850;
+ati_radeon_hd_5770;;;;;amp_meridian_hd_5770;;ATI Radeon HD 5770;
+ati_radeon_hd_5670;;;;;amp_meridian_hd_5670;;ATI Radeon HD 5670;
+amd_radeon_hd_6870;;;;;amp_meridian_hd_6870;;AMD Radeon HD 6870;
+amd_radeon_hd_6950;;;;;amp_meridian_hd_6950;;AMD Radeon HD 6950;
+amd_radeon_hd_6970;;;;;amp_meridian_hd_6970;;AMD Radeon HD 6970;
+amd_radeon_hd_6670;;;;;amp_meridian_hd_6670;;AMD Radeon HD 6670;
+amd_radeon_hd_7970;;;;;amp_meridian_hd_7970;;AMD Radeon HD 7970;
+amd_radeon_hd_7950;;;;;amp_meridian_hd_7950;;AMD Radeon HD 7950;
+amd_radeon_hd_7770;;;;;amp_meridian_hd_7770;;AMD Radeon HD 7770;
+amd_radeon_hd_7870;;;;;amp_meridian_hd_7870;;AMD Radeon HD 7870;
+amd_radeon_r9_270x;;;;;amp_meridian_r9_270x;;AMD Radeon R9 270X;
+amd_radeon_r9_280x;;;;;amp_meridian_r9_280x;;AMD Radeon R9 280X;
+amd_radeon_r9_290x;;;;;amp_meridian_r9_290x;;AMD Radeon R9 290X;
+amd_radeon_r9_290;GPU_AMD;processor;2013-11-05;399;;amp_meridian_r9_290x;AMD Radeon R9 290;kind=GPU,compute=5600,power=275,sha256=1204000000,ethash=28000000
+amd_radeon_r9_390x;;;;;amp_meridian_r9_390x;;AMD Radeon R9 390X;
+amd_radeon_r9_fury_x;;;;;amp_meridian_fury_x;;AMD Radeon R9 Fury X;
+amd_radeon_r9_nano;GPU_AMD;processor;2015-09-10;649;;amp_meridian_fury_x;AMD Radeon R9 Nano;kind=GPU,compute=9462,power=175,sha256=0,ethash=30000000
+amd_radeon_r9_380x;;;;;amp_meridian_r9_380x;;AMD Radeon R9 380X;
+amd_radeon_rx_480;;;;;amp_meridian_rx_480;;AMD Radeon RX 480 8GB;
+amd_radeon_rx_470;GPU_AMD;processor;2016-08-04;179;;amp_meridian_rx_480;AMD Radeon RX 470;kind=GPU,compute=5706,power=120,sha256=0,ethash=25000000,kheavyhash=170000000
+amd_radeon_rx_570;;;;;amp_meridian_rx_570;;AMD Radeon RX 570;
+amd_radeon_rx_580;;;;;amp_meridian_rx_580;;AMD Radeon RX 580;
+amd_radeon_rx_vega_64;;;;;amp_meridian_vega_64;;AMD Radeon RX Vega 64;
+amd_radeon_rx_vega_56;;;;;amp_meridian_vega_56;;AMD Radeon RX Vega 56;
+amd_radeon_rx_590;GPU_AMD;processor;2018-11-15;279;;amp_meridian_rx_580;AMD Radeon RX 590;kind=GPU,compute=8222,power=225,sha256=0,ethash=31000000,kheavyhash=210000000
+amd_radeon_vii;GPU_AMD;processor;2019-02-07;699;;amp_meridian_vega_64;AMD Radeon VII;kind=GPU,compute=15939,power=300,sha256=3666000000,ethash=90000000,kheavyhash=400000000
+amd_radeon_rx_5700_xt;;;;;amp_meridian_rx_5700_xt;;AMD Radeon RX 5700 XT;
+amd_radeon_rx_5700;;;;;amp_meridian_rx_5700;;AMD Radeon RX 5700;
+amd_radeon_rx_5500_xt;GPU_AMD;processor;2019-12-12;199;;amp_meridian_rx_5600_xt;AMD Radeon RX 5500 XT 8GB;kind=GPU,compute=6001,power=130,sha256=0,ethash=27000000,kheavyhash=180000000
+amd_radeon_rx_5600_xt;;;;;amp_meridian_rx_5600_xt;;AMD Radeon RX 5600 XT;
+amd_radeon_rx_6800_xt;;;;;amp_meridian_rx_6800_xt;;AMD Radeon RX 6800 XT;
+amd_radeon_rx_6800;;;;;amp_meridian_rx_6800;;AMD Radeon RX 6800;
+amd_radeon_rx_6900_xt;;;;;amp_meridian_rx_6900_xt;;AMD Radeon RX 6900 XT;
+amd_radeon_rx_6700_xt;GPU_AMD;processor;2021-03-18;479;;amp_meridian_rx_6800;AMD Radeon RX 6700 XT;kind=GPU,compute=15258,power=230,sha256=0,ethash=47000000,kheavyhash=520000000
+amd_radeon_rx_6600_xt;GPU_AMD;processor;2021-08-11;379;;amp_meridian_rx_6800;AMD Radeon RX 6600 XT;kind=GPU,compute=12243,power=160,sha256=0,ethash=32000000,kheavyhash=420000000
+amd_radeon_rx_6600;GPU_AMD;processor;2021-10-13;329;;amp_meridian_rx_6800;AMD Radeon RX 6600;kind=GPU,compute=10312,power=132,sha256=0,ethash=29000000,kheavyhash=380000000
+amd_radeon_rx_6950_xt;GPU_AMD;processor;2022-05-10;1099;;amp_meridian_rx_6900_xt;AMD Radeon RX 6950 XT;kind=GPU,compute=27316,power=335,sha256=0,ethash=65000000,kheavyhash=1000000000
+amd_radeon_rx_7900_xtx;;;;;amp_meridian_rx_7900_xtx;;AMD Radeon RX 7900 XTX;
+amd_radeon_rx_7900_xt;;;;;amp_meridian_rx_7900_xt;;AMD Radeon RX 7900 XT;
+amd_radeon_rx_7600;;;;;amp_meridian_rx_7600;;AMD Radeon RX 7600;
+amd_radeon_rx_7800_xt;;;;;amp_meridian_rx_7800_xt;;AMD Radeon RX 7800 XT;
+amd_radeon_rx_7700_xt;GPU_AMD;processor;2023-09-06;449;;amp_meridian_rx_7800_xt;AMD Radeon RX 7700 XT;kind=GPU,compute=40763,power=245,sha256=0,ethash=55000000
+amd_radeon_rx_7900_gre;GPU_AMD;processor;2024-02-27;549;;amp_meridian_rx_7900_xt;AMD Radeon RX 7900 GRE;kind=GPU,compute=53314,power=260,sha256=0,ethash=72000000
+amd_radeon_rx_9070_xt;;;;;amp_meridian_rx_9070_xt;;AMD Radeon RX 9070 XT;
+amd_radeon_rx_9070;;;;;amp_meridian_rx_9070;;AMD Radeon RX 9070;
+amd_radeon_rx_9060_xt;;;;;amp_meridian_rx_9060_xt;;AMD Radeon RX 9060 XT 16GB;
+# ---------------------------------------------------------------- Data center GPUs (no official list prices: launch prices as reported)
+nvidia_tesla_c870;;;;;invidia_tensor_c870;;NVIDIA Tesla C870;
+nvidia_tesla_c1060;GPU_DATACENTER;processor;2008-06-16;1699;;invidia_tensor_c870;NVIDIA Tesla C1060;kind=GPU,compute=1078,power=188,sha256=80800000,ethash=0,stability=0.03,memBandwidth=1.01
+nvidia_tesla_k20x;;;;;invidia_tensor_k20x;;NVIDIA Tesla K20X;
+nvidia_tesla_k80;;;;;invidia_tensor_k80;;NVIDIA Tesla K80;
+nvidia_tesla_p100;;;;;invidia_tensor_p100;;NVIDIA Tesla P100;
+nvidia_tesla_v100;;;;;invidia_tensor_v100;;NVIDIA Tesla V100;
+amd_radeon_instinct_mi25;;;;;amp_impulse_mi25;;AMD Radeon Instinct MI25;
+nvidia_tesla_t4;GPU_DATACENTER;processor;2018-09-12;2299;;invidia_tensor_p100;NVIDIA Tesla T4;kind=GPU,compute=9388,power=70,sha256=0,ethash=25000000,kheavyhash=300000000,stability=0.09,memBandwidth=1.06
+nvidia_a100;;;;;invidia_tensor_a100;;NVIDIA A100;
+amd_instinct_mi100;;;;;amp_impulse_mi100;;AMD Instinct MI100;
+amd_instinct_mi250x;;;;;amp_impulse_mi250x;;AMD Instinct MI250X;
+nvidia_h100_pcie;;;;;invidia_tensor_h100;;NVIDIA H100 PCIe;
+nvidia_l4;GPU_DATACENTER;processor;2023-03-21;2500;;invidia_tensor_a100;NVIDIA L4;kind=GPU,compute=35118,power=72,sha256=0,ethash=0,kheavyhash=500000000,stability=0.14,memBandwidth=1.12
+nvidia_l40s;GPU_DATACENTER;processor;2023-08-08;7500;;invidia_tensor_h100;NVIDIA L40S;kind=GPU,compute=106164,power=350,sha256=0,ethash=0,kheavyhash=1500000000,stability=0.15,memBandwidth=1.15
+amd_instinct_mi300x;;;;;amp_impulse_mi300x;;AMD Instinct MI300X;
+nvidia_b200;;;;;invidia_tensor_b200;;NVIDIA B200;
+nvidia_h200_nvl;GPU_DATACENTER;processor;2024-11-18;32000;;invidia_tensor_h100;NVIDIA H200 NVL;kind=GPU,compute=69540,power=600,sha256=0,ethash=0,kheavyhash=1400000000,stability=0.17,memBandwidth=1.30
+# ---------------------------------------------------------------- Mining GPUs
+nvidia_p106_100;;;;;invidia_mx_p106;;NVIDIA P106-100;
+nvidia_p104_100;;;;;invidia_mx_p104;;NVIDIA P104-100;
+amd_radeon_rx_470_mining;;;;;amp_meridian_rx_470_mining;;AMD Radeon RX 470 Mining Edition;
+amd_radeon_rx_560_mining;;;;;amp_meridian_rx_560_mining;;AMD Radeon RX 560 Mining Edition;
+nvidia_p102_100;;;;;invidia_mx_p102;;NVIDIA P102-100;
+nvidia_cmp_30hx;;;;;invidia_cmx_30;;NVIDIA CMP 30HX;
+nvidia_cmp_40hx;;;;;invidia_cmx_40;;NVIDIA CMP 40HX;
+nvidia_cmp_50hx;;;;;invidia_cmx_50;;NVIDIA CMP 50HX;
+nvidia_cmp_90hx;;;;;invidia_cmx_90;;NVIDIA CMP 90HX;
+nvidia_cmp_170hx;;;;;invidia_cmx_170;;NVIDIA CMP 170HX;
+# ---------------------------------------------------------------- RAM (prices per kit/module at the time)
+kingston_edo_simm_32mb;;;;;kingsley_simm_32;;Kingston 32MB EDO SIMM;sizeMb=32
+kingston_pc66_sdram_32mb;;;;;kingsley_sdram_32;;Kingston 32MB PC66 SDRAM;sizeMb=32
+corsair_pc100_64mb;;;;;gforce_pc100_64;;Corsair 64MB PC100 SDRAM;sizeMb=64
+kingston_pc100_128mb;;;;;kingsley_pc100_128;;Kingston ValueRAM 128MB PC100;sizeMb=128
+samsung_rimm_pc800_128mb;;;;;kingsley_rdram_128;;Samsung 128MB PC800 RDRAM RIMM;sizeMb=128
+corsair_pc133_256mb;;;;;gforce_pc133_256;;Corsair 256MB PC133 SDRAM;sizeMb=256
+samsung_rimm_pc800_256mb;;;;;gforce_rdram_256;;Samsung 256MB PC800 RDRAM RIMM;sizeMb=256
+kingston_pc100_ecc_128mb;;;;;kingsley_pc100_ecc_128;;Kingston 128MB PC100 ECC;sizeMb=128
+kingston_pc133_512mb;;;;;kingsley_pc133_512;;Kingston ValueRAM 512MB PC133;sizeMb=512
+micron_pc133_ecc_1gb;;;;;kingsley_pc133_ecc_1024;;Micron 1GB PC133 ECC Registered;sizeMb=1024
+crucial_ddr_pc1600_128mb;;;;;kingsley_pc1600_128;;Crucial 128MB DDR PC1600;sizeMb=128
+crucial_ddr_pc2100_256mb;;;;;gforce_pc2100_256;;Crucial 256MB DDR PC2100;sizeMb=256
+kingston_ddr_pc2100_ecc_1gb;;;;;kingsley_pc2100_ecc_1024;;Kingston 1GB DDR PC2100 ECC Registered;sizeMb=1024
+kingston_ddr_pc2100_512mb;;;;;kingsley_pc2100_512;;Kingston ValueRAM 512MB DDR PC2100;sizeMb=512
+kingston_valueram_ddr400_512mb;;;;;kingsley_ddr1_512;;Kingston ValueRAM 512MB DDR400;sizeMb=512
+corsair_xms_ddr400_512mb;;;;;gforce_ddr1_512;;Corsair XMS 512MB DDR400;sizeMb=512
+kingston_valueram_ddr400_1gb;;;;;kingsley_ddr1_1024;;Kingston ValueRAM 1GB DDR400;sizeMb=1024
+corsair_xms_ddr400_1gb;;;;;gforce_ddr1_1024;;Corsair XMS 1GB DDR400;sizeMb=1024
+kingston_valueram_ddr2_533_512mb;;;;;kingsley_pc2_4200_512;;Kingston ValueRAM 512MB DDR2-533;sizeMb=512
+kingston_valueram_ddr2_1gb;;;;;kingsley_ddr2_1;;Kingston ValueRAM 1GB DDR2;sizeMb=1024
+corsair_xms2_ddr2_1gb;;;;;gforce_ddr2_1;;Corsair XMS2 1GB DDR2;sizeMb=1024
+kingston_valueram_ddr2_2gb;;;;;kingsley_ddr2_2;;Kingston ValueRAM 2GB DDR2;sizeMb=2048
+corsair_xms2_ddr2_2gb;;;;;gforce_ddr2_2;;Corsair XMS2 2GB DDR2-800;sizeMb=2048
+kingston_ddr2_667_ecc_2gb;;;;;kingsley_pc2_5300_ecc_2048;;Kingston 2GB DDR2-667 ECC Registered;sizeMb=2048
+kingston_valueram_ddr2_4gb;;;;;kingsley_ddr2_4;;Kingston ValueRAM 4GB DDR2;sizeMb=4096
+corsair_dominator_ddr2_4gb;;;;;gforce_ddr2_4;;Corsair Dominator 4GB DDR2;sizeMb=4096
+kingston_valueram_ddr2_8gb;;;;;kingsley_ddr2_8;;Kingston ValueRAM 8GB DDR2;sizeMb=8192
+gskill_pi_ddr2_8gb;;;;;gforce_ddr2_8;;G.Skill PI Series 8GB DDR2;sizeMb=8192
+corsair_xms3_ddr3_2gb;;;;;gforce_pc3_10600_2048;;Corsair XMS3 2GB DDR3-1333;sizeMb=2048
+kingston_valueram_ddr3_4gb;;;;;kingsley_ddr3_4;;Kingston ValueRAM 4GB DDR3;sizeMb=4096
+corsair_dominator_ddr3_4gb;;;;;gforce_ddr3_4;;Corsair Dominator 4GB DDR3;sizeMb=4096
+kingston_valueram_ddr3_8gb;;;;;kingsley_ddr3_8;;Kingston ValueRAM 8GB DDR3;sizeMb=8192
+gskill_ripjaws_ddr3_8gb;;;;;gforce_ddr3_8;;G.Skill Ripjaws 8GB DDR3;sizeMb=8192
+kingston_valueram_ddr3_32gb;;;;;kingsley_ddr3_32;;Kingston ValueRAM 32GB DDR3;sizeMb=32768
+gskill_ripjaws_x_ddr3_32gb;;;;;gforce_ddr3_32;;G.Skill Ripjaws X 32GB DDR3;sizeMb=32768
+samsung_ddr3_ecc_rdimm_16gb;RAM;ram;2012-03-06;249;;kingsley_ddr3_16;Samsung 16GB DDR3 ECC RDIMM;crashChanceReduction=0.3,computeMultiplier=1.0,generation=DDR3,sizeMb=16384
+kingston_valueram_ddr3_16gb;;;;;kingsley_ddr3_16;;Kingston ValueRAM 16GB DDR3;sizeMb=16384
+corsair_vengeance_ddr3_16gb;;;;;gforce_ddr3_16;;Corsair Vengeance 16GB DDR3;sizeMb=16384
+crucial_ddr4_2133_16gb;RAM;ram;2014-08-29;249;;kingsley_ddr4_16;Crucial 16GB DDR4-2133;crashChanceReduction=0.25,computeMultiplier=1.0,generation=DDR4,sizeMb=16384
+kingston_valueram_ddr4_8gb;;;;;kingsley_ddr4_8;;Kingston ValueRAM 8GB DDR4;sizeMb=8192
+corsair_vengeance_lpx_ddr4_8gb;;;;;gforce_ddr4_8;;Corsair Vengeance LPX 8GB DDR4;sizeMb=8192
+kingston_valueram_ddr4_16gb;;;;;kingsley_ddr4_16;;Kingston ValueRAM 16GB DDR4;sizeMb=16384
+corsair_vengeance_lpx_ddr4_16gb;;;;;gforce_ddr4_16;;Corsair Vengeance LPX 16GB DDR4;sizeMb=16384
+kingston_valueram_ddr4_32gb;;;;;kingsley_ddr4_32;;Kingston ValueRAM 32GB DDR4;sizeMb=32768
+gskill_trident_z_ddr4_32gb;;;;;gforce_ddr4_32;;G.Skill Trident Z 32GB DDR4;sizeMb=32768
+kingston_valueram_ddr4_64gb;;;;;kingsley_ddr4_64;;Kingston ValueRAM 64GB DDR4;sizeMb=65536
+corsair_vengeance_lpx_ddr4_64gb;;;;;gforce_ddr4_64;;Corsair Vengeance LPX 64GB DDR4;sizeMb=65536
+samsung_ddr4_ecc_rdimm_32gb;RAM;ram;2017-07-11;399;;kingsley_ddr4_32;Samsung 32GB DDR4 ECC RDIMM;crashChanceReduction=0.4,computeMultiplier=1.0,generation=DDR4,sizeMb=32768
+samsung_ddr4_ecc_rdimm_64gb;RAM;ram;2019-04-02;599;;kingsley_ddr4_64;Samsung 64GB DDR4 ECC RDIMM;crashChanceReduction=0.5,computeMultiplier=1.0,generation=DDR4,sizeMb=65536
+kingston_fury_beast_ddr5_16gb;;;;;kingsley_ddr5_16;;Kingston FURY Beast 16GB DDR5;sizeMb=16384
+corsair_vengeance_ddr5_16gb;;;;;gforce_ddr5_16;;Corsair Vengeance 16GB DDR5;sizeMb=16384
+kingston_fury_beast_ddr5_32gb;;;;;kingsley_ddr5_32;;Kingston FURY Beast 32GB DDR5;sizeMb=32768
+gskill_trident_z5_ddr5_32gb;;;;;gforce_ddr5_32;;G.Skill Trident Z5 32GB DDR5;sizeMb=32768
+kingston_fury_beast_ddr5_64gb;;;;;kingsley_ddr5_64;;Kingston FURY Beast 64GB DDR5;sizeMb=65536
+corsair_vengeance_ddr5_64gb;;;;;gforce_ddr5_64;;Corsair Vengeance 64GB DDR5;sizeMb=65536
+samsung_ddr5_ecc_rdimm_128gb;RAM;ram;2022-11-10;1499;;kingsley_ddr5_128;Samsung 128GB DDR5 ECC RDIMM;crashChanceReduction=0.6,computeMultiplier=1.0,generation=DDR5,sizeMb=131072
+kingston_fury_beast_ddr5_128gb;;;;;kingsley_ddr5_128;;Kingston FURY Beast 128GB DDR5;sizeMb=131072
+gskill_trident_z5_ddr5_128gb;;;;;gforce_ddr5_128;;G.Skill Trident Z5 128GB DDR5;sizeMb=131072
+samsung_ddr5_ecc_rdimm_64gb;RAM;ram;2023-01-10;449;;kingsley_ddr5_64;Samsung 64GB DDR5 ECC RDIMM;crashChanceReduction=0.5,computeMultiplier=1.0,generation=DDR5,sizeMb=65536
+# ---------------------------------------------------------------- Storage
+samsung_ide_6gb;;;;;samcore_hdd_6gb;;Samsung 6GB IDE Hard Drive;
+seagate_medalist_17gb;;;;;seacrest_medalist_17gb;;Seagate Medalist 17.2GB;
+seagate_elite_47gb;;;;;seacrest_elite_47gb;;Seagate Elite 47GB;
+seagate_barracuda_ata_ii_30gb;;;;;seacrest_barracuda_ata_ii_31gb;;Seagate Barracuda ATA II 30.6GB;
+seagate_cheetah_x15_18gb;;;;;seacrest_cheetah_x15_18gb;;Seagate Cheetah X15 18GB;
+seagate_barracuda_180_scsi;;;;;seacrest_barracuda_180gb_scsi;;Seagate Barracuda 180 SCSI 181GB;
+seagate_cheetah_73lp;;;;;seacrest_cheetah_73lp_73gb;;Seagate Cheetah 73LP 73GB;
+wd_caviar_60gb;;;;;westdrive_caviar_60gb;;Western Digital Caviar 60GB;
+seagate_cheetah_15k3_73gb;;;;;seacrest_cheetah_15k3_73gb;;Seagate Cheetah 15K.3 73GB;
+seagate_barracuda_sata_v_120gb;;;;;seacrest_barracuda_sata_120gb;;Seagate Barracuda Serial ATA V 120GB;
+wd_raptor_36gb;;;;;westdrive_raptor_36gb;;Western Digital Raptor 36GB;
+seagate_barracuda_7200_7_80gb;;;;;seacrest_barracuda_80gb;;Seagate Barracuda 7200.7 80GB;
+seagate_barracuda_7200_7_120gb;;;;;seacrest_barracuda_7200_7_120gb;;Seagate Barracuda 7200.7 120GB;
+seagate_savvio_10k1_73gb;;;;;seacrest_savvio_73gb;;Seagate Savvio 10K.1 73GB;
+seagate_cheetah_15k4_147gb;;;;;seacrest_cheetah_15k4_147gb;;Seagate Cheetah 15K.4 147GB;
+wd_caviar_se_250gb;;;;;westdrive_caviar_250gb;;Western Digital Caviar SE 250GB;
+seagate_barracuda_7200_8_400gb;;;;;seacrest_barracuda_7200_8_400gb;;Seagate Barracuda 7200.8 400GB;
+wd_raptor_x_150gb;;;;;westdrive_raptor_x_150gb;;Western Digital Raptor X 150GB;
+seagate_barracuda_7200_10_750gb;;;;;seacrest_barracuda_7200_10_750gb;;Seagate Barracuda 7200.10 750GB;
+seagate_cheetah_15k5_300gb;;;;;seacrest_cheetah_15k5_300gb;;Seagate Cheetah 15K.5 300GB;
+wd_caviar_se16_500gb;;;;;westdrive_caviar_se16_500gb;;Western Digital Caviar SE16 500GB;
+seagate_barracuda_7200_10_500gb;;;;;seacrest_barracuda_500gb;;Seagate Barracuda 7200.10 500GB;
+hitachi_deskstar_7k1000_1tb;STORAGE;storage;2007-01-05;399;;seacrest_barracuda_7200_11_1tb;Hitachi Deskstar 7K1000 1TB;capacityGb=1000,solidState=false
+seagate_barracuda_7200_11_1tb;;;;;seacrest_barracuda_7200_11_1tb;;Seagate Barracuda 7200.11 1TB;
+wd_caviar_500gb;;;;;westdrive_caviar_500gb;;Western Digital Caviar 500GB;
+wd_velociraptor_300gb;;;;;westdrive_velociraptor_300gb;;Western Digital VelociRaptor 300GB;
+seagate_cheetah_15k6_450gb;;;;;seacrest_cheetah_15k6_450gb;;Seagate Cheetah 15K.6 450GB;
+seagate_barracuda_7200_11_1500gb;;;;;seacrest_barracuda_7200_11_1500gb;;Seagate Barracuda 7200.11 1.5TB;
+wd_caviar_blue_640gb;;;;;westdrive_caviar_640gb;;Western Digital Caviar Blue 640GB;
+wd_caviar_black_1tb;;;;;westdrive_black_1tb;;Western Digital Caviar Black 1TB;
+intel_x25_m_80gb;;;;;flint_ridge_x25_m_80gb;;Intel X25-M 80GB;
+intel_x25_e_32gb;;;;;flint_ridge_x25_e_32gb;;Intel X25-E 32GB;
+wd_caviar_green_2tb;STORAGE;storage;2009-01-27;299;;westdrive_red_4tb;Western Digital Caviar Green 2TB;capacityGb=2000,solidState=false
+wd_caviar_green_3tb;STORAGE;storage;2010-10-19;239.99;;westdrive_red_4tb;Western Digital Caviar Green 3TB;capacityGb=3000,solidState=false
+seagate_barracuda_3tb;;;;;seacrest_barracuda_3tb;;Seagate Barracuda 3TB;
+samsung_840_evo_250gb;;;;;samcore_evo_250gb;;Samsung 840 EVO 250GB;
+wd_red_4tb;;;;;westdrive_red_4tb;;Western Digital Red 4TB;
+samsung_850_pro_512gb;STORAGE;storage;2014-07-01;399.99;;samcore_evo_500gb;Samsung 850 PRO 512GB;capacityGb=512,solidState=true
+samsung_850_evo_500gb;;;;;samcore_evo_500gb;;Samsung 850 EVO 500GB;
+samsung_950_pro_512gb;STORAGE;storage;2015-10-01;349.99;;samcore_evo_nvme_1tb;Samsung 950 PRO 512GB NVMe;capacityGb=512,solidState=true
+samsung_960_evo_1tb;STORAGE;storage;2016-11-15;479.99;;samcore_evo_nvme_1tb;Samsung 960 EVO 1TB NVMe;capacityGb=1000,solidState=true
+seagate_barracuda_8tb;;;;;seacrest_barracuda_8tb;;Seagate BarraCuda 8TB;
+samsung_970_evo_1tb;;;;;samcore_evo_nvme_1tb;;Samsung 970 EVO 1TB NVMe;
+wd_gold_16tb;;;;;westdrive_gold_16tb;;Western Digital Gold 16TB;
+samsung_870_qvo_8tb;STORAGE;storage;2020-06-30;899.99;;samcore_evo_500gb;Samsung 870 QVO 8TB;capacityGb=8000,solidState=true
+samsung_980_pro_1tb;STORAGE;storage;2020-09-22;229.99;;samcore_pro_nvme_2tb;Samsung 980 PRO 1TB NVMe;capacityGb=1000,solidState=true
+samsung_980_pro_2tb;;;;;samcore_pro_nvme_2tb;;Samsung 980 PRO 2TB NVMe;
+wd_red_pro_22tb;STORAGE;storage;2022-05-10;599.99;;westdrive_gold_16tb;Western Digital Red Pro 22TB;capacityGb=22000,solidState=false
+samsung_990_pro_2tb;STORAGE;storage;2022-10-01;309.99;;samcore_pro_nvme_2tb;Samsung 990 PRO 2TB NVMe;capacityGb=2000,solidState=true
+wd_black_sn850x_4tb;;;;;westdrive_black_ssd_4tb;;WD_BLACK SN850X 4TB NVMe;
+samsung_9100_pro_4tb;STORAGE;storage;2025-03-18;549.99;;westdrive_black_ssd_4tb;Samsung 9100 PRO 4TB NVMe;capacityGb=4000,solidState=true
+# ---------------------------------------------------------------- Power supplies
+seasonic_atx_250w;;;;;seastone_atx_250;;Seasonic 250W ATX;
+antec_atx_300w;;;;;corsaire_atx_300;;Antec 300W ATX;
+enermax_eg365p_ve_350w;;;;;seastone_atx_350;;Enermax EG365P-VE 350W;
+enermax_eg465p_ve_430w;;;;;corsaire_atx_400;;Enermax EG465P-VE 430W;maxPowerThroughput=430
+antec_truepower_480w;;;;;seastone_atx_450;;Antec TruePower 480W;maxPowerThroughput=480
+pcpc_turbo_cool_510;;;;;corsaire_atx_500;;PC Power & Cooling Turbo-Cool 510;maxPowerThroughput=510
+seasonic_s12_430;;;;;seastone_plus_400;;Seasonic S12-430;maxPowerThroughput=430
+seasonic_s12_500;;;;;corsaire_plus_500;;Seasonic S12-500;
+seasonic_s12_600;;;;;seastone_plus_600;;Seasonic S12-600;
+corsair_hx620w;PSU;psu;2006-10-01;179;;corsaire_plus_750;Corsair HX620W;maxPowerThroughput=620,efficiency=0.82
+corsair_tx650;;;;;corsaire_bronze_650;;Corsair TX650;
+seasonic_s12ii_550;;;;;seastone_bronze_550;;Seasonic S12II-550 Bronze;
+corsair_hx750w;;;;;corsaire_gold_750;;Corsair HX750W;
+seasonic_x_650;PSU;psu;2009-08-01;159;;seastone_gold_650;Seasonic X-650 Gold;maxPowerThroughput=650,efficiency=0.9
+corsair_ax850;;;;;corsaire_platinum_850;;Corsair AX850;
+seasonic_platinum_760;;;;;seastone_platinum_750;;Seasonic Platinum-760;maxPowerThroughput=760
+corsair_ax1200;PSU;psu;2010-02-01;299;;corsaire_platinum_1200;Corsair AX1200;maxPowerThroughput=1200,efficiency=0.9
+hp_common_slot_750w;;;;;railforge_server_750;;HP 750W Common Slot Platinum;
+hp_common_slot_1200w;;;;;railforge_server_1200;;HP 1200W Common Slot Platinum;
+corsair_ax1200i;PSU;psu;2012-11-01;349;;corsaire_platinum_1200;Corsair AX1200i;maxPowerThroughput=1200,efficiency=0.92
+corsair_ax1500i;PSU;psu;2014-03-01;449;;corsaire_titanium_1500;Corsair AX1500i;maxPowerThroughput=1500,efficiency=0.94
+supermicro_pws_2k04a;;;;;railforge_server_2400;;Supermicro PWS-2K04A 2000W;maxPowerThroughput=2000
+evga_supernova_1600_t2;PSU;psu;2015-07-01;449;;seastone_titanium_1600;EVGA SuperNOVA 1600 T2;maxPowerThroughput=1600,efficiency=0.94
+corsair_rm850x;PSU;psu;2015-09-01;159;;corsaire_gold_850;Corsair RM850x;maxPowerThroughput=850,efficiency=0.9
+seasonic_prime_titanium_850;PSU;psu;2016-10-01;229;;seastone_titanium_850;Seasonic PRIME Titanium 850;maxPowerThroughput=850,efficiency=0.94
+corsair_ax1600i;PSU;psu;2017-05-01;449;;corsaire_titanium_1500;Corsair AX1600i;maxPowerThroughput=1600,efficiency=0.94
+seasonic_focus_gx_750;PSU;psu;2018-09-01;119;;seastone_gold_750;Seasonic FOCUS GX-750;maxPowerThroughput=750,efficiency=0.9
+corsair_hx1500i;PSU;psu;2021-05-01;399;;corsaire_titanium_1500;Corsair HX1500i;maxPowerThroughput=1500,efficiency=0.92
+seasonic_prime_tx_1600;PSU;psu;2021-09-01;549;;seastone_titanium_1600;Seasonic PRIME TX-1600;maxPowerThroughput=1600,efficiency=0.94
+be_quiet_dark_power_pro_13_1600w;PSU;psu;2022-11-01;469;;corsaire_titanium_2000;be quiet! Dark Power Pro 13 1600W;maxPowerThroughput=1600,efficiency=0.94
+corsair_rm1000x_shift;PSU;psu;2023-02-01;219;;corsaire_gold_1000;Corsair RM1000x SHIFT;maxPowerThroughput=1000,efficiency=0.9
+# ---------------------------------------------------------------- Mainboards (Data Center's own boards stay available by default)
+asus_p5b_deluxe;MAINBOARD;mainboard;2006-07-27;219;;vertex_core_lga775;ASUS P5B Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA775,ramGenerations=DDR2
+asus_p6t_deluxe;MAINBOARD;mainboard;2008-11-17;299;;vertex_core_lga1366;ASUS P6T Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=3,ramSlots=6,storageSlots=6,fanSlots=2,socket=LGA1366,ramGenerations=DDR3
+asus_p8z68_v_pro;MAINBOARD;mainboard;2011-05-11;209;;vertex_core_lga1155;ASUS P8Z68-V PRO;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=2,socket=LGA1155,ramGenerations=DDR3
+supermicro_x9dri_f;MAINBOARD;mainboard;2012-03-06;389;;vertex_dual_lga2011;Supermicro X9DRi-F;psuSlots=2,cpuSlots=2,gpuSlots=4,ramSlots=16,storageSlots=10,fanSlots=3,socket=LGA2011,ramGenerations=DDR3
+asus_maximus_vi_hero;MAINBOARD;mainboard;2013-06-02;209;;vertex_core_lga1150;ASUS ROG Maximus VI Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA1150,ramGenerations=DDR3
+supermicro_x10dri;MAINBOARD;mainboard;2014-09-08;459;;vertex_dual_lga2011_3;Supermicro X10DRi;psuSlots=2,cpuSlots=2,gpuSlots=6,ramSlots=16,storageSlots=10,fanSlots=3,socket=LGA2011_3,ramGenerations=DDR4
+asus_rog_crosshair_vi_hero;MAINBOARD;mainboard;2017-03-02;255;;vertex_core_am4;ASUS ROG Crosshair VI Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=2,socket=SOCKET_AM4,ramGenerations=DDR4
+supermicro_h11dsi;MAINBOARD;mainboard;2017-06-29;589;;vertex_dual_sp3;Supermicro H11DSi;psuSlots=2,cpuSlots=2,gpuSlots=5,ramSlots=16,storageSlots=12,fanSlots=3,socket=SOCKET_SP3,ramGenerations=DDR4
+supermicro_x11dph_t;MAINBOARD;mainboard;2017-07-11;629;;vertex_dual_lga3647;Supermicro X11DPH-T;psuSlots=2,cpuSlots=2,gpuSlots=6,ramSlots=16,storageSlots=12,fanSlots=3,socket=LGA3647,ramGenerations=DDR4
+asus_rog_maximus_xi_hero;MAINBOARD;mainboard;2018-10-19;279;;vertex_core_lga1151_v2;ASUS ROG Maximus XI Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=2,socket=LGA1151_V2,ramGenerations=DDR4
+asus_rog_strix_z690_e;MAINBOARD;mainboard;2021-11-04;469;;vertex_core_lga1700;ASUS ROG Strix Z690-E Gaming WiFi;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=3,socket=LGA1700,ramGenerations=DDR5
+asus_rog_crosshair_x670e_hero;MAINBOARD;mainboard;2022-09-27;699;;vertex_core_am5;ASUS ROG Crosshair X670E Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=3,socket=SOCKET_AM5,ramGenerations=DDR5
+supermicro_h13dsh;MAINBOARD;mainboard;2022-11-10;1099;;vertex_dual_sp5;Supermicro H13DSH;psuSlots=2,cpuSlots=2,gpuSlots=4,ramSlots=24,storageSlots=12,fanSlots=3,socket=SOCKET_SP5,ramGenerations=DDR5
+supermicro_x13dei;MAINBOARD;mainboard;2023-01-10;899;;vertex_dual_lga4677;Supermicro X13DEI;psuSlots=3,cpuSlots=2,gpuSlots=6,ramSlots=16,storageSlots=12,fanSlots=3,socket=LGA4677,ramGenerations=DDR5
+asrock_rack_b650d4u;MAINBOARD;mainboard;2023-05-01;299;;vertex_core_am5;ASRock Rack B650D4U;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=8,fanSlots=3,socket=SOCKET_AM5,ramGenerations=DDR5
+asus_rog_maximus_z890_hero;MAINBOARD;mainboard;2024-10-24;679;;vertex_core_lga1851;ASUS ROG Maximus Z890 Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=3,socket=LGA1851,ramGenerations=DDR5
+asrock_h110_pro_btc_plus;MAINBOARD_MINING;mainboard;2017-07-01;120;;bioforge_lga1151_13;ASRock H110 Pro BTC+;psuSlots=4,cpuSlots=1,gpuSlots=13,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
+biostar_tb250_btc_pro;MAINBOARD_MINING;mainboard;2017-08-01;120;;bioforge_lga1151_6;Biostar TB250-BTC PRO;psuSlots=3,cpuSlots=1,gpuSlots=12,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
+asus_b250_mining_expert;MAINBOARD_MINING;mainboard;2017-11-01;180;;bioforge_lga1151_19;ASUS B250 Mining Expert;psuSlots=3,cpuSlots=1,gpuSlots=19,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
+# ---------------------------------------------------------------- Fans
+delta_afb1212she;FAN;fan;2008-01-01;24.99;;flowtek_server_blower;Delta AFB1212SHE 120mm;airflowCfm=150
+noctua_nf_f12_pwm;FAN;fan;2012-03-01;19.9;;flowtek_120mm;Noctua NF-F12 PWM;airflowCfm=55
+noctua_nf_a14_pwm;FAN;fan;2013-01-01;24.9;;flowtek_140mm_standard;Noctua NF-A14 PWM;airflowCfm=82
+noctua_nf_a12x25_pwm;FAN;fan;2018-06-01;29.9;;flowtek_120mm_pro;Noctua NF-A12x25 PWM;airflowCfm=60
+arctic_p12_pwm;FAN;fan;2019-06-01;7.99;;flowtek_120mm;ARCTIC P12 PWM;airflowCfm=56

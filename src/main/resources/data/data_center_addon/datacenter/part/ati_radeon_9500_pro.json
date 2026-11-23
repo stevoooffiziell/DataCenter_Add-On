@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon 9500 Pro",
+  "stats": {
+    "kind": "GPU",
+    "compute": 33,
+    "power": 50,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 19900,
+    "date": "2002-10-24"
+  }
+}

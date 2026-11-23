@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA P106-100",
+  "stats": {
+    "compute": 5065,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 21330000,
+    "kheavyhash": 190000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 20000,
+    "date": "2017-06-19"
+  }
+}

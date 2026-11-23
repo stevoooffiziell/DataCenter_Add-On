@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston 128MB PC100 ECC",
+  "stats": {
+    "crashChanceReduction": 0.05,
+    "computeMultiplier": 1.0,
+    "generation": "SDRAM",
+    "sizeMb": 128
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 12000,
+    "date": "2000-05-31"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 9 7950X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 32981,
+    "power": 170,
+    "sha256": 870000000,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 69900,
+    "date": "2022-09-27"
+  }
+}

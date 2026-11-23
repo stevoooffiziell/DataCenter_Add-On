@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce4 Ti 4600",
+  "stats": {
+    "kind": "GPU",
+    "compute": 7,
+    "power": 40,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2002-02-06"
+  }
+}

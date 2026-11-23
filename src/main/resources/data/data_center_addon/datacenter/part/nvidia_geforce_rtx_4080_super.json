@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4080 SUPER",
+  "stats": {
+    "kind": "GPU",
+    "compute": 60522,
+    "power": 320,
+    "sha256": 0,
+    "ethash": 87080000,
+    "kheavyhash": 1287000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 99900,
+    "date": "2024-01-31"
+  }
+}

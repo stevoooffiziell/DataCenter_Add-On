@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon R9 Nano",
+  "stats": {
+    "kind": "GPU",
+    "compute": 9462,
+    "power": 175,
+    "sha256": 0,
+    "ethash": 30000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 64900,
+    "date": "2015-09-10"
+  }
+}

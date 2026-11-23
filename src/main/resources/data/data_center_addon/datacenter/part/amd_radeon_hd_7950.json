@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon HD 7950",
+  "stats": {
+    "kind": "GPU",
+    "compute": 3917,
+    "power": 200,
+    "sha256": 557500000,
+    "ethash": 13860000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 44900,
+    "date": "2012-01-31"
+  }
+}

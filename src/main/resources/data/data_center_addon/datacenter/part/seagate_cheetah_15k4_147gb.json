@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Cheetah 15K.4 147GB",
+  "stats": {
+    "capacityGb": 147,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 43270,
+    "date": "2004-06-14"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 1080 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 13142,
+    "power": 250,
+    "sha256": 12336900000,
+    "ethash": 48000000,
+    "kheavyhash": 480000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 69900,
+    "date": "2017-03-10"
+  }
+}

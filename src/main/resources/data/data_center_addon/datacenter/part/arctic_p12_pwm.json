@@ -1,0 +1,12 @@
+{
+  "type": "fan",
+  "name": "ARCTIC P12 PWM",
+  "stats": {
+    "airflowCfm": 56
+  },
+  "shop": {
+    "category": "FAN",
+    "price": 799,
+    "date": "2019-06-01"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 9070 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 56440,
+    "power": 304,
+    "sha256": 9307200000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 59900,
+    "date": "2025-03-06"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "psu",
+  "name": "HP 1200W Common Slot Platinum",
+  "stats": {
+    "maxPowerThroughput": 1200,
+    "wasteHeatPerFe": 0.004,
+    "efficiency": 0.94,
+    "twelveVoltOnly": true
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 7500,
+    "date": "2011-01-01"
+  }
+}

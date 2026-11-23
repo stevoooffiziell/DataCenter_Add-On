@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Phenom II X4 955 Black Edition",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4629,
+    "power": 125,
+    "sha256": 11000000,
+    "ethash": 0,
+    "socket": "SOCKET_AM3"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 24500,
+    "date": "2009-04-23"
+  }
+}

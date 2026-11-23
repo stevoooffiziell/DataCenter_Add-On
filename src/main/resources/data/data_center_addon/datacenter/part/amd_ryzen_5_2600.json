@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 2600",
+  "stats": {
+    "kind": "CPU",
+    "compute": 8500,
+    "power": 65,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM4"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 19900,
+    "date": "2018-04-19"
+  }
+}

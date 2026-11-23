@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 4670",
+  "stats": {
+    "kind": "GPU",
+    "compute": 556,
+    "power": 59,
+    "sha256": 43100000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 7900,
+    "date": "2008-09-10"
+  }
+}

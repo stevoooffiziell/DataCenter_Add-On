@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair Dominator 4GB DDR2",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR2",
+    "sizeMb": 4096
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 10000,
+    "date": "2008-07-01"
+  }
+}

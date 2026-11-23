@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "NVIDIA Tesla V100",
+  "stats": {
+    "kind": "GPU",
+    "compute": 16225,
+    "power": 250,
+    "sha256": 15300000000,
+    "ethash": 94000000,
+    "kheavyhash": 595000000,
+    "stability": 0.1,
+    "memBandwidth": 1.08
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 899900,
+    "date": "2017-06-21"
+  }
+}

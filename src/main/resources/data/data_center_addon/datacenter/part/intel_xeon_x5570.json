@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "Intel Xeon X5570",
+  "stats": {
+    "kind": "CPU",
+    "compute": 4817,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1366_XEON",
+    "stability": 0.08,
+    "memBandwidth": 1.015
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 138600,
+    "date": "2009-03-30"
+  }
+}

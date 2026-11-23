@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX Vega 56",
+  "stats": {
+    "kind": "GPU",
+    "compute": 12169,
+    "power": 210,
+    "sha256": 3356300000,
+    "ethash": 28500000,
+    "kheavyhash": 270000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 39900,
+    "date": "2017-08-28"
+  }
+}

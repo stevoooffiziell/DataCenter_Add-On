@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "Intel Pentium III Xeon 1.0 GHz",
+  "stats": {
+    "kind": "CPU",
+    "compute": 362,
+    "power": 31,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SLOT_2",
+    "stability": 0.025
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 71900,
+    "date": "2000-08-22"
+  }
+}

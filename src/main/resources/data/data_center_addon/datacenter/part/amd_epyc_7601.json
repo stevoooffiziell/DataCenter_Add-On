@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD EPYC 7601",
+  "stats": {
+    "kind": "CPU",
+    "compute": 37031,
+    "power": 180,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_SP3",
+    "stability": 0.15,
+    "memBandwidth": 1.09
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 420000,
+    "date": "2017-06-29"
+  }
+}

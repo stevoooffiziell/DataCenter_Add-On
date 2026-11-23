@@ -1,0 +1,11 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "data_center_addon:hide_original",
+      "category": "GPU_NVIDIA"
+    }
+  ],
+  "shop": {
+    "hidden": true
+  }
+}

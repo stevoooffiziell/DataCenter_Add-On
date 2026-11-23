@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "Intel Core i7-4790K",
+  "stats": {
+    "kind": "CPU",
+    "compute": 5535,
+    "power": 88,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "LGA1150"
+  },
+  "shop": {
+    "category": "CPU_INTEL",
+    "price": 33900,
+    "date": "2014-06-01"
+  }
+}

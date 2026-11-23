@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 7800 XT",
+  "stats": {
+    "kind": "GPU",
+    "compute": 43228,
+    "power": 263,
+    "sha256": 0,
+    "ethash": 66630000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 49900,
+    "date": "2023-09-06"
+  }
+}

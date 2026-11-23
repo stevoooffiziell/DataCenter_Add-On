@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "AMD Opteron 2350",
+  "stats": {
+    "kind": "CPU",
+    "compute": 2893,
+    "power": 95,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_F_1207",
+    "stability": 0.07
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 38900,
+    "date": "2007-09-10"
+  }
+}

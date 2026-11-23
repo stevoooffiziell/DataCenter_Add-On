@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.f4ked.data_center_addon.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "HostingRackBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

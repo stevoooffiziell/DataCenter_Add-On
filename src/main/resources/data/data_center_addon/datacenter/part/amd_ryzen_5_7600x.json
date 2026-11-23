@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 5 7600X",
+  "stats": {
+    "kind": "CPU",
+    "compute": 15500,
+    "power": 105,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 29900,
+    "date": "2022-09-27"
+  }
+}

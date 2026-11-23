@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "ATI Radeon HD 5670",
+  "stats": {
+    "kind": "GPU",
+    "compute": 714,
+    "power": 61,
+    "sha256": 99600000,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 9900,
+    "date": "2010-01-14"
+  }
+}

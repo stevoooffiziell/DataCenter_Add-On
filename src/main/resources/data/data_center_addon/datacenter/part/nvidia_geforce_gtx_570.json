@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce GTX 570",
+  "stats": {
+    "kind": "GPU",
+    "compute": 1623,
+    "power": 219,
+    "sha256": 135400000,
+    "ethash": 21160000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 34900,
+    "date": "2010-12-07"
+  }
+}

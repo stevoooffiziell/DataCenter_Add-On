@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3060",
+  "stats": {
+    "kind": "GPU",
+    "compute": 14765,
+    "power": 170,
+    "sha256": 3394600000,
+    "ethash": 49640000,
+    "kheavyhash": 370000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 32900,
+    "date": "2021-02-25"
+  }
+}

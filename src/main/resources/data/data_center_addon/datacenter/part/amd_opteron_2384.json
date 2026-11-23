@@ -1,0 +1,18 @@
+{
+  "type": "processor",
+  "name": "AMD Opteron 2384",
+  "stats": {
+    "kind": "CPU",
+    "compute": 3906,
+    "power": 115,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_F_1207",
+    "stability": 0.065
+  },
+  "shop": {
+    "category": "CPU_SERVER",
+    "price": 98900,
+    "date": "2008-11-13"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair XMS 1GB DDR400",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "DDR1",
+    "sizeMb": 1024
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 19000,
+    "date": "2004-01-01"
+  }
+}

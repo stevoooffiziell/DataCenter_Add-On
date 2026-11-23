@@ -35,8 +35,8 @@ authors = "${mod_authors}" #optional
 description = '''${mod_description}'''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
-#[[mixins]]
-#config="${mod_id}.mixins.json"
+[[mixins]]
+config="${mod_id}.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
@@ -70,6 +70,13 @@ type = "required"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
+side = "BOTH"
+# The add-on re-uses Data Center's textures and is meant for its server rooms
+[[dependencies."${mod_id}"]]
+modId = "datacenter"
+type = "required"
+versionRange = "${data_center_version_range}"
+ordering = "AFTER"
 side = "BOTH"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares

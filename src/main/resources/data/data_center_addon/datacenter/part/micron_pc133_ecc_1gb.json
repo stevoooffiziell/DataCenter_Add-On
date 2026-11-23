@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Micron 1GB PC133 ECC Registered",
+  "stats": {
+    "crashChanceReduction": 0.05,
+    "computeMultiplier": 1.0,
+    "generation": "SDRAM",
+    "sizeMb": 1024
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 199500,
+    "date": "2000-11-04"
+  }
+}

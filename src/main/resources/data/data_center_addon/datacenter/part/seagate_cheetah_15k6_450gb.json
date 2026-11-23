@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Cheetah 15K.6 450GB",
+  "stats": {
+    "capacityGb": 450,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 20037,
+    "date": "2008-07-01"
+  }
+}

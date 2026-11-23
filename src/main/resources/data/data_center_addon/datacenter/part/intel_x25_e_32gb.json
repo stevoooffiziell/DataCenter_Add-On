@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Intel X25-E 32GB",
+  "stats": {
+    "capacityGb": 32,
+    "solidState": true
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 69500,
+    "date": "2008-10-15"
+  }
+}

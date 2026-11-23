@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 4080",
+  "stats": {
+    "kind": "GPU",
+    "compute": 56440,
+    "power": 320,
+    "sha256": 12895300000,
+    "ethash": 87040000,
+    "kheavyhash": 1200000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 119900,
+    "date": "2022-11-16"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Western Digital Caviar Blue 640GB",
+  "stats": {
+    "capacityGb": 640,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 8499,
+    "date": "2008-07-31"
+  }
+}

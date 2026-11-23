@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 180 SCSI 181GB",
+  "stats": {
+    "capacityGb": 181,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 139900,
+    "date": "2001-06-08"
+  }
+}

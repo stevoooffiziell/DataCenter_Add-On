@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA P102-100",
+  "stats": {
+    "compute": 11734,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 44550000,
+    "kheavyhash": 440000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 49900,
+    "date": "2018-03-01"
+  }
+}

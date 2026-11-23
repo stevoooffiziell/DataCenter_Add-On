@@ -1,0 +1,16 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce FX 5900 Ultra",
+  "stats": {
+    "kind": "GPU",
+    "compute": 32,
+    "power": 59,
+    "sha256": 0,
+    "ethash": 0
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 49900,
+    "date": "2003-05-01"
+  }
+}

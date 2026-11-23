@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Corsair 256MB PC133 SDRAM",
+  "stats": {
+    "crashChanceReduction": 0.0,
+    "computeMultiplier": 1.0,
+    "generation": "SDRAM",
+    "sizeMb": 256
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 20400,
+    "date": "2000-04-08"
+  }
+}

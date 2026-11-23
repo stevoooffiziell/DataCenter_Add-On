@@ -1,0 +1,13 @@
+{
+  "type": "storage",
+  "name": "Seagate Barracuda 7200.10 500GB",
+  "stats": {
+    "capacityGb": 500,
+    "solidState": false
+  },
+  "shop": {
+    "category": "STORAGE",
+    "price": 19999,
+    "date": "2006-11-01"
+  }
+}

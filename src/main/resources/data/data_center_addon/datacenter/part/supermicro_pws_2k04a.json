@@ -1,0 +1,15 @@
+{
+  "type": "psu",
+  "name": "Supermicro PWS-2K04A 2000W",
+  "stats": {
+    "maxPowerThroughput": 2000,
+    "wasteHeatPerFe": 0.004,
+    "efficiency": 0.94,
+    "twelveVoltOnly": true
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 17500,
+    "date": "2014-01-01"
+  }
+}

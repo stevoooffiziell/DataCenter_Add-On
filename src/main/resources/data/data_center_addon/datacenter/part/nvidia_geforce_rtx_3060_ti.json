@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3060 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 18771,
+    "power": 200,
+    "sha256": 0,
+    "ethash": 61000000,
+    "kheavyhash": 460000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 39900,
+    "date": "2020-12-02"
+  }
+}

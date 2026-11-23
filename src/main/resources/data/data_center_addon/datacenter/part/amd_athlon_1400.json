@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 1.4 GHz (Thunderbird)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 506,
+    "power": 72,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_A"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 25300,
+    "date": "2001-06-06"
+  }
+}

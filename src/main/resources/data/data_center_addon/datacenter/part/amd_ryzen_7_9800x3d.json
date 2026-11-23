@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Ryzen 7 9800X3D",
+  "stats": {
+    "kind": "CPU",
+    "compute": 22500,
+    "power": 120,
+    "sha256": 0,
+    "ethash": 0,
+    "socket": "SOCKET_AM5"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 47900,
+    "date": "2024-11-07"
+  }
+}

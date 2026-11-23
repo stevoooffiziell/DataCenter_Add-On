@@ -1,0 +1,19 @@
+{
+  "type": "processor",
+  "name": "AMD Instinct MI300X",
+  "stats": {
+    "kind": "GPU",
+    "compute": 189370,
+    "power": 750,
+    "sha256": 33400000000,
+    "ethash": 0,
+    "kheavyhash": 3200000000,
+    "stability": 0.17,
+    "memBandwidth": 1.28
+  },
+  "shop": {
+    "category": "GPU_DATACENTER",
+    "price": 1500000,
+    "date": "2023-12-06"
+  }
+}

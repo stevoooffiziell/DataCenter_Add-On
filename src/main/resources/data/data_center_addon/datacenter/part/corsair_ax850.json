@@ -1,0 +1,14 @@
+{
+  "type": "psu",
+  "name": "Corsair AX850",
+  "stats": {
+    "maxPowerThroughput": 850,
+    "wasteHeatPerFe": 0.00667,
+    "efficiency": 0.9
+  },
+  "shop": {
+    "category": "PSU",
+    "price": 8400,
+    "date": "2009-10-01"
+  }
+}

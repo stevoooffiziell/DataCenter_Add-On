@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA GeForce RTX 3080 Ti",
+  "stats": {
+    "kind": "GPU",
+    "compute": 39518,
+    "power": 350,
+    "sha256": 0,
+    "ethash": 87000000,
+    "kheavyhash": 850000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 119900,
+    "date": "2021-06-03"
+  }
+}

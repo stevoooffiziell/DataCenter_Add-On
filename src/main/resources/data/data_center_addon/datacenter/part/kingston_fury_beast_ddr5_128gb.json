@@ -1,0 +1,15 @@
+{
+  "type": "ram",
+  "name": "Kingston FURY Beast 128GB DDR5",
+  "stats": {
+    "crashChanceReduction": 0.55,
+    "computeMultiplier": 1.0,
+    "generation": "DDR5",
+    "sizeMb": 131072
+  },
+  "shop": {
+    "category": "RAM",
+    "price": 80000,
+    "date": "2023-01-01"
+  }
+}

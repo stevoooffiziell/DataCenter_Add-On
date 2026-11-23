@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Radeon RX 6600",
+  "stats": {
+    "kind": "GPU",
+    "compute": 10312,
+    "power": 132,
+    "sha256": 0,
+    "ethash": 29000000,
+    "kheavyhash": 380000000
+  },
+  "shop": {
+    "category": "GPU_AMD",
+    "price": 32900,
+    "date": "2021-10-13"
+  }
+}

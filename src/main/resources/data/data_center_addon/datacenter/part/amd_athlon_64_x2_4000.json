@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "AMD Athlon 64 X2 4000+ (AM2)",
+  "stats": {
+    "kind": "CPU",
+    "compute": 1519,
+    "power": 65,
+    "sha256": 1900000,
+    "ethash": 0,
+    "socket": "SOCKET_AM2"
+  },
+  "shop": {
+    "category": "CPU_AMD",
+    "price": 32800,
+    "date": "2006-05-01"
+  }
+}

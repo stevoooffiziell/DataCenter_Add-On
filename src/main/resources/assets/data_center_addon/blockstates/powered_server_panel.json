@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "data_center_addon:block/powered_server_panel" },
+    "axis=z": { "model": "data_center_addon:block/powered_server_panel", "x": 90 },
+    "axis=x": { "model": "data_center_addon:block/powered_server_panel", "x": 90, "y": 90 }
+  }
+}

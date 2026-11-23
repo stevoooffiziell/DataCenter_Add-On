@@ -1,0 +1,16 @@
+{
+  "type": "mininggpu",
+  "name": "NVIDIA CMP 40HX",
+  "stats": {
+    "compute": 7475,
+    "power": 185,
+    "sha256": 0,
+    "ethash": 36000000,
+    "kheavyhash": 350000000
+  },
+  "shop": {
+    "category": "GPU_MINING",
+    "price": 99900,
+    "date": "2021-03-01"
+  }
+}

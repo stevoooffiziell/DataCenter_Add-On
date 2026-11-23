@@ -1,0 +1,17 @@
+{
+  "type": "processor",
+  "name": "NVIDIA TITAN Xp",
+  "stats": {
+    "kind": "GPU",
+    "compute": 14033,
+    "power": 250,
+    "sha256": 0,
+    "ethash": 40000000,
+    "kheavyhash": 460000000
+  },
+  "shop": {
+    "category": "GPU_NVIDIA",
+    "price": 119900,
+    "date": "2017-04-06"
+  }
+}
