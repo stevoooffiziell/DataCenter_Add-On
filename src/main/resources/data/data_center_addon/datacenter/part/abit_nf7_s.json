@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ABIT NF7-S",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 3,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SOCKET_A",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 12500,
+    "date": "2002-12-01"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS A8V Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "SOCKET_939",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 15900,
+    "date": "2004-06-01"
+  }
+}

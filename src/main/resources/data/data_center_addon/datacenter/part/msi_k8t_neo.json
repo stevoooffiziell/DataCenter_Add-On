@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "MSI K8T Neo",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 3,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SOCKET_754",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 13500,
+    "date": "2003-09-23"
+  }
+}

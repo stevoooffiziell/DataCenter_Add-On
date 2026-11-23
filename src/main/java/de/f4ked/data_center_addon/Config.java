@@ -1,7 +1,10 @@
 package de.f4ked.data_center_addon;
 
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -13,6 +16,15 @@ import java.util.List;
 public final class Config {
     /** Shop categories whose original Data Center parts are hidden by default when hiding is on. */
     public static final List<String> DEFAULT_HIDDEN_CATEGORIES = List.of(
+            "CPU_AMD", "CPU_INTEL", "CPU_SERVER",
+            "GPU_NVIDIA", "GPU_AMD", "GPU_DATACENTER", "GPU_MINING",
+            "RAM", "STORAGE", "PSU", "MAINBOARD", "MAINBOARD_MINING");
+
+    /**
+     * The default up to version 1.1.0, when the add-on had no real board for every socket yet. A config
+     * that still holds exactly this list is moved to the new default once ({@link #onLoad}).
+     */
+    private static final List<String> OLD_DEFAULT_HIDDEN_CATEGORIES = List.of(
             "CPU_AMD", "CPU_INTEL", "CPU_SERVER",
             "GPU_NVIDIA", "GPU_AMD", "GPU_DATACENTER", "GPU_MINING",
             "RAM", "STORAGE", "PSU");
@@ -38,7 +50,7 @@ public final class Config {
                 .define("hideOriginalParts", false);
         HIDDEN_CATEGORIES = builder
                 .comment("Shop categories in which the original parts are hidden when hideOriginalParts is true.",
-                        "Mainboards and fans are kept by default: Data Center's boards cover every socket.",
+                        "Fans are kept by default.",
                         "Allowed: " + String.join(", ", ALL_PART_CATEGORIES))
                 .defineListAllowEmpty("hiddenCategories", DEFAULT_HIDDEN_CATEGORIES, () -> "CPU_AMD",
                         o -> o instanceof String s && ALL_PART_CATEGORIES.contains(s));
@@ -56,6 +68,21 @@ public final class Config {
     }
 
     private Config() {
+    }
+
+    /**
+     * Configs written by 1.1.0 and older kept Data Center's boards. If the list is still that old default
+     * (the player never changed it), it becomes the new default, which hides the original boards too.
+     */
+    public static void onLoad(ModConfigEvent.Loading event) {
+        ModConfig config = event.getConfig();
+        if (config.getSpec() != SPEC) {
+            return;
+        }
+        if (new HashSet<>(HIDDEN_CATEGORIES.get()).equals(new HashSet<>(OLD_DEFAULT_HIDDEN_CATEGORIES))) {
+            HIDDEN_CATEGORIES.set(DEFAULT_HIDDEN_CATEGORIES);
+            SPEC.save();
+        }
     }
 
     public static boolean hidesOriginal(String category) {

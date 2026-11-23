@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Tyan Thunder K8S S2880",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 0,
+    "ramSlots": 8,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_940",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 45900,
+    "date": "2003-04-22"
+  }
+}

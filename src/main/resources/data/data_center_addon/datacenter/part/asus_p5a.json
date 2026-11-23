@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P5A",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 3,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SUPER_SOCKET_7",
+    "ramGenerations": [
+      "FPM_EDO",
+      "SDRAM"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 12900,
+    "date": "1998-06-01"
+  }
+}

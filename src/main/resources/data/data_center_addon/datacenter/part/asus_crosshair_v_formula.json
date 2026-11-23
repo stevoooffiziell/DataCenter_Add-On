@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS ROG Crosshair V Formula",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 2,
+    "socket": "SOCKET_AM3_PLUS",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 23900,
+    "date": "2011-06-01"
+  }
+}

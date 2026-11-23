@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro H8DMR-82",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 1,
+    "ramSlots": 8,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_F_1207",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 44900,
+    "date": "2006-08-15"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "Biostar TB360-BTC PRO",
+  "stats": {
+    "psuSlots": 4,
+    "cpuSlots": 1,
+    "gpuSlots": 12,
+    "ramSlots": 2,
+    "storageSlots": 1,
+    "fanSlots": 4,
+    "socket": "LGA1151_V2",
+    "ramGenerations": [
+      "DDR4"
+    ],
+    "nativeGpuSlots": 1
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 14000,
+    "date": "2018-04-01"
+  }
+}

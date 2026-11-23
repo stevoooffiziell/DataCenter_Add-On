@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS M3A32-MVP Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "SOCKET_AM2_PLUS",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 22900,
+    "date": "2008-03-01"
+  }
+}

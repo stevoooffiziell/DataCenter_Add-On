@@ -539,9 +539,55 @@ supermicro_h13dsh;MAINBOARD;mainboard;2022-11-10;1099;;vertex_dual_sp5;Supermicr
 supermicro_x13dei;MAINBOARD;mainboard;2023-01-10;899;;vertex_dual_lga4677;Supermicro X13DEI;psuSlots=3,cpuSlots=2,gpuSlots=6,ramSlots=16,storageSlots=12,fanSlots=3,socket=LGA4677,ramGenerations=DDR5
 asrock_rack_b650d4u;MAINBOARD;mainboard;2023-05-01;299;;vertex_core_am5;ASRock Rack B650D4U;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=8,fanSlots=3,socket=SOCKET_AM5,ramGenerations=DDR5
 asus_rog_maximus_z890_hero;MAINBOARD;mainboard;2024-10-24;679;;vertex_core_lga1851;ASUS ROG Maximus Z890 Hero;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=3,socket=LGA1851,ramGenerations=DDR5
+asus_p2b;MAINBOARD;mainboard;1998-04-15;149;vertex_core_slot1;;ASUS P2B;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=4,fanSlots=2,socket=SLOT_1,ramGenerations=SDRAM
+asus_p5a;MAINBOARD;mainboard;1998-06-01;129;vertex_core_super7;;ASUS P5A;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SUPER_SOCKET_7,ramGenerations=FPM_EDO|SDRAM
+supermicro_s2dge;MAINBOARD;mainboard;1998-10-06;499;vertex_dual_slot2;;Supermicro S2DGE;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=4,storageSlots=8,fanSlots=3,socket=SLOT_2,ramGenerations=SDRAM
+asus_k7m;MAINBOARD;mainboard;1999-06-23;169;vertex_core_slota;;ASUS K7M;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SLOT_A,ramGenerations=SDRAM
+abit_bp6;MAINBOARD;mainboard;1999-06-28;159;vertex_dual_s370;;ABIT BP6;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=3,storageSlots=8,fanSlots=3,socket=SOCKET_370,ramGenerations=SDRAM
+asus_a7v;MAINBOARD;mainboard;2000-06-19;159;vertex_core_socketa;;ASUS A7V;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SOCKET_A,ramGenerations=SDRAM
+asus_cusl2;MAINBOARD;mainboard;2000-08-01;149;vertex_core_s370;;ASUS CUSL2;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SOCKET_370,ramGenerations=SDRAM
+asus_p4t;MAINBOARD;mainboard;2000-11-20;199;vertex_core_s423;;ASUS P4T;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=4,fanSlots=2,socket=SOCKET_423,ramGenerations=RDRAM
+supermicro_p4dc6;MAINBOARD;mainboard;2001-05-21;549;vertex_dual_s603;;Supermicro P4DC6;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=4,storageSlots=8,fanSlots=3,socket=SOCKET_603,ramGenerations=RDRAM
+tyan_tiger_mp_s2460;MAINBOARD;mainboard;2001-06-05;239;vertex_dual_socketa;;Tyan Tiger MP S2460;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=4,storageSlots=8,fanSlots=3,socket=SOCKET_A,ramGenerations=DDR1
+ecs_k7s5a;MAINBOARD;mainboard;2001-08-01;69;vertex_core_socketa_value;;ECS K7S5A;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=4,fanSlots=2,socket=SOCKET_A,ramGenerations=SDRAM|DDR1
+asus_p4b266;MAINBOARD;mainboard;2002-01-07;149;vertex_core_s478;;ASUS P4B266;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SOCKET_478,ramGenerations=DDR1
+supermicro_x5dpe_g2;MAINBOARD;mainboard;2002-11-18;449;vertex_dual_s604;;Supermicro X5DPE-G2;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=6,storageSlots=8,fanSlots=3,socket=SOCKET_604,ramGenerations=DDR1
+abit_nf7_s;MAINBOARD;mainboard;2002-12-01;125;vertex_core_socketa_ddr;;ABIT NF7-S;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SOCKET_A,ramGenerations=DDR1
+asus_p4c800_deluxe;MAINBOARD;mainboard;2003-04-14;229;vertex_core_s478_canterwood;;ASUS P4C800 Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_478,ramGenerations=DDR1
+tyan_thunder_k8s_s2880;MAINBOARD;mainboard;2003-04-22;459;vertex_dual_s940;;Tyan Thunder K8S S2880;psuSlots=1,cpuSlots=2,gpuSlots=0,ramSlots=8,storageSlots=8,fanSlots=3,socket=SOCKET_940,ramGenerations=DDR1
+msi_k8t_neo;MAINBOARD;mainboard;2003-09-23;135;vertex_core_s754;;MSI K8T Neo;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=3,storageSlots=4,fanSlots=2,socket=SOCKET_754,ramGenerations=DDR1
+asus_a8v_deluxe;MAINBOARD;mainboard;2004-06-01;159;vertex_core;;ASUS A8V Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_939,ramGenerations=DDR1
+asus_p5ad2_premium;MAINBOARD;mainboard;2004-06-21;299;vertex_core_lga775_925;;ASUS P5AD2 Premium;psuSlots=1,cpuSlots=1,gpuSlots=1,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA775,ramGenerations=DDR2
+supermicro_x6dh8_g;MAINBOARD;mainboard;2004-06-28;429;vertex_dual_s604_lindenhurst;;Supermicro X6DH8-G;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=8,storageSlots=8,fanSlots=3,socket=SOCKET_604,ramGenerations=DDR1
+asus_a8n_sli_deluxe;MAINBOARD;mainboard;2004-11-01;199;vertex_core;;ASUS A8N-SLI Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_939,ramGenerations=DDR1
+tyan_thunder_k8we_s2895;MAINBOARD;mainboard;2005-03-01;499;vertex_dual;;Tyan Thunder K8WE S2895;psuSlots=1,cpuSlots=2,gpuSlots=2,ramSlots=8,storageSlots=8,fanSlots=3,socket=SOCKET_940,ramGenerations=DDR1
+asus_m2n32_sli_deluxe;MAINBOARD;mainboard;2006-05-01;229;vertex_core_am2;;ASUS M2N32-SLI Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_AM2,ramGenerations=DDR2
+supermicro_x7dbe;MAINBOARD;mainboard;2006-06-26;429;vertex_dual_lga771;;Supermicro X7DBE;psuSlots=1,cpuSlots=2,gpuSlots=2,ramSlots=16,storageSlots=8,fanSlots=3,socket=LGA771,ramGenerations=DDR2
+supermicro_h8dmr_82;MAINBOARD;mainboard;2006-08-15;449;vertex_dual_socketf_early;;Supermicro H8DMR-82;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=8,storageSlots=8,fanSlots=3,socket=SOCKET_F_1207,ramGenerations=DDR2
+supermicro_h8dme_2;MAINBOARD;mainboard;2007-09-10;399;vertex_dual_socketf;;Supermicro H8DME-2;psuSlots=1,cpuSlots=2,gpuSlots=1,ramSlots=16,storageSlots=8,fanSlots=3,socket=SOCKET_F_1207,ramGenerations=DDR2
+gigabyte_ga_ma790x_ds4;MAINBOARD;mainboard;2007-11-19;135;vertex_core_am2plus_790x;;Gigabyte GA-MA790X-DS4;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_AM2_PLUS,ramGenerations=DDR2
+asus_m3a32_mvp_deluxe;MAINBOARD;mainboard;2008-03-01;229;vertex_core_am2plus;;ASUS M3A32-MVP Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_AM2_PLUS,ramGenerations=DDR2
+asus_m4a79t_deluxe;MAINBOARD;mainboard;2009-03-01;199;vertex_core_am3;;ASUS M4A79T Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=SOCKET_AM3,ramGenerations=DDR3
+supermicro_x8dti_f;MAINBOARD;mainboard;2009-03-30;399;vertex_dual_lga1366_xeon;;Supermicro X8DTi-F;psuSlots=2,cpuSlots=2,gpuSlots=4,ramSlots=12,storageSlots=8,fanSlots=3,socket=LGA1366_XEON,ramGenerations=DDR3
+asus_p7p55d_deluxe;MAINBOARD;mainboard;2009-09-08;199;vertex_core_lga1156;;ASUS P7P55D Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA1156,ramGenerations=DDR3
+supermicro_h8dgi_f;MAINBOARD;mainboard;2010-03-29;489;vertex_dual_g34;;Supermicro H8DGi-F;psuSlots=1,cpuSlots=2,gpuSlots=2,ramSlots=16,storageSlots=8,fanSlots=3,socket=SOCKET_G34,ramGenerations=DDR3
+evga_classified_sr_2;MAINBOARD;mainboard;2010-04-01;649;vertex_dual_lga1366_xeon;;EVGA Classified SR-2;psuSlots=3,cpuSlots=2,gpuSlots=7,ramSlots=12,storageSlots=8,fanSlots=3,socket=LGA1366_XEON,ramGenerations=DDR3
+asus_p8p67_deluxe;MAINBOARD;mainboard;2011-01-09;209;vertex_core_lga1155;;ASUS P8P67 Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=2,socket=LGA1155,ramGenerations=DDR3
+asus_crosshair_v_formula;MAINBOARD;mainboard;2011-06-01;239;vertex_core_am3plus;;ASUS ROG Crosshair V Formula;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=2,socket=SOCKET_AM3_PLUS,ramGenerations=DDR3
+asus_p9x79_deluxe;MAINBOARD;mainboard;2011-11-14;329;vertex_dual_lga2011;;ASUS P9X79 Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=3,ramSlots=8,storageSlots=8,fanSlots=2,socket=LGA2011,ramGenerations=DDR3
+asus_x99_deluxe;MAINBOARD;mainboard;2014-08-29;399;vertex_dual_lga2011_3;;ASUS X99-Deluxe;psuSlots=1,cpuSlots=1,gpuSlots=3,ramSlots=8,storageSlots=10,fanSlots=3,socket=LGA2011_3,ramGenerations=DDR4
+asus_z170_a;MAINBOARD;mainboard;2015-08-05;165;vertex_core_lga1151_v1;;ASUS Z170-A;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA1151_V1,ramGenerations=DDR4
+asus_rog_strix_z370_e;MAINBOARD;mainboard;2017-10-05;209;vertex_core_lga1151_v2;;ASUS ROG Strix Z370-E Gaming;psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=6,fanSlots=2,socket=LGA1151_V2,ramGenerations=DDR4
+asus_rog_maximus_xii_hero;MAINBOARD;mainboard;2020-04-30;399;vertex_core_lga1200;;ASUS ROG Maximus XII Hero (Wi-Fi);psuSlots=1,cpuSlots=1,gpuSlots=2,ramSlots=4,storageSlots=8,fanSlots=3,socket=LGA1200,ramGenerations=DDR4
+supermicro_x12dpi_nt6;MAINBOARD;mainboard;2021-04-06;799;vertex_dual_lga4189;;Supermicro X12DPi-NT6;psuSlots=2,cpuSlots=2,gpuSlots=6,ramSlots=18,storageSlots=12,fanSlots=3,socket=LGA4189,ramGenerations=DDR4
 asrock_h110_pro_btc_plus;MAINBOARD_MINING;mainboard;2017-07-01;120;;bioforge_lga1151_13;ASRock H110 Pro BTC+;psuSlots=4,cpuSlots=1,gpuSlots=13,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
 biostar_tb250_btc_pro;MAINBOARD_MINING;mainboard;2017-08-01;120;;bioforge_lga1151_6;Biostar TB250-BTC PRO;psuSlots=3,cpuSlots=1,gpuSlots=12,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
 asus_b250_mining_expert;MAINBOARD_MINING;mainboard;2017-11-01;180;;bioforge_lga1151_19;ASUS B250 Mining Expert;psuSlots=3,cpuSlots=1,gpuSlots=19,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V1,ramGenerations=DDR4
+asrock_h61_pro_btc;MAINBOARD_MINING;mainboard;2014-01-01;69;bioforge_lga1155;;ASRock H61 Pro BTC;psuSlots=2,cpuSlots=1,gpuSlots=6,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1155,ramGenerations=DDR3
+asrock_h81_pro_btc;MAINBOARD_MINING;mainboard;2014-01-01;75;bioforge_lga1150;;ASRock H81 Pro BTC;psuSlots=2,cpuSlots=1,gpuSlots=6,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1150,ramGenerations=DDR3
+asrock_ab350_pro4;MAINBOARD_MINING;mainboard;2017-05-08;99;bioforge_am4;;ASRock AB350 Pro4;psuSlots=2,cpuSlots=1,gpuSlots=6,ramSlots=4,storageSlots=1,fanSlots=4,socket=SOCKET_AM4,ramGenerations=DDR4
+biostar_tb360_btc_pro;MAINBOARD_MINING;mainboard;2018-04-01;140;bioforge_rig_8;;Biostar TB360-BTC PRO;psuSlots=4,cpuSlots=1,gpuSlots=12,nativeGpuSlots=1,ramSlots=2,storageSlots=1,fanSlots=4,socket=LGA1151_V2,ramGenerations=DDR4
+asrock_h510_pro_btc_plus;MAINBOARD_MINING;mainboard;2021-07-18;179;bioforge_lga1200;;ASRock H510 Pro BTC+;psuSlots=3,cpuSlots=1,gpuSlots=6,nativeGpuSlots=6,ramSlots=1,storageSlots=2,fanSlots=4,socket=LGA1200,ramGenerations=DDR4
 # ---------------------------------------------------------------- Fans
 delta_afb1212she;FAN;fan;2008-01-01;24.99;;flowtek_server_blower;Delta AFB1212SHE 120mm;airflowCfm=150
 noctua_nf_f12_pwm;FAN;fan;2012-03-01;19.9;;@fan_beige_brown;Noctua NF-F12 PWM;airflowCfm=55

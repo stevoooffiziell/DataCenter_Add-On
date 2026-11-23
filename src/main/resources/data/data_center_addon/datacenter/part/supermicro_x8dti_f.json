@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X8DTi-F",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 4,
+    "ramSlots": 12,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "LGA1366_XEON",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 39900,
+    "date": "2009-03-30"
+  }
+}

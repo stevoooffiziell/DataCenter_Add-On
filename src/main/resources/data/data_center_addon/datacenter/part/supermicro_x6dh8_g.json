@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X6DH8-G",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 1,
+    "ramSlots": 8,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_604",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 42900,
+    "date": "2004-06-28"
+  }
+}

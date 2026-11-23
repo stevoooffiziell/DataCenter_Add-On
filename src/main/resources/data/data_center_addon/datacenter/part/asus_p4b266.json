@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P4B266",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 3,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SOCKET_478",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 14900,
+    "date": "2002-01-07"
+  }
+}

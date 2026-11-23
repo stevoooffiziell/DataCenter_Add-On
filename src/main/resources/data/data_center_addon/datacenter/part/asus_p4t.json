@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P4T",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SOCKET_423",
+    "ramGenerations": [
+      "RDRAM"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 19900,
+    "date": "2000-11-20"
+  }
+}

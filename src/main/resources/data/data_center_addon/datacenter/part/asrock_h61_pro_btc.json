@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "ASRock H61 Pro BTC",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 1,
+    "gpuSlots": 6,
+    "nativeGpuSlots": 1,
+    "ramSlots": 2,
+    "storageSlots": 1,
+    "fanSlots": 4,
+    "socket": "LGA1155",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 6900,
+    "date": "2014-01-01"
+  }
+}

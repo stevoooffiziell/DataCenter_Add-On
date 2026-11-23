@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "datacenter:item/mainboard/vertex_core_lga1200"
+  }
+}

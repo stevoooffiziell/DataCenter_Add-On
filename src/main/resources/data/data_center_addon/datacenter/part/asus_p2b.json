@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P2B",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SLOT_1",
+    "ramGenerations": [
+      "SDRAM"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 14900,
+    "date": "1998-04-15"
+  }
+}

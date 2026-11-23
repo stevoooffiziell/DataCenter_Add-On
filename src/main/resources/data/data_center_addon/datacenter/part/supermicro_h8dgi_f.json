@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro H8DGi-F",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 2,
+    "ramSlots": 16,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_G34",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 48900,
+    "date": "2010-03-29"
+  }
+}

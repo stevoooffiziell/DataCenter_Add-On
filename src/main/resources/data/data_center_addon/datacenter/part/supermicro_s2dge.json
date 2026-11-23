@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro S2DGE",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SLOT_2",
+    "ramGenerations": [
+      "SDRAM"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 49900,
+    "date": "1998-10-06"
+  }
+}

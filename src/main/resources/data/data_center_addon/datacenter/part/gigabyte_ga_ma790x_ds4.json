@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Gigabyte GA-MA790X-DS4",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "SOCKET_AM2_PLUS",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 13500,
+    "date": "2007-11-19"
+  }
+}

@@ -63,6 +63,7 @@ public class Data_center_addon {
         CREATIVE_MODE_TABS.register(modEventBus);
         CONDITIONS.register(modEventBus);
         modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(Config::onLoad);
         // config/data_center_addon-common.toml
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }

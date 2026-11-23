@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Tyan Tiger MP S2460",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_A",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 23900,
+    "date": "2001-06-05"
+  }
+}

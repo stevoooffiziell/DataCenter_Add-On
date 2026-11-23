@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS Z170-A",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "LGA1151_V1",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 16500,
+    "date": "2015-08-05"
+  }
+}

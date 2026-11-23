@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "ECS K7S5A",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SOCKET_A",
+    "ramGenerations": [
+      "SDRAM",
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 6900,
+    "date": "2001-08-01"
+  }
+}

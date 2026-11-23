@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P8P67 Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 2,
+    "socket": "LGA1155",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 20900,
+    "date": "2011-01-09"
+  }
+}

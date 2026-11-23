@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P9X79 Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 3,
+    "ramSlots": 8,
+    "storageSlots": 8,
+    "fanSlots": 2,
+    "socket": "LGA2011",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 32900,
+    "date": "2011-11-14"
+  }
+}

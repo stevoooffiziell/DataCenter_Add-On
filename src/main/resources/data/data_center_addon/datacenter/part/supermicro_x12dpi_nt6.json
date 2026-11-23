@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X12DPi-NT6",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 2,
+    "gpuSlots": 6,
+    "ramSlots": 18,
+    "storageSlots": 12,
+    "fanSlots": 3,
+    "socket": "LGA4189",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 79900,
+    "date": "2021-04-06"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro H8DME-2",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 1,
+    "ramSlots": 16,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_F_1207",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 39900,
+    "date": "2007-09-10"
+  }
+}

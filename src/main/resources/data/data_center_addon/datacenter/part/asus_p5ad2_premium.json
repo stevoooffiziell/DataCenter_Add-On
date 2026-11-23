@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P5AD2 Premium",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "LGA775",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 29900,
+    "date": "2004-06-21"
+  }
+}

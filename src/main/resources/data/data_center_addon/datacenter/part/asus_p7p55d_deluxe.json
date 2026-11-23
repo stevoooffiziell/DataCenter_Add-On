@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P7P55D Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "LGA1156",
+    "ramGenerations": [
+      "DDR3"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 19900,
+    "date": "2009-09-08"
+  }
+}

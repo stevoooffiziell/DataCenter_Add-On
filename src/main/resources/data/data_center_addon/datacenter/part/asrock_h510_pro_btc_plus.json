@@ -1,0 +1,22 @@
+{
+  "type": "mainboard",
+  "name": "ASRock H510 Pro BTC+",
+  "stats": {
+    "psuSlots": 3,
+    "cpuSlots": 1,
+    "gpuSlots": 6,
+    "nativeGpuSlots": 6,
+    "ramSlots": 1,
+    "storageSlots": 2,
+    "fanSlots": 4,
+    "socket": "LGA1200",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 17900,
+    "date": "2021-07-18"
+  }
+}

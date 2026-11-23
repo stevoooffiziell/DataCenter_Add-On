@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS A8N-SLI Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "SOCKET_939",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 19900,
+    "date": "2004-11-01"
+  }
+}

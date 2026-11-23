@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Supermicro X7DBE",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 2,
+    "ramSlots": 16,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "LGA771",
+    "ramGenerations": [
+      "DDR2"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 42900,
+    "date": "2006-06-26"
+  }
+}

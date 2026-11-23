@@ -4,7 +4,8 @@
   "package": "de.f4ked.data_center_addon.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "HostingRackBlockEntityMixin"
+    "HostingRackBlockEntityMixin",
+    "NewsEventsMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",

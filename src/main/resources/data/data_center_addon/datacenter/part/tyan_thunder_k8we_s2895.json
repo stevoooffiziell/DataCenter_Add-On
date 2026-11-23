@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "Tyan Thunder K8WE S2895",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 2,
+    "gpuSlots": 2,
+    "ramSlots": 8,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "SOCKET_940",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 49900,
+    "date": "2005-03-01"
+  }
+}

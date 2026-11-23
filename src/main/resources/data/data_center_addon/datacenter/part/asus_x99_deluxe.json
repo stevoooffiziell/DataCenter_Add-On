@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS X99-Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 3,
+    "ramSlots": 8,
+    "storageSlots": 10,
+    "fanSlots": 3,
+    "socket": "LGA2011_3",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 39900,
+    "date": "2014-08-29"
+  }
+}

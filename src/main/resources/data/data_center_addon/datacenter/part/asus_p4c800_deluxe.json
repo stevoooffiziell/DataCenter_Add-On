@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS P4C800 Deluxe",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 4,
+    "storageSlots": 6,
+    "fanSlots": 2,
+    "socket": "SOCKET_478",
+    "ramGenerations": [
+      "DDR1"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 22900,
+    "date": "2003-04-14"
+  }
+}

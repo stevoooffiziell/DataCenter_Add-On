@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASRock AB350 Pro4",
+  "stats": {
+    "psuSlots": 2,
+    "cpuSlots": 1,
+    "gpuSlots": 6,
+    "ramSlots": 4,
+    "storageSlots": 1,
+    "fanSlots": 4,
+    "socket": "SOCKET_AM4",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD_MINING",
+    "price": 9900,
+    "date": "2017-05-08"
+  }
+}

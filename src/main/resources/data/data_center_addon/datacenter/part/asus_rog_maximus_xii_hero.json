@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS ROG Maximus XII Hero (Wi-Fi)",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 2,
+    "ramSlots": 4,
+    "storageSlots": 8,
+    "fanSlots": 3,
+    "socket": "LGA1200",
+    "ramGenerations": [
+      "DDR4"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 39900,
+    "date": "2020-04-30"
+  }
+}

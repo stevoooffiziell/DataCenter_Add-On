@@ -1,0 +1,21 @@
+{
+  "type": "mainboard",
+  "name": "ASUS K7M",
+  "stats": {
+    "psuSlots": 1,
+    "cpuSlots": 1,
+    "gpuSlots": 1,
+    "ramSlots": 3,
+    "storageSlots": 4,
+    "fanSlots": 2,
+    "socket": "SLOT_A",
+    "ramGenerations": [
+      "SDRAM"
+    ]
+  },
+  "shop": {
+    "category": "MAINBOARD",
+    "price": 16900,
+    "date": "1999-06-23"
+  }
+}
