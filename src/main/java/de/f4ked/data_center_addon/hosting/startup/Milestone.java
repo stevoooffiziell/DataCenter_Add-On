@@ -1,4 +1,4 @@
-package de.f4ked.data_center_addon.hosting;
+package de.f4ked.data_center_addon.hosting.startup;
 
 import java.util.Locale;
 

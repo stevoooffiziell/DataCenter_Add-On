@@ -1,4 +1,4 @@
-package de.f4ked.data_center_addon.client;
+package de.f4ked.data_center_addon.client.hosting;
 
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingContent;

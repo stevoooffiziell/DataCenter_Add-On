@@ -1,4 +1,4 @@
-package de.f4ked.data_center_addon.hosting;
+package de.f4ked.data_center_addon.hosting.contract;
 
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.catalog.PartPacks;
@@ -15,6 +15,11 @@ import com.example.datacenter.server.ServerItem;
 import com.example.datacenter.server.ServerLayout;
 import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
+import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.Money;
+import de.f4ked.data_center_addon.hosting.startup.Milestone;
+import de.f4ked.data_center_addon.hosting.startup.Milestones;
+import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.network.CableType;
 import de.f4ked.data_center_addon.network.NetworkContent;
 import de.f4ked.data_center_addon.network.SwitchModel;
@@ -60,6 +65,9 @@ public final class DeliveryService {
     /** Offers a young company can have; it also gets two new offers a day. */
     public static final int MAX_OFFERS_EARLY = 4;
     static final int OFFER_DAYS = 3;
+    /** Pay for cables and switches as a multiple of their price (they are cheap to make). */
+    private static final double CABLE_PAY = 2.5;
+    private static final double SWITCH_PAY = 1.25;
 
     public enum Action { ACCEPT, DECLINE, DELIVER, CANCEL }
 
@@ -240,50 +248,65 @@ public final class DeliveryService {
             return new ContractBook.Goal(GoalKind.SCRAP, icon(GoalKind.SCRAP, random), between(random, 2, 6, scale));
         }
         if (roll < 86) {
-            List<CableType> cables = new ArrayList<>();
-            for (CableType type : CableType.values()) {
-                if (!type.releaseDate.isAfter(today)) {
-                    cables.add(type);
-                }
-            }
+            List<CableType> cables = releasedCables(today);
             if (cables.isEmpty()) {
                 return null;
             }
-            // the newer cables of the time are asked for more often
-            CableType type = cables.get(Math.max(random.nextInt(cables.size()), random.nextInt(cables.size())));
             int count = Math.round(between(random, 8, 24, scale) / 4f) * 4;
-            return new ContractBook.Goal(GoalKind.ITEM, itemId(NetworkContent.CABLE_ITEMS.get(type).get()), Math.max(4, count));
+            return new ContractBook.Goal(GoalKind.ITEM, cableId(newerOf(cables, random)), Math.max(4, count));
         }
+        List<SwitchModel> switches = releasedSwitches(today);
+        if (switches.isEmpty()) {
+            return null;
+        }
+        return new ContractBook.Goal(GoalKind.ITEM, switchId(newerOf(switches, random)), cls >= 3 ? 2 : 1);
+    }
+
+    /** A goal for a young company: cables of the time or a few small parts, things it can make or buy cheaply. */
+    private static ContractBook.Goal newEarlyGoal(LocalDate today, RandomSource random) {
+        List<CableType> cables = releasedCables(today);
+        if (random.nextFloat() < 0.6f && !cables.isEmpty()) {
+            CableType type = cables.get(random.nextInt(cables.size()));
+            return new ContractBook.Goal(GoalKind.ITEM, cableId(type), 4 + 4 * random.nextInt(3));
+        }
+        GoalKind[] small = {GoalKind.RAM, GoalKind.FAN, GoalKind.STORAGE, GoalKind.SCRAP};
+        GoalKind kind = small[random.nextInt(small.length)];
+        return new ContractBook.Goal(kind, icon(kind, random), 1 + random.nextInt(3));
+    }
+
+    /** The add-on's cables on sale at {@code today}, oldest first. */
+    private static List<CableType> releasedCables(LocalDate today) {
+        List<CableType> cables = new ArrayList<>();
+        for (CableType type : CableType.values()) {
+            if (!type.releaseDate.isAfter(today)) {
+                cables.add(type);
+            }
+        }
+        return cables;
+    }
+
+    /** The add-on's switches on sale at {@code today}, oldest first. */
+    private static List<SwitchModel> releasedSwitches(LocalDate today) {
         List<SwitchModel> switches = new ArrayList<>();
         for (SwitchModel model : SwitchModel.values()) {
             if (!model.releaseDate.isAfter(today)) {
                 switches.add(model);
             }
         }
-        if (switches.isEmpty()) {
-            return null;
-        }
-        SwitchModel model = switches.get(Math.max(random.nextInt(switches.size()), random.nextInt(switches.size())));
-        return new ContractBook.Goal(GoalKind.ITEM, itemId(NetworkContent.SWITCH_ITEMS.get(model).get()), cls >= 3 ? 2 : 1);
+        return switches;
     }
 
-    /** A goal for a young company: cables of the time or a few small parts, things it can make or buy cheaply. */
-    private static ContractBook.Goal newEarlyGoal(LocalDate today, RandomSource random) {
-        if (random.nextFloat() < 0.6f) {
-            List<CableType> cables = new ArrayList<>();
-            for (CableType type : CableType.values()) {
-                if (!type.releaseDate.isAfter(today)) {
-                    cables.add(type);
-                }
-            }
-            if (!cables.isEmpty()) {
-                CableType type = cables.get(random.nextInt(cables.size()));
-                return new ContractBook.Goal(GoalKind.ITEM, itemId(NetworkContent.CABLE_ITEMS.get(type).get()), 4 + 4 * random.nextInt(3));
-            }
-        }
-        GoalKind[] small = {GoalKind.RAM, GoalKind.FAN, GoalKind.STORAGE, GoalKind.SCRAP};
-        GoalKind kind = small[random.nextInt(small.length)];
-        return new ContractBook.Goal(kind, icon(kind, random), 1 + random.nextInt(3));
+    /** One of a non-empty list ordered oldest first; the newer models of the time come up more often. */
+    private static <T> T newerOf(List<T> list, RandomSource random) {
+        return list.get(Math.max(random.nextInt(list.size()), random.nextInt(list.size())));
+    }
+
+    private static ResourceLocation cableId(CableType type) {
+        return itemId(NetworkContent.CABLE_ITEMS.get(type).get());
+    }
+
+    private static ResourceLocation switchId(SwitchModel model) {
+        return itemId(NetworkContent.SWITCH_ITEMS.get(model).get());
     }
 
     private static int between(RandomSource random, int min, int max, double scale) {
@@ -295,13 +318,13 @@ public final class DeliveryService {
             return goal.kind.usd;
         }
         for (CableType type : CableType.values()) {
-            if (itemId(NetworkContent.CABLE_ITEMS.get(type).get()).equals(goal.item)) {
-                return type.priceCents / 100.0 * 2.5;
+            if (cableId(type).equals(goal.item)) {
+                return type.priceCents / 100.0 * CABLE_PAY;
             }
         }
         for (SwitchModel model : SwitchModel.values()) {
-            if (itemId(NetworkContent.SWITCH_ITEMS.get(model).get()).equals(goal.item)) {
-                return model.priceCents / 100.0 * 1.25;
+            if (switchId(model).equals(goal.item)) {
+                return model.priceCents / 100.0 * SWITCH_PAY;
             }
         }
         return 10;
@@ -332,7 +355,7 @@ public final class DeliveryService {
 
     // ------------------------------------------------------------------ actions
 
-    static void apply(ServerPlayer player, ServerLevel level, UUID accountId, int id, Action action) {
+    public static void apply(ServerPlayer player, ServerLevel level, UUID accountId, int id, Action action) {
         if (!Config.deliveriesEnabled()) {
             return;
         }
@@ -374,8 +397,8 @@ public final class DeliveryService {
                     DataCenterApi.deposit(level, accountId, d.payCents);
                     DataCenterApi.changeReputation(level, accountId, d.reputation);
                     OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.completed",
-                            clientName(d), ContractService.usd(d.payCents), d.reputation).withStyle(ChatFormatting.GREEN));
-                    StartupService.award(level, accountId, Milestone.FIRST_DELIVERY);
+                            clientName(d), Money.usd(d.payCents), d.reputation).withStyle(ChatFormatting.GREEN));
+                    Milestones.award(level, accountId, Milestone.FIRST_DELIVERY);
                 } else {
                     player.displayClientMessage(Component.translatable("data_center_addon.delivery.msg.delivered", taken), true);
                 }
@@ -426,7 +449,7 @@ public final class DeliveryService {
     // ------------------------------------------------------------------ snapshot
 
     /** The account's running deliveries and offers as the manager shows them; {@code inventory} counts what the player could deliver. */
-    static List<HostingSnapshot.Delivery> snapshot(ServerLevel level, UUID accountId, ContractBook.Account account,
+    public static List<HostingSnapshot.Delivery> snapshot(ServerLevel level, UUID accountId, ContractBook.Account account,
                                                    Inventory inventory) {
         if (!Config.deliveriesEnabled()) {
             return List.of();
@@ -459,6 +482,6 @@ public final class DeliveryService {
     }
 
     private static Component clientName(ContractBook.Delivery d) {
-        return Component.translatable("data_center_addon.contract.client." + d.client);
+        return ContractService.clientName(d.client);
     }
 }

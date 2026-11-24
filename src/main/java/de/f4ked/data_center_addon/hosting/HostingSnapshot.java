@@ -1,5 +1,9 @@
 package de.f4ked.data_center_addon.hosting;
 
+import de.f4ked.data_center_addon.hosting.contract.ContractService;
+import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
+import de.f4ked.data_center_addon.hosting.startup.Milestone;
+import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,12 +14,14 @@ import java.util.List;
 
 /**
  * What the Hosting Manager shows: the hosting racks reachable over its network, the customer
- * segments on them, and the totals. Built on the server ({@link HostingManagerService}), sent to the
- * player who has the manager open.
+ * segments on them, the account's contracts, delivery orders and founding phase, and the totals.
+ * Built on the server ({@link HostingManagerService}), sent to the player who has the manager open.
+ * Every record carries its own {@code STREAM_CODEC}.
  *
- * @param connected   whether a cable is plugged into the manager
+ * @param connected    whether a cable is plugged into the manager
  * @param foreignRacks racks in the network the player may not control (not listed)
- * @param network     state of the compute network the manager is plugged into
+ * @param network      state of the compute network the manager is plugged into
+ * @param ticksPerDay  ticks in one in-game day (depends on Data Center's calendar pace)
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
                               Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
@@ -27,15 +33,231 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
     /** Ticks in one real hour (the unit of the Hosting Rack's own "Rate: $/h"). */
     public static final double TICKS_PER_HOUR = 20.0 * 3600.0;
 
-    /** An amount per in-game day as an amount per real hour. */
-    public long perHour(long centsPerDay) {
-        return ticksPerDay <= 0 ? 0 : Math.round(centsPerDay * TICKS_PER_HOUR / ticksPerDay);
+    // ------------------------------------------------------------------ totals
+
+    public double totalCustomers() {
+        return racks.stream().mapToDouble(Rack::customers).sum();
+    }
+
+    /** Income per in-game day of the racks. */
+    public long totalCentsPerDay() {
+        return racks.stream().mapToLong(Rack::centsPerDay).sum();
+    }
+
+    /** What the running contracts pay per in-game day (paid for every day their places are kept free). */
+    public long contractCentsPerDay() {
+        return activeContracts().stream().mapToLong(Contract::centsPerDay).sum();
+    }
+
+    /** Income per in-game day of the racks plus the running contracts. */
+    public long incomeCentsPerDay() {
+        return totalCentsPerDay() + contractCentsPerDay();
     }
 
     /** What the running start bonus pays per in-game day on top of the racks' income (0 when none runs). */
     public long startBonusCentsPerDay() {
         return startup.started() && !startup.veteran() ? Math.round(totalCentsPerDay() * startup.bonusFactor()) : 0;
     }
+
+    /** An amount per in-game day as an amount per real hour. */
+    public long perHour(long centsPerDay) {
+        return ticksPerDay <= 0 ? 0 : Math.round(centsPerDay * TICKS_PER_HOUR / ticksPerDay);
+    }
+
+    /** Racks of this snapshot that earn nothing because of the control panel licence. */
+    public int licenceBoundRacks() {
+        return (int) racks.stream().filter(Rack::licenceBound).count();
+    }
+
+    public List<Contract> activeContracts() {
+        return contracts.stream().filter(c -> !c.offer).toList();
+    }
+
+    public List<Contract> offers() {
+        return contracts.stream().filter(Contract::offer).toList();
+    }
+
+    public List<Delivery> runningDeliveries() {
+        return deliveries.stream().filter(d -> !d.offer).toList();
+    }
+
+    public List<Delivery> deliveryOffers() {
+        return deliveries.stream().filter(Delivery::offer).toList();
+    }
+
+    // ------------------------------------------------------------------ racks and network
+
+    /**
+     * The compute network: what it delivers of what it could, and what slows it down.
+     *
+     * @param capacity          compute per tick it can pass ({@link Long#MAX_VALUE}: not limited by cables)
+     * @param delivered         compute per tick it passes now
+     * @param overlongRuns      cable runs longer than their cable's reach
+     * @param unpoweredSwitches switches without power (each cuts the network)
+     */
+    public record Network(long capacity, long delivered, int overlongRuns, int unpoweredSwitches) {
+        public static final Network NONE = new Network(0, 0, 0, 0);
+
+        public static final StreamCodec<FriendlyByteBuf, Network> STREAM_CODEC = StreamCodec.of(
+                (buf, n) -> {
+                    buf.writeVarLong(n.capacity);
+                    buf.writeVarLong(n.delivered);
+                    buf.writeVarInt(n.overlongRuns);
+                    buf.writeVarInt(n.unpoweredSwitches);
+                },
+                buf -> new Network(buf.readVarLong(), buf.readVarLong(), buf.readVarInt(), buf.readVarInt()));
+    }
+
+    /**
+     * One hosting rack.
+     *
+     * @param product      {@code HostingProduct} ordinal, -1 = dedicated servers
+     * @param customers    customers on this rack
+     * @param capacity     customers its hardware can serve (places offered = capacity × fill)
+     * @param centsPerDay  income per in-game day
+     * @param status       {@code HostingRackBlockEntity.MODE_*}
+     * @param fill         target fill in percent (shared hosting and VPS)
+     * @param licenceBound shared hosting rack with customers that earns nothing: on every server the
+     *                     control panel licence ($30 a month) is higher than what its customers pay
+     */
+    public record Rack(BlockPos pos, int product, double customers, double capacity, long centsPerDay, int status, int fill,
+                       boolean licenceBound) {
+        public static final StreamCodec<FriendlyByteBuf, Rack> STREAM_CODEC = StreamCodec.of(
+                (buf, r) -> {
+                    buf.writeBlockPos(r.pos);
+                    buf.writeVarInt(r.product + 1);
+                    buf.writeDouble(r.customers);
+                    buf.writeDouble(r.capacity);
+                    buf.writeVarLong(r.centsPerDay);
+                    buf.writeVarInt(r.status);
+                    buf.writeVarInt(r.fill);
+                    buf.writeBoolean(r.licenceBound);
+                },
+                buf -> new Rack(buf.readBlockPos(), buf.readVarInt() - 1, buf.readDouble(), buf.readDouble(), buf.readVarLong(),
+                        buf.readVarInt(), buf.readVarInt(), buf.readBoolean()));
+    }
+
+    /** Customers of one {@code CustomerSegment} on the racks of this network, and their share of the income. */
+    public record Segment(int segment, double customers, long centsPerDay) {
+        public static final StreamCodec<FriendlyByteBuf, Segment> STREAM_CODEC = StreamCodec.of(
+                (buf, g) -> {
+                    buf.writeVarInt(g.segment);
+                    buf.writeDouble(g.customers);
+                    buf.writeVarLong(g.centsPerDay);
+                },
+                buf -> new Segment(buf.readVarInt(), buf.readDouble(), buf.readVarLong()));
+    }
+
+    // ------------------------------------------------------------------ contracts and deliveries
+
+    /**
+     * A running hosting contract or an offer ({@link ContractService}).
+     *
+     * @param client    index of the client's name
+     * @param product   {@code HostingProduct} ordinal
+     * @param accounts  places the client wants kept free
+     * @param free      places of the product free now (capacity minus customers of all the account's racks)
+     * @param required  places all running contracts of the product need (for an offer: with it)
+     * @param metToday  share of today the places were free (running contracts)
+     * @param expiresIn days an offer stays open
+     * @param urgent    emergency order: short, well paid, open for one day
+     * @param mini      small hobbyist order: no penalty, no reputation lost
+     */
+    public record Contract(int id, boolean offer, int client, int product, int accounts, int days, int daysDone, int strikes,
+                           long centsPerDay, long bonusCents, long penaltyCents, int reputation, double free, int required,
+                           float metToday, int expiresIn, boolean urgent, boolean mini) {
+        public boolean covered() {
+            return free >= required;
+        }
+
+        /** Reputation a failed or cancelled contract costs (mini contracts: none). */
+        public int reputationLoss() {
+            return mini ? 0 : reputation * 2;
+        }
+
+        public static final StreamCodec<FriendlyByteBuf, Contract> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeVarInt(c.id);
+                    buf.writeBoolean(c.offer);
+                    buf.writeVarInt(c.client);
+                    buf.writeVarInt(c.product);
+                    buf.writeVarInt(c.accounts);
+                    buf.writeVarInt(c.days);
+                    buf.writeVarInt(c.daysDone);
+                    buf.writeVarInt(c.strikes);
+                    buf.writeVarLong(c.centsPerDay);
+                    buf.writeVarLong(c.bonusCents);
+                    buf.writeVarLong(c.penaltyCents);
+                    buf.writeVarInt(c.reputation);
+                    buf.writeDouble(c.free);
+                    buf.writeVarInt(c.required);
+                    buf.writeFloat(c.metToday);
+                    buf.writeVarInt(c.expiresIn);
+                    buf.writeBoolean(c.urgent);
+                    buf.writeBoolean(c.mini);
+                },
+                buf -> new Contract(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
+                        buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
+                        buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readBoolean(),
+                        buf.readBoolean()));
+    }
+
+    /**
+     * A delivery order or an offer ({@link DeliveryService}).
+     *
+     * @param days     days the client gives from accepting
+     * @param daysLeft running: days left to deliver (1 = today is the last); offer: days it stays open
+     */
+    public record Delivery(int id, boolean offer, int client, List<Goal> goals, long payCents, int reputation, int days,
+                           int daysLeft) {
+        public int delivered() {
+            return goals.stream().mapToInt(Goal::delivered).sum();
+        }
+
+        public int total() {
+            return goals.stream().mapToInt(Goal::count).sum();
+        }
+
+        /** Whether the player carries something this delivery still needs. */
+        public boolean canDeliver() {
+            return goals.stream().anyMatch(g -> g.delivered < g.count && g.inInventory > 0);
+        }
+
+        public static final StreamCodec<FriendlyByteBuf, Delivery> STREAM_CODEC = StreamCodec.of(
+                (buf, d) -> {
+                    buf.writeVarInt(d.id);
+                    buf.writeBoolean(d.offer);
+                    buf.writeVarInt(d.client);
+                    writeList(buf, d.goals, Goal.STREAM_CODEC);
+                    buf.writeVarLong(d.payCents);
+                    buf.writeVarInt(d.reputation);
+                    buf.writeVarInt(d.days);
+                    buf.writeVarInt(d.daysLeft);
+                },
+                buf -> new Delivery(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), readList(buf, Goal.STREAM_CODEC, 8),
+                        buf.readVarLong(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
+    }
+
+    /**
+     * One goal of a delivery.
+     *
+     * @param kind        {@code DeliveryService.GoalKind} ordinal
+     * @param item        the item wanted (ITEM) or shown as icon
+     * @param inInventory matching items in the viewing player's inventory
+     */
+    public record Goal(int kind, ResourceLocation item, int count, int delivered, int inInventory) {
+        public static final StreamCodec<FriendlyByteBuf, Goal> STREAM_CODEC = StreamCodec.of(
+                (buf, g) -> {
+                    buf.writeVarInt(g.kind);
+                    buf.writeResourceLocation(g.item);
+                    buf.writeVarInt(g.count);
+                    buf.writeVarInt(g.delivered);
+                    buf.writeVarInt(g.inInventory);
+                },
+                buf -> new Goal(buf.readVarInt(), buf.readResourceLocation(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
+    }
+
+    // ------------------------------------------------------------------ founding phase
 
     /**
      * The founding phase of the viewer's company ({@link StartupService}).
@@ -63,169 +285,77 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
         public boolean reached(Milestone milestone) {
             return (milestones & milestone.bit()) != 0;
         }
+
+        private static final StreamCodec<FriendlyByteBuf, Long> REWARD = StreamCodec.of(
+                (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
+
+        public static final StreamCodec<FriendlyByteBuf, Startup> STREAM_CODEC = StreamCodec.of(
+                (buf, s) -> {
+                    buf.writeBoolean(s.started);
+                    buf.writeBoolean(s.veteran);
+                    buf.writeDouble(s.bonusFactor);
+                    buf.writeVarInt(s.bonusMode);
+                    buf.writeVarInt(s.bonusDaysLeft);
+                    buf.writeVarLong(s.bonusRevenueLeft);
+                    buf.writeVarLong(s.bonusPaidCents);
+                    buf.writeVarLong(s.grantCents);
+                    buf.writeVarLong(s.grantOfferCents);
+                    buf.writeVarLong(s.feesPaidCents);
+                    buf.writeVarLong(s.loanOfferCents);
+                    buf.writeBoolean(s.loanTaken);
+                    buf.writeVarLong(s.loanOutstandingCents);
+                    buf.writeVarInt(s.loanGraceDays);
+                    buf.writeVarLong(s.loanInstalmentCents);
+                    buf.writeLong(s.milestones);
+                    writeList(buf, s.milestoneRewards, REWARD);
+                    writeList(buf, s.tickets, Ticket.STREAM_CODEC);
+                    Prepay.STREAM_CODEC.encode(buf, s.prepay);
+                },
+                buf -> new Startup(buf.readBoolean(), buf.readBoolean(), buf.readDouble(), buf.readVarInt(), buf.readVarInt(),
+                        buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
+                        buf.readBoolean(), buf.readVarLong(), buf.readVarInt(), buf.readVarLong(), buf.readLong(),
+                        readList(buf, REWARD, 64), readList(buf, Ticket.STREAM_CODEC, 16), Prepay.STREAM_CODEC.decode(buf)));
     }
 
     /**
      * Annual plans paid in advance.
      *
-     * @param available  prepayment is turned on in the config
-     * @param enabled    the account offers annual plans to new customers
-     * @param openCents  value not yet settled against the income (plans running plus what is still to be taken)
+     * @param available prepayment is turned on in the config
+     * @param enabled   the account offers annual plans to new customers
+     * @param openCents value not yet settled against the income (plans running plus what is still to be taken)
      */
     public record Prepay(boolean available, boolean enabled, int sharePercent, int discountPercent, long receivedCents,
                          long openCents, int customers) {
         public static final Prepay NONE = new Prepay(false, false, 0, 0, 0, 0, 0);
+
+        public static final StreamCodec<FriendlyByteBuf, Prepay> STREAM_CODEC = StreamCodec.of(
+                (buf, p) -> {
+                    buf.writeBoolean(p.available);
+                    buf.writeBoolean(p.enabled);
+                    buf.writeVarInt(p.sharePercent);
+                    buf.writeVarInt(p.discountPercent);
+                    buf.writeVarLong(p.receivedCents);
+                    buf.writeVarLong(p.openCents);
+                    buf.writeVarInt(p.customers);
+                },
+                buf -> new Prepay(buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(),
+                        buf.readVarLong(), buf.readVarInt()));
     }
 
     /** A service ticket: right-click the rack at {@code pos} before it runs out. */
     public record Ticket(int id, BlockPos pos, int kind, long rewardCents, int daysLeft) {
+        public static final StreamCodec<FriendlyByteBuf, Ticket> STREAM_CODEC = StreamCodec.of(
+                (buf, t) -> {
+                    buf.writeVarInt(t.id);
+                    buf.writeBlockPos(t.pos);
+                    buf.writeVarInt(t.kind);
+                    buf.writeVarLong(t.rewardCents);
+                    buf.writeVarInt(t.daysLeft);
+                },
+                buf -> new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
     }
 
-    /**
-     * A delivery order or an offer ({@link DeliveryService}).
-     *
-     * @param days     days the client gives from accepting
-     * @param daysLeft running: days left to deliver (1 = today is the last); offer: days it stays open
-     */
-    public record Delivery(int id, boolean offer, int client, List<Goal> goals, long payCents, int reputation, int days,
-                           int daysLeft) {
-        public int delivered() {
-            return goals.stream().mapToInt(Goal::delivered).sum();
-        }
-
-        public int total() {
-            return goals.stream().mapToInt(Goal::count).sum();
-        }
-
-        /** Whether the player carries something this delivery still needs. */
-        public boolean canDeliver() {
-            return goals.stream().anyMatch(g -> g.delivered < g.count && g.inInventory > 0);
-        }
-    }
-
-    /**
-     * One goal of a delivery.
-     *
-     * @param kind        {@code DeliveryService.GoalKind} ordinal
-     * @param item        the item wanted (ITEM) or shown as icon
-     * @param inInventory matching items in the viewing player's inventory
-     */
-    public record Goal(int kind, ResourceLocation item, int count, int delivered, int inInventory) {
-    }
-
-    public List<Delivery> runningDeliveries() {
-        return deliveries.stream().filter(d -> !d.offer).toList();
-    }
-
-    public List<Delivery> deliveryOffers() {
-        return deliveries.stream().filter(Delivery::offer).toList();
-    }
-
-    /**
-     * A running hosting contract or an offer ({@link ContractService}).
-     *
-     * @param client    index of the client's name
-     * @param product   {@code HostingProduct} ordinal
-     * @param accounts  places the client wants kept free
-     * @param free      places of the product free now (capacity minus customers of all the account's racks)
-     * @param required  places all running contracts of the product need (for an offer: with it)
-     * @param metToday  share of today the places were free (running contracts)
-     * @param expiresIn days an offer stays open
-     */
-    public record Contract(int id, boolean offer, int client, int product, int accounts, int days, int daysDone, int strikes,
-                           long centsPerDay, long bonusCents, long penaltyCents, int reputation, double free, int required,
-                           float metToday, int expiresIn, boolean urgent, boolean mini) {
-        public boolean covered() {
-            return free >= required;
-        }
-
-        /** Reputation a failed or cancelled contract costs (mini contracts: none). */
-        public int reputationLoss() {
-            return mini ? 0 : reputation * 2;
-        }
-    }
-
-    public List<Contract> activeContracts() {
-        return contracts.stream().filter(c -> !c.offer).toList();
-    }
-
-    public List<Contract> offers() {
-        return contracts.stream().filter(Contract::offer).toList();
-    }
-
-    /** What the running contracts pay per in-game day (paid for every day their places are kept free). */
-    public long contractCentsPerDay() {
-        return activeContracts().stream().mapToLong(Contract::centsPerDay).sum();
-    }
-
-    /** Places the running contracts keep reserved. */
-    public int contractAccounts() {
-        return activeContracts().stream().mapToInt(Contract::accounts).sum();
-    }
-
-    /** Income per in-game day of the racks plus the running contracts. */
-    public long incomeCentsPerDay() {
-        return totalCentsPerDay() + contractCentsPerDay();
-    }
-
-    /**
-     * The compute network: what it delivers of what it could, and what slows it down.
-     *
-     * @param capacity          compute per tick it can pass ({@link Long#MAX_VALUE}: not limited by cables)
-     * @param delivered         compute per tick it passes now
-     * @param overlongRuns      cable runs longer than their cable's reach
-     * @param unpoweredSwitches switches without power (each cuts the network)
-     */
-    public record Network(long capacity, long delivered, int overlongRuns, int unpoweredSwitches) {
-        public static final Network NONE = new Network(0, 0, 0, 0);
-    }
-
-    /**
-     * One hosting rack.
-     *
-     * @param product    {@code HostingProduct} ordinal, -1 = dedicated servers
-     * @param customers  customers on this rack
-     * @param capacity   customers it can take
-     * @param centsPerDay income per in-game day
-     * @param status     {@code HostingRackBlockEntity.MODE_*}
-     * @param fill       target fill in percent (shared hosting and VPS)
-     * @param licenceBound shared hosting rack with customers that earns nothing: on every server the
-     *                   control panel licence ($30 a month) is higher than what its customers pay
-     */
-    public record Rack(BlockPos pos, int product, double customers, double capacity, long centsPerDay, int status, int fill,
-                       boolean licenceBound) {
-    }
-
-    /** Racks of this snapshot that earn nothing because of the control panel licence. */
-    public int licenceBoundRacks() {
-        int count = 0;
-        for (Rack rack : racks) {
-            if (rack.licenceBound) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /** Customers of one {@code CustomerSegment} on the racks of this network, and their share of the income. */
-    public record Segment(int segment, double customers, long centsPerDay) {
-    }
-
-    public double totalCustomers() {
-        double sum = 0;
-        for (Rack rack : racks) {
-            sum += rack.customers;
-        }
-        return sum;
-    }
-
-    public long totalCentsPerDay() {
-        long sum = 0;
-        for (Rack rack : racks) {
-            sum += rack.centsPerDay;
-        }
-        return sum;
-    }
+    // ------------------------------------------------------------------ codec
 
     public static final StreamCodec<FriendlyByteBuf, HostingSnapshot> STREAM_CODEC = StreamCodec.of(
             (buf, s) -> {
@@ -233,177 +363,33 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 buf.writeVarInt(s.reputation);
                 buf.writeVarInt(s.customerClass);
                 buf.writeVarInt(s.foreignRacks);
-                buf.writeVarLong(s.network.capacity);
-                buf.writeVarLong(s.network.delivered);
-                buf.writeVarInt(s.network.overlongRuns);
-                buf.writeVarInt(s.network.unpoweredSwitches);
-                buf.writeVarInt(s.racks.size());
-                for (Rack r : s.racks) {
-                    buf.writeBlockPos(r.pos);
-                    buf.writeVarInt(r.product + 1);
-                    buf.writeDouble(r.customers);
-                    buf.writeDouble(r.capacity);
-                    buf.writeVarLong(r.centsPerDay);
-                    buf.writeVarInt(r.status);
-                    buf.writeVarInt(r.fill);
-                    buf.writeBoolean(r.licenceBound);
-                }
-                buf.writeVarInt(s.segments.size());
-                for (Segment g : s.segments) {
-                    buf.writeVarInt(g.segment);
-                    buf.writeDouble(g.customers);
-                    buf.writeVarLong(g.centsPerDay);
-                }
-                buf.writeVarInt(s.contracts.size());
-                for (Contract c : s.contracts) {
-                    buf.writeVarInt(c.id);
-                    buf.writeBoolean(c.offer);
-                    buf.writeVarInt(c.client);
-                    buf.writeVarInt(c.product);
-                    buf.writeVarInt(c.accounts);
-                    buf.writeVarInt(c.days);
-                    buf.writeVarInt(c.daysDone);
-                    buf.writeVarInt(c.strikes);
-                    buf.writeVarLong(c.centsPerDay);
-                    buf.writeVarLong(c.bonusCents);
-                    buf.writeVarLong(c.penaltyCents);
-                    buf.writeVarInt(c.reputation);
-                    buf.writeDouble(c.free);
-                    buf.writeVarInt(c.required);
-                    buf.writeFloat(c.metToday);
-                    buf.writeVarInt(c.expiresIn);
-                    buf.writeBoolean(c.urgent);
-                    buf.writeBoolean(c.mini);
-                }
-                buf.writeVarInt(s.deliveries.size());
-                for (Delivery d : s.deliveries) {
-                    buf.writeVarInt(d.id);
-                    buf.writeBoolean(d.offer);
-                    buf.writeVarInt(d.client);
-                    buf.writeVarInt(d.goals.size());
-                    for (Goal g : d.goals) {
-                        buf.writeVarInt(g.kind);
-                        buf.writeResourceLocation(g.item);
-                        buf.writeVarInt(g.count);
-                        buf.writeVarInt(g.delivered);
-                        buf.writeVarInt(g.inInventory);
-                    }
-                    buf.writeVarLong(d.payCents);
-                    buf.writeVarInt(d.reputation);
-                    buf.writeVarInt(d.days);
-                    buf.writeVarInt(d.daysLeft);
-                }
-                Startup st = s.startup;
-                buf.writeBoolean(st.started);
-                buf.writeBoolean(st.veteran);
-                buf.writeDouble(st.bonusFactor);
-                buf.writeVarInt(st.bonusMode);
-                buf.writeVarInt(st.bonusDaysLeft);
-                buf.writeVarLong(st.bonusRevenueLeft);
-                buf.writeVarLong(st.bonusPaidCents);
-                buf.writeVarLong(st.grantCents);
-                buf.writeVarLong(st.grantOfferCents);
-                buf.writeVarLong(st.feesPaidCents);
-                buf.writeVarLong(st.loanOfferCents);
-                buf.writeBoolean(st.loanTaken);
-                buf.writeVarLong(st.loanOutstandingCents);
-                buf.writeVarInt(st.loanGraceDays);
-                buf.writeVarLong(st.loanInstalmentCents);
-                buf.writeLong(st.milestones);
-                buf.writeVarInt(st.milestoneRewards.size());
-                for (long reward : st.milestoneRewards) {
-                    buf.writeVarLong(reward);
-                }
-                buf.writeVarInt(st.tickets.size());
-                for (Ticket t : st.tickets) {
-                    buf.writeVarInt(t.id);
-                    buf.writeBlockPos(t.pos);
-                    buf.writeVarInt(t.kind);
-                    buf.writeVarLong(t.rewardCents);
-                    buf.writeVarInt(t.daysLeft);
-                }
-                Prepay pp = st.prepay;
-                buf.writeBoolean(pp.available);
-                buf.writeBoolean(pp.enabled);
-                buf.writeVarInt(pp.sharePercent);
-                buf.writeVarInt(pp.discountPercent);
-                buf.writeVarLong(pp.receivedCents);
-                buf.writeVarLong(pp.openCents);
-                buf.writeVarInt(pp.customers);
+                Network.STREAM_CODEC.encode(buf, s.network);
+                writeList(buf, s.racks, Rack.STREAM_CODEC);
+                writeList(buf, s.segments, Segment.STREAM_CODEC);
+                writeList(buf, s.contracts, Contract.STREAM_CODEC);
+                writeList(buf, s.deliveries, Delivery.STREAM_CODEC);
+                Startup.STREAM_CODEC.encode(buf, s.startup);
                 buf.writeDouble(s.ticksPerDay);
             },
-            buf -> {
-                boolean connected = buf.readBoolean();
-                int reputation = buf.readVarInt();
-                int customerClass = buf.readVarInt();
-                int foreign = buf.readVarInt();
-                Network network = new Network(buf.readVarLong(), buf.readVarLong(), buf.readVarInt(), buf.readVarInt());
-                int rackCount = Math.min(buf.readVarInt(), 4096);
-                List<Rack> racks = new ArrayList<>(rackCount);
-                for (int i = 0; i < rackCount; i++) {
-                    racks.add(new Rack(buf.readBlockPos(), buf.readVarInt() - 1, buf.readDouble(), buf.readDouble(),
-                            buf.readVarLong(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean()));
-                }
-                int segmentCount = Math.min(buf.readVarInt(), 64);
-                List<Segment> segments = new ArrayList<>(segmentCount);
-                for (int i = 0; i < segmentCount; i++) {
-                    segments.add(new Segment(buf.readVarInt(), buf.readDouble(), buf.readVarLong()));
-                }
-                int contractCount = Math.min(buf.readVarInt(), 64);
-                List<Contract> contracts = new ArrayList<>(contractCount);
-                for (int i = 0; i < contractCount; i++) {
-                    contracts.add(new Contract(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
-                            buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
-                            buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readBoolean(),
-                            buf.readBoolean()));
-                }
-                int deliveryCount = Math.min(buf.readVarInt(), 64);
-                List<Delivery> deliveries = new ArrayList<>(deliveryCount);
-                for (int i = 0; i < deliveryCount; i++) {
-                    int id = buf.readVarInt();
-                    boolean offer = buf.readBoolean();
-                    int client = buf.readVarInt();
-                    int goalCount = Math.min(buf.readVarInt(), 8);
-                    List<Goal> goals = new ArrayList<>(goalCount);
-                    for (int j = 0; j < goalCount; j++) {
-                        goals.add(new Goal(buf.readVarInt(), buf.readResourceLocation(), buf.readVarInt(), buf.readVarInt(),
-                                buf.readVarInt()));
-                    }
-                    deliveries.add(new Delivery(id, offer, client, List.copyOf(goals), buf.readVarLong(), buf.readVarInt(),
-                            buf.readVarInt(), buf.readVarInt()));
-                }
-                boolean started = buf.readBoolean();
-                boolean veteran = buf.readBoolean();
-                double bonusFactor = buf.readDouble();
-                int bonusMode = buf.readVarInt();
-                int bonusDaysLeft = buf.readVarInt();
-                long bonusRevenueLeft = buf.readVarLong();
-                long bonusPaid = buf.readVarLong();
-                long grant = buf.readVarLong();
-                long grantOffer = buf.readVarLong();
-                long fees = buf.readVarLong();
-                long loanOffer = buf.readVarLong();
-                boolean loanTaken = buf.readBoolean();
-                long loanOutstanding = buf.readVarLong();
-                int loanGrace = buf.readVarInt();
-                long loanInstalment = buf.readVarLong();
-                long milestones = buf.readLong();
-                int rewardCount = Math.min(buf.readVarInt(), 64);
-                List<Long> rewards = new ArrayList<>(rewardCount);
-                for (int i = 0; i < rewardCount; i++) {
-                    rewards.add(buf.readVarLong());
-                }
-                int ticketCount = Math.min(buf.readVarInt(), 16);
-                List<Ticket> tickets = new ArrayList<>(ticketCount);
-                for (int i = 0; i < ticketCount; i++) {
-                    tickets.add(new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
-                }
-                Prepay prepay = new Prepay(buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(),
-                        buf.readVarLong(), buf.readVarInt());
-                Startup startup = new Startup(started, veteran, bonusFactor, bonusMode, bonusDaysLeft, bonusRevenueLeft, bonusPaid,
-                        grant, grantOffer, fees, loanOffer, loanTaken, loanOutstanding, loanGrace, loanInstalment, milestones,
-                        List.copyOf(rewards), List.copyOf(tickets), prepay);
-                return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
-                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries), startup, buf.readDouble());
-            });
+            buf -> new HostingSnapshot(buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
+                    Network.STREAM_CODEC.decode(buf), readList(buf, Rack.STREAM_CODEC, 4096), readList(buf, Segment.STREAM_CODEC, 64),
+                    readList(buf, Contract.STREAM_CODEC, 64), readList(buf, Delivery.STREAM_CODEC, 64), Startup.STREAM_CODEC.decode(buf),
+                    buf.readDouble()));
+
+    private static <T> void writeList(FriendlyByteBuf buf, List<T> list, StreamCodec<FriendlyByteBuf, T> codec) {
+        buf.writeVarInt(list.size());
+        for (T element : list) {
+            codec.encode(buf, element);
+        }
+    }
+
+    /** A list of at most {@code max} elements (a guard against broken packets). */
+    private static <T> List<T> readList(FriendlyByteBuf buf, StreamCodec<FriendlyByteBuf, T> codec, int max) {
+        int size = Math.min(buf.readVarInt(), max);
+        List<T> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(codec.decode(buf));
+        }
+        return List.copyOf(list);
+    }
 }

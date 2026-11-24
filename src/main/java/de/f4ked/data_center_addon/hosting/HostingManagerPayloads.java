@@ -2,7 +2,10 @@ package de.f4ked.data_center_addon.hosting;
 
 import com.example.datacenter.api.DataCenterApi;
 import de.f4ked.data_center_addon.Data_center_addon;
-import de.f4ked.data_center_addon.client.HostingManagerClient;
+import de.f4ked.data_center_addon.client.hosting.HostingManagerClient;
+import de.f4ked.data_center_addon.hosting.contract.ContractService;
+import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
+import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

@@ -1,4 +1,4 @@
-package de.f4ked.data_center_addon.hosting;
+package de.f4ked.data_center_addon.hosting.contract;
 
 import com.example.datacenter.hosting.HostingProduct;
 import net.minecraft.core.HolderLookup;

@@ -3,7 +3,7 @@ package de.f4ked.data_center_addon.mixin;
 import com.example.datacenter.component.StorageSpec;
 import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.machine.MachineBlockEntity;
-import de.f4ked.data_center_addon.hosting.StartupService;
+import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,12 +12,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * The Hosting Rack reads the capacity of every storage part of its servers in {@code runLoadout}:
- * once for the storage rent (dedicated mode) and once for the shared capacity pool. Both reads go
- * through {@link HostingStorageBoost}, which raises the capacity of the add-on's storage parts.
- * <p>
- * {@code require = 0}: if a Data Center update changes this method, the boost silently stops
- * instead of crashing the game.
+ * Two hooks into the Hosting Rack's {@code runLoadout}, which runs once per tick while the rack works:
+ * <ul>
+ *   <li>It reads the capacity of every storage part of its servers: once for the storage rent
+ *       (dedicated mode) and once for the shared capacity pool. Both reads go through
+ *       {@link HostingStorageBoost}, which raises the capacity of the add-on's storage parts.</li>
+ *   <li>At its end the rack's income of the tick is reported to {@link StartupService} (start bonus,
+ *       service tickets). This hook only reads.</li>
+ * </ul>
+ * {@code require = 0}: if a Data Center update changes this method, the hooks silently stop instead
+ * of crashing the game.
  */
 @Mixin(value = HostingRackBlockEntity.class, remap = false)
 public abstract class HostingRackBlockEntityMixin {

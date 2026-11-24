@@ -1,4 +1,4 @@
-package de.f4ked.data_center_addon.hosting;
+package de.f4ked.data_center_addon.hosting.contract;
 
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.CustomerClass;
@@ -9,6 +9,10 @@ import com.example.datacenter.hosting.HostingReputation;
 import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
+import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.Money;
+import de.f4ked.data_center_addon.hosting.startup.Milestone;
+import de.f4ked.data_center_addon.hosting.startup.Milestones;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
@@ -23,7 +27,6 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -177,14 +180,14 @@ public final class ContractService {
                 it.remove();
                 charge(level, accountId, c);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.failed",
-                        clientName(c), usd(c.penaltyCents), c.reputationLoss()).withStyle(ChatFormatting.RED));
+                        clientName(c), Money.usd(c.penaltyCents), c.reputationLoss()).withStyle(ChatFormatting.RED));
             } else if (c.daysDone >= c.days) {
                 it.remove();
                 DataCenterApi.deposit(level, accountId, c.bonusCents);
                 DataCenterApi.changeReputation(level, accountId, c.reputation);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.completed",
-                        clientName(c), usd(c.bonusCents), c.reputation).withStyle(ChatFormatting.GREEN));
-                StartupService.award(level, accountId, Milestone.FIRST_CONTRACT);
+                        clientName(c), Money.usd(c.bonusCents), c.reputation).withStyle(ChatFormatting.GREEN));
+                Milestones.award(level, accountId, Milestone.FIRST_CONTRACT);
             }
         }
         account.offers.removeIf(offer -> offer.expiresDay < day);
@@ -291,7 +294,7 @@ public final class ContractService {
     // ------------------------------------------------------------------ actions
 
     /** Accepts an offer or cancels a running contract for the player's account. */
-    static void apply(ServerLevel level, UUID accountId, int contractId, Action action) {
+    public static void apply(ServerLevel level, UUID accountId, int contractId, Action action) {
         if (!Config.contractsEnabled()) {
             return;
         }
@@ -322,7 +325,7 @@ public final class ContractService {
                 account.active.remove(running);
                 charge(level, accountId, running);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.cancelled",
-                        clientName(running), usd(running.penaltyCents), running.reputationLoss()).withStyle(ChatFormatting.RED));
+                        clientName(running), Money.usd(running.penaltyCents), running.reputationLoss()).withStyle(ChatFormatting.RED));
             }
         }
         book.setDirty();
@@ -340,7 +343,7 @@ public final class ContractService {
     // ------------------------------------------------------------------ snapshot
 
     /** The account's running contracts and offers as the manager shows them. */
-    static List<HostingSnapshot.Contract> snapshot(ServerLevel level, UUID accountId) {
+    public static List<HostingSnapshot.Contract> snapshot(ServerLevel level, UUID accountId) {
         if (!Config.contractsEnabled()) {
             return List.of();
         }
@@ -369,11 +372,12 @@ public final class ContractService {
     // ------------------------------------------------------------------ text
 
     private static Component clientName(ContractBook.Contract c) {
-        return Component.translatable("data_center_addon.contract.client." + c.client);
+        return clientName(c.client);
     }
 
-    /** $1,234.56 */
-    static String usd(long cents) {
-        return String.format(Locale.ROOT, "$%,.2f", cents / 100.0);
+    /** A client's name (contracts and delivery orders share the clients). */
+    public static Component clientName(int client) {
+        return Component.translatable("data_center_addon.contract.client." + client);
     }
+
 }
