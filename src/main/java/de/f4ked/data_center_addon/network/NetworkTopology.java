@@ -52,8 +52,15 @@ public final class NetworkTopology {
     private NetworkTopology() {
     }
 
-    /** A cable run: its capacity and the devices plugged into it. */
-    public record Run(long capacity, CableType weakest, int length, boolean overlength, List<NetNode> devices) {
+    /**
+     * A cable run: its capacity, the devices plugged into it and the cable blocks it is made of.
+     * {@code reach} is the shortest reach of its cables ({@link Integer#MAX_VALUE}: no limit).
+     */
+    public record Run(long capacity, CableType weakest, int length, int reach, boolean overlength, List<NetNode> devices,
+                      Set<Long> cells) {
+        public boolean contains(BlockPos pos) {
+            return cells.contains(pos.asLong());
+        }
     }
 
     /** The parts of a network that do not change until a block is placed or removed. */
@@ -168,11 +175,13 @@ public final class NetworkTopology {
             CableType weakest = null;
             int length = 0;
             Set<NetNode> devices = new HashSet<>();
+            Set<Long> runCells = new HashSet<>();
             ArrayDeque<Long> queue = new ArrayDeque<>();
             queue.add(start);
             while (!queue.isEmpty()) {
                 long key = queue.poll();
                 Cell cell = cells.get(key);
+                runCells.add(key);
                 length++;
                 if (cell.capacity < capacity) {
                     capacity = cell.capacity;
@@ -198,7 +207,7 @@ public final class NetworkTopology {
             }
             boolean overlength = length > reach;
             long runCapacity = overlength ? capacity / CableType.OVERLENGTH_DIVISOR : capacity;
-            runs.add(new Run(runCapacity, weakest, length, overlength, List.copyOf(devices)));
+            runs.add(new Run(runCapacity, weakest, length, reach, overlength, List.copyOf(devices), Set.copyOf(runCells)));
         }
 
         Set<NetNode> switchDevices = new HashSet<>();
@@ -223,6 +232,21 @@ public final class NetworkTopology {
         }
         Set<NetNode> members = ((ComputeNetInvoker) (Object) net).data_center_addon$members();
         return members.isEmpty() ? null : layout(net, members, grid, level);
+    }
+
+    /** The cable run a cable block belongs to, or {@code null} if it is not part of a network with the add-on's parts. */
+    @Nullable
+    public static Run runAt(ServerLevel level, BlockPos pos) {
+        Layout layout = layoutAt(level, pos);
+        if (layout == null) {
+            return null;
+        }
+        for (Run run : layout.runs()) {
+            if (run.contains(pos)) {
+                return run;
+            }
+        }
+        return null;
     }
 
     /** Makes Data Center recompute the network at a position, e.g. after a switch lost power. */

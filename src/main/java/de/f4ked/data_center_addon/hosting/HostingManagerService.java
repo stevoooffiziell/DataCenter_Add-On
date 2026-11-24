@@ -82,7 +82,6 @@ public final class HostingManagerService {
 
     public static HostingSnapshot snapshot(ServerLevel level, BlockPos manager, ServerPlayer player) {
         boolean connected = !netsAround(level, manager).isEmpty();
-        double ticksPerDay = 24.0 / MiningEra.fictionalHoursPerTick();
         List<HostingSnapshot.Rack> racks = new ArrayList<>();
         int foreign = 0;
         // per owner and product: customers and income on this network's racks
@@ -94,7 +93,7 @@ public final class HostingManagerService {
                 continue;
             }
             HostingProduct product = rack.getProduct();
-            long centsPerDay = Math.round(rack.getLastUsdCentsPerTick() * ticksPerDay);
+            long centsPerDay = centsPerDay(rack);
             racks.add(new HostingSnapshot.Rack(pos, product == null ? -1 : product.ordinal(), rack.getModeCustomers(),
                     rack.getModeCapacity(), centsPerDay, rack.getModeStatus(), rack.getHostingFill(),
                     licenceBound(product, rack, centsPerDay)));
@@ -108,7 +107,7 @@ public final class HostingManagerService {
         UUID account = DataCenterApi.accountOf(level, player.getUUID());
         HostingReputation reputation = HostingReputation.get(level, account);
         return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()), reputation.getUnlockedClass().ordinal(),
-                foreign, network(level, manager), List.copyOf(racks), segments(level, pools));
+                foreign, network(level, manager), List.copyOf(racks), segments(level, pools), ContractService.snapshot(level, account));
     }
 
     /**
@@ -117,10 +116,15 @@ public final class HostingManagerService {
      * applies with software enabled, to every shared offer but game servers) and cuts negative results
      * to zero, so a running rack whose servers each hold too few customers shows $0.
      */
-    private static boolean licenceBound(@Nullable HostingProduct product, HostingRackBlockEntity rack, long centsPerDay) {
+    public static boolean licenceBound(@Nullable HostingProduct product, HostingRackBlockEntity rack, long centsPerDay) {
         return product != null && product.mode() == HostingMode.SHARED && product != HostingProduct.SHARED_GAME
                 && com.example.datacenter.Config.SOFTWARE_ENABLED.get()
                 && rack.getModeStatus() == 0 && rack.getModeCustomers() >= 0.5 && centsPerDay <= 0;
+    }
+
+    /** A rack's income per in-game day in US cents, as the manager shows it. */
+    public static long centsPerDay(HostingRackBlockEntity rack) {
+        return Math.round(rack.getLastUsdCentsPerTick() * 24.0 / MiningEra.fictionalHoursPerTick());
     }
 
     /** Capacity and use of the manager's network, with the add-on's cable warnings. */

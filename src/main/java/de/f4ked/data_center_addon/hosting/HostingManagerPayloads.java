@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting;
 
+import com.example.datacenter.api.DataCenterApi;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.client.HostingManagerClient;
 import net.minecraft.core.BlockPos;
@@ -57,6 +58,24 @@ public final class HostingManagerPayloads {
         }
     }
 
+    /** Accept an offer or cancel a running contract, from the manager's Contracts tab. */
+    public record ContractChange(BlockPos manager, int contract, ContractService.Action action) implements CustomPacketPayload {
+        public static final Type<ContractChange> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(Data_center_addon.MODID, "hosting_contract"));
+        public static final StreamCodec<FriendlyByteBuf, ContractChange> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeBlockPos(c.manager);
+                    buf.writeVarInt(c.contract);
+                    buf.writeEnum(c.action);
+                },
+                buf -> new ContractChange(buf.readBlockPos(), buf.readVarInt(), buf.readEnum(ContractService.Action.class)));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar("1");
@@ -68,6 +87,13 @@ public final class HostingManagerPayloads {
                 if (player.level() instanceof ServerLevel level) {
                     sendSnapshot(player, level, payload.manager());
                 }
+            }
+        });
+        registrar.playToServer(ContractChange.TYPE, ContractChange.STREAM_CODEC, (payload, context) -> {
+            if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
+                    && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
+                ContractService.apply(level, DataCenterApi.accountOf(level, player.getUUID()), payload.contract(), payload.action());
+                sendSnapshot(player, level, payload.manager());
             }
         });
     }

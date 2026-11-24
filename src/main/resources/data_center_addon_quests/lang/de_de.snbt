@@ -39,7 +39,7 @@
 	quest.2796152E44FB6510.title: "2013"
 	quest.2806AE19A3C66782.quest_desc: ["Der Reiter &fÜbersicht&r: Kunden, Einnahmen pro Tag und Monat, Anzahl der Racks, Reputation und Kundenklasse.", "", "Der Balken &fNetz&r zeigt, wie viel der Netzkapazität genutzt wird. Er warnt vor Switches ohne Strom und zu langen Kabelsträngen."]
 	quest.2806AE19A3C66782.title: "Übersicht"
-	quest.29C231E37B49246A.quest_desc: ["Jeder Switch braucht seine &fechte Leistungsaufnahme&r in FE pro Tick, z. B. 30 FE/t beim Catalyst 2950 und 700 FE/t beim Spectrum SN4700.", "", "&cEin Switch ohne Strom unterbricht sein Netz.&r Der Hosting Manager warnt dich davor.", "Abschaltbar unter &7Config → Netzwerk → Switches brauchen Strom&r."]
+	quest.29C231E37B49246A.quest_desc: ["Jeder Switch braucht seine &fechte Leistungsaufnahme&r in FE pro Tick, z. B. 30 FE/t beim Catalyst 2950 und 700 FE/t beim Spectrum SN4700.", "", "&cEin Switch ohne Strom unterbricht sein Netz.&r Seine Status-LED blinkt rot, und der Hosting Manager warnt dich davor.", "Abschaltbar unter &7Config → Netzwerk → Switches brauchen Strom&r."]
 	quest.29C231E37B49246A.title: "Switches brauchen Strom"
 	quest.29D2D9172C141BD2.quest_desc: ["3D V-Cache: gestapelter Cache für Spiele.", "", "&7Besitze eins, um diesen Meilenstein abzuschließen."]
 	quest.29D2D9172C141BD2.quest_subtitle: "20.04.2022 · $449"
@@ -47,6 +47,8 @@
 	quest.2A3E577058405A40.quest_desc: ["Blackwell für den Desktop.", "", "&7Besitze eins, um diesen Meilenstein abzuschließen."]
 	quest.2A3E577058405A40.quest_subtitle: "30.01.2025 · $1.999"
 	quest.2A3E577058405A40.title: "NVIDIA GeForce RTX 5090"
+	quest.2ADA2F3196A10406.quest_desc: ["Der Reiter &fAufträge&r bietet Angebote von Kunden: Halte eine Zahl von Plätzen eines Produkts für eine Zahl von Tagen &ffrei&r.", "", "Ein Tag zählt, wenn die Plätze 80 % der Zeit frei waren, und wird bezahlt. Sonst gibt es eine &cVerwarnung&r; bei drei platzt der Auftrag, mit Strafe und Reputationsverlust.", "Wer durchhält, bekommt einen &aBonus&r und Reputation. Größere Kunden kommen mit deiner Kundenklasse."]
+	quest.2ADA2F3196A10406.title: "Aufträge"
 	quest.2B4C955AFF27BBA1.quest_desc: ["&6Intel-CPUs", "&701.06. &fIntel Core i7-4790K &8$339", "&729.08. &fIntel Core i7-5960X Extreme Edition &8$999", "", "&6Server-CPUs", "&708.09. &fIntel Xeon E5-2699 v3 &8$4.115", "", "&6NVIDIA-Grafikkarten", "&718.02. &fNVIDIA GeForce GTX 750 Ti &8$149", "&718.09. &fNVIDIA GeForce GTX 970 &8$329", "&718.09. &fNVIDIA GeForce GTX 980 &8$549", "", "&6Radeon- & Arc-Grafikkarten", "&721.04. &fAMD Radeon R9 295X2 &8$1.499", "", "&6Rechenzentrums-Beschleuniger", "&717.11. &fNVIDIA Tesla K80 &8$5.000", "", "&6Mainboards", "&729.08. &fASUS X99-Deluxe &8$399", "&708.09. &fSupermicro X10DRi &8$459", "", "&6Mining-Boards", "&701.01. &fASRock H61 Pro BTC &8$69", "&701.01. &fASRock H81 Pro BTC &8$75", "", "&6Arbeitsspeicher", "&729.08. &fCrucial 16GB DDR4-2133 &8$249", "&708.09. &fSamsung 16GB DDR4 ECC RDIMM &8$249", "", "&6Speicher", "&701.01. &fWestern Digital Red 4TB &8$190", "&701.07. &fSamsung 850 PRO 512GB &8$400", "&701.12. &fSamsung 850 EVO 500GB &8$295", "", "&6Netzteile", "&701.01. &fSupermicro PWS-2K04A 2000W &8$175", "&701.03. &fCorsair AX1500i &8$449"]
 	quest.2B4C955AFF27BBA1.quest_subtitle: "19 Neuerscheinungen"
 	quest.2B4C955AFF27BBA1.title: "2014"

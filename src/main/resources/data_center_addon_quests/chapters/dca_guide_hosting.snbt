@@ -173,6 +173,36 @@
 		{
 			dependencies: ["615E03E0E73336B0"]
 			icon: {
+				id: "minecraft:writable_book"
+			}
+			id: "2ADA2F3196A10406"
+			rewards: [
+				{
+					id: "7C2C7A8E1EFA8D1E"
+					item: {
+						components: {
+							"datacenter:payment_cents": 5000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "46DDAEC77B9E035A"
+					type: "checkmark"
+				}
+			]
+			x: 8.75d
+			y: 1.25d
+		}
+		{
+			dependencies: ["2ADA2F3196A10406"]
+			icon: {
 				id: "data_center_addon:powered_server_panel"
 			}
 			id: "222027F73A08570E"
@@ -202,8 +232,8 @@
 					type: "item"
 				}
 			]
-			x: 8.75d
-			y: 1.25d
+			x: 10.5d
+			y: 0.0d
 		}
 	]
 }

@@ -7,6 +7,7 @@ import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingProduct;
+import de.f4ked.data_center_addon.hosting.ContractService;
 import de.f4ked.data_center_addon.hosting.HostingManagerMenu;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingManagerService;
@@ -37,14 +38,14 @@ import java.util.Map;
  * {@link #MAX_W}x{@link #MAX_H}); table columns are placed as fractions of its width.
  */
 public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
-    private static final int MIN_W = 360;
+    private static final int MIN_W = 380;
     private static final int MAX_W = 520;
     private static final int MIN_H = 240;
     private static final int MAX_H = 320;
     private static final int SCREEN_MARGIN = 16;
     private static final int PAD = 10;
     private static final int HEADER_H = 28;
-    private static final int TAB_W = 76;
+    private static final int TAB_W = 64;
     private static final int TAB_H = 16;
     private static final int ROW_H = 15;
     private static final int TEXT_DY = 4;
@@ -56,12 +57,18 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     private static final int ON_ACCENT = 0xFF101418;
     private static final int HEADER_LINE = 0x605AB0E0;
 
-    private enum Tab { OVERVIEW, SEGMENTS, RACKS }
+    private enum Tab { OVERVIEW, SEGMENTS, RACKS, CONTRACTS }
 
     private Tab tab = Tab.OVERVIEW;
     private int scroll;
     @Nullable
     private BlockPos selected;
+    /** Contract whose cancel button was clicked once, and until when the second click confirms it. */
+    private int confirmCancel = -1;
+    private long confirmUntil;
+    /** Tooltip of the last frame, drawn on top of everything in {@link #render}. */
+    @Nullable
+    private List<Component> tooltip;
     /** Clickable areas of the last frame. */
     private final List<Button> buttons = new ArrayList<>();
 
@@ -96,8 +103,17 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     }
 
     @Override
+    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+        super.render(g, mouseX, mouseY, partialTick);
+        if (tooltip != null) {
+            g.renderComponentTooltip(font, tooltip, mouseX, mouseY);
+        }
+    }
+
+    @Override
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
         buttons.clear();
+        tooltip = null;
         int x = leftPos, y = topPos, w = imageWidth, h = imageHeight;
         TechPanel.background(g, x, y, w, h);
         g.drawString(font, title, x + PAD + 2, y + 10, TechPanel.TEXT, true);
@@ -128,7 +144,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             message(g, cx, cy, cw, ch, Component.translatable("data_center_addon.hosting.not_connected"));
             return;
         }
-        if (s.racks().isEmpty()) {
+        if (s.racks().isEmpty() && tab != Tab.CONTRACTS) {
             message(g, cx, cy, cw, ch, s.foreignRacks() > 0
                     ? Component.translatable("data_center_addon.hosting.only_foreign", s.foreignRacks())
                     : Component.translatable("data_center_addon.hosting.no_racks"));
@@ -139,6 +155,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             case OVERVIEW -> overview(g, s, ix, iy, iw, ih);
             case SEGMENTS -> segments(g, s, ix, iy, iw, ih, mouseX, mouseY);
             case RACKS -> racks(g, s, ix, iy, iw, ih, mouseX, mouseY);
+            case CONTRACTS -> contracts(g, s, ix, iy, iw, ih, mouseX, mouseY);
         }
     }
 
@@ -349,6 +366,151 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         }
     }
 
+    // ------------------------------------------------------------------ contracts
+
+    private void contracts(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
+        List<HostingSnapshot.Contract> active = s.activeContracts();
+        List<HostingSnapshot.Contract> offers = s.offers();
+        if (active.isEmpty() && offers.isEmpty()) {
+            message(g, x, y, w, h, Component.translatable("data_center_addon.contract.none"));
+            return;
+        }
+        int buttonW = 58;
+        int[] col = columns(x, w - buttonW - 6, 0, 0.27, 0.53, 0.75, 0.88);
+        int noteH = 20;
+        int ty = y;
+
+        // running contracts
+        g.drawString(font, Component.translatable("data_center_addon.contract.active", active.size(), ContractService.MAX_ACTIVE),
+                x, ty + TEXT_DY, TechPanel.ACCENT, false);
+        ty += ROW_H;
+        g.fill(x, ty, x + w, ty + 1, HEADER_LINE);
+        ty += 2;
+        if (active.isEmpty()) {
+            g.drawString(font, trc("no_active"), x, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
+            ty += ROW_H;
+        }
+        for (int i = 0; i < active.size(); i++) {
+            HostingSnapshot.Contract c = active.get(i);
+            if (inside(mouseX, mouseY, x, ty, w - buttonW - 6, ROW_H)) {
+                g.fill(x - 4, ty, x + w + 4, ty + ROW_H, ROW_HOVER);
+                tooltip = contractTooltip(c);
+            } else {
+                stripe(g, x, ty, w, i);
+            }
+            text(g, clientName(c.client()).getString(), col, 0, ty, TechPanel.TEXT);
+            text(g, c.accounts() + "× " + productName(c.product()).getString(), col, 1, ty, TechPanel.TEXT);
+            coverage(g, c, col[2], ty, col[3] - col[2] - 8);
+            text(g, c.daysDone() + " / " + c.days() + " " + trc("days_short") + "  " + strikes(c.strikes()), col, 3, ty,
+                    c.strikes() > 0 ? TechPanel.WARN : TechPanel.TEXT_MUTED);
+            text(g, GuiText.compactUsd(c.centsPerDay()), col, 4, ty, TechPanel.GOOD);
+            boolean confirming = confirmCancel == c.id() && System.currentTimeMillis() < confirmUntil;
+            smallButton(g, x + w - buttonW, ty + 1, buttonW, trc(confirming ? "confirm" : "cancel"),
+                    confirming ? TechPanel.DANGER : TechPanel.SLOT_BG, mouseX, mouseY, () -> {
+                        if (confirmCancel == c.id() && System.currentTimeMillis() < confirmUntil) {
+                            confirmCancel = -1;
+                            sendContract(c, ContractService.Action.CANCEL);
+                        } else {
+                            confirmCancel = c.id();
+                            confirmUntil = System.currentTimeMillis() + 3000;
+                        }
+                    });
+            ty += ROW_H;
+        }
+
+        // offers
+        ty += 6;
+        g.drawString(font, trc("offers"), x, ty + TEXT_DY, TechPanel.ACCENT, false);
+        ty += ROW_H;
+        g.fill(x, ty, x + w, ty + 1, HEADER_LINE);
+        ty += 2;
+        boolean full = active.size() >= ContractService.MAX_ACTIVE;
+        for (int i = 0; i < offers.size() && ty + ROW_H <= y + h - noteH; i++) {
+            HostingSnapshot.Contract c = offers.get(i);
+            if (inside(mouseX, mouseY, x, ty, w - buttonW - 6, ROW_H)) {
+                g.fill(x - 4, ty, x + w + 4, ty + ROW_H, ROW_HOVER);
+                tooltip = contractTooltip(c);
+            } else {
+                stripe(g, x, ty, w, i);
+            }
+            text(g, clientName(c.client()).getString(), col, 0, ty, TechPanel.TEXT);
+            text(g, c.accounts() + "× " + productName(c.product()).getString(), col, 1, ty, TechPanel.TEXT);
+            coverage(g, c, col[2], ty, col[3] - col[2] - 8);
+            text(g, c.days() + " " + trc("days_short"), col, 3, ty, TechPanel.TEXT_MUTED);
+            text(g, GuiText.compactUsd(c.centsPerDay()), col, 4, ty, TechPanel.GOOD);
+            if (full) {
+                smallButton(g, x + w - buttonW, ty + 1, buttonW, trc("full"), 0xFF1A2028, mouseX, mouseY, null);
+            } else {
+                smallButton(g, x + w - buttonW, ty + 1, buttonW, trc("accept"), TechPanel.SLOT_BG, mouseX, mouseY,
+                        () -> sendContract(c, ContractService.Action.ACCEPT));
+            }
+            ty += ROW_H;
+        }
+
+        List<FormattedCharSequence> note = font.split(Component.translatable("data_center_addon.contract.note"), w);
+        for (int i = 0; i < note.size() && i < 2; i++) {
+            g.drawString(font, note.get(i), x, y + h - noteH + i * 10, TechPanel.TEXT_MUTED, false);
+        }
+    }
+
+    /** "free / needed" with a bar: green when the free places cover the contracts, amber when they do not. */
+    private void coverage(GuiGraphics g, HostingSnapshot.Contract c, int x, int y, int w) {
+        float ratio = c.required() <= 0 ? 1 : (float) Math.min(1.0, c.free() / c.required());
+        int barW = Math.max(16, w - 52);
+        TechPanel.bar(g, x, y + 3, barW, 9, ratio, c.covered() ? TechPanel.GOOD : TechPanel.WARN);
+        String label = GuiText.compactNumber((long) Math.floor(c.free())) + "/" + c.required();
+        g.drawString(font, GuiText.fit(font, label, w - barW - 4), x + barW + 4, y + TEXT_DY,
+                c.covered() ? TechPanel.TEXT_MUTED : TechPanel.WARN, false);
+    }
+
+    private List<Component> contractTooltip(HostingSnapshot.Contract c) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(clientName(c.client()).copy().withStyle(net.minecraft.ChatFormatting.AQUA));
+        lines.add(Component.translatable("data_center_addon.contract.tip.wants", c.accounts(), productName(c.product()), c.days()));
+        lines.add(Component.translatable("data_center_addon.contract.tip.free", GuiText.compactNumber((long) Math.floor(c.free())),
+                c.required()).withStyle(c.covered() ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.GOLD));
+        lines.add(Component.translatable("data_center_addon.contract.tip.pay", GuiText.compactUsd(c.centsPerDay()),
+                GuiText.compactUsd(c.bonusCents()), c.reputation()).withStyle(net.minecraft.ChatFormatting.GREEN));
+        lines.add(Component.translatable("data_center_addon.contract.tip.penalty", GuiText.compactUsd(c.penaltyCents()),
+                c.reputation() * 2, ContractService.MAX_STRIKES).withStyle(net.minecraft.ChatFormatting.RED));
+        if (c.offer()) {
+            lines.add(Component.translatable("data_center_addon.contract.tip.expires", c.expiresIn()).withStyle(net.minecraft.ChatFormatting.GRAY));
+        } else {
+            lines.add(Component.translatable("data_center_addon.contract.tip.today", Math.round(c.metToday() * 100),
+                    ContractService.DAY_SHARE_PERCENT).withStyle(net.minecraft.ChatFormatting.GRAY));
+        }
+        return lines;
+    }
+
+    private static String strikes(int strikes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ContractService.MAX_STRIKES; i++) {
+            sb.append(i < strikes ? '●' : '○');
+        }
+        return sb.toString();
+    }
+
+    private static Component clientName(int client) {
+        return Component.translatable("data_center_addon.contract.client." + client);
+    }
+
+    private void sendContract(HostingSnapshot.Contract c, ContractService.Action action) {
+        PacketDistributor.sendToServer(new HostingManagerPayloads.ContractChange(menu.managerPos(), c.id(), action));
+    }
+
+    /** A small labelled button; {@code action == null} draws it disabled. */
+    private void smallButton(GuiGraphics g, int x, int y, int w, String label, int background, int mouseX, int mouseY,
+                             @Nullable Runnable action) {
+        int h = ROW_H - 2;
+        boolean hover = action != null && inside(mouseX, mouseY, x, y, w, h);
+        g.fill(x, y, x + w, y + h, hover ? TechPanel.ACCENT : background);
+        g.drawCenteredString(font, GuiText.fit(font, label, w - 6), x + w / 2, y + 3,
+                hover ? ON_ACCENT : action == null ? TechPanel.TEXT_MUTED : TechPanel.TEXT);
+        if (action != null) {
+            buttons.add(new Button(x, y, w, h, action));
+        }
+    }
+
     /** "◀ value ▶" with two clickable arrows. */
     private void stepper(GuiGraphics g, int x, int y, int w, String value, int mouseX, int mouseY, Runnable previous, Runnable next) {
         int size = 16;
@@ -436,6 +598,10 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
 
     private static String percent(float share) {
         return String.format(Locale.ROOT, "%.1f %%", share * 100);
+    }
+
+    private static String trc(String key) {
+        return Component.translatable("data_center_addon.contract." + key).getString();
     }
 
     private static String tr(String key) {

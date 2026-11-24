@@ -38,6 +38,8 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_PARTS;
     private static final ModConfigSpec.ConfigValue<List<? extends String>> HIDDEN_CATEGORIES;
     private static final ModConfigSpec.DoubleValue HOSTING_STORAGE_BOOST;
+    private static final ModConfigSpec.BooleanValue CONTRACTS_ENABLED;
+    private static final ModConfigSpec.DoubleValue CONTRACT_PAY;
     private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_NETWORK;
     private static final ModConfigSpec.BooleanValue SWITCHES_NEED_POWER;
     private static final ModConfigSpec.BooleanValue CABLE_REACH_LIMITS;
@@ -66,6 +68,13 @@ public final class Config {
                         "(more storage to rent out in dedicated mode, more shared capacity in shared mode).",
                         "1.0 turns the boost off.")
                 .defineInRange("storageBoost", 1.10, 1.0, 2.0);
+        CONTRACTS_ENABLED = builder
+                .comment("Hosting contracts in the Hosting Manager: clients that want places of one product kept free",
+                        "for a number of in-game days. Paid daily, with a bonus at the end and a penalty if they fail.")
+                .define("contracts", true);
+        CONTRACT_PAY = builder
+                .comment("Multiplier for what contracts pay (daily pay, bonus and penalty).")
+                .defineInRange("contractPayMultiplier", 1.0, 0.1, 10.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -133,6 +142,14 @@ public final class Config {
 
     public static boolean installQuests() {
         return !SPEC.isLoaded() || INSTALL_QUESTS.get();
+    }
+
+    public static boolean contractsEnabled() {
+        return !SPEC.isLoaded() || CONTRACTS_ENABLED.get();
+    }
+
+    public static double contractPayMultiplier() {
+        return SPEC.isLoaded() ? CONTRACT_PAY.get() : 1.0;
     }
 
     public static double hostingStorageBoost() {

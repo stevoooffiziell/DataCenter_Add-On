@@ -17,9 +17,36 @@ import java.util.List;
  * @param network     state of the compute network the manager is plugged into
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
-                              Network network, List<Rack> racks, List<Segment> segments) {
+                              Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts) {
 
-    public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of());
+    public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of());
+
+    /**
+     * A running hosting contract or an offer ({@link ContractService}).
+     *
+     * @param client    index of the client's name
+     * @param product   {@code HostingProduct} ordinal
+     * @param accounts  places the client wants kept free
+     * @param free      places of the product free now (capacity minus customers of all the account's racks)
+     * @param required  places all running contracts of the product need (for an offer: with it)
+     * @param metToday  share of today the places were free (running contracts)
+     * @param expiresIn days an offer stays open
+     */
+    public record Contract(int id, boolean offer, int client, int product, int accounts, int days, int daysDone, int strikes,
+                           long centsPerDay, long bonusCents, long penaltyCents, int reputation, double free, int required,
+                           float metToday, int expiresIn) {
+        public boolean covered() {
+            return free >= required;
+        }
+    }
+
+    public List<Contract> activeContracts() {
+        return contracts.stream().filter(c -> !c.offer).toList();
+    }
+
+    public List<Contract> offers() {
+        return contracts.stream().filter(Contract::offer).toList();
+    }
 
     /**
      * The compute network: what it delivers of what it could, and what slows it down.
@@ -107,6 +134,25 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(g.customers);
                     buf.writeVarLong(g.centsPerDay);
                 }
+                buf.writeVarInt(s.contracts.size());
+                for (Contract c : s.contracts) {
+                    buf.writeVarInt(c.id);
+                    buf.writeBoolean(c.offer);
+                    buf.writeVarInt(c.client);
+                    buf.writeVarInt(c.product);
+                    buf.writeVarInt(c.accounts);
+                    buf.writeVarInt(c.days);
+                    buf.writeVarInt(c.daysDone);
+                    buf.writeVarInt(c.strikes);
+                    buf.writeVarLong(c.centsPerDay);
+                    buf.writeVarLong(c.bonusCents);
+                    buf.writeVarLong(c.penaltyCents);
+                    buf.writeVarInt(c.reputation);
+                    buf.writeDouble(c.free);
+                    buf.writeVarInt(c.required);
+                    buf.writeFloat(c.metToday);
+                    buf.writeVarInt(c.expiresIn);
+                }
             },
             buf -> {
                 boolean connected = buf.readBoolean();
@@ -125,6 +171,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 for (int i = 0; i < segmentCount; i++) {
                     segments.add(new Segment(buf.readVarInt(), buf.readDouble(), buf.readVarLong()));
                 }
-                return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks), List.copyOf(segments));
+                int contractCount = Math.min(buf.readVarInt(), 64);
+                List<Contract> contracts = new ArrayList<>(contractCount);
+                for (int i = 0; i < contractCount; i++) {
+                    contracts.add(new Contract(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
+                            buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
+                            buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt()));
+                }
+                return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
+                        List.copyOf(segments), List.copyOf(contracts));
             });
 }
