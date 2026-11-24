@@ -398,5 +398,6 @@
   "data_center_addon.configuration.prepayDiscount": "Prepayment discount",
   "data_center_addon.configuration.prepayDiscount.tooltip": "Discount prepaying customers get.",
   "data_center_addon.configuration.serviceTickets": "Service tickets",
-  "data_center_addon.configuration.serviceTickets.tooltip": "Clients ask you to look at one of your racks. Right-clicking it before the deadline pays."
+  "data_center_addon.configuration.serviceTickets.tooltip": "Clients ask you to look at one of your racks. Right-clicking it before the deadline pays.",
+  "data_center_addon.hosting.racks.tip.customers": "Customers: %s + %s places from contracts (paying %s per game day, included)"
 }

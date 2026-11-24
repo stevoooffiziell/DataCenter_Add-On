@@ -398,5 +398,6 @@
   "data_center_addon.configuration.prepayDiscount": "Rabatt bei Vorkasse",
   "data_center_addon.configuration.prepayDiscount.tooltip": "Rabatt, den vorauszahlende Kunden bekommen.",
   "data_center_addon.configuration.serviceTickets": "Service-Tickets",
-  "data_center_addon.configuration.serviceTickets.tooltip": "Kunden bitten darum, nach einem Rack zu sehen. Rechtsklick auf das Rack vor Fristende zahlt."
+  "data_center_addon.configuration.serviceTickets.tooltip": "Kunden bitten darum, nach einem Rack zu sehen. Rechtsklick auf das Rack vor Fristende zahlt.",
+  "data_center_addon.hosting.racks.tip.customers": "Kunden: %s + %s Plätze aus Aufträgen (zahlen %s pro Spieltag, eingerechnet)"
 }
