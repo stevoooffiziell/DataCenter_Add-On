@@ -48,6 +48,21 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
         return contracts.stream().filter(Contract::offer).toList();
     }
 
+    /** What the running contracts pay per in-game day (paid for every day their places are kept free). */
+    public long contractCentsPerDay() {
+        return activeContracts().stream().mapToLong(Contract::centsPerDay).sum();
+    }
+
+    /** Places the running contracts keep reserved. */
+    public int contractAccounts() {
+        return activeContracts().stream().mapToInt(Contract::accounts).sum();
+    }
+
+    /** Income per in-game day of the racks plus the running contracts. */
+    public long incomeCentsPerDay() {
+        return totalCentsPerDay() + contractCentsPerDay();
+    }
+
     /**
      * The compute network: what it delivers of what it could, and what slows it down.
      *

@@ -171,7 +171,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     // ------------------------------------------------------------------ overview
 
     private void overview(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h) {
-        long perDay = s.totalCentsPerDay();
+        long perDay = s.incomeCentsPerDay();
         String[][] cards = {
                 {tr("overview.customers"), GuiText.compactNumber(Math.round(s.totalCustomers()))},
                 {tr("overview.per_day"), GuiText.compactUsd(perDay)},
@@ -253,6 +253,18 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             text(g, GuiText.compactUsd((long) sum[3]), col, 4, ty, TechPanel.GOOD);
             ty += ROW_H;
         }
+        // running contracts: the places they reserve and what they pay
+        List<HostingSnapshot.Contract> active = s.activeContracts();
+        if (!active.isEmpty() && ty + ROW_H <= y + h) {
+            stripe(g, x, ty, w, row);
+            text(g, Component.translatable("data_center_addon.hosting.overview.contracts", active.size()).getString(), col, 0, ty,
+                    TechPanel.ACCENT);
+            text(g, "—", col, 1, ty, TechPanel.TEXT_MUTED);
+            text(g, GuiText.compactNumber(s.contractAccounts()), col, 2, ty, TechPanel.TEXT);
+            long covered = active.stream().filter(HostingSnapshot.Contract::covered).count();
+            loadBar(g, col[3], ty + 3, col[4] - col[3] - 12, (float) covered / active.size());
+            text(g, GuiText.compactUsd(s.contractCentsPerDay()), col, 4, ty, TechPanel.GOOD);
+        }
     }
 
     // ------------------------------------------------------------------ segments
@@ -260,15 +272,26 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     private void segments(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
         int[] col = columns(x, w, 0, 0.40, 0.56, 0.84);
         header(g, x, y, w, col, "column.segment", "column.customers", "column.share", "column.per_day");
-        if (s.segments().isEmpty()) {
+        // customer segments of the racks, then one row per running contract (its client and reserved places)
+        record Row(String name, double customers, long centsPerDay, boolean contract) {
+        }
+        List<Row> list = new ArrayList<>();
+        for (HostingSnapshot.Segment segment : s.segments()) {
+            CustomerSegment kind = CustomerSegment.values()[Mth.clamp(segment.segment(), 0, CustomerSegment.values().length - 1)];
+            list.add(new Row(Component.translatable(kind.translationKey()).getString(), segment.customers(), segment.centsPerDay(), false));
+        }
+        for (HostingSnapshot.Contract c : s.activeContracts()) {
+            list.add(new Row(Component.translatable("data_center_addon.hosting.segments.contract", clientName(c.client())).getString(),
+                    c.accounts(), c.centsPerDay(), true));
+        }
+        if (list.isEmpty()) {
             message(g, x, y + ROW_H, w, h - ROW_H, Component.translatable("data_center_addon.hosting.no_segments"));
             return;
         }
         double total = 0;
-        for (HostingSnapshot.Segment segment : s.segments()) {
-            total += segment.customers();
+        for (Row r : list) {
+            total += r.customers;
         }
-        List<HostingSnapshot.Segment> list = s.segments();
         int noteH = 14;
         int top = y + ROW_H + 2;
         int visible = (h - ROW_H - 2 - noteH) / ROW_H;
@@ -276,15 +299,14 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         int ty = top;
         int shareBarW = col[3] - col[2] - 56;
         for (int i = scroll; i < list.size() && i < scroll + visible; i++) {
-            HostingSnapshot.Segment segment = list.get(i);
-            CustomerSegment kind = CustomerSegment.values()[Mth.clamp(segment.segment(), 0, CustomerSegment.values().length - 1)];
-            float share = total <= 0 ? 0 : (float) (segment.customers() / total);
+            Row r = list.get(i);
+            float share = total <= 0 ? 0 : (float) (r.customers / total);
             stripe(g, x, ty, w, i);
-            text(g, Component.translatable(kind.translationKey()).getString(), col, 0, ty, TechPanel.TEXT);
-            text(g, GuiText.compactNumber(Math.round(segment.customers())), col, 1, ty, TechPanel.TEXT);
-            TechPanel.bar(g, col[2], ty + 3, shareBarW, 9, share, TechPanel.VIOLET);
+            text(g, r.name, col, 0, ty, r.contract ? TechPanel.ACCENT : TechPanel.TEXT);
+            text(g, GuiText.compactNumber(Math.round(r.customers)), col, 1, ty, TechPanel.TEXT);
+            TechPanel.bar(g, col[2], ty + 3, shareBarW, 9, share, r.contract ? TechPanel.ACCENT : TechPanel.VIOLET);
             g.drawString(font, percent(share), col[2] + shareBarW + 6, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
-            text(g, GuiText.compactUsd(segment.centsPerDay()), col, 3, ty, TechPanel.GOOD);
+            text(g, GuiText.compactUsd(r.centsPerDay), col, 3, ty, TechPanel.GOOD);
             ty += ROW_H;
         }
         scrollbar(g, x + w + 3, top, visible * ROW_H, list.size(), visible);

@@ -39,7 +39,7 @@ public final class ManagerProvider implements IBlockComponentProvider, IServerDa
         tag.putBoolean("connected", s.connected());
         tag.putInt("racks", s.racks().size());
         tag.putLong("customers", Math.round(s.totalCustomers()));
-        tag.putLong("cents", s.totalCentsPerDay());
+        tag.putLong("cents", s.incomeCentsPerDay());
         tag.putInt("licence", s.licenceBoundRacks());
         tag.putInt("contracts", s.activeContracts().size());
         tag.putInt("uncovered", (int) s.activeContracts().stream().filter(c -> !c.covered()).count());
