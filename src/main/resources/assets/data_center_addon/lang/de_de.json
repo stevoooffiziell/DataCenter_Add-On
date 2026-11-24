@@ -359,5 +359,8 @@
   "data_center_addon.startup.prepay.customers": "Kunden mit laufendem Jahrestarif: %s",
   "data_center_addon.hosting.overview.per_hour": "$ / Stunde",
   "data_center_addon.hosting.overview.bonus": "inkl. Startbonus %s: +%s pro Stunde (+%s pro Spieltag)",
-  "data_center_addon.hosting.overview.time_note": "Stunde = Echtzeit wie im Hosting Rack · Spieltag und Monat = Spielzeit"
+  "data_center_addon.hosting.overview.time_note": "Stunde = Echtzeit wie im Hosting Rack · Spieltag und Monat = Spielzeit",
+  "data_center_addon.hosting.racks.tip.places": "Angebotene Plätze: %s (Füllgrad %s %%)",
+  "data_center_addon.hosting.racks.tip.capacity": "Hardware-Kapazität: %s Kunden",
+  "data_center_addon.hosting.racks.tip.overbooked": "Überbucht: Kunden über der Kapazität zahlen weniger und beschweren sich."
 }

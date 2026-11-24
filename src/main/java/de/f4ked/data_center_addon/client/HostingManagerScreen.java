@@ -370,8 +370,23 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             BlockPos p = rack.pos();
             text(g, p.getX() + ", " + p.getY() + ", " + p.getZ(), col, 0, ty, TechPanel.TEXT_MUTED);
             text(g, productName(rack.product()).getString(), col, 1, ty, TechPanel.TEXT);
-            text(g, GuiText.compactNumber(Math.round(rack.customers())) + " / " + GuiText.compactNumber(Math.round(rack.capacity())),
-                    col, 2, ty, TechPanel.TEXT);
+            // customers / places offered (hardware capacity × fill); the capacity itself is in the tooltip
+            boolean fillable = hasFill(rack.product());
+            double places = fillable ? rack.capacity() * rack.fill() / 100.0 : rack.capacity();
+            text(g, GuiText.compactNumber(Math.round(rack.customers())) + " / " + GuiText.compactNumber(Math.round(places)),
+                    col, 2, ty, fillable && rack.fill() > 100 ? TechPanel.WARN : TechPanel.TEXT);
+            if (fillable && inside(mouseX, mouseY, x, ty, w, ROW_H)) {
+                List<Component> lines = new ArrayList<>();
+                lines.add(Component.translatable("data_center_addon.hosting.racks.tip.places", GuiText.compactNumber(Math.round(places)),
+                        rack.fill()));
+                lines.add(Component.translatable("data_center_addon.hosting.racks.tip.capacity",
+                        GuiText.compactNumber(Math.round(rack.capacity()))).withStyle(net.minecraft.ChatFormatting.GRAY));
+                if (rack.fill() > 100) {
+                    lines.add(Component.translatable("data_center_addon.hosting.racks.tip.overbooked")
+                            .withStyle(net.minecraft.ChatFormatting.GOLD));
+                }
+                tooltip = lines;
+            }
             text(g, percent(total <= 0 ? 0 : (float) (rack.customers() / total)), col, 3, ty, TechPanel.TEXT_MUTED);
             text(g, GuiText.compactUsd(rack.centsPerDay()), col, 4, ty, TechPanel.GOOD);
             Component status = rack.licenceBound()
