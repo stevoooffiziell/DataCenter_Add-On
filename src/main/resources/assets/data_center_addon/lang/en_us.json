@@ -362,5 +362,6 @@
   "data_center_addon.hosting.overview.time_note": "Hour = real time, as in the Hosting Rack · game day and month = game time",
   "data_center_addon.hosting.racks.tip.places": "Places offered: %s (fill %s %%)",
   "data_center_addon.hosting.racks.tip.capacity": "Hardware capacity: %s customers",
-  "data_center_addon.hosting.racks.tip.overbooked": "Overbooked: customers above the capacity pay less and complain."
+  "data_center_addon.hosting.racks.tip.overbooked": "Overbooked: customers above the capacity pay less and complain.",
+  "data_center_addon.hosting.overview.contract_places": "+%s places from running contracts, paying %s per game day (included in the total)"
 }

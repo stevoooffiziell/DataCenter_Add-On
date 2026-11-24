@@ -258,13 +258,20 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         int[] col = columns(x, w, 0, 0.40, 0.52, 0.66, 0.86);
         header(g, x, ty, w, col, "column.product", "column.racks", "column.customers", "column.load", "column.per_day");
         ty += ROW_H + 2;
+        // per product: racks, customers, capacity, income; running contracts count with their product
+        // (they use its places): places reserved and pay, shown as "+n" in blue
         Map<Integer, double[]> byProduct = new LinkedHashMap<>();
         for (HostingSnapshot.Rack rack : s.racks()) {
-            double[] sum = byProduct.computeIfAbsent(rack.product(), p -> new double[4]);
+            double[] sum = byProduct.computeIfAbsent(rack.product(), p -> new double[6]);
             sum[0]++;
             sum[1] += rack.customers();
             sum[2] += rack.capacity();
             sum[3] += rack.centsPerDay();
+        }
+        for (HostingSnapshot.Contract c : s.activeContracts()) {
+            double[] sum = byProduct.computeIfAbsent(c.product(), p -> new double[6]);
+            sum[4] += c.accounts();
+            sum[5] += c.centsPerDay();
         }
         int row = 0;
         for (Map.Entry<Integer, double[]> entry : byProduct.entrySet()) {
@@ -275,22 +282,19 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             stripe(g, x, ty, w, row++);
             text(g, productName(entry.getKey()).getString(), col, 0, ty, TechPanel.TEXT);
             text(g, Integer.toString((int) sum[0]), col, 1, ty, TechPanel.TEXT);
-            text(g, GuiText.compactNumber(Math.round(sum[1])), col, 2, ty, TechPanel.TEXT);
-            loadBar(g, col[3], ty + 3, col[4] - col[3] - 12, sum[2] <= 0 ? 0 : (float) (sum[1] / sum[2]));
-            text(g, GuiText.compactUsd((long) sum[3]), col, 4, ty, TechPanel.GOOD);
+            String customers = GuiText.compactNumber(Math.round(sum[1]));
+            g.drawString(font, customers, col[2], ty + TEXT_DY, TechPanel.TEXT, false);
+            if (sum[4] > 0) {
+                g.drawString(font, " + " + GuiText.compactNumber(Math.round(sum[4])), col[2] + font.width(customers), ty + TEXT_DY,
+                        TechPanel.ACCENT, false);
+                if (inside(mouseX, mouseY, col[2], ty, col[3] - col[2], ROW_H)) {
+                    tooltip = List.of(Component.translatable("data_center_addon.hosting.overview.contract_places",
+                            GuiText.compactNumber(Math.round(sum[4])), GuiText.compactUsd((long) sum[5])));
+                }
+            }
+            loadBar(g, col[3], ty + 3, col[4] - col[3] - 12, sum[2] <= 0 ? 0 : (float) ((sum[1] + sum[4]) / sum[2]));
+            text(g, GuiText.compactUsd((long) (sum[3] + sum[5])), col, 4, ty, TechPanel.GOOD);
             ty += ROW_H;
-        }
-        // running contracts: the places they reserve and what they pay
-        List<HostingSnapshot.Contract> active = s.activeContracts();
-        if (!active.isEmpty() && ty + ROW_H <= y + h) {
-            stripe(g, x, ty, w, row);
-            text(g, Component.translatable("data_center_addon.hosting.overview.contracts", active.size()).getString(), col, 0, ty,
-                    TechPanel.ACCENT);
-            text(g, "—", col, 1, ty, TechPanel.TEXT_MUTED);
-            text(g, GuiText.compactNumber(s.contractAccounts()), col, 2, ty, TechPanel.TEXT);
-            long covered = active.stream().filter(HostingSnapshot.Contract::covered).count();
-            loadBar(g, col[3], ty + 3, col[4] - col[3] - 12, (float) covered / active.size());
-            text(g, GuiText.compactUsd(s.contractCentsPerDay()), col, 4, ty, TechPanel.GOOD);
         }
     }
 
