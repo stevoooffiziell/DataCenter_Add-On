@@ -1,6 +1,7 @@
 package de.f4ked.data_center_addon.hosting.startup;
 
 import com.example.datacenter.api.DataCenterApi;
+import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
 import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
@@ -42,19 +43,24 @@ final class ServiceTickets {
     private ServiceTickets() {
     }
 
-    /** Ends one in-game day: drops expired tickets, maybe opens a new one. */
-    static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day) {
+    /**
+     * Ends one in-game day: drops expired tickets, maybe opens a new one. Days caught up after a time
+     * skip ({@code today} false) open no tickets and send no messages.
+     */
+    static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day, boolean today) {
         MinecraftServer server = level.getServer();
         for (Iterator<StartupBook.Ticket> it = a.tickets.iterator(); it.hasNext(); ) {
             StartupBook.Ticket ticket = it.next();
             if (ticket.lastDay < day) {
                 it.remove();
-                OwnerMessages.toOwner(server, id, Component.translatable("data_center_addon.startup.msg.ticket_expired",
-                        ticket.pos.getX(), ticket.pos.getY(), ticket.pos.getZ()).withStyle(ChatFormatting.GRAY));
+                if (today) {
+                    OwnerMessages.toOwner(server, id, Component.translatable("data_center_addon.startup.msg.ticket_expired",
+                            ticket.pos.getX(), ticket.pos.getY(), ticket.pos.getZ()).withStyle(ChatFormatting.GRAY));
+                }
             }
         }
         RandomSource random = level.getRandom();
-        if (!Config.serviceTickets() || a.tickets.size() >= MAX_OPEN || random.nextFloat() >= CHANCE_PER_DAY) {
+        if (!today || !Config.serviceTickets() || a.tickets.size() >= MAX_OPEN || random.nextFloat() >= CHANCE_PER_DAY) {
             return;
         }
         GlobalPos rack = runningRack(server, id, a, random);
@@ -98,7 +104,8 @@ final class ServiceTickets {
         BlockPos pos = event.getPos();
         for (Iterator<StartupBook.Ticket> it = a.tickets.iterator(); it.hasNext(); ) {
             StartupBook.Ticket ticket = it.next();
-            if (ticket.pos.equals(pos) && ticket.dimension.equals(level.dimension().location())) {
+            if (ticket.pos.equals(pos) && ticket.dimension.equals(level.dimension().location())
+                    && level.getBlockEntity(pos) instanceof HostingRackBlockEntity) {
                 it.remove();
                 DataCenterApi.deposit(level, id, ticket.rewardCents);
                 OwnerMessages.toOwner(level.getServer(), id, Component.translatable("data_center_addon.startup.msg.ticket_done",

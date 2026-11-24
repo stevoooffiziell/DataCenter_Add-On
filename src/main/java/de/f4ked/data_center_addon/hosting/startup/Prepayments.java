@@ -16,13 +16,20 @@ import java.util.UUID;
 /**
  * Annual plans paid in advance. Part of the new customers ({@link Config#prepayShare()}) pay 3 to 12
  * months at once, minus a discount. Data Center keeps paying for them every month, so the add-on
- * settles the prepaid value day by day against the wallet; customers that leave early get the rest
- * back. What the wallet cannot cover stays open and is taken later.
+ * settles the prepaid value day by day against the wallet. What the wallet cannot cover stays open and
+ * is taken later.
+ * <p>
+ * Customers on a plan do not cancel. They leave only when the product loses customers for good
+ * (outage, rack removed, lower fill): when its customers fall by more than {@link #NOISE} from one day
+ * to the next, the same share of the plans ends and gets its rest back. Day-to-day churn that new
+ * customers fill again does not touch the plans.
  */
 final class Prepayments {
     private static final int MONTHS_MIN = 3;
     private static final int MONTHS_MAX = 12;
     private static final double DAYS_PER_MONTH = 30.4375;
+    /** Daily drops of a product's customers up to this share count as ordinary churn. */
+    private static final double NOISE = 0.02;
 
     private Prepayments() {
     }
@@ -61,22 +68,26 @@ final class Prepayments {
      * day is settled against the income they bring.
      */
     static void settleDay(ServerLevel level, UUID id, StartupBook.Account a) {
-        if (a.prepayments.isEmpty()) {
-            return;
-        }
         HostingCustomers customers = HostingCustomers.get(level);
         for (HostingProduct product : HostingProduct.values()) {
+            double now = customers.total(id, product);
+            double before = a.prepayLastTotal[product.ordinal()];
+            a.prepayLastTotal[product.ordinal()] = now;
             double prepaid = 0;
             for (StartupBook.Prepayment p : a.prepayments) {
                 if (p.product == product) {
                     prepaid += p.customers;
                 }
             }
-            double now = customers.total(id, product);
-            if (prepaid <= 0 || now >= prepaid) {
+            if (prepaid <= 0) {
                 continue;
             }
-            double left = 1 - now / prepaid;
+            // share of the plans that ends: the product's real drop, and at least what no longer fits
+            double drop = Double.isNaN(before) || before <= 0 ? 0 : 1 - now / before;
+            double left = Math.max(drop > NOISE ? drop : 0, now < prepaid ? 1 - now / prepaid : 0);
+            if (left <= 0) {
+                continue;
+            }
             for (StartupBook.Prepayment p : a.prepayments) {
                 if (p.product == product) {
                     double refund = p.remainingCents * left;

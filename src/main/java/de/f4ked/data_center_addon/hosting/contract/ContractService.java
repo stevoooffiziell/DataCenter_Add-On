@@ -263,7 +263,7 @@ public final class ContractService {
 
         int client = pickClient(cls, product, random);
         ContractBook.Contract contract = new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus,
-                penalty, reputation, today.toEpochDay() + (urgent ? 0 : OFFER_DAYS));
+                penalty, reputation, today.toEpochDay() + (urgent ? 0 : OFFER_DAYS - 1));
         contract.urgent = urgent;
         contract.mini = mini;
         return contract;

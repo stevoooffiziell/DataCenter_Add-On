@@ -39,6 +39,7 @@ import net.minecraft.world.item.component.ItemContainerContents;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -227,7 +228,8 @@ public final class DeliveryService {
         int days = 4 + cls * 2 + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
         int reputation = 2 + cls * 3;
         int client = ContractService.pickClient(cls, null, random);
-        return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days, today.toEpochDay() + OFFER_DAYS);
+        return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days,
+                today.toEpochDay() + OFFER_DAYS - 1);
     }
 
     private static ContractBook.Goal newGoal(int cls, double scale, LocalDate today, RandomSource random) {
@@ -375,7 +377,7 @@ public final class DeliveryService {
                     return;
                 }
                 account.deliveryOffers.remove(offer);
-                offer.lastDay = today + offer.days;
+                offer.lastDay = today + offer.days - 1;
                 account.deliveries.add(offer);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.accepted",
                         clientName(offer), offer.days));
@@ -420,7 +422,10 @@ public final class DeliveryService {
     /** Takes what the delivery still needs from the inventory; returns the number of items taken. */
     private static int take(Inventory inventory, ContractBook.Delivery d) {
         int taken = 0;
-        for (ContractBook.Goal goal : d.goals) {
+        // a GPU server also counts as a server: fill the GPU server goal first so it does not run dry
+        List<ContractBook.Goal> goals = new ArrayList<>(d.goals);
+        goals.sort(Comparator.comparingInt(g -> g.kind == GoalKind.GPU_SERVER ? 0 : 1));
+        for (ContractBook.Goal goal : goals) {
             for (int slot = 0; slot < inventory.getContainerSize() && !goal.done(); slot++) {
                 ItemStack stack = inventory.getItem(slot);
                 if (matches(goal, stack)) {

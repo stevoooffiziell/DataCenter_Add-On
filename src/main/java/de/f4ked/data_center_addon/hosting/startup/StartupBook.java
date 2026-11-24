@@ -42,7 +42,7 @@ public final class StartupBook extends SavedData {
         /** Setup fees earned but not yet paid out, and paid so far. */
         double feeOwedCents;
         long feesPaidCents;
-        /** Customers per product at the last check; NaN until the first. */
+        /** Most customers per product so far (only customers above it pay a setup fee); NaN until the first check. */
         final double[] lastCustomers = new double[HostingProduct.values().length];
         boolean loanTaken;
         long loanCents;
@@ -58,6 +58,8 @@ public final class StartupBook extends SavedData {
         /** New customers per product that will book a plan once a whole one has come together. */
         final double[] prepayPending = new double[HostingProduct.values().length];
         final List<Prepayment> prepayments = new ArrayList<>();
+        /** Customers per product at the last day's settlement (to see how many left); NaN until the first. */
+        final double[] prepayLastTotal = new double[HostingProduct.values().length];
         long prepayReceivedCents;
         /** Prepayment settled against the income but not yet taken from the wallet. */
         double prepayDebtCents;
@@ -66,6 +68,7 @@ public final class StartupBook extends SavedData {
 
         Account() {
             Arrays.fill(lastCustomers, Double.NaN);
+            Arrays.fill(prepayLastTotal, Double.NaN);
         }
     }
 
@@ -203,6 +206,7 @@ public final class StartupBook extends SavedData {
                 prepayments.add(p.save());
             }
             t.put("prepayments", prepayments);
+            t.put("prepayLastTotal", doubles(a.prepayLastTotal));
             t.putLong("prepayReceived", a.prepayReceivedCents);
             t.putDouble("prepayDebt", a.prepayDebtCents);
             t.putLong("lastDay", a.lastDay);
@@ -210,6 +214,22 @@ public final class StartupBook extends SavedData {
         }
         tag.put("accounts", list);
         return tag;
+    }
+
+    private static ListTag doubles(double[] values) {
+        ListTag list = new ListTag();
+        for (double v : values) {
+            CompoundTag t = new CompoundTag();
+            t.putDouble("n", v);
+            list.add(t);
+        }
+        return list;
+    }
+
+    private static void readDoubles(ListTag list, double[] into) {
+        for (int i = 0; i < list.size() && i < into.length; i++) {
+            into[i] = list.getCompound(i).getDouble("n");
+        }
     }
 
     static StartupBook load(CompoundTag tag, HolderLookup.Provider registries) {
@@ -254,6 +274,7 @@ public final class StartupBook extends SavedData {
                     a.prepayments.add(p);
                 }
             }
+            readDoubles(t.getList("prepayLastTotal", Tag.TAG_COMPOUND), a.prepayLastTotal);
             a.prepayReceivedCents = t.getLong("prepayReceived");
             a.prepayDebtCents = t.getDouble("prepayDebt");
             a.lastDay = t.contains("lastDay") ? t.getLong("lastDay") : -1;

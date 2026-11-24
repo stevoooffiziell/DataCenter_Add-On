@@ -116,7 +116,8 @@ public final class HostingManagerPayloads {
 
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
-        var registrar = event.registrar("1");
+        // "2": the snapshot changed in 1.6.0 (deliveries, startup); a mismatch is refused at login
+        var registrar = event.registrar("2");
         registrar.playToClient(Snapshot.TYPE, Snapshot.STREAM_CODEC,
                 (payload, context) -> HostingManagerClient.receive(payload.manager(), payload.snapshot()));
         registrar.playToServer(Change.TYPE, Change.STREAM_CODEC, (payload, context) -> {

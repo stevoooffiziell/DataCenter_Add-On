@@ -121,7 +121,8 @@ public final class StartupService {
             } else if (today > a.lastDay) {
                 int days = (int) Math.min(MAX_CATCH_UP_DAYS, today - a.lastDay);
                 for (int i = 0; i < days; i++) {
-                    settleDay(level, id, a, a.lastDay + i + 1);
+                    long day = a.lastDay + i + 1;
+                    settleDay(level, id, a, day, day == today);
                 }
                 a.lastDay = today;
             }
@@ -130,10 +131,11 @@ public final class StartupService {
         book.setDirty();
     }
 
-    private static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day) {
+    /** {@code today}: the last of the days being settled (earlier ones are caught up after a time skip). */
+    private static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day, boolean today) {
         Prepayments.settleDay(level, id, a);
-        settleLoan(level, id, a, day);
-        ServiceTickets.settleDay(level, id, a, day);
+        settleLoan(level, id, a, day, today);
+        ServiceTickets.settleDay(level, id, a, day, today);
     }
 
     // ------------------------------------------------------------------ start bonus and grant
@@ -188,13 +190,19 @@ public final class StartupService {
         };
     }
 
-    /** Whether the account is a young company (no rack income yet, or within the start bonus days). */
+    /** Whether the account is a young company: no rack income yet, or the start bonus period (days or revenue) runs. */
     public static boolean earlyPhase(ServerLevel level, UUID id) {
         StartupBook.Account a = StartupBook.get(level.getServer()).accounts().get(id);
         if (a == null || a.startDay < 0) {
             return a == null ? HostingReputation.get(level, id).getPoints() < Config.veteranReputation() : !a.veteran;
         }
-        return !a.veteran && DataCenterApi.currentDate(level).toEpochDay() - a.startDay < Config.startBonusDays();
+        if (a.veteran) {
+            return false;
+        }
+        return switch (Config.startBonusMode()) {
+            case TIME -> DataCenterApi.currentDate(level).toEpochDay() - a.startDay < Config.startBonusDays();
+            case REVENUE -> a.revenueCents < Config.startBonusRevenueCents();
+        };
     }
 
     /** Pays the whole cents of the start bonus and the setup fees earned so far, takes the prepayment owed. */
@@ -216,7 +224,10 @@ public final class StartupService {
 
     // ------------------------------------------------------------------ new customers
 
-    /** Customers that joined since the last check pay their setup fee; part of them book an annual plan. */
+    /**
+     * Customers above the most the product ever had pay their setup fee; part of them book an annual
+     * plan. Customers who come back after an outage, a move or a lower fill do not pay again.
+     */
     private static void newCustomers(ServerLevel level, UUID id, StartupBook.Account a, LocalDate date) {
         HostingCustomers customers = HostingCustomers.get(level);
         double months = Config.setupFeeMonths();
@@ -232,14 +243,16 @@ public final class StartupService {
                 }
                 Prepayments.joined(level, id, a, products[i], joined, date, classMultiplier);
             }
-            a.lastCustomers[i] = now;
+            if (Double.isNaN(before) || now > before) {
+                a.lastCustomers[i] = now;
+            }
         }
     }
 
     // ------------------------------------------------------------------ founding loan
 
     /** One instalment a day after the grace period, as far as the wallet allows. */
-    private static void settleLoan(ServerLevel level, UUID id, StartupBook.Account a, long day) {
+    private static void settleLoan(ServerLevel level, UUID id, StartupBook.Account a, long day, boolean today) {
         if (a.loanOutstandingCents <= 0 || day <= a.loanStartDay + Config.foundingLoanGraceDays()) {
             return;
         }
@@ -252,7 +265,7 @@ public final class StartupService {
         if (a.loanOutstandingCents <= 0) {
             OwnerMessages.toOwner(server, id, Component.translatable("data_center_addon.startup.msg.loan_repaid")
                     .withStyle(ChatFormatting.GREEN));
-        } else if (take < due) {
+        } else if (take < due && today) {
             OwnerMessages.toOwner(server, id, Component.translatable("data_center_addon.startup.msg.loan_short",
                     Money.usd(due - take)).withStyle(ChatFormatting.GOLD));
         }
