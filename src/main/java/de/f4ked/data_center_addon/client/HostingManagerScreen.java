@@ -449,7 +449,28 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         ty += line;
         g.drawString(font, GuiText.fit(font, Component.translatable("data_center_addon.startup.fees",
                 GuiText.compactUsd(st.feesPaidCents())).getString(), leftW), x, ty, TechPanel.TEXT_MUTED, false);
-        ty += line + 6;
+        ty += line;
+        HostingSnapshot.Prepay prepay = st.prepay();
+        if (prepay.available()) {
+            int toggleW = 34;
+            String state = prepay.enabled()
+                    ? Component.translatable("data_center_addon.startup.prepay.state", GuiText.compactUsd(prepay.receivedCents()),
+                    GuiText.compactUsd(prepay.openCents())).getString()
+                    : trs("prepay.off");
+            g.drawString(font, GuiText.fit(font, state, leftW - toggleW - 6), x, ty + 2, TechPanel.TEXT_MUTED, false);
+            smallButton(g, x + leftW - toggleW, ty, toggleW, trs(prepay.enabled() ? "prepay.on_label" : "prepay.off_label"),
+                    prepay.enabled() ? 0xFF2E6E8E : TechPanel.SLOT_BG, mouseX, mouseY,
+                    () -> sendStartup(prepay.enabled() ? StartupService.Action.PREPAY_OFF : StartupService.Action.PREPAY_ON));
+            if (inside(mouseX, mouseY, x, ty, leftW - toggleW - 6, ROW_H - 2)) {
+                tooltip = List.of(Component.translatable("data_center_addon.startup.prepay"),
+                        Component.translatable("data_center_addon.startup.prepay.hint", prepay.sharePercent(), prepay.discountPercent())
+                                .withStyle(net.minecraft.ChatFormatting.GRAY),
+                        Component.translatable("data_center_addon.startup.prepay.customers", prepay.customers())
+                                .withStyle(net.minecraft.ChatFormatting.GRAY));
+            }
+            ty += ROW_H;
+        }
+        ty += 6;
 
         // left: founding loan
         sectionTitle(g, x, ty, leftW, trs("loan"));

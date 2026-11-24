@@ -232,7 +232,7 @@
 	quest.5624ABA45C9D2568.quest_desc: ["The card of the first GPU mining wave.", "", "&7Own one to complete this milestone."]
 	quest.5624ABA45C9D2568.quest_subtitle: "2009-09-22 · $379"
 	quest.5624ABA45C9D2568.title: "ATI Radeon HD 5870"
-	quest.566E73DAA26CC95E.quest_desc: ["The &fStartup&r tab helps a young company get its first money together:", "", "&e• &fStart bonus&r: extra income on every hosting rack, starting with the first income and fading out over time.", "&e• &fFounding grant&r: paid once with the first rack income.", "&e• &fSetup fees&r: every new customer pays a one-time fee.", "&e• &fFounding loan&r: interest-free, with days without repayment, then small daily instalments.", "&e• &fMilestones&r: rewards for customers, customer classes and your first contract, delivery and ticket."]
+	quest.566E73DAA26CC95E.quest_desc: ["The &fStartup&r tab helps a young company get its first money together:", "", "&e• &fStart bonus&r: extra income on every hosting rack, starting with the first income and fading out over time.", "&e• &fFounding grant&r: paid once with the first rack income.", "&e• &fSetup fees&r: every new customer pays a one-time fee.", "&e• &fPrepayment&r: part of the new customers pay 3-12 months in advance. The money comes at once and is settled against their income later.", "&e• &fFounding loan&r: interest-free, with days without repayment, then small daily instalments.", "&e• &fMilestones&r: rewards for customers, customer classes and your first contract, delivery and ticket."]
 	quest.566E73DAA26CC95E.title: "Founding your company"
 	quest.568500AA1976C133.quest_desc: ["100 Gbit/s over multimode fibre.", "", "&7Own one to complete this milestone."]
 	quest.568500AA1976C133.quest_subtitle: "2009-08-01 · $3.00"

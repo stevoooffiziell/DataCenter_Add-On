@@ -43,6 +43,9 @@ import java.util.UUID;
  *   <li><b>Founding loan</b>: interest-free, taken once in the Hosting Manager, repaid in daily
  *       instalments after a grace period.</li>
  *   <li><b>Setup fees</b>: every new customer pays a one-time fee.</li>
+ *   <li><b>Prepayment</b>: part of the new customers book an annual plan and pay several months in
+ *       advance, at a discount. The money arrives at once and is settled day by day against the income
+ *       those customers bring; customers that leave early get the rest back.</li>
  *   <li><b>Milestones</b>: one-time rewards ({@link Milestone}).</li>
  *   <li><b>Service tickets</b>: a client asks someone to look at one of the account's racks;
  *       right-clicking the rack before the deadline pays.</li>
@@ -67,7 +70,12 @@ public final class StartupService {
     /** Rack income per owner since the last sample, in cents. */
     private static final Map<UUID, Double> INCOME = new HashMap<>();
 
-    public enum Action { TAKE_LOAN, REPAY_LOAN }
+    public enum Action { TAKE_LOAN, REPAY_LOAN, PREPAY_ON, PREPAY_OFF }
+
+    /** Months a prepaying customer pays in advance: 3 to 12. */
+    private static final int PREPAY_MONTHS_MIN = 3;
+    private static final int PREPAY_MONTHS_MAX = 12;
+    private static final double DAYS_PER_MONTH = 30.4375;
 
     private StartupService() {
     }
@@ -199,23 +207,99 @@ public final class StartupService {
             a.feeOwedCents -= fees;
             a.feesPaidCents += fees;
         }
+        long debt = (long) Math.floor(a.prepayDebtCents);
+        if (debt > 0) {
+            long take = Math.min(debt, Math.max(0, DataCenterApi.balanceCents(level, id)));
+            if (take > 0 && DataCenterApi.withdraw(level, id, take)) {
+                a.prepayDebtCents -= take;
+            }
+        }
     }
 
     // ------------------------------------------------------------------ setup fees
 
-    /** Customers that joined since the last check pay their setup fee. */
+    /** Customers that joined since the last check pay their setup fee; part of them book an annual plan. */
     private static void setupFees(ServerLevel level, UUID id, StartupBook.Account a, LocalDate date) {
         HostingCustomers customers = HostingCustomers.get(level);
         double months = Config.setupFeeMonths();
         double classMultiplier = HostingReputation.get(level, id).getUnlockedClass().incomeMultiplier;
+        double prepayShare = a.prepayEnabled ? Config.prepayShare() : 0;
         HostingProduct[] products = HostingProduct.values();
         for (int i = 0; i < products.length && i < a.lastCustomers.length; i++) {
             double now = customers.total(id, products[i]);
             double before = a.lastCustomers[i];
-            if (!Double.isNaN(before) && now > before && months > 0) {
-                a.feeOwedCents += (now - before) * HostingModeRates.unitUsd(products[i], date) * 100 * months * classMultiplier;
+            if (!Double.isNaN(before) && now > before) {
+                double joined = now - before;
+                if (months > 0) {
+                    a.feeOwedCents += joined * HostingModeRates.unitUsd(products[i], date) * 100 * months * classMultiplier;
+                }
+                if (prepayShare > 0) {
+                    a.prepayPending[i] += joined * prepayShare;
+                    if (a.prepayPending[i] >= 1) {
+                        int count = (int) Math.floor(a.prepayPending[i]);
+                        a.prepayPending[i] -= count;
+                        prepay(level, id, a, products[i], count, date, classMultiplier);
+                    }
+                }
             }
             a.lastCustomers[i] = now;
+        }
+    }
+
+    /** {@code count} new customers pay several months in advance: the money arrives now, minus the discount. */
+    private static void prepay(ServerLevel level, UUID id, StartupBook.Account a, HostingProduct product, int count, LocalDate date,
+                               double classMultiplier) {
+        int months = PREPAY_MONTHS_MIN + level.getRandom().nextInt(PREPAY_MONTHS_MAX - PREPAY_MONTHS_MIN + 1);
+        double value = count * HostingModeRates.unitNet(product, date) * 100 * months * classMultiplier;
+        long paid = Math.round(value * (1 - Config.prepayDiscount()));
+        if (paid <= 0) {
+            return;
+        }
+        a.prepayments.add(new StartupBook.Prepayment(product, count, value, (int) Math.round(months * DAYS_PER_MONTH)));
+        a.prepayReceivedCents += paid;
+        DataCenterApi.deposit(level, id, paid);
+    }
+
+    /**
+     * One day of the running annual plans: customers that left get the rest of their plan back, the
+     * others' day is settled against the income they bring.
+     */
+    private static void settlePrepayments(ServerLevel level, UUID id, StartupBook.Account a) {
+        if (a.prepayments.isEmpty()) {
+            return;
+        }
+        HostingCustomers customers = HostingCustomers.get(level);
+        for (HostingProduct product : HostingProduct.values()) {
+            double prepaid = 0;
+            for (StartupBook.Prepayment p : a.prepayments) {
+                if (p.product == product) {
+                    prepaid += p.customers;
+                }
+            }
+            double now = customers.total(id, product);
+            if (prepaid <= 0 || now >= prepaid) {
+                continue;
+            }
+            double left = 1 - now / prepaid;
+            for (StartupBook.Prepayment p : a.prepayments) {
+                if (p.product == product) {
+                    double refund = p.remainingCents * left;
+                    a.prepayDebtCents += refund;
+                    p.remainingCents -= refund;
+                    p.customers *= 1 - left;
+                }
+            }
+        }
+        for (Iterator<StartupBook.Prepayment> it = a.prepayments.iterator(); it.hasNext(); ) {
+            StartupBook.Prepayment p = it.next();
+            double day = p.daysLeft <= 1 ? p.remainingCents : p.remainingCents / p.daysLeft;
+            a.prepayDebtCents += day;
+            p.remainingCents -= day;
+            p.daysLeft--;
+            if (p.daysLeft <= 0 || p.remainingCents < 1) {
+                a.prepayDebtCents += Math.max(0, p.remainingCents);
+                it.remove();
+            }
         }
     }
 
@@ -276,6 +360,7 @@ public final class StartupService {
 
     private static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day) {
         MinecraftServer server = level.getServer();
+        settlePrepayments(level, id, a);
         // founding loan: one instalment a day after the grace period
         if (a.loanOutstandingCents > 0 && day > a.loanStartDay + Config.foundingLoanGraceDays()) {
             long due = Math.min(instalment(a), a.loanOutstandingCents);
@@ -399,6 +484,11 @@ public final class StartupService {
                         : Component.translatable("data_center_addon.startup.msg.loan_partly", ContractService.usd(take),
                         ContractService.usd(a.loanOutstandingCents)));
             }
+            case PREPAY_ON -> a.prepayEnabled = true;
+            case PREPAY_OFF -> {
+                a.prepayEnabled = false;
+                java.util.Arrays.fill(a.prepayPending, 0);
+            }
         }
         book.setDirty();
     }
@@ -426,9 +516,18 @@ public final class StartupService {
         for (StartupBook.Ticket t : a.tickets) {
             tickets.add(new HostingSnapshot.Ticket(t.id, t.pos, t.kind, t.rewardCents, (int) Math.max(0, t.lastDay - today + 1)));
         }
+        double prepayOpen = a.prepayDebtCents;
+        double prepayCustomers = 0;
+        for (StartupBook.Prepayment p : a.prepayments) {
+            prepayOpen += p.remainingCents;
+            prepayCustomers += p.customers;
+        }
+        HostingSnapshot.Prepay prepay = new HostingSnapshot.Prepay(Config.prepayShare() > 0, a.prepayEnabled,
+                (int) Math.round(Config.prepayShare() * 100), (int) Math.round(Config.prepayDiscount() * 100), a.prepayReceivedCents,
+                Math.round(prepayOpen), (int) Math.round(prepayCustomers));
         return new HostingSnapshot.Startup(started, veteran, factor, Config.startBonusMode().ordinal(), daysLeft, revenueLeft,
                 a.bonusPaidCents, a.grantCents, veteran ? 0 : Config.foundingGrantCents(), a.feesPaidCents, loanOffer, a.loanTaken,
-                a.loanOutstandingCents, grace, instalment, a.milestones, List.copyOf(rewards), List.copyOf(tickets));
+                a.loanOutstandingCents, grace, instalment, a.milestones, List.copyOf(rewards), List.copyOf(tickets), prepay);
     }
 
     /** "+200 %" */

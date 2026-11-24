@@ -349,5 +349,12 @@
   "data_center_addon.contract.tip.urgent": "⚡ Notfall: kurz, gut bezahlt, nur heute annehmbar",
   "data_center_addon.contract.tip.mini": "Mini-Auftrag: keine Strafe, kein Reputationsverlust",
   "data_center_addon.delivery.goal.scrap": "Defekte Teile (Schrott)",
-  "data_center_addon.delivery.goal.hint.scrap": "Irgendein defektes Computerteil: CPU, Grafikkarte, RAM, Festplatte, Netzteil oder Lüfter."
+  "data_center_addon.delivery.goal.hint.scrap": "Irgendein defektes Computerteil: CPU, Grafikkarte, RAM, Festplatte, Netzteil oder Lüfter.",
+  "data_center_addon.startup.prepay": "Vorkasse (Jahrestarife)",
+  "data_center_addon.startup.prepay.state": "Vorkasse: %s erhalten · %s noch zu verrechnen",
+  "data_center_addon.startup.prepay.off": "Vorkasse: aus – neue Kunden zahlen monatlich",
+  "data_center_addon.startup.prepay.on_label": "An",
+  "data_center_addon.startup.prepay.off_label": "Aus",
+  "data_center_addon.startup.prepay.hint": "%s %% der neuen Kunden buchen einen Jahrestarif und zahlen 3–12 Monate im Voraus (%s %% Rabatt). Das Geld kommt sofort und wird Tag für Tag mit ihren Einnahmen verrechnet. Wer früher geht, bekommt den Rest zurück.",
+  "data_center_addon.startup.prepay.customers": "Kunden mit laufendem Jahrestarif: %s"
 }

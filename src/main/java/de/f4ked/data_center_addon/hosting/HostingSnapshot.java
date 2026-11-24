@@ -42,13 +42,26 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
     public record Startup(boolean started, boolean veteran, double bonusFactor, int bonusMode, int bonusDaysLeft,
                           long bonusRevenueLeft, long bonusPaidCents, long grantCents, long grantOfferCents, long feesPaidCents,
                           long loanOfferCents, boolean loanTaken, long loanOutstandingCents, int loanGraceDays,
-                          long loanInstalmentCents, long milestones, List<Long> milestoneRewards, List<Ticket> tickets) {
+                          long loanInstalmentCents, long milestones, List<Long> milestoneRewards, List<Ticket> tickets,
+                          Prepay prepay) {
         public static final Startup NONE = new Startup(false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, 0, 0, 0, 0, List.of(),
-                List.of());
+                List.of(), Prepay.NONE);
 
         public boolean reached(Milestone milestone) {
             return (milestones & milestone.bit()) != 0;
         }
+    }
+
+    /**
+     * Annual plans paid in advance.
+     *
+     * @param available  prepayment is turned on in the config
+     * @param enabled    the account offers annual plans to new customers
+     * @param openCents  value not yet settled against the income (plans running plus what is still to be taken)
+     */
+    public record Prepay(boolean available, boolean enabled, int sharePercent, int discountPercent, long receivedCents,
+                         long openCents, int customers) {
+        public static final Prepay NONE = new Prepay(false, false, 0, 0, 0, 0, 0);
     }
 
     /** A service ticket: right-click the rack at {@code pos} before it runs out. */
@@ -296,6 +309,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarLong(t.rewardCents);
                     buf.writeVarInt(t.daysLeft);
                 }
+                Prepay pp = st.prepay;
+                buf.writeBoolean(pp.available);
+                buf.writeBoolean(pp.enabled);
+                buf.writeVarInt(pp.sharePercent);
+                buf.writeVarInt(pp.discountPercent);
+                buf.writeVarLong(pp.receivedCents);
+                buf.writeVarLong(pp.openCents);
+                buf.writeVarInt(pp.customers);
             },
             buf -> {
                 boolean connected = buf.readBoolean();
@@ -363,9 +384,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 for (int i = 0; i < ticketCount; i++) {
                     tickets.add(new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
                 }
+                Prepay prepay = new Prepay(buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(),
+                        buf.readVarLong(), buf.readVarInt());
                 Startup startup = new Startup(started, veteran, bonusFactor, bonusMode, bonusDaysLeft, bonusRevenueLeft, bonusPaid,
                         grant, grantOffer, fees, loanOffer, loanTaken, loanOutstanding, loanGrace, loanInstalment, milestones,
-                        List.copyOf(rewards), List.copyOf(tickets));
+                        List.copyOf(rewards), List.copyOf(tickets), prepay);
                 return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
                         List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries), startup);
             });

@@ -57,6 +57,8 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue SETUP_FEE;
     private static final ModConfigSpec.DoubleValue MILESTONE_REWARDS;
     private static final ModConfigSpec.BooleanValue SERVICE_TICKETS;
+    private static final ModConfigSpec.DoubleValue PREPAY_SHARE;
+    private static final ModConfigSpec.DoubleValue PREPAY_DISCOUNT;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -134,6 +136,14 @@ public final class Config {
         MILESTONE_REWARDS = builder
                 .comment("Multiplier for the milestone rewards (customers, customer classes, first contract, ...). 0 turns them off.")
                 .defineInRange("milestoneRewards", 1.0, 0.0, 100.0);
+        PREPAY_SHARE = builder
+                .comment("Share of new customers that book an annual plan and pay 3 to 12 months in advance (at a discount).",
+                        "The money arrives at once and is settled day by day against the income they bring; customers",
+                        "that leave early get the rest back. 0 turns prepayment off.")
+                .defineInRange("prepayShare", 0.3, 0.0, 1.0);
+        PREPAY_DISCOUNT = builder
+                .comment("Discount a prepaying customer gets.")
+                .defineInRange("prepayDiscount", 0.05, 0.0, 0.5);
         SERVICE_TICKETS = builder
                 .comment("Service tickets: clients ask you to look at one of your racks. Right-click the rack before the",
                         "deadline to be paid.")
@@ -261,6 +271,14 @@ public final class Config {
 
     public static double milestoneRewards() {
         return SPEC.isLoaded() ? MILESTONE_REWARDS.get() : 1.0;
+    }
+
+    public static double prepayShare() {
+        return SPEC.isLoaded() ? PREPAY_SHARE.get() : 0.3;
+    }
+
+    public static double prepayDiscount() {
+        return SPEC.isLoaded() ? PREPAY_DISCOUNT.get() : 0.05;
     }
 
     public static boolean serviceTickets() {

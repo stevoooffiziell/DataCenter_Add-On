@@ -53,11 +53,53 @@ public final class StartupBook extends SavedData {
         boolean milestonesSeeded;
         final List<Ticket> tickets = new ArrayList<>();
         int nextTicketId = 1;
+        /** Prepayment: whether new customers are offered annual plans, and the plans running. */
+        boolean prepayEnabled = true;
+        /** New customers per product that will book a plan once a whole one has come together. */
+        final double[] prepayPending = new double[HostingProduct.values().length];
+        final List<Prepayment> prepayments = new ArrayList<>();
+        long prepayReceivedCents;
+        /** Prepayment settled against the income but not yet taken from the wallet. */
+        double prepayDebtCents;
         /** Epoch day of the last settled in-game day; -1 before the first. */
         long lastDay = -1;
 
         Account() {
             Arrays.fill(lastCustomers, Double.NaN);
+        }
+    }
+
+    /**
+     * Customers of one product that paid {@code days} of service in advance. Their value is settled
+     * day by day against the income they bring; customers that leave early get the rest back.
+     */
+    public static final class Prepayment {
+        final HostingProduct product;
+        double customers;
+        /** Value of the service still owed to them, in cents. */
+        double remainingCents;
+        int daysLeft;
+
+        Prepayment(HostingProduct product, double customers, double remainingCents, int daysLeft) {
+            this.product = product;
+            this.customers = customers;
+            this.remainingCents = remainingCents;
+            this.daysLeft = daysLeft;
+        }
+
+        CompoundTag save() {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("product", product.id());
+            tag.putDouble("customers", customers);
+            tag.putDouble("remaining", remainingCents);
+            tag.putInt("days", daysLeft);
+            return tag;
+        }
+
+        static Prepayment load(CompoundTag tag) {
+            HostingProduct product = HostingProduct.byId(tag.getString("product"));
+            return product == null ? null
+                    : new Prepayment(product, tag.getDouble("customers"), tag.getDouble("remaining"), tag.getInt("days"));
         }
     }
 
@@ -148,6 +190,21 @@ public final class StartupBook extends SavedData {
             }
             t.put("tickets", tickets);
             t.putInt("nextTicket", a.nextTicketId);
+            t.putBoolean("prepayEnabled", a.prepayEnabled);
+            ListTag pending = new ListTag();
+            for (double p : a.prepayPending) {
+                CompoundTag pt = new CompoundTag();
+                pt.putDouble("n", p);
+                pending.add(pt);
+            }
+            t.put("prepayPending", pending);
+            ListTag prepayments = new ListTag();
+            for (Prepayment p : a.prepayments) {
+                prepayments.add(p.save());
+            }
+            t.put("prepayments", prepayments);
+            t.putLong("prepayReceived", a.prepayReceivedCents);
+            t.putDouble("prepayDebt", a.prepayDebtCents);
             t.putLong("lastDay", a.lastDay);
             list.add(t);
         }
@@ -186,6 +243,19 @@ public final class StartupBook extends SavedData {
                 }
             }
             a.nextTicketId = Math.max(1, t.getInt("nextTicket"));
+            a.prepayEnabled = !t.contains("prepayEnabled") || t.getBoolean("prepayEnabled");
+            ListTag pending = t.getList("prepayPending", Tag.TAG_COMPOUND);
+            for (int i = 0; i < pending.size() && i < a.prepayPending.length; i++) {
+                a.prepayPending[i] = pending.getCompound(i).getDouble("n");
+            }
+            for (Tag pt : t.getList("prepayments", Tag.TAG_COMPOUND)) {
+                Prepayment p = Prepayment.load((CompoundTag) pt);
+                if (p != null) {
+                    a.prepayments.add(p);
+                }
+            }
+            a.prepayReceivedCents = t.getLong("prepayReceived");
+            a.prepayDebtCents = t.getDouble("prepayDebt");
             a.lastDay = t.contains("lastDay") ? t.getLong("lastDay") : -1;
             book.accounts.put(t.getUUID("account"), a);
         }
