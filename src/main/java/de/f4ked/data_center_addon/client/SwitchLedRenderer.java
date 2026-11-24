@@ -33,8 +33,13 @@ public class SwitchLedRenderer implements BlockEntityRenderer<NetworkSwitchBlock
     private static final int GREEN = 0xFF3CFF6E;
     private static final int AMBER = 0xFFFFB020;
     private static final int RED = 0xFFFF3030;
-    /** Left edges of the port LEDs in pixels (1/16 block): the dots painted on the front textures. */
-    private static final float[] PORT_X = {1.5f, 2.5f, 3.5f, 4.5f, 6.5f, 7.5f, 8.5f, 10.5f};
+    /**
+     * Left edges of the port LEDs in pixels (1/16 block): the dots painted on the 32 px front textures,
+     * at texture column u / 2 (the front face maps the texture's full width onto the block).
+     */
+    private static final float[] PORT_X = {1.5f, 2.5f, 3.5f, 4.5f, 5.0f, 6.0f, 7.0f, 8.0f, 8.5f, 9.5f, 10.5f, 11.5f};
+    /** The hub's front ({@code switch_front}) has 8 dots, spaced differently. */
+    private static final float[] HUB_PORT_X = {1.5f, 3.0f, 4.5f, 5.5f, 7.0f, 8.0f, 9.5f, 11.0f};
     private static final float LED = 0.5f;
     /** The front face of Data Center's switch model, facing north before rotation. */
     private static final float FRONT_Z = 2f / 16f - 0.002f;
@@ -72,11 +77,12 @@ public class SwitchLedRenderer implements BlockEntityRenderer<NetworkSwitchBlock
         float rowY = twoRows(block.model()) ? 1.5f : 1.0f;
         if (powered) {
             long seed = be.getBlockPos().asLong();
-            for (int i = 0; i < PORT_X.length; i++) {
+            float[] ports = block.model() == SwitchModel.HUB_3COM_SUPERSTACK_II ? HUB_PORT_X : PORT_X;
+            for (int i = 0; i < ports.length; i++) {
                 long step = (time + i * 7L) / FLICKER_TICKS;
                 float roll = (mix(seed * 31 + i * 7919L + step * 104729L) & 0xFFFF) / 65536f;
                 if (roll >= FLICKER[Math.min(activity, FLICKER.length - 1)]) {
-                    quad(buffer, matrix, PORT_X[i], rowY, LED, LED, saturated ? AMBER : GREEN);
+                    quad(buffer, matrix, ports[i], rowY, LED, LED, saturated ? AMBER : GREEN);
                 }
             }
             quad(buffer, matrix, 14.5f, 0f, 0.5f, 1f, saturated ? AMBER : GREEN);
