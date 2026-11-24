@@ -8,6 +8,7 @@ import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.hosting.ContractService;
+import de.f4ked.data_center_addon.hosting.DeliveryService;
 import de.f4ked.data_center_addon.hosting.HostingManagerMenu;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingManagerService;
@@ -15,11 +16,13 @@ import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,6 +69,9 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     /** Contract whose cancel button was clicked once, and until when the second click confirms it. */
     private int confirmCancel = -1;
     private long confirmUntil;
+    /** Contracts tab: delivery orders (true) or hosting reservations; the delivery shown in the detail. */
+    private boolean deliveriesView = true;
+    private int selectedDelivery = -1;
     /** Tooltip of the last frame, drawn on top of everything in {@link #render}. */
     @Nullable
     private List<Component> tooltip;
@@ -390,7 +396,199 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
 
     // ------------------------------------------------------------------ contracts
 
+    /** The Contracts tab: a toggle between hosting reservations and delivery orders. */
     private void contracts(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
+        String reservations = Component.translatable("data_center_addon.delivery.view.reservations", s.activeContracts().size())
+                .getString();
+        String orders = Component.translatable("data_center_addon.delivery.view.deliveries", s.runningDeliveries().size())
+                .getString();
+        int bw = Math.max(font.width(reservations), font.width(orders)) + 14;
+        toggle(g, x, y, bw, reservations, !deliveriesView, mouseX, mouseY, () -> deliveriesView = false);
+        toggle(g, x + bw + 4, y, bw, orders, deliveriesView, mouseX, mouseY, () -> deliveriesView = true);
+        int top = ROW_H + 4;
+        if (deliveriesView) {
+            deliveries(g, s, x, y + top, w, h - top, mouseX, mouseY);
+        } else {
+            reservations(g, s, x, y + top, w, h - top, mouseX, mouseY);
+        }
+    }
+
+    private void toggle(GuiGraphics g, int x, int y, int w, String label, boolean active, int mouseX, int mouseY, Runnable action) {
+        int h = ROW_H - 2;
+        boolean hover = inside(mouseX, mouseY, x, y, w, h);
+        g.fill(x, y, x + w, y + h, active ? HEADER_LINE : hover ? 0xFF2A3440 : TechPanel.SLOT_BG);
+        if (active) {
+            g.fill(x, y + h - 1, x + w, y + h, TechPanel.ACCENT);
+        }
+        g.drawCenteredString(font, label, x + w / 2, y + 3, active ? TechPanel.TEXT : TechPanel.TEXT_MUTED);
+        buttons.add(new Button(x, y, w, h, () -> {
+            action.run();
+            scroll = 0;
+        }));
+    }
+
+    // ------------------------------------------------------------------ deliveries (preview)
+
+    private void deliveries(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
+        List<HostingSnapshot.Delivery> running = s.runningDeliveries();
+        List<HostingSnapshot.Delivery> offers = s.deliveryOffers();
+        if (running.isEmpty() && offers.isEmpty()) {
+            message(g, x, y, w, h, Component.translatable("data_center_addon.delivery.none"));
+            return;
+        }
+        HostingSnapshot.Delivery selected = null;
+        for (HostingSnapshot.Delivery d : s.deliveries()) {
+            if (d.id() == selectedDelivery) {
+                selected = d;
+            }
+        }
+        if (selected == null) {
+            selected = running.isEmpty() ? offers.get(0) : running.get(0);
+            selectedDelivery = selected.id();
+        }
+
+        int detailW = Math.max(150, (int) (w * 0.42));
+        int listW = w - detailW - 8;
+        int[] col = columns(x, listW, 0, 0.50, 0.68, 0.82);
+        int ty = y;
+        g.drawString(font, Component.translatable("data_center_addon.delivery.running", running.size(), DeliveryService.MAX_ACTIVE),
+                x, ty + TEXT_DY, TechPanel.ACCENT, false);
+        ty += ROW_H;
+        g.fill(x, ty, x + listW, ty + 1, HEADER_LINE);
+        ty += 2;
+        if (running.isEmpty()) {
+            g.drawString(font, trd("no_running"), x, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
+            ty += ROW_H;
+        }
+        for (int i = 0; i < running.size(); i++) {
+            deliveryRow(g, running.get(i), x, ty, listW, col, i, mouseX, mouseY);
+            ty += ROW_H;
+        }
+        ty += 6;
+        g.drawString(font, trd("offers"), x, ty + TEXT_DY, TechPanel.ACCENT, false);
+        ty += ROW_H;
+        g.fill(x, ty, x + listW, ty + 1, HEADER_LINE);
+        ty += 2;
+        for (int i = 0; i < offers.size() && ty + ROW_H <= y + h - 10; i++) {
+            deliveryRow(g, offers.get(i), x, ty, listW, col, i, mouseX, mouseY);
+            ty += ROW_H;
+        }
+        g.drawString(font, GuiText.fit(font, trd("note"), listW), x, y + h - 9, TechPanel.TEXT_MUTED, false);
+
+        deliveryDetail(g, selected, running.size() >= DeliveryService.MAX_ACTIVE, x + listW + 8, y, detailW, h, mouseX, mouseY);
+    }
+
+    private void deliveryRow(GuiGraphics g, HostingSnapshot.Delivery d, int x, int y, int w, int[] col, int row,
+                             int mouseX, int mouseY) {
+        boolean selected = d.id() == selectedDelivery;
+        if (selected) {
+            g.fill(x - 4, y, x + w + 4, y + ROW_H, ROW_SELECTED);
+        } else if (inside(mouseX, mouseY, x, y, w, ROW_H)) {
+            g.fill(x - 4, y, x + w + 4, y + ROW_H, ROW_HOVER);
+        } else {
+            stripe(g, x, y, w, row);
+        }
+        text(g, clientName(d.client()).getString(), col, 0, y, TechPanel.TEXT);
+        text(g, d.offer() ? "—" : d.delivered() + "/" + d.total(), col, 1, y,
+                !d.offer() && d.canDeliver() ? TechPanel.GOOD : TechPanel.TEXT_MUTED);
+        boolean urgent = d.daysLeft() <= 1;
+        text(g, d.daysLeft() + " " + trc("days_short"), col, 2, y, urgent ? TechPanel.WARN : TechPanel.TEXT_MUTED);
+        int payW = x + w - col[3];
+        String pay = GuiText.compactUsd(d.payCents());
+        g.drawString(font, GuiText.fit(font, pay, payW), x + w - Math.min(payW, font.width(pay)), y + TEXT_DY, TechPanel.GOOD, false);
+        buttons.add(new Button(x, y, w, ROW_H, () -> selectedDelivery = d.id()));
+    }
+
+    private void deliveryDetail(GuiGraphics g, HostingSnapshot.Delivery d, boolean full, int x, int y, int w, int h,
+                                int mouseX, int mouseY) {
+        g.fill(x, y, x + w, y + h, 0x60000000);
+        g.fill(x, y, x + 1, y + h, HEADER_LINE);
+        int px = x + 6, pw = w - 12, ty = y + 4;
+        g.drawString(font, GuiText.fit(font, clientName(d.client()).getString(), pw), px, ty, TechPanel.ACCENT, false);
+        ty += 11;
+        String status = d.offer()
+                ? Component.translatable("data_center_addon.delivery.detail.offer", d.daysLeft(), d.days()).getString()
+                : Component.translatable("data_center_addon.delivery.detail.running", d.daysLeft()).getString();
+        g.drawString(font, GuiText.fit(font, status, pw), px, ty, d.daysLeft() <= 1 ? TechPanel.WARN : TechPanel.TEXT_MUTED, false);
+        ty += 14;
+
+        for (HostingSnapshot.Goal goal : d.goals()) {
+            ItemStack icon = new ItemStack(BuiltInRegistries.ITEM.get(goal.item()));
+            g.fill(px, ty, px + 18, ty + 18, TechPanel.SLOT_BG);
+            g.renderItem(icon, px + 1, ty + 1);
+            String label = goal.count() + "× " + goalName(goal, icon).getString();
+            g.drawString(font, GuiText.fit(font, label, pw - 24), px + 22, ty, TechPanel.TEXT, false);
+            boolean done = goal.delivered() >= goal.count();
+            String progress = d.offer()
+                    ? Component.translatable("data_center_addon.delivery.detail.have", goal.inInventory()).getString()
+                    : goal.delivered() + " / " + goal.count()
+                    + (done ? " ✔" : goal.inInventory() > 0 ? "  (+" + Math.min(goal.inInventory(), goal.count() - goal.delivered()) + ")" : "");
+            g.drawString(font, GuiText.fit(font, progress, pw - 24), px + 22, ty + 10,
+                    done ? TechPanel.GOOD : goal.inInventory() > 0 ? TechPanel.ACCENT : TechPanel.TEXT_MUTED, false);
+            if (inside(mouseX, mouseY, px, ty, 18, 18) && !icon.isEmpty()) {
+                tooltip = List.of(goalName(goal, icon), Component.translatable("data_center_addon.delivery.goal.hint."
+                        + goalKind(goal).name().toLowerCase(Locale.ROOT)).withStyle(net.minecraft.ChatFormatting.GRAY));
+            }
+            ty += 22;
+        }
+
+        ty += 2;
+        g.drawString(font, GuiText.fit(font, Component.translatable("data_center_addon.delivery.detail.pay",
+                GuiText.compactUsd(d.payCents()), d.reputation()).getString(), pw), px, ty, TechPanel.GOOD, false);
+        ty += 11;
+        g.drawString(font, GuiText.fit(font, Component.translatable("data_center_addon.delivery.detail.fail", d.reputation())
+                .getString(), pw), px, ty, TechPanel.DANGER, false);
+
+        int by = y + h - ROW_H - 3;
+        int half = (pw - 4) / 2;
+        if (d.offer()) {
+            if (full) {
+                smallButton(g, px, by, half, trc("full"), 0xFF1A2028, mouseX, mouseY, null);
+            } else {
+                smallButton(g, px, by, half, trc("accept"), 0xFF2E6E8E, mouseX, mouseY,
+                        () -> sendDelivery(d, DeliveryService.Action.ACCEPT));
+            }
+            smallButton(g, px + half + 4, by, half, trd("decline"), TechPanel.SLOT_BG, mouseX, mouseY,
+                    () -> sendDelivery(d, DeliveryService.Action.DECLINE));
+        } else {
+            smallButton(g, px, by, half, trd("deliver"), d.canDeliver() ? 0xFF2E6E8E : TechPanel.SLOT_BG, mouseX, mouseY,
+                    d.canDeliver() ? () -> sendDelivery(d, DeliveryService.Action.DELIVER) : null);
+            boolean confirming = confirmCancel == -d.id() - 1 && System.currentTimeMillis() < confirmUntil;
+            smallButton(g, px + half + 4, by, half, trc(confirming ? "confirm" : "cancel"),
+                    confirming ? TechPanel.DANGER : TechPanel.SLOT_BG, mouseX, mouseY, () -> {
+                        if (confirmCancel == -d.id() - 1 && System.currentTimeMillis() < confirmUntil) {
+                            confirmCancel = -1;
+                            sendDelivery(d, DeliveryService.Action.CANCEL);
+                        } else {
+                            confirmCancel = -d.id() - 1;
+                            confirmUntil = System.currentTimeMillis() + 3000;
+                        }
+                    });
+        }
+    }
+
+    private static DeliveryService.GoalKind goalKind(HostingSnapshot.Goal goal) {
+        DeliveryService.GoalKind[] kinds = DeliveryService.GoalKind.values();
+        return goal.kind() >= 0 && goal.kind() < kinds.length ? kinds[goal.kind()] : DeliveryService.GoalKind.ITEM;
+    }
+
+    private static Component goalName(HostingSnapshot.Goal goal, ItemStack icon) {
+        DeliveryService.GoalKind kind = goalKind(goal);
+        return kind == DeliveryService.GoalKind.ITEM ? icon.getHoverName()
+                : Component.translatable("data_center_addon.delivery.goal." + kind.name().toLowerCase(Locale.ROOT));
+    }
+
+    private void sendDelivery(HostingSnapshot.Delivery d, DeliveryService.Action action) {
+        PacketDistributor.sendToServer(new HostingManagerPayloads.DeliveryChange(menu.managerPos(), d.id(), action));
+    }
+
+    private static String trd(String key) {
+        return Component.translatable("data_center_addon.delivery." + key).getString();
+    }
+
+    // ------------------------------------------------------------------ reservations
+
+    private void reservations(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
         List<HostingSnapshot.Contract> active = s.activeContracts();
         List<HostingSnapshot.Contract> offers = s.offers();
         if (active.isEmpty() && offers.isEmpty()) {

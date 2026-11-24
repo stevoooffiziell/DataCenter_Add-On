@@ -76,6 +76,24 @@ public final class HostingManagerPayloads {
         }
     }
 
+    /** Accept, decline, deliver to or cancel a delivery order, from the manager's Contracts tab. */
+    public record DeliveryChange(BlockPos manager, int delivery, DeliveryService.Action action) implements CustomPacketPayload {
+        public static final Type<DeliveryChange> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(Data_center_addon.MODID, "hosting_delivery"));
+        public static final StreamCodec<FriendlyByteBuf, DeliveryChange> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeBlockPos(c.manager);
+                    buf.writeVarInt(c.delivery);
+                    buf.writeEnum(c.action);
+                },
+                buf -> new DeliveryChange(buf.readBlockPos(), buf.readVarInt(), buf.readEnum(DeliveryService.Action.class)));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar("1");
@@ -93,6 +111,14 @@ public final class HostingManagerPayloads {
             if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
                     && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
                 ContractService.apply(level, DataCenterApi.accountOf(level, player.getUUID()), payload.contract(), payload.action());
+                sendSnapshot(player, level, payload.manager());
+            }
+        });
+        registrar.playToServer(DeliveryChange.TYPE, DeliveryChange.STREAM_CODEC, (payload, context) -> {
+            if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
+                    && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
+                DeliveryService.apply(player, level, DataCenterApi.accountOf(level, player.getUUID()), payload.delivery(),
+                        payload.action());
                 sendSnapshot(player, level, payload.manager());
             }
         });

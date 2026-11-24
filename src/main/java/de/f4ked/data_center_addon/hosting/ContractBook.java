@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -30,6 +31,10 @@ public final class ContractBook extends SavedData {
         int nextId = 1;
         /** Epoch day of the last in-game day that was settled; -1 before the first. */
         long lastDay = -1;
+        /** Delivery orders: offers, running ones, and whether the first offers were made. */
+        final List<Delivery> deliveryOffers = new ArrayList<>();
+        final List<Delivery> deliveries = new ArrayList<>();
+        boolean deliveriesSeeded;
 
         public List<Contract> offers() {
             return offers;
@@ -112,6 +117,116 @@ public final class ContractBook extends SavedData {
         }
     }
 
+    /** One thing a delivery order asks for: {@code count} items matching {@code kind} (and {@code item} for ITEM). */
+    public static final class Goal {
+        final DeliveryService.GoalKind kind;
+        /** ITEM: the item wanted; other kinds: the item shown as icon. */
+        final ResourceLocation item;
+        final int count;
+        int delivered;
+
+        Goal(DeliveryService.GoalKind kind, ResourceLocation item, int count) {
+            this.kind = kind;
+            this.item = item;
+            this.count = count;
+        }
+
+        boolean done() {
+            return delivered >= count;
+        }
+
+        CompoundTag save() {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("kind", kind.name());
+            tag.putString("item", item.toString());
+            tag.putInt("count", count);
+            tag.putInt("delivered", delivered);
+            return tag;
+        }
+
+        static Goal load(CompoundTag tag) {
+            DeliveryService.GoalKind kind;
+            try {
+                kind = DeliveryService.GoalKind.valueOf(tag.getString("kind"));
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+            ResourceLocation item = ResourceLocation.tryParse(tag.getString("item"));
+            if (item == null) {
+                return null;
+            }
+            Goal goal = new Goal(kind, item, Math.max(1, tag.getInt("count")));
+            goal.delivered = tag.getInt("delivered");
+            return goal;
+        }
+    }
+
+    /**
+     * A delivery order (offer or running): a client wants the goods of its {@link Goal}s delivered to a
+     * Hosting Manager before {@code dueDay} and pays {@code payCents} and reputation when all are in.
+     */
+    public static final class Delivery {
+        final int id;
+        final int client;
+        final List<Goal> goals;
+        final long payCents;
+        final int reputation;
+        /** In-game days the client gives from accepting. */
+        final int days;
+        /** Offer: last epoch day it can be taken. Running: last epoch day to deliver. */
+        long lastDay;
+
+        Delivery(int id, int client, List<Goal> goals, long payCents, int reputation, int days, long lastDay) {
+            this.id = id;
+            this.client = client;
+            this.goals = goals;
+            this.payCents = payCents;
+            this.reputation = reputation;
+            this.days = days;
+            this.lastDay = lastDay;
+        }
+
+        boolean complete() {
+            for (Goal goal : goals) {
+                if (!goal.done()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        CompoundTag save() {
+            CompoundTag tag = new CompoundTag();
+            tag.putInt("id", id);
+            tag.putInt("client", client);
+            ListTag list = new ListTag();
+            for (Goal goal : goals) {
+                list.add(goal.save());
+            }
+            tag.put("goals", list);
+            tag.putLong("pay", payCents);
+            tag.putInt("reputation", reputation);
+            tag.putInt("days", days);
+            tag.putLong("lastDay", lastDay);
+            return tag;
+        }
+
+        static Delivery load(CompoundTag tag) {
+            List<Goal> goals = new ArrayList<>();
+            for (Tag t : tag.getList("goals", Tag.TAG_COMPOUND)) {
+                Goal goal = Goal.load((CompoundTag) t);
+                if (goal != null) {
+                    goals.add(goal);
+                }
+            }
+            if (goals.isEmpty()) {
+                return null;
+            }
+            return new Delivery(tag.getInt("id"), tag.getInt("client"), goals, tag.getLong("pay"), tag.getInt("reputation"),
+                    tag.getInt("days"), tag.getLong("lastDay"));
+        }
+    }
+
     public static ContractBook get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
                 new SavedData.Factory<>(ContractBook::new, ContractBook::load, null), NAME);
@@ -136,6 +251,9 @@ public final class ContractBook extends SavedData {
             a.putLong("lastDay", account.lastDay);
             a.put("offers", saveAll(account.offers));
             a.put("active", saveAll(account.active));
+            a.put("deliveryOffers", saveDeliveries(account.deliveryOffers));
+            a.put("deliveries", saveDeliveries(account.deliveries));
+            a.putBoolean("deliveriesSeeded", account.deliveriesSeeded);
             list.add(a);
         }
         tag.put("accounts", list);
@@ -159,9 +277,29 @@ public final class ContractBook extends SavedData {
             account.lastDay = a.contains("lastDay") ? a.getLong("lastDay") : -1;
             loadAll(a.getList("offers", Tag.TAG_COMPOUND), account.offers);
             loadAll(a.getList("active", Tag.TAG_COMPOUND), account.active);
+            loadDeliveries(a.getList("deliveryOffers", Tag.TAG_COMPOUND), account.deliveryOffers);
+            loadDeliveries(a.getList("deliveries", Tag.TAG_COMPOUND), account.deliveries);
+            account.deliveriesSeeded = a.getBoolean("deliveriesSeeded");
             book.accounts.put(a.getUUID("account"), account);
         }
         return book;
+    }
+
+    private static ListTag saveDeliveries(List<Delivery> deliveries) {
+        ListTag list = new ListTag();
+        for (Delivery d : deliveries) {
+            list.add(d.save());
+        }
+        return list;
+    }
+
+    private static void loadDeliveries(ListTag list, List<Delivery> into) {
+        for (Tag t : list) {
+            Delivery d = Delivery.load((CompoundTag) t);
+            if (d != null) {
+                into.add(d);
+            }
+        }
     }
 
     private static void loadAll(ListTag list, List<Contract> into) {

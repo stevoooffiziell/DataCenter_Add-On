@@ -40,6 +40,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue HOSTING_STORAGE_BOOST;
     private static final ModConfigSpec.BooleanValue CONTRACTS_ENABLED;
     private static final ModConfigSpec.DoubleValue CONTRACT_PAY;
+    private static final ModConfigSpec.BooleanValue DELIVERIES_ENABLED;
     private static final ModConfigSpec.BooleanValue HIDE_ORIGINAL_NETWORK;
     private static final ModConfigSpec.BooleanValue SWITCHES_NEED_POWER;
     private static final ModConfigSpec.BooleanValue CABLE_REACH_LIMITS;
@@ -75,6 +76,10 @@ public final class Config {
         CONTRACT_PAY = builder
                 .comment("Multiplier for what contracts pay (daily pay, bonus and penalty).")
                 .defineInRange("contractPayMultiplier", 1.0, 0.1, 10.0);
+        DELIVERIES_ENABLED = builder
+                .comment("Delivery orders in the Hosting Manager (preview): clients that want servers, parts, cables or",
+                        "switches delivered before a deadline. Uses contractPayMultiplier too.")
+                .define("deliveries", true);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -146,6 +151,10 @@ public final class Config {
 
     public static boolean contractsEnabled() {
         return !SPEC.isLoaded() || CONTRACTS_ENABLED.get();
+    }
+
+    public static boolean deliveriesEnabled() {
+        return !SPEC.isLoaded() || DELIVERIES_ENABLED.get();
     }
 
     public static double contractPayMultiplier() {

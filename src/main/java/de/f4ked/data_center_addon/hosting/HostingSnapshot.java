@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon.hosting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,51 @@ import java.util.List;
  * @param network     state of the compute network the manager is plugged into
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
-                              Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts) {
+                              Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
+                              List<Delivery> deliveries) {
 
-    public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of());
+    public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of(),
+            List.of());
+
+    /**
+     * A delivery order or an offer ({@link DeliveryService}).
+     *
+     * @param days     days the client gives from accepting
+     * @param daysLeft running: days left to deliver (1 = today is the last); offer: days it stays open
+     */
+    public record Delivery(int id, boolean offer, int client, List<Goal> goals, long payCents, int reputation, int days,
+                           int daysLeft) {
+        public int delivered() {
+            return goals.stream().mapToInt(Goal::delivered).sum();
+        }
+
+        public int total() {
+            return goals.stream().mapToInt(Goal::count).sum();
+        }
+
+        /** Whether the player carries something this delivery still needs. */
+        public boolean canDeliver() {
+            return goals.stream().anyMatch(g -> g.delivered < g.count && g.inInventory > 0);
+        }
+    }
+
+    /**
+     * One goal of a delivery.
+     *
+     * @param kind        {@code DeliveryService.GoalKind} ordinal
+     * @param item        the item wanted (ITEM) or shown as icon
+     * @param inInventory matching items in the viewing player's inventory
+     */
+    public record Goal(int kind, ResourceLocation item, int count, int delivered, int inInventory) {
+    }
+
+    public List<Delivery> runningDeliveries() {
+        return deliveries.stream().filter(d -> !d.offer).toList();
+    }
+
+    public List<Delivery> deliveryOffers() {
+        return deliveries.stream().filter(Delivery::offer).toList();
+    }
 
     /**
      * A running hosting contract or an offer ({@link ContractService}).
@@ -168,6 +211,24 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeFloat(c.metToday);
                     buf.writeVarInt(c.expiresIn);
                 }
+                buf.writeVarInt(s.deliveries.size());
+                for (Delivery d : s.deliveries) {
+                    buf.writeVarInt(d.id);
+                    buf.writeBoolean(d.offer);
+                    buf.writeVarInt(d.client);
+                    buf.writeVarInt(d.goals.size());
+                    for (Goal g : d.goals) {
+                        buf.writeVarInt(g.kind);
+                        buf.writeResourceLocation(g.item);
+                        buf.writeVarInt(g.count);
+                        buf.writeVarInt(g.delivered);
+                        buf.writeVarInt(g.inInventory);
+                    }
+                    buf.writeVarLong(d.payCents);
+                    buf.writeVarInt(d.reputation);
+                    buf.writeVarInt(d.days);
+                    buf.writeVarInt(d.daysLeft);
+                }
             },
             buf -> {
                 boolean connected = buf.readBoolean();
@@ -193,7 +254,22 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                             buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
                             buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt()));
                 }
+                int deliveryCount = Math.min(buf.readVarInt(), 64);
+                List<Delivery> deliveries = new ArrayList<>(deliveryCount);
+                for (int i = 0; i < deliveryCount; i++) {
+                    int id = buf.readVarInt();
+                    boolean offer = buf.readBoolean();
+                    int client = buf.readVarInt();
+                    int goalCount = Math.min(buf.readVarInt(), 8);
+                    List<Goal> goals = new ArrayList<>(goalCount);
+                    for (int j = 0; j < goalCount; j++) {
+                        goals.add(new Goal(buf.readVarInt(), buf.readResourceLocation(), buf.readVarInt(), buf.readVarInt(),
+                                buf.readVarInt()));
+                    }
+                    deliveries.add(new Delivery(id, offer, client, List.copyOf(goals), buf.readVarLong(), buf.readVarInt(),
+                            buf.readVarInt(), buf.readVarInt()));
+                }
                 return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
-                        List.copyOf(segments), List.copyOf(contracts));
+                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries));
             });
 }

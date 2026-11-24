@@ -104,7 +104,7 @@ public final class ContractService {
     @SubscribeEvent
     static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
-        if (!Config.contractsEnabled() || server.getTickCount() % SAMPLE_TICKS != 0) {
+        if (!(Config.contractsEnabled() || Config.deliveriesEnabled()) || server.getTickCount() % SAMPLE_TICKS != 0) {
             return;
         }
         ServerLevel level = server.overworld();
@@ -134,7 +134,11 @@ public final class ContractService {
             } else if (today > account.lastDay) {
                 int days = (int) Math.min(MAX_CATCH_UP_DAYS, today - account.lastDay);
                 for (int i = 0; i < days; i++) {
-                    settleDay(level, accountId, account, account.lastDay + i + 1);
+                    long day = account.lastDay + i + 1;
+                    if (Config.contractsEnabled()) {
+                        settleDay(level, accountId, account, day);
+                    }
+                    DeliveryService.settleDay(level, accountId, account, day);
                 }
                 account.lastDay = today;
                 dirty = true;
@@ -241,7 +245,7 @@ public final class ContractService {
                 today.toEpochDay() + OFFER_DAYS);
     }
 
-    private static int pickClient(int cls, HostingProduct product, RandomSource random) {
+    static int pickClient(int cls, HostingProduct product, RandomSource random) {
         if (product == HostingProduct.SHARED_GAME && cls == 0) {
             return GAMING_CLAN;
         }
