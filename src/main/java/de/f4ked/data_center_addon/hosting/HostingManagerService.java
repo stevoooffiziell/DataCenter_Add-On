@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon.hosting;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingCustomers;
+import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
@@ -95,7 +96,8 @@ public final class HostingManagerService {
             HostingProduct product = rack.getProduct();
             long centsPerDay = Math.round(rack.getLastUsdCentsPerTick() * ticksPerDay);
             racks.add(new HostingSnapshot.Rack(pos, product == null ? -1 : product.ordinal(), rack.getModeCustomers(),
-                    rack.getModeCapacity(), centsPerDay, rack.getModeStatus(), rack.getHostingFill()));
+                    rack.getModeCapacity(), centsPerDay, rack.getModeStatus(), rack.getHostingFill(),
+                    licenceBound(product, rack, centsPerDay)));
             if (product != null) {
                 double[] pool = pools.computeIfAbsent(new Pool(OwnerMessages.ownerOf(level, pos), product), p -> new double[2]);
                 pool[0] += rack.getModeCustomers();
@@ -107,6 +109,18 @@ public final class HostingManagerService {
         HostingReputation reputation = HostingReputation.get(level, account);
         return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()), reputation.getUnlockedClass().ordinal(),
                 foreign, network(level, manager), List.copyOf(racks), segments(level, pools));
+    }
+
+    /**
+     * Whether a shared hosting rack has customers but earns nothing because of the control panel
+     * licence. Data Center bills each server {@code paying * unitNet - 30} USD a month (the licence
+     * applies with software enabled, to every shared offer but game servers) and cuts negative results
+     * to zero, so a running rack whose servers each hold too few customers shows $0.
+     */
+    private static boolean licenceBound(@Nullable HostingProduct product, HostingRackBlockEntity rack, long centsPerDay) {
+        return product != null && product.mode() == HostingMode.SHARED && product != HostingProduct.SHARED_GAME
+                && com.example.datacenter.Config.SOFTWARE_ENABLED.get()
+                && rack.getModeStatus() == 0 && rack.getModeCustomers() >= 0.5 && centsPerDay <= 0;
     }
 
     /** Capacity and use of the manager's network, with the add-on's cable warnings. */

@@ -197,6 +197,17 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             g.drawString(font, GuiText.fit(font, "⚠ " + warning.getString(), w), x, ny + 1,
                     net.unpoweredSwitches() > 0 ? TechPanel.DANGER : TechPanel.WARN, false);
         }
+        int licenceBound = s.licenceBoundRacks();
+        if (licenceBound > 0) {
+            ny += 14;
+            Component warning = Component.literal("⚠ ")
+                    .append(Component.translatable("data_center_addon.hosting.overview.licence", licenceBound));
+            List<FormattedCharSequence> lines = font.split(warning, w);
+            for (int i = 0; i < lines.size() && i < 2; i++) {
+                g.drawString(font, lines.get(i), x, ny + 1 + i * 10, TechPanel.WARN, false);
+            }
+            ny += Math.min(lines.size(), 2) * 10 - 10;
+        }
 
         // per product
         int ty = ny + 22;
@@ -297,8 +308,11 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
                     col, 2, ty, TechPanel.TEXT);
             text(g, percent(total <= 0 ? 0 : (float) (rack.customers() / total)), col, 3, ty, TechPanel.TEXT_MUTED);
             text(g, GuiText.compactUsd(rack.centsPerDay()), col, 4, ty, TechPanel.GOOD);
-            g.drawString(font, GuiText.fit(font, statusName(rack.status()).getString(), x + w - col[5]), col[5], ty + TEXT_DY,
-                    rack.status() == 0 ? TechPanel.GOOD : TechPanel.WARN, false);
+            Component status = rack.licenceBound()
+                    ? Component.translatable("data_center_addon.hosting.status.licence")
+                    : statusName(rack.status());
+            g.drawString(font, GuiText.fit(font, status.getString(), x + w - col[5]), col[5], ty + TEXT_DY,
+                    rack.status() == 0 && !rack.licenceBound() ? TechPanel.GOOD : TechPanel.WARN, false);
             buttons.add(new Button(x, ty, w, ROW_H, () -> selected = rack.pos()));
             ty += ROW_H;
         }
@@ -312,9 +326,13 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
             return;
         }
         BlockPos p = current.pos();
-        g.drawString(font, Component.translatable("data_center_addon.hosting.racks.selected", p.getX(), p.getY(), p.getZ()),
-                x, py, TechPanel.TEXT, false);
+        Component selectedLabel = Component.translatable("data_center_addon.hosting.racks.selected", p.getX(), p.getY(), p.getZ());
+        g.drawString(font, selectedLabel, x, py, TechPanel.TEXT, false);
         HostingSnapshot.Rack rack = current;
+        if (rack.licenceBound()) {
+            int hx = x + font.width(selectedLabel) + 10;
+            g.drawString(font, GuiText.fit(font, tr("racks.licence_hint"), x + w - hx), hx, py, TechPanel.WARN, false);
+        }
         int by = py + 16;
         String productLabel = tr("column.product");
         int labelW = font.width(productLabel);

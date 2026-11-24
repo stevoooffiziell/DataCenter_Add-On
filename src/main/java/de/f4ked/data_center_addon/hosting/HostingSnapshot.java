@@ -42,8 +42,22 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param centsPerDay income per in-game day
      * @param status     {@code HostingRackBlockEntity.MODE_*}
      * @param fill       target fill in percent (shared hosting and VPS)
+     * @param licenceBound shared hosting rack with customers that earns nothing: on every server the
+     *                   control panel licence ($30 a month) is higher than what its customers pay
      */
-    public record Rack(BlockPos pos, int product, double customers, double capacity, long centsPerDay, int status, int fill) {
+    public record Rack(BlockPos pos, int product, double customers, double capacity, long centsPerDay, int status, int fill,
+                       boolean licenceBound) {
+    }
+
+    /** Racks of this snapshot that earn nothing because of the control panel licence. */
+    public int licenceBoundRacks() {
+        int count = 0;
+        for (Rack rack : racks) {
+            if (rack.licenceBound) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /** Customers of one {@code CustomerSegment} on the racks of this network, and their share of the income. */
@@ -85,6 +99,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarLong(r.centsPerDay);
                     buf.writeVarInt(r.status);
                     buf.writeVarInt(r.fill);
+                    buf.writeBoolean(r.licenceBound);
                 }
                 buf.writeVarInt(s.segments.size());
                 for (Segment g : s.segments) {
@@ -103,7 +118,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 List<Rack> racks = new ArrayList<>(rackCount);
                 for (int i = 0; i < rackCount; i++) {
                     racks.add(new Rack(buf.readBlockPos(), buf.readVarInt() - 1, buf.readDouble(), buf.readDouble(),
-                            buf.readVarLong(), buf.readVarInt(), buf.readVarInt()));
+                            buf.readVarLong(), buf.readVarInt(), buf.readVarInt(), buf.readBoolean()));
                 }
                 int segmentCount = Math.min(buf.readVarInt(), 64);
                 List<Segment> segments = new ArrayList<>(segmentCount);
