@@ -19,10 +19,23 @@ import java.util.List;
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
                               Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
-                              List<Delivery> deliveries, Startup startup) {
+                              List<Delivery> deliveries, Startup startup, double ticksPerDay) {
 
     public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of(),
-            List.of(), Startup.NONE);
+            List.of(), Startup.NONE, 1000);
+
+    /** Ticks in one real hour (the unit of the Hosting Rack's own "Rate: $/h"). */
+    public static final double TICKS_PER_HOUR = 20.0 * 3600.0;
+
+    /** An amount per in-game day as an amount per real hour. */
+    public long perHour(long centsPerDay) {
+        return ticksPerDay <= 0 ? 0 : Math.round(centsPerDay * TICKS_PER_HOUR / ticksPerDay);
+    }
+
+    /** What the running start bonus pays per in-game day on top of the racks' income (0 when none runs). */
+    public long startBonusCentsPerDay() {
+        return startup.started() && !startup.veteran() ? Math.round(totalCentsPerDay() * startup.bonusFactor()) : 0;
+    }
 
     /**
      * The founding phase of the viewer's company ({@link StartupService}).
@@ -317,6 +330,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 buf.writeVarLong(pp.receivedCents);
                 buf.writeVarLong(pp.openCents);
                 buf.writeVarInt(pp.customers);
+                buf.writeDouble(s.ticksPerDay);
             },
             buf -> {
                 boolean connected = buf.readBoolean();
@@ -390,6 +404,6 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                         grant, grantOffer, fees, loanOffer, loanTaken, loanOutstanding, loanGrace, loanInstalment, milestones,
                         List.copyOf(rewards), List.copyOf(tickets), prepay);
                 return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
-                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries), startup);
+                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries), startup, buf.readDouble());
             });
 }

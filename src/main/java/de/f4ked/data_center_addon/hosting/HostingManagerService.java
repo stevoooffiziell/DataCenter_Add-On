@@ -109,7 +109,7 @@ public final class HostingManagerService {
         return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()), reputation.getUnlockedClass().ordinal(),
                 foreign, network(level, manager), List.copyOf(racks), segments(level, pools), ContractService.snapshot(level, account),
                 DeliveryService.snapshot(level, account, ContractBook.get(level.getServer()).account(account), player.getInventory()),
-                StartupService.snapshot(level, account));
+                StartupService.snapshot(level, account), 24.0 / MiningEra.fictionalHoursPerTick());
     }
 
     /**

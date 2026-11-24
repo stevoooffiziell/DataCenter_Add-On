@@ -164,7 +164,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         }
         int ix = cx + 8, iy = cy + 8, iw = cw - 16, ih = ch - 16;
         switch (tab) {
-            case OVERVIEW -> overview(g, s, ix, iy, iw, ih);
+            case OVERVIEW -> overview(g, s, ix, iy, iw, ih, mouseX, mouseY);
             case SEGMENTS -> segments(g, s, ix, iy, iw, ih, mouseX, mouseY);
             case RACKS -> racks(g, s, ix, iy, iw, ih, mouseX, mouseY);
             case CONTRACTS -> contracts(g, s, ix, iy, iw, ih, mouseX, mouseY);
@@ -183,28 +183,42 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
 
     // ------------------------------------------------------------------ overview
 
-    private void overview(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h) {
-        long perDay = s.incomeCentsPerDay();
+    private void overview(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h, int mouseX, int mouseY) {
+        // income including the running start bonus; the hour is a real hour, as in the rack's own menu
+        long bonusPerDay = s.startBonusCentsPerDay();
+        long perDay = s.incomeCentsPerDay() + bonusPerDay;
         String[][] cards = {
                 {tr("overview.customers"), GuiText.compactNumber(Math.round(s.totalCustomers()))},
+                {tr("overview.per_hour"), GuiText.compactUsd(s.perHour(perDay))},
                 {tr("overview.per_day"), GuiText.compactUsd(perDay)},
                 {tr("overview.per_month"), GuiText.compactUsd(perDay * 30)},
                 {tr("overview.racks"), s.racks().size() + (s.foreignRacks() > 0 ? " (+" + s.foreignRacks() + ")" : "")},
         };
-        int gap = 6, cardW = (w - 3 * gap) / 4;
+        int gap = 6, cardW = (w - (cards.length - 1) * gap) / cards.length;
         for (int i = 0; i < cards.length; i++) {
             int bx = x + i * (cardW + gap);
             g.fill(bx, y, bx + cardW, y + CARD_H, TechPanel.SLOT_BG);
             g.fill(bx, y, bx + 2, y + CARD_H, TechPanel.ACCENT);
             g.drawString(font, GuiText.fit(font, cards[i][0], cardW - 12), bx + 8, y + 6, TechPanel.TEXT_MUTED, false);
             g.drawString(font, GuiText.fit(font, cards[i][1], cardW - 12), bx + 8, y + 20,
-                    i == 1 || i == 2 ? TechPanel.GOOD : TechPanel.TEXT, false);
+                    i >= 1 && i <= 3 ? TechPanel.GOOD : TechPanel.TEXT, false);
+            if (i >= 1 && i <= 3 && inside(mouseX, mouseY, bx, y, cardW, CARD_H)) {
+                tooltip = List.of(Component.literal(cards[i][0] + ": " + cards[i][1]),
+                        Component.translatable("data_center_addon.hosting.overview.time_note").withStyle(net.minecraft.ChatFormatting.GRAY));
+            }
+        }
+        int ry = y + CARD_H + 12;
+        if (bonusPerDay > 0) {
+            String bonus = Component.translatable("data_center_addon.hosting.overview.bonus",
+                    "+" + Math.round(s.startup().bonusFactor() * 100) + " %", GuiText.compactUsd(s.perHour(bonusPerDay)),
+                    GuiText.compactUsd(bonusPerDay)).getString();
+            g.drawString(font, GuiText.fit(font, bonus, w), x, y + CARD_H + 4, TechPanel.GOOD, false);
+            ry += 8;
         }
 
         // reputation and network: label | bar | value
         int labelW = 78, valueW = Math.max(130, w / 3);
         int barX = x + labelW, barW = w - labelW - valueW - 8;
-        int ry = y + CARD_H + 12;
         g.drawString(font, tr("overview.reputation"), x, ry + 1, TechPanel.TEXT_MUTED, false);
         TechPanel.bar(g, barX, ry, barW, 10, s.reputation() / 1000f, TechPanel.ACCENT);
         String rep = s.reputation() + " / 1000 · " + Component.translatable(CustomerClass.ofOrdinal(s.customerClass()).translationKey()).getString();
