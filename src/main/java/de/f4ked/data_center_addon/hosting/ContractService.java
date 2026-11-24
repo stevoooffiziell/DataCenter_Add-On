@@ -64,6 +64,11 @@ public final class ContractService {
     private static final int[] SIZE_MAX = {15, 30, 60, 120, 250};
     private static final int[] DAYS_MIN = {10, 14, 20, 25, 30};
     private static final int[] DAYS_MAX = {20, 28, 35, 45, 60};
+    /** Share of the offers that are emergency orders (short, well paid, open for one day). */
+    private static final float URGENT_CHANCE = 0.15f;
+    private static final double URGENT_PAY = 2.5;
+    /** Share of a hobbyist account's offers that are mini orders (a few places, no risk). */
+    private static final float MINI_CHANCE = 0.4f;
 
     public enum Action { ACCEPT, CANCEL }
 
@@ -172,13 +177,14 @@ public final class ContractService {
                 it.remove();
                 charge(level, accountId, c);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.failed",
-                        clientName(c), usd(c.penaltyCents), c.reputation * 2).withStyle(ChatFormatting.RED));
+                        clientName(c), usd(c.penaltyCents), c.reputationLoss()).withStyle(ChatFormatting.RED));
             } else if (c.daysDone >= c.days) {
                 it.remove();
                 DataCenterApi.deposit(level, accountId, c.bonusCents);
                 DataCenterApi.changeReputation(level, accountId, c.reputation);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.completed",
                         clientName(c), usd(c.bonusCents), c.reputation).withStyle(ChatFormatting.GREEN));
+                StartupService.award(level, accountId, Milestone.FIRST_CONTRACT);
             }
         }
         account.offers.removeIf(offer -> offer.expiresDay < day);
@@ -191,7 +197,9 @@ public final class ContractService {
     private static void charge(ServerLevel level, UUID accountId, ContractBook.Contract c) {
         long take = Math.min(c.penaltyCents, Math.max(0, DataCenterApi.balanceCents(level, accountId)));
         DataCenterApi.withdraw(level, accountId, take);
-        DataCenterApi.changeReputation(level, accountId, -2.0 * c.reputation);
+        if (c.reputationLoss() > 0) {
+            DataCenterApi.changeReputation(level, accountId, -c.reputationLoss());
+        }
     }
 
     // ------------------------------------------------------------------ offers
@@ -230,19 +238,32 @@ public final class ContractService {
         }
         HostingProduct product = products.isEmpty() ? HostingProduct.SHARED_WEB : products.get(random.nextInt(products.size()));
 
+        // hobbyist accounts often get mini orders; any account now and then an emergency order
+        boolean mini = unlocked == CustomerClass.HOBBYISTS && random.nextFloat() < MINI_CHANCE;
+        boolean urgent = !mini && random.nextFloat() < URGENT_CHANCE;
+
         double size = SIZE_MIN[cls] + random.nextDouble() * (SIZE_MAX[cls] - SIZE_MIN[cls]);
         int accounts = nice(Math.max(1, (int) Math.round(size * sizeScale(product))));
         int days = DAYS_MIN[cls] + random.nextInt(DAYS_MAX[cls] - DAYS_MIN[cls] + 1);
+        if (mini) {
+            accounts = 1 + random.nextInt(sizeScale(product) >= 0.5 ? 5 : 2);
+            days = 3 + random.nextInt(4);
+        } else if (urgent) {
+            days = 2 + random.nextInt(3);
+        }
         double monthlyUsd = accounts * HostingModeRates.unitUsd(product, today) * PAY_SHARE
-                * CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier();
+                * CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
         long perDay = Math.max(25, Math.round(monthlyUsd / 30.0 * 100));
         long bonus = perDay * days / 2;
-        long penalty = perDay * 5;
-        int reputation = 3 + cls * 4;
+        long penalty = mini ? 0 : perDay * (urgent ? 3 : 5);
+        int reputation = mini ? 1 : 3 + cls * 4 + (urgent ? 2 : 0);
 
         int client = pickClient(cls, product, random);
-        return new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus, penalty, reputation,
-                today.toEpochDay() + OFFER_DAYS);
+        ContractBook.Contract contract = new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus,
+                penalty, reputation, today.toEpochDay() + (urgent ? 0 : OFFER_DAYS));
+        contract.urgent = urgent;
+        contract.mini = mini;
+        return contract;
     }
 
     static int pickClient(int cls, HostingProduct product, RandomSource random) {
@@ -301,7 +322,7 @@ public final class ContractService {
                 account.active.remove(running);
                 charge(level, accountId, running);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.cancelled",
-                        clientName(running), usd(running.penaltyCents), running.reputation * 2).withStyle(ChatFormatting.RED));
+                        clientName(running), usd(running.penaltyCents), running.reputationLoss()).withStyle(ChatFormatting.RED));
             }
         }
         book.setDirty();
@@ -332,13 +353,15 @@ public final class ContractService {
             double f = free.computeIfAbsent(c.product, p -> freePlaces(level, accountId, p));
             float metToday = c.samples == 0 ? 1f : (float) c.samplesMet / c.samples;
             list.add(new HostingSnapshot.Contract(c.id, false, c.client, c.product.ordinal(), c.accounts, c.days, c.daysDone,
-                    c.strikes, c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, required.get(c.product), metToday, 0));
+                    c.strikes, c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, required.get(c.product), metToday, 0,
+                    c.urgent, c.mini));
         }
         for (ContractBook.Contract c : account.offers) {
             double f = free.computeIfAbsent(c.product, p -> freePlaces(level, accountId, p));
             int need = required.getOrDefault(c.product, 0) + c.accounts;
             list.add(new HostingSnapshot.Contract(c.id, true, c.client, c.product.ordinal(), c.accounts, c.days, 0, 0,
-                    c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, need, 1f, (int) Math.max(0, c.expiresDay - today + 1)));
+                    c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, need, 1f, (int) Math.max(0, c.expiresDay - today + 1),
+                    c.urgent, c.mini));
         }
         return List.copyOf(list);
     }

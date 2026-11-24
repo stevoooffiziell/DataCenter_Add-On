@@ -94,6 +94,23 @@ public final class HostingManagerPayloads {
         }
     }
 
+    /** Take or repay the founding loan, from the manager's Startup tab. */
+    public record StartupChange(BlockPos manager, StartupService.Action action) implements CustomPacketPayload {
+        public static final Type<StartupChange> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(Data_center_addon.MODID, "hosting_startup"));
+        public static final StreamCodec<FriendlyByteBuf, StartupChange> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeBlockPos(c.manager);
+                    buf.writeEnum(c.action);
+                },
+                buf -> new StartupChange(buf.readBlockPos(), buf.readEnum(StartupService.Action.class)));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar("1");
@@ -119,6 +136,13 @@ public final class HostingManagerPayloads {
                     && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
                 DeliveryService.apply(player, level, DataCenterApi.accountOf(level, player.getUUID()), payload.delivery(),
                         payload.action());
+                sendSnapshot(player, level, payload.manager());
+            }
+        });
+        registrar.playToServer(StartupChange.TYPE, StartupChange.STREAM_CODEC, (payload, context) -> {
+            if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
+                    && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
+                StartupService.apply(level, DataCenterApi.accountOf(level, player.getUUID()), payload.action());
                 sendSnapshot(player, level, payload.manager());
             }
         });

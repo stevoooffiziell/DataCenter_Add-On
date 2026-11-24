@@ -44,8 +44,10 @@ import java.util.function.Predicate;
  * <ul>
  *   <li>Offers appear next to the hosting contracts (up to {@link #MAX_OFFERS}, one new per in-game day,
  *       each open for {@link #OFFER_DAYS} days). Size and pay grow with the unlocked customer class.</li>
- *   <li>Goods are assembled servers, computer parts of a kind, or this add-on's cables and switches
- *       that exist at the current date.</li>
+ *   <li>Goods are assembled servers, computer parts of a kind, defective parts (scrap), or this
+ *       add-on's cables and switches that exist at the current date.</li>
+ *   <li>A young company ({@link StartupService#earlyPhase}) gets simpler orders: one goal of cables or
+ *       small parts, more time, more offers.</li>
  *   <li>"Deliver" takes matching items from the player's inventory; part deliveries count. When every
  *       goal is in, the client pays and the reputation rises. A missed deadline or a cancel costs
  *       reputation; what was delivered stays with the client.</li>
@@ -55,6 +57,8 @@ import java.util.function.Predicate;
 public final class DeliveryService {
     public static final int MAX_ACTIVE = 3;
     public static final int MAX_OFFERS = 3;
+    /** Offers a young company can have; it also gets two new offers a day. */
+    public static final int MAX_OFFERS_EARLY = 4;
     static final int OFFER_DAYS = 3;
 
     public enum Action { ACCEPT, DECLINE, DELIVER, CANCEL }
@@ -72,7 +76,9 @@ public final class DeliveryService {
         RAM(80),
         STORAGE(120),
         PSU(90),
-        FAN(25);
+        FAN(25),
+        /** Any defective computer part: bought as scrap. */
+        SCRAP(15);
 
         /** Pay per unit in dollars before the class multiplier (ITEM: from the item's price). */
         final int usd;
@@ -95,6 +101,7 @@ public final class DeliveryService {
             case ITEM -> BuiltInRegistries.ITEM.getKey(stack.getItem()).equals(goal.item);
             case SERVER -> isServer(stack, false);
             case GPU_SERVER -> isServer(stack, true);
+            case SCRAP -> ComponentCondition.isDefective(stack) && isPart(PartPacks.spec(stack));
             default -> !ComponentCondition.isDefective(stack) && partMatches(goal.kind, PartPacks.spec(stack));
         };
     }
@@ -109,6 +116,11 @@ public final class DeliveryService {
             case FAN -> spec instanceof FanSpec;
             default -> false;
         };
+    }
+
+    private static boolean isPart(Object spec) {
+        return spec instanceof ProcessorSpec || spec instanceof RamSpec || spec instanceof StorageSpec || spec instanceof PsuSpec
+                || spec instanceof FanSpec;
     }
 
     private static boolean isServer(ItemStack stack, boolean needGpu) {
@@ -153,9 +165,14 @@ public final class DeliveryService {
             }
         }
         account.deliveryOffers.removeIf(offer -> offer.lastDay < day);
-        if (account.deliveryOffers.size() < MAX_OFFERS) {
+        boolean early = StartupService.earlyPhase(level, accountId);
+        for (int i = 0; i < (early ? 2 : 1) && account.deliveryOffers.size() < maxOffers(early); i++) {
             account.deliveryOffers.add(newOffer(level, accountId, account, LocalDate.ofEpochDay(day), level.getRandom()));
         }
+    }
+
+    private static int maxOffers(boolean early) {
+        return early ? MAX_OFFERS_EARLY : MAX_OFFERS;
     }
 
     /** The first offers, made once per account when one of its players opens a Hosting Manager. */
@@ -164,7 +181,8 @@ public final class DeliveryService {
             return;
         }
         LocalDate today = DataCenterApi.currentDate(level);
-        while (account.deliveryOffers.size() < MAX_OFFERS) {
+        int max = maxOffers(StartupService.earlyPhase(level, accountId));
+        while (account.deliveryOffers.size() < max) {
             account.deliveryOffers.add(newOffer(level, accountId, account, today, level.getRandom()));
         }
         account.deliveriesSeeded = true;
@@ -178,11 +196,12 @@ public final class DeliveryService {
         CustomerClass unlocked = HostingReputation.get(level, accountId).getUnlockedClass();
         int cls = Math.max(random.nextInt(unlocked.ordinal() + 1), random.nextInt(unlocked.ordinal() + 1));
         double scale = 1 + cls * 0.75;
+        boolean early = StartupService.earlyPhase(level, accountId);
 
         List<ContractBook.Goal> goals = new ArrayList<>();
-        int wanted = random.nextFloat() < 0.35f ? 2 : 1;
+        int wanted = !early && random.nextFloat() < 0.35f ? 2 : 1;
         for (int attempt = 0; goals.size() < wanted && attempt < 10; attempt++) {
-            ContractBook.Goal goal = newGoal(cls, scale, today, random);
+            ContractBook.Goal goal = early ? newEarlyGoal(today, random) : newGoal(cls, scale, today, random);
             if (goal != null && goals.stream().noneMatch(g -> g.kind == goal.kind && g.item.equals(goal.item))) {
                 goals.add(goal);
             }
@@ -197,7 +216,7 @@ public final class DeliveryService {
         }
         usd *= CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier();
         long pay = Math.max(100, Math.round(usd) * 100);
-        int days = 4 + cls * 2 + random.nextInt(3) + (goals.size() - 1) * 2;
+        int days = 4 + cls * 2 + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
         int reputation = 2 + cls * 3;
         int client = ContractService.pickClient(cls, null, random);
         return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days, today.toEpochDay() + OFFER_DAYS);
@@ -211,13 +230,16 @@ public final class DeliveryService {
         if (roll < 30 && cls >= 2) {
             return new ContractBook.Goal(GoalKind.GPU_SERVER, icon(GoalKind.GPU_SERVER, random), between(random, 1, 2, scale * 0.6));
         }
-        if (roll < 62) {
+        if (roll < 56) {
             GoalKind[] parts = {GoalKind.CPU, GoalKind.GPU, GoalKind.RAM, GoalKind.RAM, GoalKind.STORAGE, GoalKind.PSU, GoalKind.FAN};
             GoalKind kind = parts[random.nextInt(parts.length)];
             int base = kind == GoalKind.FAN || kind == GoalKind.RAM ? 4 : 2;
             return new ContractBook.Goal(kind, icon(kind, random), between(random, base, base * 2, scale));
         }
-        if (roll < 84) {
+        if (roll < 64) {
+            return new ContractBook.Goal(GoalKind.SCRAP, icon(GoalKind.SCRAP, random), between(random, 2, 6, scale));
+        }
+        if (roll < 86) {
             List<CableType> cables = new ArrayList<>();
             for (CableType type : CableType.values()) {
                 if (!type.releaseDate.isAfter(today)) {
@@ -245,6 +267,25 @@ public final class DeliveryService {
         return new ContractBook.Goal(GoalKind.ITEM, itemId(NetworkContent.SWITCH_ITEMS.get(model).get()), cls >= 3 ? 2 : 1);
     }
 
+    /** A goal for a young company: cables of the time or a few small parts, things it can make or buy cheaply. */
+    private static ContractBook.Goal newEarlyGoal(LocalDate today, RandomSource random) {
+        if (random.nextFloat() < 0.6f) {
+            List<CableType> cables = new ArrayList<>();
+            for (CableType type : CableType.values()) {
+                if (!type.releaseDate.isAfter(today)) {
+                    cables.add(type);
+                }
+            }
+            if (!cables.isEmpty()) {
+                CableType type = cables.get(random.nextInt(cables.size()));
+                return new ContractBook.Goal(GoalKind.ITEM, itemId(NetworkContent.CABLE_ITEMS.get(type).get()), 4 + 4 * random.nextInt(3));
+            }
+        }
+        GoalKind[] small = {GoalKind.RAM, GoalKind.FAN, GoalKind.STORAGE, GoalKind.SCRAP};
+        GoalKind kind = small[random.nextInt(small.length)];
+        return new ContractBook.Goal(kind, icon(kind, random), 1 + random.nextInt(3));
+    }
+
     private static int between(RandomSource random, int min, int max, double scale) {
         return Math.max(1, (int) Math.round((min + random.nextInt(max - min + 1)) * scale));
     }
@@ -270,6 +311,7 @@ public final class DeliveryService {
     private static ResourceLocation icon(GoalKind kind, RandomSource random) {
         Predicate<ItemStack> test = switch (kind) {
             case SERVER, GPU_SERVER -> stack -> stack.getItem() instanceof ServerItem;
+            case SCRAP -> stack -> isPart(PartPacks.spec(stack));
             default -> stack -> partMatches(kind, PartPacks.spec(stack));
         };
         List<ResourceLocation> found = new ArrayList<>();
@@ -333,6 +375,7 @@ public final class DeliveryService {
                     DataCenterApi.changeReputation(level, accountId, d.reputation);
                     OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.completed",
                             clientName(d), ContractService.usd(d.payCents), d.reputation).withStyle(ChatFormatting.GREEN));
+                    StartupService.award(level, accountId, Milestone.FIRST_DELIVERY);
                 } else {
                     player.displayClientMessage(Component.translatable("data_center_addon.delivery.msg.delivered", taken), true);
                 }

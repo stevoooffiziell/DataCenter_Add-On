@@ -45,6 +45,21 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue SWITCHES_NEED_POWER;
     private static final ModConfigSpec.BooleanValue CABLE_REACH_LIMITS;
     private static final ModConfigSpec.BooleanValue INSTALL_QUESTS;
+    private static final ModConfigSpec.DoubleValue START_BONUS;
+    private static final ModConfigSpec.EnumValue<StartBonusMode> START_BONUS_MODE;
+    private static final ModConfigSpec.IntValue START_BONUS_DAYS;
+    private static final ModConfigSpec.IntValue START_BONUS_REVENUE;
+    private static final ModConfigSpec.IntValue FOUNDING_GRANT;
+    private static final ModConfigSpec.IntValue FOUNDING_LOAN;
+    private static final ModConfigSpec.IntValue FOUNDING_LOAN_GRACE;
+    private static final ModConfigSpec.IntValue FOUNDING_LOAN_REPAY;
+    private static final ModConfigSpec.IntValue VETERAN_REPUTATION;
+    private static final ModConfigSpec.DoubleValue SETUP_FEE;
+    private static final ModConfigSpec.DoubleValue MILESTONE_REWARDS;
+    private static final ModConfigSpec.BooleanValue SERVICE_TICKETS;
+
+    /** How the start bonus ends. */
+    public enum StartBonusMode { TIME, REVENUE }
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -80,6 +95,49 @@ public final class Config {
                 .comment("Delivery orders in the Hosting Manager (preview): clients that want servers, parts, cables or",
                         "switches delivered before a deadline. Uses contractPayMultiplier too.")
                 .define("deliveries", true);
+        builder.pop();
+
+        builder.comment("The founding phase of a hosting company: help to get the first money together.").push("startup");
+        START_BONUS = builder
+                .comment("Extra share of every hosting rack's income paid on top while the start bonus runs.",
+                        "2.0 = the racks earn three times as much. 0 turns the start bonus off.")
+                .defineInRange("startBonus", 2.0, 0.0, 10.0);
+        START_BONUS_MODE = builder
+                .comment("TIME: the bonus starts with the first rack income and fades out over startBonusDays in-game days.",
+                        "REVENUE: the full bonus until the racks have earned startBonusRevenueUsd, then it ends.")
+                .defineEnum("startBonusMode", StartBonusMode.TIME);
+        START_BONUS_DAYS = builder
+                .comment("In-game days the TIME start bonus fades out over.")
+                .defineInRange("startBonusDays", 120, 1, 3650);
+        START_BONUS_REVENUE = builder
+                .comment("Rack income in dollars until which the REVENUE start bonus runs.")
+                .defineInRange("startBonusRevenueUsd", 50_000, 1, 100_000_000);
+        FOUNDING_GRANT = builder
+                .comment("Founding grant in dollars, paid once with the first rack income. 0 turns it off.")
+                .defineInRange("foundingGrantUsd", 2_000, 0, 10_000_000);
+        FOUNDING_LOAN = builder
+                .comment("Founding loan in dollars, interest-free, taken once in the Hosting Manager. 0 turns it off.")
+                .defineInRange("foundingLoanUsd", 10_000, 0, 100_000_000);
+        FOUNDING_LOAN_GRACE = builder
+                .comment("In-game days after taking the founding loan before the first instalment is due.")
+                .defineInRange("foundingLoanGraceDays", 30, 0, 3650);
+        FOUNDING_LOAN_REPAY = builder
+                .comment("Daily instalments the founding loan is paid back in.")
+                .defineInRange("foundingLoanRepayDays", 60, 1, 3650);
+        VETERAN_REPUTATION = builder
+                .comment("An account that already has this much hosting reputation when the add-on first sees it is an",
+                        "established company: no start bonus and no founding grant.")
+                .defineInRange("veteranReputation", 150, 0, 1000);
+        SETUP_FEE = builder
+                .comment("One-time setup fee every new customer pays, in months of the product's list price. 0 turns it off.")
+                .defineInRange("setupFeeMonths", 1.0, 0.0, 12.0);
+        MILESTONE_REWARDS = builder
+                .comment("Multiplier for the milestone rewards (customers, customer classes, first contract, ...). 0 turns them off.")
+                .defineInRange("milestoneRewards", 1.0, 0.0, 100.0);
+        SERVICE_TICKETS = builder
+                .comment("Service tickets: clients ask you to look at one of your racks. Right-click the rack before the",
+                        "deadline to be paid.")
+                .define("serviceTickets", true);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -159,6 +217,54 @@ public final class Config {
 
     public static double contractPayMultiplier() {
         return SPEC.isLoaded() ? CONTRACT_PAY.get() : 1.0;
+    }
+
+    public static double startBonus() {
+        return SPEC.isLoaded() ? START_BONUS.get() : 2.0;
+    }
+
+    public static StartBonusMode startBonusMode() {
+        return SPEC.isLoaded() ? START_BONUS_MODE.get() : StartBonusMode.TIME;
+    }
+
+    public static int startBonusDays() {
+        return SPEC.isLoaded() ? START_BONUS_DAYS.get() : 120;
+    }
+
+    public static long startBonusRevenueCents() {
+        return (SPEC.isLoaded() ? START_BONUS_REVENUE.get() : 50_000) * 100L;
+    }
+
+    public static long foundingGrantCents() {
+        return (SPEC.isLoaded() ? FOUNDING_GRANT.get() : 2_000) * 100L;
+    }
+
+    public static long foundingLoanCents() {
+        return (SPEC.isLoaded() ? FOUNDING_LOAN.get() : 10_000) * 100L;
+    }
+
+    public static int foundingLoanGraceDays() {
+        return SPEC.isLoaded() ? FOUNDING_LOAN_GRACE.get() : 30;
+    }
+
+    public static int foundingLoanRepayDays() {
+        return SPEC.isLoaded() ? FOUNDING_LOAN_REPAY.get() : 60;
+    }
+
+    public static int veteranReputation() {
+        return SPEC.isLoaded() ? VETERAN_REPUTATION.get() : 150;
+    }
+
+    public static double setupFeeMonths() {
+        return SPEC.isLoaded() ? SETUP_FEE.get() : 1.0;
+    }
+
+    public static double milestoneRewards() {
+        return SPEC.isLoaded() ? MILESTONE_REWARDS.get() : 1.0;
+    }
+
+    public static boolean serviceTickets() {
+        return !SPEC.isLoaded() || SERVICE_TICKETS.get();
     }
 
     public static double hostingStorageBoost() {

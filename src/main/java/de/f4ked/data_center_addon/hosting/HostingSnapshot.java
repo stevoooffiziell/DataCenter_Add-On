@@ -19,10 +19,41 @@ import java.util.List;
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
                               Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
-                              List<Delivery> deliveries) {
+                              List<Delivery> deliveries, Startup startup) {
 
     public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of(),
-            List.of());
+            List.of(), Startup.NONE);
+
+    /**
+     * The founding phase of the viewer's company ({@link StartupService}).
+     *
+     * @param started          the first rack income was seen (the start bonus and grant start with it)
+     * @param veteran          an established company when first seen: no start bonus, no grant
+     * @param bonusFactor      extra share of rack income paid now (0 = no bonus)
+     * @param bonusMode        {@code Config.StartBonusMode} ordinal
+     * @param bonusDaysLeft    TIME: days until the bonus has faded out
+     * @param bonusRevenueLeft REVENUE: rack income in cents until the bonus ends
+     * @param grantOfferCents  founding grant paid with the first rack income (0 = none)
+     * @param loanOfferCents   founding loan on offer (0 = none)
+     * @param loanGraceDays    days until the first instalment (0 = repaying)
+     * @param milestones       {@link Milestone#bit()} of the milestones reached
+     * @param milestoneRewards reward in cents of every milestone, in {@link Milestone} order
+     */
+    public record Startup(boolean started, boolean veteran, double bonusFactor, int bonusMode, int bonusDaysLeft,
+                          long bonusRevenueLeft, long bonusPaidCents, long grantCents, long grantOfferCents, long feesPaidCents,
+                          long loanOfferCents, boolean loanTaken, long loanOutstandingCents, int loanGraceDays,
+                          long loanInstalmentCents, long milestones, List<Long> milestoneRewards, List<Ticket> tickets) {
+        public static final Startup NONE = new Startup(false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, 0, 0, 0, 0, List.of(),
+                List.of());
+
+        public boolean reached(Milestone milestone) {
+            return (milestones & milestone.bit()) != 0;
+        }
+    }
+
+    /** A service ticket: right-click the rack at {@code pos} before it runs out. */
+    public record Ticket(int id, BlockPos pos, int kind, long rewardCents, int daysLeft) {
+    }
 
     /**
      * A delivery order or an offer ({@link DeliveryService}).
@@ -77,9 +108,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      */
     public record Contract(int id, boolean offer, int client, int product, int accounts, int days, int daysDone, int strikes,
                            long centsPerDay, long bonusCents, long penaltyCents, int reputation, double free, int required,
-                           float metToday, int expiresIn) {
+                           float metToday, int expiresIn, boolean urgent, boolean mini) {
         public boolean covered() {
             return free >= required;
+        }
+
+        /** Reputation a failed or cancelled contract costs (mini contracts: none). */
+        public int reputationLoss() {
+            return mini ? 0 : reputation * 2;
         }
     }
 
@@ -210,6 +246,8 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(c.required);
                     buf.writeFloat(c.metToday);
                     buf.writeVarInt(c.expiresIn);
+                    buf.writeBoolean(c.urgent);
+                    buf.writeBoolean(c.mini);
                 }
                 buf.writeVarInt(s.deliveries.size());
                 for (Delivery d : s.deliveries) {
@@ -228,6 +266,35 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(d.reputation);
                     buf.writeVarInt(d.days);
                     buf.writeVarInt(d.daysLeft);
+                }
+                Startup st = s.startup;
+                buf.writeBoolean(st.started);
+                buf.writeBoolean(st.veteran);
+                buf.writeDouble(st.bonusFactor);
+                buf.writeVarInt(st.bonusMode);
+                buf.writeVarInt(st.bonusDaysLeft);
+                buf.writeVarLong(st.bonusRevenueLeft);
+                buf.writeVarLong(st.bonusPaidCents);
+                buf.writeVarLong(st.grantCents);
+                buf.writeVarLong(st.grantOfferCents);
+                buf.writeVarLong(st.feesPaidCents);
+                buf.writeVarLong(st.loanOfferCents);
+                buf.writeBoolean(st.loanTaken);
+                buf.writeVarLong(st.loanOutstandingCents);
+                buf.writeVarInt(st.loanGraceDays);
+                buf.writeVarLong(st.loanInstalmentCents);
+                buf.writeLong(st.milestones);
+                buf.writeVarInt(st.milestoneRewards.size());
+                for (long reward : st.milestoneRewards) {
+                    buf.writeVarLong(reward);
+                }
+                buf.writeVarInt(st.tickets.size());
+                for (Ticket t : st.tickets) {
+                    buf.writeVarInt(t.id);
+                    buf.writeBlockPos(t.pos);
+                    buf.writeVarInt(t.kind);
+                    buf.writeVarLong(t.rewardCents);
+                    buf.writeVarInt(t.daysLeft);
                 }
             },
             buf -> {
@@ -252,7 +319,8 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 for (int i = 0; i < contractCount; i++) {
                     contracts.add(new Contract(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
                             buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
-                            buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt()));
+                            buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readBoolean(),
+                            buf.readBoolean()));
                 }
                 int deliveryCount = Math.min(buf.readVarInt(), 64);
                 List<Delivery> deliveries = new ArrayList<>(deliveryCount);
@@ -269,7 +337,36 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     deliveries.add(new Delivery(id, offer, client, List.copyOf(goals), buf.readVarLong(), buf.readVarInt(),
                             buf.readVarInt(), buf.readVarInt()));
                 }
+                boolean started = buf.readBoolean();
+                boolean veteran = buf.readBoolean();
+                double bonusFactor = buf.readDouble();
+                int bonusMode = buf.readVarInt();
+                int bonusDaysLeft = buf.readVarInt();
+                long bonusRevenueLeft = buf.readVarLong();
+                long bonusPaid = buf.readVarLong();
+                long grant = buf.readVarLong();
+                long grantOffer = buf.readVarLong();
+                long fees = buf.readVarLong();
+                long loanOffer = buf.readVarLong();
+                boolean loanTaken = buf.readBoolean();
+                long loanOutstanding = buf.readVarLong();
+                int loanGrace = buf.readVarInt();
+                long loanInstalment = buf.readVarLong();
+                long milestones = buf.readLong();
+                int rewardCount = Math.min(buf.readVarInt(), 64);
+                List<Long> rewards = new ArrayList<>(rewardCount);
+                for (int i = 0; i < rewardCount; i++) {
+                    rewards.add(buf.readVarLong());
+                }
+                int ticketCount = Math.min(buf.readVarInt(), 16);
+                List<Ticket> tickets = new ArrayList<>(ticketCount);
+                for (int i = 0; i < ticketCount; i++) {
+                    tickets.add(new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
+                }
+                Startup startup = new Startup(started, veteran, bonusFactor, bonusMode, bonusDaysLeft, bonusRevenueLeft, bonusPaid,
+                        grant, grantOffer, fees, loanOffer, loanTaken, loanOutstanding, loanGrace, loanInstalment, milestones,
+                        List.copyOf(rewards), List.copyOf(tickets));
                 return new HostingSnapshot(connected, reputation, customerClass, foreign, network, List.copyOf(racks),
-                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries));
+                        List.copyOf(segments), List.copyOf(contracts), List.copyOf(deliveries), startup);
             });
 }

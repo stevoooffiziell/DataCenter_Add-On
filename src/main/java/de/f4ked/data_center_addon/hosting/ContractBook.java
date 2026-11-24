@@ -68,6 +68,10 @@ public final class ContractBook extends SavedData {
         int samplesMet;
         /** Whether the last measured day was met; days skipped by sleeping end the same way. Not saved. */
         boolean lastMet = true;
+        /** Emergency order: short, well paid, open for one day only. */
+        boolean urgent;
+        /** Small hobbyist order: a few places, no penalty, no reputation lost when it fails. */
+        boolean mini;
 
         Contract(int id, int client, HostingProduct product, int accounts, int days, long centsPerDay, long bonusCents,
                  long penaltyCents, int reputation, long expiresDay) {
@@ -99,7 +103,14 @@ public final class ContractBook extends SavedData {
             tag.putInt("strikes", strikes);
             tag.putInt("samples", samples);
             tag.putInt("met", samplesMet);
+            tag.putBoolean("urgent", urgent);
+            tag.putBoolean("mini", mini);
             return tag;
+        }
+
+        /** Reputation a failed or cancelled contract costs. */
+        int reputationLoss() {
+            return mini ? 0 : reputation * 2;
         }
 
         static Contract load(CompoundTag tag) {
@@ -113,6 +124,8 @@ public final class ContractBook extends SavedData {
             c.strikes = tag.getInt("strikes");
             c.samples = tag.getInt("samples");
             c.samplesMet = tag.getInt("met");
+            c.urgent = tag.getBoolean("urgent");
+            c.mini = tag.getBoolean("mini");
             return c;
         }
     }

@@ -21,7 +21,7 @@
 					id: "328CC3C38A3AB09F"
 					item: {
 						components: {
-							"datacenter:payment_cents": 5000
+							"datacenter:payment_cents": 50000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -56,7 +56,7 @@
 					id: "2B75B23D57A1399D"
 					item: {
 						components: {
-							"datacenter:payment_cents": 10000
+							"datacenter:payment_cents": 100000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -91,7 +91,7 @@
 					id: "395B75F2F7A4173C"
 					item: {
 						components: {
-							"datacenter:payment_cents": 1000
+							"datacenter:payment_cents": 10000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -121,7 +121,7 @@
 					id: "696D462D3EDB1F29"
 					item: {
 						components: {
-							"datacenter:payment_cents": 1000
+							"datacenter:payment_cents": 10000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -151,7 +151,7 @@
 					id: "72A076C7AC0C1FE9"
 					item: {
 						components: {
-							"datacenter:payment_cents": 1000
+							"datacenter:payment_cents": 10000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -181,7 +181,7 @@
 					id: "7C2C7A8E1EFA8D1E"
 					item: {
 						components: {
-							"datacenter:payment_cents": 5000
+							"datacenter:payment_cents": 30000
 						}
 						count: 1
 						id: "datacenter:payment_voucher"
@@ -202,6 +202,66 @@
 		}
 		{
 			dependencies: ["2ADA2F3196A10406"]
+			icon: {
+				id: "minecraft:gold_ingot"
+			}
+			id: "566E73DAA26CC95E"
+			rewards: [
+				{
+					id: "7C7D829C9A9E5D9D"
+					item: {
+						components: {
+							"datacenter:payment_cents": 50000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "40B75DFF50B22780"
+					type: "checkmark"
+				}
+			]
+			x: 10.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["566E73DAA26CC95E"]
+			icon: {
+				id: "minecraft:compass"
+			}
+			id: "5BB5BCF0188E00A9"
+			rewards: [
+				{
+					id: "2F461640168CD60F"
+					item: {
+						components: {
+							"datacenter:payment_cents": 20000
+						}
+						count: 1
+						id: "datacenter:payment_voucher"
+					}
+					type: "item"
+				}
+			]
+			shape: "circle"
+			size: 1.0d
+			tasks: [
+				{
+					id: "73101D80F5A00D30"
+					type: "checkmark"
+				}
+			]
+			x: 12.25d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5BB5BCF0188E00A9"]
 			icon: {
 				id: "data_center_addon:powered_server_panel"
 			}
@@ -232,7 +292,7 @@
 					type: "item"
 				}
 			]
-			x: 10.5d
+			x: 14.0d
 			y: 0.0d
 		}
 	]
