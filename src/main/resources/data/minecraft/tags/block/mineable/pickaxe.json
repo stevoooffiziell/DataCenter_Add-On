@@ -14,6 +14,7 @@
     "data_center_addon:smelter",
     "data_center_addon:rolling_mill",
     "data_center_addon:wire_drawer",
-    "data_center_addon:press"
+    "data_center_addon:press",
+    "data_center_addon:assembler"
   ]
 }

@@ -56,6 +56,12 @@ public final class IndustryContent {
     public static final DeferredItem<Item> PCB_BLANK = Data_center_addon.ITEMS.registerSimpleItem("pcb_blank");
     /** A silicon wafer, sliced from silicon: the base of microchips. */
     public static final DeferredItem<Item> WAFER = Data_center_addon.ITEMS.registerSimpleItem("wafer");
+    /** An etched circuit board: the base of every switch, server board and network card. */
+    public static final DeferredItem<Item> CIRCUIT_BOARD = Data_center_addon.ITEMS.registerSimpleItem("circuit_board");
+    /** Capacitors, rolled from copper foil in a plastic case. */
+    public static final DeferredItem<Item> CAPACITOR = Data_center_addon.ITEMS.registerSimpleItem("capacitor");
+    /** Connectors: gold contacts in a plastic body, for cables and boards. */
+    public static final DeferredItem<Item> CONNECTOR = Data_center_addon.ITEMS.registerSimpleItem("connector");
 
     // ------------------------------------------------------------------ factory machines
 
@@ -139,6 +145,9 @@ public final class IndustryContent {
         stacks.add(PLASTIC_PARTS.get().getDefaultInstance());
         stacks.add(PCB_BLANK.get().getDefaultInstance());
         stacks.add(WAFER.get().getDefaultInstance());
+        stacks.add(CIRCUIT_BOARD.get().getDefaultInstance());
+        stacks.add(CAPACITOR.get().getDefaultInstance());
+        stacks.add(CONNECTOR.get().getDefaultInstance());
         return List.copyOf(stacks);
     }
 

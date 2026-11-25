@@ -608,5 +608,9 @@
   "block.data_center_addon.press": "Presse",
   "item.data_center_addon.plastic_parts": "Kunststoffteile",
   "item.data_center_addon.pcb_blank": "Leiterplatten-Rohling",
-  "item.data_center_addon.wafer": "Silizium-Wafer"
+  "item.data_center_addon.wafer": "Silizium-Wafer",
+  "block.data_center_addon.assembler": "Bestückungsautomat",
+  "item.data_center_addon.circuit_board": "Platine",
+  "item.data_center_addon.capacitor": "Kondensator",
+  "item.data_center_addon.connector": "Steckverbinder"
 }

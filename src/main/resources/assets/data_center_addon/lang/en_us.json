@@ -608,5 +608,9 @@
   "block.data_center_addon.press": "Press",
   "item.data_center_addon.plastic_parts": "Plastic Parts",
   "item.data_center_addon.pcb_blank": "Circuit Board Blank",
-  "item.data_center_addon.wafer": "Silicon Wafer"
+  "item.data_center_addon.wafer": "Silicon Wafer",
+  "block.data_center_addon.assembler": "Assembler",
+  "item.data_center_addon.circuit_board": "Circuit Board",
+  "item.data_center_addon.capacitor": "Capacitor",
+  "item.data_center_addon.connector": "Connector"
 }

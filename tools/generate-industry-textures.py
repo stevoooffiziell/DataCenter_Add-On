@@ -32,6 +32,7 @@ MACHINES = {
     'rolling_mill': 0.58,  # steel blue
     'wire_drawer': 0.08,  # copper
     'press': 0.78,  # violet
+    'assembler': 0.33,  # green
 }
 
 
@@ -191,7 +192,64 @@ def wafer():
     return img
 
 
+def circuit_board():
+    """An etched circuit board: green with copper traces, solder pads and a gold edge connector."""
+    img = blank()
+    for y in range(3, 13):
+        for x in range(2, 14):
+            edge = x in (2, 13) or y in (3, 12)
+            img[y][x] = [0x16, 0x4E, 0x2A, 255] if edge else [0x22, 0x6C, 0x3A, 255]
+    trace = [0xC8, 0x9A, 0x50, 255]
+    for x in range(4, 12):
+        img[5][x] = trace
+    for y in range(5, 10):
+        img[y][11] = trace
+    for x in range(4, 9):
+        img[9][x] = trace
+    for y in range(7, 10):
+        img[y][4] = trace
+    for x, y in [(4, 5), (11, 5), (11, 9), (4, 9), (8, 9), (8, 7)]:
+        img[y][x] = [0xE8, 0xE8, 0xD8, 255]
+    for x in range(5, 12, 2):
+        img[12][x] = [0xF2, 0xC8, 0x4C, 255]
+    return img
+
+
+def capacitor():
+    """Two electrolytic capacitors: blue cylinders with a silver top and legs."""
+    img = blank()
+    for cx in (5, 11):
+        for y in range(3, 11):
+            for x in range(cx - 2, cx + 2):
+                light = 1.25 if x == cx - 2 else 0.8 if x == cx + 1 else 1.0
+                base = (0xB8, 0xBE, 0xC6) if y == 3 else (0x2E, 0x5C, 0xB8)
+                img[y][x] = [min(255, int(c * light)) for c in base] + [255]
+            img[y][cx + 1] = [0x88, 0x96, 0xB0, 255] if y in (4, 5) else img[y][cx + 1]
+        for y in range(11, 14):
+            img[y][cx - 1] = [0xA8, 0xA8, 0xA8, 255]
+            img[y][cx] = [0xA8, 0xA8, 0xA8, 255] if y < 13 else img[y][cx]
+    return img
+
+
+def connector():
+    """A connector: a black plastic body with a row of gold pins."""
+    img = blank()
+    for y in range(5, 11):
+        for x in range(2, 14):
+            edge = x in (2, 13) or y in (5, 10)
+            img[y][x] = [0x16, 0x18, 0x1C, 255] if edge else [0x26, 0x29, 0x2E, 255]
+    for x in range(4, 13, 2):
+        for y in range(7, 9):
+            img[y][x] = [0xF2, 0xC8, 0x4C, 255]
+        for y in range(11, 14):
+            img[y][x] = [0xC8, 0x9A, 0x2A, 255]
+    return img
+
+
 ITEMS = {
+    'circuit_board': circuit_board,
+    'capacitor': capacitor,
+    'connector': connector,
     'plastic_pellets': pellets,
     'plastic_parts': plastic_parts,
     'pcb_blank': pcb_blank,

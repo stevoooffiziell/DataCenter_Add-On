@@ -38,7 +38,16 @@ public enum MachineKind {
             of(() -> IndustryContent.PLASTIC_PARTS.get(), 2, 60, 25, in(() -> IndustryContent.PLASTIC_PELLETS.get(), 4)),
             of(() -> IndustryContent.PCB_BLANK.get(), 1, 100, 35, in(() -> IndustryContent.COPPER_FOIL.get(), 1),
                     in(() -> Items.GLASS, 1)),
-            of(() -> IndustryContent.WAFER.get(), 2, 120, 45, in(() -> IndustryContent.SILICON.get(), 1))));
+            of(() -> IndustryContent.WAFER.get(), 2, 120, 45, in(() -> IndustryContent.SILICON.get(), 1)))),
+
+    /** Pick-and-place: etched circuit boards, capacitors and connectors. */
+    ASSEMBLER(12_000_00L, () -> List.of(
+            of(() -> IndustryContent.CIRCUIT_BOARD.get(), 1, 100, 40, in(() -> IndustryContent.PCB_BLANK.get(), 1),
+                    in(() -> Items.REDSTONE, 1)),
+            of(() -> IndustryContent.CAPACITOR.get(), 2, 80, 30, in(() -> IndustryContent.COPPER_FOIL.get(), 1),
+                    in(() -> IndustryContent.PLASTIC_PARTS.get(), 1)),
+            of(() -> IndustryContent.CONNECTOR.get(), 2, 80, 30, in(() -> IndustryContent.GOLD_CONTACTS.get(), 2),
+                    in(() -> IndustryContent.PLASTIC_PARTS.get(), 1))));
 
     /** Shop price in US cents. */
     public final long priceCents;
