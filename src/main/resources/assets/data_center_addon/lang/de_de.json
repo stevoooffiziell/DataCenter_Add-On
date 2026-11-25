@@ -499,5 +499,7 @@
   "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
   "data_center_addon.reputation.class.renown": "Bekanntheit %s / %s",
   "data_center_addon.reputation.class.tier": "Raum: %s",
-  "data_center_addon.reputation.class.tip": "Eine Klasse braucht beides: Kleinunternehmen Ruf 80 %% und Bekanntheit 100, Mittelstand 90 %% und 200, Großunternehmen 95 %% und 400, Finanzen & Behörden 98 %% und 600. Ein Rack bedient nur die Klasse, die die Zertifizierung seines Raums erlaubt. Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt."
+  "data_center_addon.reputation.class.tip": "Eine Klasse braucht beides: Kleinunternehmen Ruf 80 %% und Bekanntheit 100, Mittelstand 90 %% und 200, Großunternehmen 95 %% und 400, Finanzen & Behörden 98 %% und 600. Ein Rack bedient nur die Klasse, die die Zertifizierung seines Raums erlaubt. Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt.",
+  "data_center_addon.configuration.orderRenown": "Bekanntheit aus Aufträgen",
+  "data_center_addon.configuration.orderRenown.tooltip": "Faktor für die Bekanntheit, die Aufträge und Lieferaufträge bringen und kosten."
 }

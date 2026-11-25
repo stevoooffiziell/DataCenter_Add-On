@@ -499,5 +499,7 @@
   "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
   "data_center_addon.reputation.class.renown": "Renown %s / %s",
   "data_center_addon.reputation.class.tier": "Room: %s",
-  "data_center_addon.reputation.class.tip": "A class needs both: Small Business Ruf 80 %% and renown 100, Mid-Market 90 %% and 200, Enterprise 95 %% and 400, Finance 98 %% and 600. A rack only serves the class its room's certification allows. A class is kept while Ruf stays within 5 %% and renown within 25 of it."
+  "data_center_addon.reputation.class.tip": "A class needs both: Small Business Ruf 80 %% and renown 100, Mid-Market 90 %% and 200, Enterprise 95 %% and 400, Finance 98 %% and 600. A rack only serves the class its room's certification allows. A class is kept while Ruf stays within 5 %% and renown within 25 of it.",
+  "data_center_addon.configuration.orderRenown": "Order renown",
+  "data_center_addon.configuration.orderRenown.tooltip": "Multiplier for the renown contracts and delivery orders give and cost."
 }

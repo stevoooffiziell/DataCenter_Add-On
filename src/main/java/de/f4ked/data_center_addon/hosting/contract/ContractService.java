@@ -260,7 +260,7 @@ public final class ContractService {
         long perDay = Math.max(25, Math.round(monthlyUsd / 30.0 * 100));
         long bonus = perDay * days / 2;
         long penalty = mini ? 0 : perDay * (urgent ? 3 : 5);
-        int reputation = mini ? 1 : 3 + cls * 4 + (urgent ? 2 : 0);
+        int reputation = (int) Math.round((mini ? 1 : 3 + cls * 4 + (urgent ? 2 : 0)) * Config.orderRenown());
 
         int client = pickClient(cls, product, random);
         ContractBook.Contract contract = new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus,

@@ -67,6 +67,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue WAIT_DAYS;
     private static final ModConfigSpec.BooleanValue SHARED_POOL;
     private static final ModConfigSpec.BooleanValue REPUTATION_MODEL;
+    private static final ModConfigSpec.DoubleValue ORDER_RENOWN;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -194,6 +195,10 @@ public final class Config {
                 .comment("Use the add-on's reputation model: running servers no longer earn reputation points by the hour;",
                         "reputation comes from events instead. false: Data Center's own reputation.")
                 .define("reputationModel", true);
+        ORDER_RENOWN = builder
+                .comment("Multiplier for the reputation (renown) contracts and delivery orders give and cost, with the",
+                        "reputation model on. Orders are meant to be the main source of renown.")
+                .defineInRange("orderRenown", 3.0, 0.0, 20.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -361,6 +366,14 @@ public final class Config {
 
     public static boolean reputationModel() {
         return !SPEC.isLoaded() || REPUTATION_MODEL.get();
+    }
+
+    /** The multiplier for order reputation; 1 with the reputation model off. */
+    public static double orderRenown() {
+        if (!reputationModel()) {
+            return 1.0;
+        }
+        return SPEC.isLoaded() ? ORDER_RENOWN.get() : 3.0;
     }
 
     public static double hostingStorageBoost() {

@@ -227,7 +227,7 @@ public final class DeliveryService {
         usd *= CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier();
         long pay = Math.max(100, Math.round(usd) * 100);
         int days = 4 + cls * 2 + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
-        int reputation = 2 + cls * 3;
+        int reputation = (int) Math.round((2 + cls * 3) * Config.orderRenown());
         int client = ContractService.pickClient(cls, null, random);
         return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days,
                 today.toEpochDay() + OFFER_DAYS - 1);
