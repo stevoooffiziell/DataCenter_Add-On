@@ -57,17 +57,26 @@ final class MarketTab implements ManagerTab {
         int rivalsH = m.rivals().isEmpty() ? 0 : 30;
         rivals(g, m, x, y + h - rivalsH + 4, w);
         h -= rivalsH;
+        int summaryY = y + h - 9;
+        h -= 14;
         int ty = y + 14;
         int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.57, 0.68, 0.80);
         panel.header(g, x, ty, w, col, "column.product", "column.pool", "column.reachable", "column.customers",
                 "column.inflow", "column.churn", "column.price");
         ty += ROW_H + 2;
         int index = 0;
+        // the summary line follows the row under the mouse, otherwise the product with the most customers
+        HostingSnapshot.MarketRow hovered = null, largest = null;
         for (HostingSnapshot.MarketRow row : m.rows()) {
             if (ty + ROW_H > y + h) {
                 break;
             }
-            Panel.stripe(g, x, ty, w, index++);
+            if (panel.row(g, x, ty, w, index++, false)) {
+                hovered = row;
+            }
+            if (largest == null || row.customers() > largest.customers()) {
+                largest = row;
+            }
             panel.cell(g, Texts.productName(row.product()).getString(), col, 0, ty, TechPanel.TEXT);
             panel.cell(g, GuiText.compactNumber(Math.round(row.pool())), col, 1, ty, TechPanel.TEXT);
             panel.cell(g, GuiText.compactNumber(Math.round(row.potential())), col, 2, ty, TechPanel.ACCENT);
@@ -93,6 +102,10 @@ final class MarketTab implements ManagerTab {
                 panel.tooltip(qualityTooltip(q));
             }
             ty += ROW_H;
+        }
+        HostingSnapshot.MarketRow summary = hovered != null ? hovered : largest;
+        if (summary != null) {
+            panel.line(g, Texts.marketSummary(summary).getString(), x, summaryY, w, TechPanel.TEXT);
         }
     }
 

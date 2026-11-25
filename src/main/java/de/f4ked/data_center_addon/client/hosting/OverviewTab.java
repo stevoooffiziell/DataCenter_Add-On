@@ -155,6 +155,11 @@ final class OverviewTab implements ManagerTab {
             ProductRow row = entry.getValue();
             Panel.stripe(g, x, ty, w, index++);
             panel.cell(g, Texts.productName(entry.getKey()).getString(), col, 0, ty, TechPanel.TEXT);
+            HostingSnapshot.MarketRow market = s.market().row(entry.getKey());
+            if (market != null && panel.hover(col[0], ty, col[1] - col[0], ROW_H)) {
+                panel.tooltip(List.of(Texts.marketSummary(market),
+                        Component.translatable("data_center_addon.market.summary.more").withStyle(ChatFormatting.GRAY)));
+            }
             panel.cell(g, Integer.toString(row.racks), col, 1, ty, TechPanel.TEXT);
             String customers = GuiText.compactNumber(Math.round(row.customers));
             g.drawString(panel.font, customers, col[2], ty + TEXT_DY, TechPanel.TEXT, false);

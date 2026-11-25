@@ -1,7 +1,10 @@
 package de.f4ked.data_center_addon.client.hosting;
 
+import com.example.datacenter.client.screen.GuiText;
+import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingProduct;
+import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
@@ -37,6 +40,23 @@ final class Texts {
     /** {@code data_center_addon.market.<key>} */
     static String market(String key) {
         return Component.translatable("data_center_addon.market." + key).getString();
+    }
+
+    /**
+     * "Market Shared Web: 4.2K · reachable 900 · you have 310 · next class (Mid-Market): +400", the
+     * summary of one product's market.
+     */
+    static Component marketSummary(HostingSnapshot.MarketRow row) {
+        Component product = productName(row.product());
+        String pool = GuiText.compactNumber(Math.round(row.pool()));
+        String reach = GuiText.compactNumber(Math.round(row.potential()));
+        String have = GuiText.compactNumber(Math.round(row.customers()));
+        if (row.nextClass() < 0) {
+            return Component.translatable("data_center_addon.market.summary.top", product, pool, reach, have);
+        }
+        return Component.translatable("data_center_addon.market.summary", product, pool, reach, have,
+                Component.translatable(CustomerClass.ofOrdinal(row.nextClass()).translationKey()),
+                "+" + GuiText.compactNumber(Math.round(row.nextGain())));
     }
 
     /** "5 d." */

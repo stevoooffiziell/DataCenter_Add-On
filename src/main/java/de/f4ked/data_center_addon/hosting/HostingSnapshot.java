@@ -378,6 +378,16 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
             return rows.stream().mapToDouble(MarketRow::waiting).sum();
         }
 
+        /** The row of a {@code HostingProduct} ordinal, or null. */
+        public MarketRow row(int product) {
+            for (MarketRow r : rows) {
+                if (r.product == product) {
+                    return r;
+                }
+            }
+            return null;
+        }
+
         public static final StreamCodec<FriendlyByteBuf, Market> STREAM_CODEC = StreamCodec.of(
                 (buf, m) -> {
                     buf.writeBoolean(m.model);
@@ -430,11 +440,13 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param rivalFactor factor of the reach from the competitors
      * @param sharing     factor of the reach from sharing the pool with other players
      * @param accounts    accounts sharing the pool (1 alone)
+     * @param nextClass   {@code CustomerClass} ordinal of the next class to unlock (-1: the highest is reached)
+     * @param nextGain    reachable customers the next class would add (its reputation and sub-pool)
      */
     public record MarketRow(int product, double pool, double market, double potential, double repFactor, double awareFactor,
                             double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
                             Quality quality, List<SegmentBoost> boosts, int priceStep, double priceFactor, double competition,
-                            double rivalFactor, double sharing, int accounts) {
+                            double rivalFactor, double sharing, int accounts, int nextClass, double nextGain) {
         public double orders() {
             return ordersGap + ordersWord;
         }
@@ -460,11 +472,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(r.rivalFactor);
                     buf.writeDouble(r.sharing);
                     buf.writeVarInt(r.accounts);
+                    buf.writeVarInt(r.nextClass + 1);
+                    buf.writeDouble(r.nextGain);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         Quality.STREAM_CODEC.decode(buf), readList(buf, SegmentBoost.STREAM_CODEC, 16), buf.readVarInt(),
-                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt()));
+                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(),
+                        buf.readVarInt() - 1, buf.readDouble()));
     }
 
     /**

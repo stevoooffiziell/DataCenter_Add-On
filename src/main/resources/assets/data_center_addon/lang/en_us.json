@@ -469,5 +469,8 @@
   "data_center_addon.market.reach.shared": "Shared with %s accounts: %s",
   "data_center_addon.market.reach.shared.tip": "Accounts that sell the same product share its pool: the stronger your share (reputation, classes, awareness, price), the more you keep.",
   "data_center_addon.configuration.sharedPool": "Shared pool (multiplayer)",
-  "data_center_addon.configuration.sharedPool.tooltip": "Accounts selling the same product share its pool and compete through reputation and price."
+  "data_center_addon.configuration.sharedPool.tooltip": "Accounts selling the same product share its pool and compete through reputation and price.",
+  "data_center_addon.market.summary": "Market %s: %s · reachable %s · you have %s · next class (%s): %s",
+  "data_center_addon.market.summary.top": "Market %s: %s · reachable %s · you have %s · highest class reached",
+  "data_center_addon.market.summary.more": "Details in the Market tab."
 }

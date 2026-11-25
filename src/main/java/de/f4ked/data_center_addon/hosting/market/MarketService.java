@@ -1,6 +1,7 @@
 package de.f4ked.data_center_addon.hosting.market;
 
 import com.example.datacenter.api.DataCenterApi;
+import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingReputation;
@@ -86,12 +87,24 @@ public final class MarketService {
                     MarketEvents.factor(level, product, date), Competitors.factor(market, product),
                     level.getServer().getTickCount(), false);
             double customers = book.total(account, product);
+            // what the next customer class would add: its reputation threshold, its sub-pool
+            CustomerClass next = CustomerClass.ofOrdinal(rep.getUnlockedClass().ordinal() + 1);
+            double nextGain = 0;
+            int nextClass = -1;
+            if (next.ordinal() > rep.getUnlockedClass().ordinal()) {
+                nextClass = next.ordinal();
+                MarketModel.Reach then = MarketModel.sharedReach(market, entry, product, date, Math.max(reputation, next.threshold),
+                        next, MarketEvents.factor(level, product, date), Competitors.factor(market, product),
+                        level.getServer().getTickCount(), false);
+                nextGain = Math.max(0, then.potential() - reach.potential());
+            }
             HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
                     nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.market(), reach.potential(),
                     reach.reputation(), reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap,
                     entry.ordersWord, quality, boosts(product, date), Config.marketModel() ? entry.priceStep() : 0,
-                    reach.price(), Competitors.competition(market, product), reach.rivals(), reach.sharing(), reach.accounts()));
+                    reach.price(), Competitors.competition(market, product), reach.rivals(), reach.sharing(), reach.accounts(),
+                    nextClass, nextGain));
         }
         return new HostingSnapshot.Market(Config.marketModel(), Config.sharedPool(), MarketPool.internetUsers(date),
                 MarketEvents.phase(level, date).ordinal(), MarketEvents.mood(level, date) * MarketEvents.web20(date),
