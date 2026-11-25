@@ -452,5 +452,12 @@
   "data_center_addon.market.event.web20_boom": "Web 2.0 boom",
   "data_center_addon.market.event.financial_crisis": "financial crisis",
   "data_center_addon.market.event.tip": "Market events change the size of the markets of shared hosting and VPS (not colocation). Customers above your potential leave over the months. Only in worlds that start before 2009, as in Data Center.",
-  "data_center_addon.market.pool.events": "Market events: %s"
+  "data_center_addon.market.pool.events": "Market events: %s",
+  "data_center_addon.hosting.column.price": "Price",
+  "data_center_addon.market.price.title": "Your price: %s of the list price",
+  "data_center_addon.market.price.pay": "Customers pay %s",
+  "data_center_addon.market.price.share": "Reachable share %s",
+  "data_center_addon.market.price.tip": "Cheaper brings more customers and less per customer, dearer the opposite. Setup fees and annual plans follow the price.",
+  "data_center_addon.market.reach.price": "Price: %s",
+  "data_center_addon.market.customers": "%s customers · %s of the market"
 }

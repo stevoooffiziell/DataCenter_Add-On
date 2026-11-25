@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * The add-on's customer model. Each product has a pool of potential customers ({@link MarketPool}); an
  * account reaches a share of it, its <b>potential</b>:
- * <pre>potential = pool × market events × base share × reputation × awareness × customer classes</pre>
+ * <pre>potential = pool × market events × base share × reputation × awareness × customer classes × price</pre>
  * <ul>
  *   <li><b>Market events</b>: dotcom boom and crash, Web 2.0 boom, financial crisis ({@link MarketEvents}).</li>
  *   <li><b>Base share</b>: {@code 1 / POOL_FACTOR}, so at 0 reputation and fully known the potential
@@ -27,6 +27,9 @@ import java.util.UUID;
  *   <li><b>Awareness</b>: ×0.5 for a product nobody knows the account for, up to ×1. It grows while the
  *       account offers places of the product (63 % of the way in {@link #AWARENESS_UP_MONTHS} game
  *       months) and fades slowly while it offers none.</li>
+ *   <li><b>Price</b>: the account sets each product's price from −30 % to +50 % of the list price. Each
+ *       10 % cheaper raises the share by {@link #PRICE_ELASTICITY} × 10 %, each 10 % dearer lowers it as
+ *       much. What the customers pay changes with the price.</li>
  * </ul>
  * New customers close the gap between potential and customers and come by word of mouth ({@link #step}).
  */
@@ -41,6 +44,11 @@ public final class MarketModel {
     static final double REPUTATION_MAX = 2.0;
     /** Size of each customer class's sub-pool, relative to the hobbyist pool, in {@link CustomerClass} order. */
     public static final double[] CLASS_POOLS = {1.0, 0.30, 0.30, 0.25, 0.20};
+    /** Price steps: 10 % each, from −30 % to +50 %. */
+    public static final double PRICE_STEP = 0.10;
+    public static final int PRICE_MIN = -3, PRICE_MAX = 5;
+    /** How strongly the share answers the price: share × (1 − elasticity × price change). */
+    static final double PRICE_ELASTICITY = 1.5;
     /** Share per game month of the customers above the potential that leave (a shrinking market, a lost class). */
     static final double OVER_POTENTIAL_LEAVE = 0.10;
 
@@ -55,8 +63,10 @@ public final class MarketModel {
      * @param reputation factor from reputation
      * @param awareness  factor from awareness (0.5..1)
      * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
+     * @param price      factor from the account's price
      */
-    public record Reach(double pool, double market, double reputation, double awareness, double classes, double potential) {
+    public record Reach(double pool, double market, double reputation, double awareness, double classes, double price,
+                        double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
         }
@@ -74,7 +84,23 @@ public final class MarketModel {
         double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
         double classes = classFactor(unlocked);
-        return new Reach(pool, market, rep, aware, classes, pool * BASE_SHARE * rep * aware * classes);
+        double price = Config.marketModel() ? demandFactor(entry.priceStep) : 1.0;
+        return new Reach(pool, market, rep, aware, classes, price, pool * BASE_SHARE * rep * aware * classes * price);
+    }
+
+    /** The price change of a step, e.g. +0.2 for two steps up. */
+    public static double priceChange(int step) {
+        return step * PRICE_STEP;
+    }
+
+    /** What the customers pay relative to the list price. */
+    public static double payFactor(int step) {
+        return 1 + priceChange(step);
+    }
+
+    /** How the price changes the share of the market the account reaches. */
+    public static double demandFactor(int step) {
+        return Math.max(0.1, 1 - PRICE_ELASTICITY * priceChange(step));
     }
 
     static double reputationFactor(double points) {

@@ -31,6 +31,8 @@ public final class MarketBook extends SavedData {
         double awareness = Double.NaN;
         /** New customers waiting for a free place. */
         double waiting;
+        /** Price in steps of {@link MarketModel#PRICE_STEP} from the list price ({@link MarketModel#PRICE_MIN}..{@link MarketModel#PRICE_MAX}). */
+        int priceStep;
         /** The last step's new customers per month: closing the gap, and by word of mouth (not saved). */
         double ordersGap, ordersWord;
         /** Averages of the service ({@link ServiceQuality}): downtime, overload, throttling, 0..1; NaN before the first report. */
@@ -42,6 +44,10 @@ public final class MarketBook extends SavedData {
 
         public double waiting() {
             return waiting;
+        }
+
+        public int priceStep() {
+            return priceStep;
         }
     }
 
@@ -84,6 +90,7 @@ public final class MarketBook extends SavedData {
                 if (p.contains("awareness")) {
                     e.awareness = clamp01(p.getDouble("awareness"));
                 }
+                e.priceStep = Math.max(MarketModel.PRICE_MIN, Math.min(MarketModel.PRICE_MAX, p.getInt("price")));
                 double waiting = p.getDouble("waiting");
                 e.waiting = Double.isFinite(waiting) ? Math.max(0, waiting) : 0;
                 if (p.contains("down")) {
@@ -108,6 +115,9 @@ public final class MarketBook extends SavedData {
                 }
                 if (e.waiting > 0) {
                     p.putDouble("waiting", e.waiting);
+                }
+                if (e.priceStep != 0) {
+                    p.putInt("price", e.priceStep);
                 }
                 if (!Double.isNaN(e.down)) {
                     p.putDouble("down", e.down);

@@ -11,6 +11,7 @@ import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import de.f4ked.data_center_addon.hosting.Money;
+import de.f4ked.data_center_addon.hosting.market.MarketService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
@@ -238,10 +239,12 @@ public final class StartupService {
             double before = a.lastCustomers[i];
             if (!Double.isNaN(before) && now > before) {
                 double joined = now - before;
+                // the account's own price (Market tab) counts for the fee and the annual plans
+                double multiplier = classMultiplier * MarketService.priceFactor(level, id, products[i]);
                 if (months > 0) {
-                    a.feeOwedCents += joined * HostingModeRates.unitUsd(products[i], date) * 100 * months * classMultiplier;
+                    a.feeOwedCents += joined * HostingModeRates.unitUsd(products[i], date) * 100 * months * multiplier;
                 }
-                Prepayments.joined(level, id, a, products[i], joined, date, classMultiplier);
+                Prepayments.joined(level, id, a, products[i], joined, date, multiplier);
             }
             if (Double.isNaN(before) || now > before) {
                 a.lastCustomers[i] = now;

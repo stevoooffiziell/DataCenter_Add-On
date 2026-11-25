@@ -5,6 +5,7 @@ import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.client.hosting.HostingManagerClient;
 import de.f4ked.data_center_addon.hosting.contract.ContractService;
 import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
+import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -117,6 +118,24 @@ public final class HostingManagerPayloads {
         }
     }
 
+    /** Raise or lower the price of a product by one step, from the manager's Market tab. */
+    public record PriceChange(BlockPos manager, int product, int delta) implements CustomPacketPayload {
+        public static final Type<PriceChange> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(Data_center_addon.MODID, "hosting_price"));
+        public static final StreamCodec<FriendlyByteBuf, PriceChange> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeBlockPos(c.manager);
+                    buf.writeVarInt(c.product);
+                    buf.writeVarInt(c.delta);
+                },
+                buf -> new PriceChange(buf.readBlockPos(), buf.readVarInt(), buf.readVarInt()));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
         // the add-on's version: the snapshot changes with most releases, so server and client must match
@@ -151,6 +170,13 @@ public final class HostingManagerPayloads {
             if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
                     && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
                 StartupService.apply(level, DataCenterApi.accountOf(level, player.getUUID()), payload.action());
+                sendSnapshot(player, level, payload.manager());
+            }
+        });
+        registrar.playToServer(PriceChange.TYPE, PriceChange.STREAM_CODEC, (payload, context) -> {
+            if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
+                    && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
+                MarketService.changePrice(level, DataCenterApi.accountOf(level, player.getUUID()), payload.product(), payload.delta());
                 sendSnapshot(player, level, payload.manager());
             }
         });

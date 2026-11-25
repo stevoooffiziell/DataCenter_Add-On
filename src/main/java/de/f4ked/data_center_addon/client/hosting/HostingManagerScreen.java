@@ -65,7 +65,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         tabs.put(Tab.RACKS, new RacksTab(panel, menu::managerPos));
         tabs.put(Tab.CONTRACTS, new ContractsTab(panel, menu::managerPos));
         tabs.put(Tab.STARTUP, new StartupTab(panel, menu::managerPos));
-        tabs.put(Tab.MARKET, new MarketTab(panel));
+        tabs.put(Tab.MARKET, new MarketTab(panel, menu::managerPos));
     }
 
     @Override

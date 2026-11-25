@@ -3,26 +3,34 @@ package de.f4ked.data_center_addon.client.hosting;
 import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import com.example.datacenter.hosting.CustomerSegment;
+import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import de.f4ked.data_center_addon.hosting.market.MarketEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import static de.f4ked.data_center_addon.client.hosting.Panel.ROW_H;
 import static de.f4ked.data_center_addon.client.hosting.Panel.TEXT_DY;
 
-/** Market: per product the pool of potential customers, the part the account reaches and its customers. */
+/**
+ * Market: per product the pool of potential customers, the part the account reaches, its customers, new
+ * customers and cancellations, and the account's price.
+ */
 final class MarketTab implements ManagerTab {
     private final Panel panel;
+    private final Supplier<BlockPos> manager;
 
-    MarketTab(Panel panel) {
+    MarketTab(Panel panel, Supplier<BlockPos> manager) {
         this.panel = panel;
+        this.manager = manager;
     }
 
     @Override
@@ -46,9 +54,9 @@ final class MarketTab implements ManagerTab {
             }
         }
         int ty = y + 14;
-        int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.56, 0.68, 0.81);
+        int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.57, 0.68, 0.80);
         panel.header(g, x, ty, w, col, "column.product", "column.pool", "column.reachable", "column.customers",
-                "column.inflow", "column.churn", "column.market_share");
+                "column.inflow", "column.churn", "column.price");
         ty += ROW_H + 2;
         int index = 0;
         for (HostingSnapshot.MarketRow row : m.rows()) {
@@ -68,19 +76,13 @@ final class MarketTab implements ManagerTab {
             panel.cell(g, "+" + GuiText.compactNumber(Math.round(row.orders())), col, 4, ty, TechPanel.GOOD);
             HostingSnapshot.Quality q = row.quality();
             panel.cell(g, Texts.percent((float) q.churn()), col, 5, ty, churnColor(q));
-            float share = row.pool() <= 0 ? 0 : (float) Math.min(1, row.customers() / row.pool());
-            float reach = row.pool() <= 0 ? 0 : (float) Math.min(1, row.potential() / row.pool());
-            int barW = x + w - col[6] - 46;
-            TechPanel.bar(g, col[6], ty + 3, barW, 9, reach, Panel.HEADER_LINE);
-            TechPanel.bar(g, col[6], ty + 3, (int) (barW * reach), 9, reach <= 0 ? 0 : share / reach, TechPanel.VIOLET);
-            g.drawString(panel.font, Texts.percent(share), col[6] + barW + 4, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
+            price(g, m, row, col[6], ty, x + w - col[6]);
             if (panel.hover(col[1], ty, col[2] - col[1], ROW_H)) {
                 panel.tooltip(poolTooltip(row));
             } else if (panel.hover(col[2], ty, col[3] - col[2], ROW_H)) {
                 panel.tooltip(reachTooltip(row));
-            } else if (panel.hover(col[3], ty, col[4] - col[3], ROW_H) && row.waiting() >= 0.5) {
-                panel.tooltip(List.of(Component.translatable("data_center_addon.market.waiting",
-                        GuiText.compactNumber(Math.round(row.waiting()))).withStyle(ChatFormatting.GOLD)));
+            } else if (panel.hover(col[3], ty, col[4] - col[3], ROW_H)) {
+                panel.tooltip(customersTooltip(row));
             } else if (panel.hover(col[4], ty, col[5] - col[4], ROW_H)) {
                 panel.tooltip(inflowTooltip(row));
             } else if (panel.hover(col[5], ty, col[6] - col[5], ROW_H)) {
@@ -88,6 +90,39 @@ final class MarketTab implements ManagerTab {
             }
             ty += ROW_H;
         }
+    }
+
+    /** "◀ +10 % ▶": the account's price of the product; only with the market model on. */
+    private void price(GuiGraphics g, HostingSnapshot.Market m, HostingSnapshot.MarketRow row, int px, int ty, int pw) {
+        String value = row.priceStep() == 0 ? "±0 %" : String.format(Locale.ROOT, "%+d %%", row.priceStep() * 10);
+        if (!m.model()) {
+            panel.line(g, "–", px, ty + TEXT_DY, pw, TechPanel.TEXT_MUTED);
+            return;
+        }
+        panel.stepper(g, px, ty - 1, Math.min(pw, 78), value,
+                () -> Panel.send(new HostingManagerPayloads.PriceChange(manager.get(), row.product(), -1)),
+                () -> Panel.send(new HostingManagerPayloads.PriceChange(manager.get(), row.product(), 1)));
+        if (panel.hover(px + 16, ty, Math.min(pw, 78) - 32, ROW_H)) {
+            panel.tooltip(List.of(Component.translatable("data_center_addon.market.price.title", value),
+                    Component.translatable("data_center_addon.market.price.pay", factor(1 + row.priceStep() * 0.1))
+                            .withStyle(ChatFormatting.GRAY),
+                    Component.translatable("data_center_addon.market.price.share", factor(row.priceFactor()))
+                            .withStyle(ChatFormatting.GRAY),
+                    Component.translatable("data_center_addon.market.price.tip").withStyle(ChatFormatting.DARK_GRAY)));
+        }
+    }
+
+    /** Customers, market share and the waiting list. */
+    private static List<Component> customersTooltip(HostingSnapshot.MarketRow row) {
+        List<Component> lines = new ArrayList<>();
+        float share = row.pool() <= 0 ? 0 : (float) Math.min(1, row.customers() / row.pool());
+        lines.add(Component.translatable("data_center_addon.market.customers", GuiText.compactNumber(Math.round(row.customers())),
+                Texts.percent(share)));
+        if (row.waiting() >= 0.5) {
+            lines.add(Component.translatable("data_center_addon.market.waiting", GuiText.compactNumber(Math.round(row.waiting())))
+                    .withStyle(ChatFormatting.GOLD));
+        }
+        return lines;
     }
 
     /** The market and the segments raised by launches in the world. */
@@ -119,6 +154,7 @@ final class MarketTab implements ManagerTab {
                 Component.translatable("data_center_addon.market.reach.awareness", factor(row.awareFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.classes", factor(row.classFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.classes.tip").withStyle(ChatFormatting.DARK_GRAY),
+                Component.translatable("data_center_addon.market.reach.price", factor(row.priceFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.awareness.tip").withStyle(ChatFormatting.DARK_GRAY));
     }
 

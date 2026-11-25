@@ -3,11 +3,14 @@ package de.f4ked.data_center_addon.mixin;
 import com.example.datacenter.component.StorageSpec;
 import com.example.datacenter.hosting.HostingDemand;
 import com.example.datacenter.hosting.HostingMode;
+import com.example.datacenter.hosting.HostingModeRates;
+import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
 import com.example.datacenter.machine.MachineBlockEntity;
 import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
+import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
@@ -15,6 +18,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -30,6 +34,7 @@ import java.time.LocalDate;
  *       {@link HostingStorageBoost}, which raises the capacity of the add-on's storage parts.</li>
  *   <li>At its end the rack's income of the tick is reported to {@link StartupService} (start bonus,
  *       service tickets). This hook only reads.</li>
+ *   <li>Shared, VPS and colocation customers pay the owner's price ({@code MarketService#priceFactor}).</li>
  *   <li>With the market model on, Data Center's market mood no longer scales shared and VPS income; it
  *       changes the markets' size instead.</li>
  *   <li>The rack's service of the tick (customers served, down, overloaded, throttled), which it reports to
@@ -40,6 +45,38 @@ import java.time.LocalDate;
  */
 @Mixin(value = HostingRackBlockEntity.class, remap = false)
 public abstract class HostingRackBlockEntityMixin {
+    /** What this rack's customers pay relative to the list price this tick (the owner's price, Market tab). */
+    @Unique
+    private double data_center_addon$price = 1.0;
+
+    @Inject(method = "runLoadout", at = @At("HEAD"), require = 0)
+    private void data_center_addon$readPrice(MachineBlockEntity.TickContext context, CallbackInfo ci) {
+        HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
+        data_center_addon$price = rack.getLevel() instanceof ServerLevel level
+                ? MarketService.priceFactor(level, OwnerMessages.ownerOf(level, rack.getBlockPos()), rack.getProduct())
+                : 1.0;
+    }
+
+    /** Shared hosting and VPS: what a customer brings, at the owner's price. */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/HostingModeRates;unitNet(Lcom/example/datacenter/hosting/HostingProduct;Ljava/time/LocalDate;)D"),
+            require = 0)
+    private double data_center_addon$unitNet(HostingProduct product, LocalDate today) {
+        return HostingModeRates.unitNet(product, today) * data_center_addon$price;
+    }
+
+    /** Colocation: what a customer's server brings, at the owner's price. */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/HostingModeRates;coloUsdPerServer(Ljava/time/LocalDate;)D"),
+            require = 0)
+    private double data_center_addon$coloUsd(LocalDate today) {
+        return HostingModeRates.coloUsdPerServer(today) * data_center_addon$price;
+    }
+
     @Redirect(
             method = "runLoadout",
             at = @At(value = "INVOKE", target = "Lcom/example/datacenter/component/StorageSpec;getCapacityGb()J"),
