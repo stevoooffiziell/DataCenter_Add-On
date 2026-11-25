@@ -492,5 +492,12 @@
   "data_center_addon.reputation.source.orders": "Orders finished",
   "data_center_addon.reputation.source.customers": "New customers",
   "data_center_addon.reputation.source.milestones": "Milestones",
-  "data_center_addon.reputation.source.penalties": "Failed orders"
+  "data_center_addon.reputation.source.penalties": "Failed orders",
+  "data_center_addon.reputation.class": "Customer class: %s",
+  "data_center_addon.reputation.class.top": "The highest class is reached. Keep Ruf and renown up to keep it.",
+  "data_center_addon.reputation.class.next": "Next: %s",
+  "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
+  "data_center_addon.reputation.class.renown": "Renown %s / %s",
+  "data_center_addon.reputation.class.tier": "Room: %s",
+  "data_center_addon.reputation.class.tip": "A class needs both: Small Business Ruf 80 %% and renown 100, Mid-Market 90 %% and 200, Enterprise 95 %% and 400, Finance 98 %% and 600. A rack only serves the class its room's certification allows. A class is kept while Ruf stays within 5 %% and renown within 25 of it."
 }

@@ -10,6 +10,8 @@
     "ComputeNetsAccessor",
     "HostingCustomersMixin",
     "HostingRackBlockEntityMixin",
+    "HostingReputationInvoker",
+    "HostingReputationMixin",
     "NetNodeAccessor",
     "NewsEventsMixin",
     "ShopEntryMixin"

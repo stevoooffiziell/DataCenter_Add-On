@@ -1,6 +1,8 @@
 package de.f4ked.data_center_addon.hosting.reputation;
 
 import com.example.datacenter.api.DataCenterApi;
+import com.example.datacenter.hosting.HostingReputation;
+import de.f4ked.data_center_addon.mixin.HostingReputationInvoker;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
@@ -20,7 +22,8 @@ import java.util.UUID;
 /**
  * The add-on's reputation model: records each account's service into its day ({@link RackService}
  * reports every rack tick), closes the day once the in-game date moves on, and computes the
- * {@link Ruf} of the last 30 days.
+ * {@link Ruf} of the last 30 days. Once a second it lets Data Center re-check each account's customer
+ * class, which now depends on the Ruf too ({@link ClassRules}).
  */
 @EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class ReputationService {
@@ -59,8 +62,11 @@ public final class ReputationService {
         ReputationBook book = ReputationBook.get(server);
         for (Map.Entry<UUID, ReputationBook.Account> e : new ArrayList<>(book.accounts().entrySet())) {
             ReputationBook.Account a = e.getValue();
-            if (Config.reputationModel()) {
+            if (Config.reputationModel() && !ReputationBook.NOBODY.equals(e.getKey())) {
                 Renown.customers(server.overworld(), e.getKey(), a);
+                // the class depends on the Ruf too, which changes without the points: let Data Center re-check it
+                ((HostingReputationInvoker) (Object) HostingReputation.get(server.overworld(), e.getKey()))
+                        .data_center_addon$adjust(server, 0.0);
             }
             if (a.day < 0) {
                 a.day = today;

@@ -492,5 +492,12 @@
   "data_center_addon.reputation.source.orders": "Erledigte Aufträge",
   "data_center_addon.reputation.source.customers": "Neue Kunden",
   "data_center_addon.reputation.source.milestones": "Meilensteine",
-  "data_center_addon.reputation.source.penalties": "Gescheiterte Aufträge"
+  "data_center_addon.reputation.source.penalties": "Gescheiterte Aufträge",
+  "data_center_addon.reputation.class": "Kundenklasse: %s",
+  "data_center_addon.reputation.class.top": "Die höchste Klasse ist erreicht. Halte Ruf und Bekanntheit, um sie zu behalten.",
+  "data_center_addon.reputation.class.next": "Nächste: %s",
+  "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
+  "data_center_addon.reputation.class.renown": "Bekanntheit %s / %s",
+  "data_center_addon.reputation.class.tier": "Raum: %s",
+  "data_center_addon.reputation.class.tip": "Eine Klasse braucht beides: Kleinunternehmen Ruf 80 %% und Bekanntheit 100, Mittelstand 90 %% und 200, Großunternehmen 95 %% und 400, Finanzen & Behörden 98 %% und 600. Ein Rack bedient nur die Klasse, die die Zertifizierung seines Raums erlaubt. Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt."
 }
