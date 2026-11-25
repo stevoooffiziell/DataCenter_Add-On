@@ -504,5 +504,7 @@
   "data_center_addon.configuration.orderRenown.tooltip": "Faktor für die Bekanntheit, die Aufträge und Lieferaufträge bringen und kosten.",
   "data_center_addon.reputation.pending": "%s Neukunden im ersten Monat",
   "data_center_addon.reputation.source.quick_fix": "Störungen schnell behoben",
-  "data_center_addon.reputation.msg.quick_fix": "Rack bei %s läuft nach %s Spielstunden wieder. Die Kunden haben es bemerkt: %s Bekanntheit."
+  "data_center_addon.reputation.msg.quick_fix": "Rack bei %s läuft nach %s Spielstunden wieder. Die Kunden haben es bemerkt: %s Bekanntheit.",
+  "data_center_addon.reputation.source.certification": "Zertifizierungen",
+  "data_center_addon.reputation.msg.certification": "Dein erstes Rack in einem Raum mit %s: Die Fachpresse berichtet. %s Bekanntheit."
 }

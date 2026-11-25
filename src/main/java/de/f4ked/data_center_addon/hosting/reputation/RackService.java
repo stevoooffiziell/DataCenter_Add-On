@@ -42,6 +42,9 @@ public final class RackService {
         ReputationService.record(server, owner, earning, down, overloaded, throttled);
         if (rack.getLevel() instanceof ServerLevel level) {
             QuickFix.service(level, rack.getBlockPos(), owner, earning, down);
+            if (earning > 0) {
+                Certification.seen(level, owner, certification);
+            }
         }
     }
 }

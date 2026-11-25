@@ -19,6 +19,7 @@ import java.util.UUID;
  *       customer has had its first {@link #FIRST_MONTH_DAYS} days without a disruption,</li>
  *   <li>milestones,</li>
  *   <li>failures fixed fast ({@link QuickFix}),</li>
+ *   <li>a higher room certification ({@link Certification}),</li>
  * </ul>
  * and fall through failed or cancelled orders. Renown sets the share of the markets the account reaches.
  * Every change is booked by its source, for the Reputation tab.
@@ -33,7 +34,7 @@ public final class Renown {
 
     /** Where renown comes from; the name gives {@code data_center_addon.reputation.source.<name>}. */
     public enum Source {
-        ORDERS, CUSTOMERS, MILESTONES, QUICK_FIX, PENALTIES;
+        ORDERS, CUSTOMERS, MILESTONES, QUICK_FIX, CERTIFICATION, PENALTIES;
 
         public String key() {
             return "data_center_addon.reputation.source." + name().toLowerCase(Locale.ROOT);

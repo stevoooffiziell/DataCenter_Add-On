@@ -504,5 +504,7 @@
   "data_center_addon.configuration.orderRenown.tooltip": "Multiplier for the renown contracts and delivery orders give and cost.",
   "data_center_addon.reputation.pending": "%s new customers in their first month",
   "data_center_addon.reputation.source.quick_fix": "Failures fixed fast",
-  "data_center_addon.reputation.msg.quick_fix": "Rack at %s is back in %s game hours. Customers noticed: %s renown."
+  "data_center_addon.reputation.msg.quick_fix": "Rack at %s is back in %s game hours. Customers noticed: %s renown.",
+  "data_center_addon.reputation.source.certification": "Certifications",
+  "data_center_addon.reputation.msg.certification": "Your first rack in a %s room: the trade press reports. %s renown."
 }
