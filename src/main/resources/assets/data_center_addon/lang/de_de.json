@@ -488,9 +488,9 @@
   "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × Ausfall − ½ Überlast − ½ Drosselung − 2 %% je Absturz. Bei gleicher Qualität bleibt er, wo er ist. Er skaliert deinen erreichbaren Marktanteil: ×0,5 bei 0 %%, ×1 bei 100 %%.",
   "data_center_addon.market.reach.ruf": "Ruf: %s",
   "data_center_addon.reputation.renown": "Bekanntheit",
-  "data_center_addon.reputation.renown.note": "Bekanntheit sind die Reputationspunkte aus Data Center. Sie wächst nur durch das, was du tust: erledigte Aufträge, neue Kunden über deinem Rekord (+1 je 20), Meilensteine. Sie bestimmt deinen Marktanteil.",
+  "data_center_addon.reputation.renown.note": "Bekanntheit sind die Reputationspunkte aus Data Center. Sie wächst nur durch das, was du tust: erledigte Aufträge, Neukunden mit störungsfreiem ersten Monat (+1 je 10), Meilensteine. Sie bestimmt deinen Marktanteil.",
   "data_center_addon.reputation.source.orders": "Erledigte Aufträge",
-  "data_center_addon.reputation.source.customers": "Neue Kunden",
+  "data_center_addon.reputation.source.customers": "Neukunden (guter erster Monat)",
   "data_center_addon.reputation.source.milestones": "Meilensteine",
   "data_center_addon.reputation.source.penalties": "Gescheiterte Aufträge",
   "data_center_addon.reputation.class": "Kundenklasse: %s",
@@ -501,5 +501,6 @@
   "data_center_addon.reputation.class.tier": "Raum: %s",
   "data_center_addon.reputation.class.tip": "Eine Klasse braucht beides: Kleinunternehmen Ruf 80 %% und Bekanntheit 100, Mittelstand 90 %% und 200, Großunternehmen 95 %% und 400, Finanzen & Behörden 98 %% und 600. Ein Rack bedient nur die Klasse, die die Zertifizierung seines Raums erlaubt. Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt.",
   "data_center_addon.configuration.orderRenown": "Bekanntheit aus Aufträgen",
-  "data_center_addon.configuration.orderRenown.tooltip": "Faktor für die Bekanntheit, die Aufträge und Lieferaufträge bringen und kosten."
+  "data_center_addon.configuration.orderRenown.tooltip": "Faktor für die Bekanntheit, die Aufträge und Lieferaufträge bringen und kosten.",
+  "data_center_addon.reputation.pending": "%s Neukunden im ersten Monat"
 }

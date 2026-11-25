@@ -15,15 +15,20 @@ import java.util.UUID;
  * 1000), but with the reputation model on they only grow through what the account does:
  * <ul>
  *   <li>finished contracts and delivery orders,</li>
- *   <li>more customers: {@link #PER_CUSTOMER} for every customer above the most it ever had,</li>
+ *   <li>new customers: {@link #PER_CUSTOMER} for every customer above the most it ever had, once that
+ *       customer has had its first {@link #FIRST_MONTH_DAYS} days without a disruption,</li>
  *   <li>milestones,</li>
  * </ul>
  * and fall through failed or cancelled orders. Renown sets the share of the markets the account reaches.
  * Every change is booked by its source, for the Reputation tab.
  */
 public final class Renown {
-    /** Renown for every customer above the account's high-water mark (one point per 20 customers). */
-    static final double PER_CUSTOMER = 0.05;
+    /** Renown for every new customer whose first month went without a disruption (one point per 10 customers). */
+    static final double PER_CUSTOMER = 0.1;
+    /** The first month of a new customer, in in-game days. */
+    static final int FIRST_MONTH_DAYS = 30;
+    /** A day with more downtime than this, or with a crash, disrupts every new customer in its first month. */
+    static final double DISRUPTION_DOWN = 0.01;
 
     /** Where renown comes from; the name gives {@code data_center_addon.reputation.source.<name>}. */
     public enum Source {
@@ -50,8 +55,8 @@ public final class Renown {
         }
     }
 
-    /** Customers above the account's high-water mark bring renown (checked once a second). */
-    static void customers(ServerLevel level, UUID id, ReputationBook.Account a) {
+    /** Customers above the account's high-water mark start their first month (checked once a second). */
+    static void customers(ServerLevel level, UUID id, ReputationBook.Account a, long today) {
         HostingCustomers book = HostingCustomers.get(level);
         double total = 0;
         for (HostingProduct product : HostingProduct.values()) {
@@ -60,8 +65,46 @@ public final class Renown {
         if (Double.isNaN(a.customerMark)) {
             a.customerMark = total;
         } else if (total > a.customerMark + 1) {
-            add(level, id, (total - a.customerMark) * PER_CUSTOMER, Source.CUSTOMERS);
+            double[] last = a.cohorts.peekLast();
+            if (last != null && last[0] == today && last[2] == 0) {
+                last[1] += total - a.customerMark;
+            } else {
+                a.cohorts.addLast(new double[]{today, total - a.customerMark, 0});
+            }
             a.customerMark = total;
         }
+    }
+
+    /**
+     * A finished day: a disrupted day spoils the first month of every new customer in it; customers
+     * whose first month is over without a disruption bring their renown.
+     *
+     * @param day the finished day's record ({@link Ruf#SERVED}, ...)
+     */
+    static void closeDay(ServerLevel level, UUID id, ReputationBook.Account a, double[] day, long today) {
+        double total = day[Ruf.SERVED] + day[Ruf.DOWN];
+        boolean disrupted = day[Ruf.CRASHES] > 0 || (total > 0 && day[Ruf.DOWN] / total > DISRUPTION_DOWN);
+        if (disrupted) {
+            for (double[] cohort : a.cohorts) {
+                cohort[2] = 1;
+            }
+        }
+        while (!a.cohorts.isEmpty() && today - a.cohorts.peekFirst()[0] >= FIRST_MONTH_DAYS) {
+            double[] cohort = a.cohorts.removeFirst();
+            if (cohort[2] == 0) {
+                add(level, id, cohort[1] * PER_CUSTOMER, Source.CUSTOMERS);
+            }
+        }
+    }
+
+    /** New customers still in an undisturbed first month. */
+    static double pending(ReputationBook.Account a) {
+        double sum = 0;
+        for (double[] cohort : a.cohorts) {
+            if (cohort[2] == 0) {
+                sum += cohort[1];
+            }
+        }
+        return sum;
     }
 }

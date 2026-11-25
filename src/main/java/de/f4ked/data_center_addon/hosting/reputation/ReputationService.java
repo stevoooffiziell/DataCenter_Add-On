@@ -63,7 +63,7 @@ public final class ReputationService {
         for (Map.Entry<UUID, ReputationBook.Account> e : new ArrayList<>(book.accounts().entrySet())) {
             ReputationBook.Account a = e.getValue();
             if (Config.reputationModel() && !ReputationBook.NOBODY.equals(e.getKey())) {
-                Renown.customers(server.overworld(), e.getKey(), a);
+                Renown.customers(server.overworld(), e.getKey(), a, today);
                 // the class depends on the Ruf too, which changes without the points: let Data Center re-check it
                 ((HostingReputationInvoker) (Object) HostingReputation.get(server.overworld(), e.getKey()))
                         .data_center_addon$adjust(server, 0.0);
@@ -71,6 +71,9 @@ public final class ReputationService {
             if (a.day < 0) {
                 a.day = today;
             } else if (today > a.day) {
+                if (Config.reputationModel() && !ReputationBook.NOBODY.equals(e.getKey())) {
+                    Renown.closeDay(server.overworld(), e.getKey(), a, a.today, today);
+                }
                 closeDay(a);
                 a.day = today;
             }
@@ -100,7 +103,7 @@ public final class ReputationService {
         double[] sources = new double[Renown.Source.values().length];
         a.sources().forEach((s, v) -> sources[s.ordinal()] = v);
         return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days(),
-                DataCenterApi.reputation(level, account), toList(sources));
+                DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a));
     }
 
     private static List<Double> toList(double[] values) {

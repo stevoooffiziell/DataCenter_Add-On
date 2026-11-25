@@ -488,9 +488,9 @@
   "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × downtime − ½ overload − ½ throttling − 2 %% per crash. With the same quality it stays where it is. It scales the share of the markets you reach: ×0.5 at 0 %%, ×1 at 100 %%.",
   "data_center_addon.market.reach.ruf": "Ruf: %s",
   "data_center_addon.reputation.renown": "Bekanntheit (renown)",
-  "data_center_addon.reputation.renown.note": "Renown is Data Center's reputation points. It only grows through what you do: finished orders, new customers above your record (+1 per 20), milestones. It sets your share of the markets.",
+  "data_center_addon.reputation.renown.note": "Renown is Data Center's reputation points. It only grows through what you do: finished orders, new customers whose first month runs without a disruption (+1 per 10), milestones. It sets your share of the markets.",
   "data_center_addon.reputation.source.orders": "Orders finished",
-  "data_center_addon.reputation.source.customers": "New customers",
+  "data_center_addon.reputation.source.customers": "New customers (good first month)",
   "data_center_addon.reputation.source.milestones": "Milestones",
   "data_center_addon.reputation.source.penalties": "Failed orders",
   "data_center_addon.reputation.class": "Customer class: %s",
@@ -501,5 +501,6 @@
   "data_center_addon.reputation.class.tier": "Room: %s",
   "data_center_addon.reputation.class.tip": "A class needs both: Small Business Ruf 80 %% and renown 100, Mid-Market 90 %% and 200, Enterprise 95 %% and 400, Finance 98 %% and 600. A rack only serves the class its room's certification allows. A class is kept while Ruf stays within 5 %% and renown within 25 of it.",
   "data_center_addon.configuration.orderRenown": "Order renown",
-  "data_center_addon.configuration.orderRenown.tooltip": "Multiplier for the renown contracts and delivery orders give and cost."
+  "data_center_addon.configuration.orderRenown.tooltip": "Multiplier for the renown contracts and delivery orders give and cost.",
+  "data_center_addon.reputation.pending": "%s new customers in their first month"
 }

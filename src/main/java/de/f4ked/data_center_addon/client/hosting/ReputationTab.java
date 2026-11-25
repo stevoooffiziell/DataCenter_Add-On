@@ -86,6 +86,11 @@ final class ReputationTab implements ManagerTab {
                     (v > 0 ? "+" : "") + Math.round(v), v > 0 ? TechPanel.GOOD : TechPanel.DANGER);
             ty += LINE_H;
         }
+        if (st.pending() >= 1) {
+            line(g, x, ty, w, Component.translatable("data_center_addon.reputation.pending",
+                    Math.round(st.pending())).getString(), "+" + Math.round(st.pending() * 0.1), TechPanel.TEXT_MUTED);
+            ty += LINE_H;
+        }
         ty += 4;
         panel.wrapped(g, Component.translatable("data_center_addon.reputation.renown.note"), x, ty, w, TechPanel.TEXT_MUTED, 4);
     }

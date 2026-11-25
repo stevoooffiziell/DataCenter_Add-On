@@ -37,6 +37,8 @@ public final class ReputationBook extends SavedData {
         final EnumMap<Renown.Source, Double> sources = new EnumMap<>(Renown.Source.class);
         /** Most customers the account ever had; NaN until first seen. */
         double customerMark = Double.NaN;
+        /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
+        final Deque<double[]> cohorts = new ArrayDeque<>();
 
         public EnumMap<Renown.Source, Double> sources() {
             return sources;
@@ -87,6 +89,11 @@ public final class ReputationBook extends SavedData {
                 }
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
+            for (Tag c : a.getList("cohorts", Tag.TAG_LIST)) {
+                double[] cohort = new double[3];
+                readRecord((ListTag) c, cohort);
+                account.cohorts.addLast(cohort);
+            }
         }
         return book;
     }
@@ -110,6 +117,11 @@ public final class ReputationBook extends SavedData {
             if (!Double.isNaN(account.customerMark)) {
                 a.putDouble("customerMark", account.customerMark);
             }
+            ListTag cohorts = new ListTag();
+            for (double[] cohort : account.cohorts) {
+                cohorts.add(writeRecord(cohort));
+            }
+            a.put("cohorts", cohorts);
             list.add(a);
         });
         tag.put("accounts", list);

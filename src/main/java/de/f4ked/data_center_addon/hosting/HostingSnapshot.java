@@ -543,10 +543,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param days     days with service in the window
      * @param renown   Bekanntheit: Data Center's reputation points
      * @param sources  renown booked per {@code Renown.Source}, in its order
+     * @param pending  new customers still in an undisturbed first month
      */
     public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
-                           double renown, List<Double> sources) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of());
+                           double renown, List<Double> sources, double pending) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0);
 
         private static final StreamCodec<FriendlyByteBuf, Double> DOUBLE = StreamCodec.of(
                 (buf, v) -> buf.writeDouble(v), FriendlyByteBuf::readDouble);
@@ -562,9 +563,10 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(s.days);
                     buf.writeDouble(s.renown);
                     writeList(buf, s.sources, DOUBLE);
+                    buf.writeDouble(s.pending);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32)));
+                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble()));
     }
 
     // ------------------------------------------------------------------ codec
