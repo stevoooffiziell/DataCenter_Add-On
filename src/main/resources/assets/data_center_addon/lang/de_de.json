@@ -472,5 +472,8 @@
   "data_center_addon.configuration.sharedPool.tooltip": "Konten, die dasselbe Produkt verkaufen, teilen sich seinen Pool und konkurrieren über Reputation und Preis.",
   "data_center_addon.market.summary": "Markt %s: %s · erreichbar %s · du hast %s · nächste Stufe (%s): %s",
   "data_center_addon.market.summary.top": "Markt %s: %s · erreichbar %s · du hast %s · höchste Stufe erreicht",
-  "data_center_addon.market.summary.more": "Details im Markt-Tab."
+  "data_center_addon.market.summary.more": "Details im Markt-Tab.",
+  "data_center_addon.configuration.reputation": "Hosting-Reputation",
+  "data_center_addon.configuration.reputationModel": "Reputationsmodell",
+  "data_center_addon.configuration.reputationModel.tooltip": "Laufende Server bringen keine Reputation pro Stunde mehr; sie kommt aus Ereignissen. Aus: Reputation wie in Data Center."
 }

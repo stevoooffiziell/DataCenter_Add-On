@@ -472,5 +472,8 @@
   "data_center_addon.configuration.sharedPool.tooltip": "Accounts selling the same product share its pool and compete through reputation and price.",
   "data_center_addon.market.summary": "Market %s: %s · reachable %s · you have %s · next class (%s): %s",
   "data_center_addon.market.summary.top": "Market %s: %s · reachable %s · you have %s · highest class reached",
-  "data_center_addon.market.summary.more": "Details in the Market tab."
+  "data_center_addon.market.summary.more": "Details in the Market tab.",
+  "data_center_addon.configuration.reputation": "Hosting reputation",
+  "data_center_addon.configuration.reputationModel": "Reputation model",
+  "data_center_addon.configuration.reputationModel.tooltip": "Running servers no longer earn reputation by the hour; it comes from events. Off: Data Center's own reputation."
 }

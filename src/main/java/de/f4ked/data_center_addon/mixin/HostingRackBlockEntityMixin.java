@@ -12,6 +12,7 @@ import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
+import de.f4ked.data_center_addon.hosting.reputation.RackService;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import net.minecraft.server.MinecraftServer;
@@ -37,8 +38,9 @@ import java.time.LocalDate;
  *   <li>Shared, VPS and colocation customers pay the owner's price ({@code MarketService#priceFactor}).</li>
  *   <li>With the market model on, Data Center's market mood no longer scales shared and VPS income; it
  *       changes the markets' size instead.</li>
- *   <li>The rack's service of the tick (customers served, down, overloaded, throttled), which it reports to
- *       Data Center's reputation, is also reported to {@link ServiceQuality}.</li>
+ *   <li>The rack's service of the tick (customers served, down, overloaded, throttled) goes to the
+ *       add-on's {@link RackService} instead of straight to Data Center's reputation, and to
+ *       {@link ServiceQuality}.</li>
  * </ul>
  * {@code require = 0}: if a Data Center update changes this method, the hooks silently stop instead
  * of crashing the game.
@@ -102,7 +104,10 @@ public abstract class HostingRackBlockEntityMixin {
         return HostingDemand.factor(level, today, mode);
     }
 
-    /** Passes the rack's service on to Data Center's reputation and to {@link ServiceQuality} (shared, VPS, colocation). */
+    /**
+     * Passes the rack's service (shared, VPS, colocation) on to the reputation ({@link RackService}) and to
+     * {@link ServiceQuality}.
+     */
     @Redirect(
             method = "runLoadout",
             at = @At(value = "INVOKE",
@@ -110,12 +115,23 @@ public abstract class HostingRackBlockEntityMixin {
             require = 0)
     private void data_center_addon$recordService(HostingReputation reputation, MinecraftServer server, double earning,
                                                  boolean throttled, int certification, double down, double overloaded) {
-        reputation.recordService(server, earning, throttled, certification, down, overloaded);
+        RackService.service(reputation, server, earning, throttled, certification, down, overloaded);
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
         if (rack.getLevel() instanceof ServerLevel level) {
             ServiceQuality.report(OwnerMessages.ownerOf(level, rack.getBlockPos()), rack.getProduct(), earning, throttled, down,
                     overloaded);
         }
+    }
+
+    /** Dedicated servers: their service goes to the reputation ({@link RackService}). */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/HostingReputation;recordService(Lnet/minecraft/server/MinecraftServer;IZII)V"),
+            require = 0)
+    private void data_center_addon$recordDedicated(HostingReputation reputation, MinecraftServer server, int earningBays,
+                                                   boolean throttled, int certification, int downBays) {
+        RackService.service(reputation, server, earningBays, throttled, certification, downBays, 0);
     }
 
     /** Reports the rack and its income of this tick to the founding phase (start bonus, service tickets). */

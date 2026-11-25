@@ -66,6 +66,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue CHURN_BAD;
     private static final ModConfigSpec.DoubleValue WAIT_DAYS;
     private static final ModConfigSpec.BooleanValue SHARED_POOL;
+    private static final ModConfigSpec.BooleanValue REPUTATION_MODEL;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -186,6 +187,13 @@ public final class Config {
                 .comment("Multiplayer: accounts that sell the same product share its pool and compete through reputation,",
                         "customer classes, awareness and price. false: every account has the whole pool to itself.")
                 .define("sharedPool", false);
+        builder.pop();
+
+        builder.comment("Hosting reputation: how it is earned and lost.").push("reputation");
+        REPUTATION_MODEL = builder
+                .comment("Use the add-on's reputation model: running servers no longer earn reputation points by the hour;",
+                        "reputation comes from events instead. false: Data Center's own reputation.")
+                .define("reputationModel", true);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -349,6 +357,10 @@ public final class Config {
 
     public static boolean sharedPool() {
         return SPEC.isLoaded() && SHARED_POOL.get();
+    }
+
+    public static boolean reputationModel() {
+        return !SPEC.isLoaded() || REPUTATION_MODEL.get();
     }
 
     public static double hostingStorageBoost() {
