@@ -407,5 +407,11 @@
   "data_center_addon.market.internet.tip": "The markets grow with the internet. Up to 2008 they follow Data Center's demand of the year, after that the number of internet users.",
   "data_center_addon.market.pool.tip": "Potential customers of this product in the whole market.",
   "data_center_addon.market.billion": "bn",
-  "data_center_addon.market.million": "M"
+  "data_center_addon.market.million": "M",
+  "data_center_addon.hosting.column.reachable": "Reachable",
+  "data_center_addon.market.reach.title": "Reachable: %s customers",
+  "data_center_addon.market.reach.base": "Base: 20 %% of the market (%s)",
+  "data_center_addon.market.reach.reputation": "Reputation: %s",
+  "data_center_addon.market.reach.awareness": "Awareness: %s",
+  "data_center_addon.market.reach.awareness.tip": "Awareness grows while you offer places of the product and fades while you offer none."
 }

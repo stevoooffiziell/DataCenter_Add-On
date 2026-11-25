@@ -379,17 +379,25 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * The market of one product.
      *
      * @param product   {@code HostingProduct} ordinal
-     * @param pool      potential customers in the whole market
-     * @param customers the account's customers of the product
+     * @param pool        potential customers in the whole market
+     * @param potential   the part of the pool the account can reach
+     * @param repFactor   factor of the reach from reputation
+     * @param awareFactor factor of the reach from awareness
+     * @param customers   the account's customers of the product
      */
-    public record MarketRow(int product, double pool, double customers) {
+    public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
+                            double customers) {
         public static final StreamCodec<FriendlyByteBuf, MarketRow> STREAM_CODEC = StreamCodec.of(
                 (buf, r) -> {
                     buf.writeVarInt(r.product);
                     buf.writeDouble(r.pool);
+                    buf.writeDouble(r.potential);
+                    buf.writeDouble(r.repFactor);
+                    buf.writeDouble(r.awareFactor);
                     buf.writeDouble(r.customers);
                 },
-                buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble()));
+                buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                        buf.readDouble()));
     }
 
     // ------------------------------------------------------------------ codec

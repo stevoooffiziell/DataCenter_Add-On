@@ -8,6 +8,7 @@
     "ComputeNetInvoker",
     "ComputeNetMixin",
     "ComputeNetsAccessor",
+    "HostingCustomersMixin",
     "HostingRackBlockEntityMixin",
     "NetNodeAccessor",
     "NewsEventsMixin",

@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon.hosting.market;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
+import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.server.level.ServerLevel;
 
@@ -13,7 +14,8 @@ import java.util.UUID;
 
 /**
  * The hosting market as the Hosting Manager's Market tab shows it: per product the pool of potential
- * customers ({@link MarketPool}) and the account's own customers in it.
+ * customers ({@link MarketPool}), the part the account can reach ({@link MarketModel}) and its own
+ * customers.
  */
 public final class MarketService {
     private MarketService() {
@@ -22,12 +24,16 @@ public final class MarketService {
     public static HostingSnapshot.Market snapshot(ServerLevel level, UUID account) {
         LocalDate date = DataCenterApi.currentDate(level);
         HostingCustomers book = HostingCustomers.get(level);
+        MarketBook market = MarketBook.get(level.getServer());
+        double reputation = HostingReputation.get(level, account).getPoints();
         List<HostingSnapshot.MarketRow> rows = new ArrayList<>();
         for (HostingProduct product : HostingProduct.values()) {
             if (!MarketPool.exists(product, date)) {
                 continue;
             }
-            rows.add(new HostingSnapshot.MarketRow(product.ordinal(), MarketPool.pool(product, date), book.total(account, product)));
+            MarketModel.Reach reach = MarketModel.reach(market.entry(account, product), product, date, reputation);
+            rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
+                    reach.awareness(), book.total(account, product)));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
     }
