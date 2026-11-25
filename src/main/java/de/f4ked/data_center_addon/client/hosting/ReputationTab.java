@@ -2,9 +2,12 @@ package de.f4ked.data_center_addon.client.hosting;
 
 import com.example.datacenter.client.screen.TechPanel;
 import com.example.datacenter.hosting.CustomerClass;
+import com.example.datacenter.hosting.CustomerSegment;
+import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
 import de.f4ked.data_center_addon.hosting.reputation.Renown;
+import de.f4ked.data_center_addon.hosting.reputation.Reviews;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -92,6 +95,22 @@ final class ReputationTab implements ManagerTab {
             ty += LINE_H;
         }
         ty += 4;
+        if (st.review().size() == 6) {
+            List<Long> r = st.review();
+            boolean positive = r.get(1) == 1;
+            CustomerSegment[] segments = CustomerSegment.values();
+            HostingProduct[] products = HostingProduct.values();
+            CustomerSegment segment = segments[(int) Math.min(r.get(3), segments.length - 1)];
+            HostingProduct product = products[(int) Math.min(r.get(2), products.length - 1)];
+            long ago = Math.max(0, r.get(5) - r.get(0));
+            String label = Component.translatable("data_center_addon.reputation.last_review", positive ? "★★★★★" : "★☆☆☆☆",
+                    Component.translatable(segment.translationKey()), ago).getString();
+            panel.line(g, label, x, ty, w, positive ? TechPanel.GOOD : TechPanel.WARN);
+            if (panel.hover(x, ty - 1, w, LINE_H)) {
+                panel.tooltip(List.of(Reviews.message(positive, product, segment, (int) (long) r.get(4))));
+            }
+            ty += LINE_H + 2;
+        }
         panel.wrapped(g, Component.translatable("data_center_addon.reputation.renown.note"), x, ty, w, TechPanel.TEXT_MUTED, 4);
     }
 

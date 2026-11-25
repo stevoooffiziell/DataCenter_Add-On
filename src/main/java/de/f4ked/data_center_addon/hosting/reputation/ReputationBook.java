@@ -37,6 +37,9 @@ public final class ReputationBook extends SavedData {
         final EnumMap<Renown.Source, Double> sources = new EnumMap<>(Renown.Source.class);
         /** Most customers the account ever had; NaN until first seen. */
         double customerMark = Double.NaN;
+        /** The last customer review: {day, positive (1/0), product, segment, text}; null before the first. */
+        @Nullable
+        long[] lastReview;
         /** Highest room certification level a serving rack of the account had; -1 until first seen. */
         int maxTier = -1;
         /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
@@ -92,6 +95,8 @@ public final class ReputationBook extends SavedData {
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
+            long[] review = a.getLongArray("lastReview");
+            account.lastReview = review.length == 5 ? review : null;
             for (Tag c : a.getList("cohorts", Tag.TAG_LIST)) {
                 double[] cohort = new double[3];
                 readRecord((ListTag) c, cohort);
@@ -121,6 +126,9 @@ public final class ReputationBook extends SavedData {
                 a.putDouble("customerMark", account.customerMark);
             }
             a.putInt("maxTier", account.maxTier);
+            if (account.lastReview != null) {
+                a.putLongArray("lastReview", account.lastReview);
+            }
             ListTag cohorts = new ListTag();
             for (double[] cohort : account.cohorts) {
                 cohorts.add(writeRecord(cohort));

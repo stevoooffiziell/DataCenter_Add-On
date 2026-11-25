@@ -79,6 +79,7 @@ public final class ReputationService {
             } else if (today > a.day) {
                 if (Config.reputationModel() && !ReputationBook.NOBODY.equals(e.getKey())) {
                     Renown.closeDay(server.overworld(), e.getKey(), a, a.today, today);
+                    Reviews.day(server.overworld(), e.getKey(), a, today);
                 }
                 closeDay(a);
                 a.day = today;
@@ -109,7 +110,9 @@ public final class ReputationService {
         double[] sources = new double[Renown.Source.values().length];
         a.sources().forEach((s, v) -> sources[s.ordinal()] = v);
         return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days(),
-                DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a));
+                DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a),
+                a.lastReview == null ? List.of() : List.of(a.lastReview[0], a.lastReview[1], a.lastReview[2], a.lastReview[3],
+                        a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()));
     }
 
     private static List<Double> toList(double[] values) {

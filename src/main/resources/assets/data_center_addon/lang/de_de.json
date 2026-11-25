@@ -506,5 +506,16 @@
   "data_center_addon.reputation.source.quick_fix": "Störungen schnell behoben",
   "data_center_addon.reputation.msg.quick_fix": "Rack bei %s läuft nach %s Spielstunden wieder. Die Kunden haben es bemerkt: %s Bekanntheit.",
   "data_center_addon.reputation.source.certification": "Zertifizierungen",
-  "data_center_addon.reputation.msg.certification": "Dein erstes Rack in einem Raum mit %s: Die Fachpresse berichtet. %s Bekanntheit."
+  "data_center_addon.reputation.msg.certification": "Dein erstes Rack in einem Raum mit %s: Die Fachpresse berichtet. %s Bekanntheit.",
+  "data_center_addon.reputation.source.reviews": "Kundenbewertungen",
+  "data_center_addon.reputation.review": "%s Bewertung eines Kunden (%s, %s): „%s“ %s Bekanntheit",
+  "data_center_addon.reputation.last_review": "Letzte Bewertung: %s %s, vor %s Tagen",
+  "data_center_addon.reputation.review.good.0": "Läuft seit Monaten ohne ein einziges Problem.",
+  "data_center_addon.reputation.review.good.1": "Schnelle Server, fairer Preis, ich empfehle sie jedem.",
+  "data_center_addon.reputation.review.good.2": "Unser Launch-Tag lief perfekt, keine Sekunde Ausfall.",
+  "data_center_addon.reputation.review.good.3": "Endlich ein Hoster, der einfach funktioniert.",
+  "data_center_addon.reputation.review.bad.0": "Schon wieder down. Unsere Kunden konnten uns den ganzen Abend nicht erreichen.",
+  "data_center_addon.reputation.review.bad.1": "Langsam wie ein Modem. Wir suchen einen neuen Hoster.",
+  "data_center_addon.reputation.review.bad.2": "Der Server ist voll, alles ruckelt.",
+  "data_center_addon.reputation.review.bad.3": "Nicht das, wofür wir bezahlt haben."
 }

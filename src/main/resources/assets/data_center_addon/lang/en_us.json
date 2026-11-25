@@ -506,5 +506,16 @@
   "data_center_addon.reputation.source.quick_fix": "Failures fixed fast",
   "data_center_addon.reputation.msg.quick_fix": "Rack at %s is back in %s game hours. Customers noticed: %s renown.",
   "data_center_addon.reputation.source.certification": "Certifications",
-  "data_center_addon.reputation.msg.certification": "Your first rack in a %s room: the trade press reports. %s renown."
+  "data_center_addon.reputation.msg.certification": "Your first rack in a %s room: the trade press reports. %s renown.",
+  "data_center_addon.reputation.source.reviews": "Customer reviews",
+  "data_center_addon.reputation.review": "%s Review by a customer (%s, %s): \"%s\" %s renown",
+  "data_center_addon.reputation.last_review": "Last review: %s %s, %s days ago",
+  "data_center_addon.reputation.review.good.0": "Runs for months without a single problem.",
+  "data_center_addon.reputation.review.good.1": "Fast servers, fair price, I recommend them to everyone.",
+  "data_center_addon.reputation.review.good.2": "Our launch day went perfectly, not a second of downtime.",
+  "data_center_addon.reputation.review.good.3": "Finally a host that simply works.",
+  "data_center_addon.reputation.review.bad.0": "Down again. Our customers could not reach us all evening.",
+  "data_center_addon.reputation.review.bad.1": "Slow as a dial-up modem. Looking for a new host.",
+  "data_center_addon.reputation.review.bad.2": "The server is full, everything lags.",
+  "data_center_addon.reputation.review.bad.3": "Not what we paid for."
 }

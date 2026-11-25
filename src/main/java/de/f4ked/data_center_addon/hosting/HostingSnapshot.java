@@ -544,10 +544,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param renown   Bekanntheit: Data Center's reputation points
      * @param sources  renown booked per {@code Renown.Source}, in its order
      * @param pending  new customers still in an undisturbed first month
+     * @param review   the last customer review {day, positive, product, segment, text, today}; empty before the first
      */
     public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
-                           double renown, List<Double> sources, double pending) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0);
+                           double renown, List<Double> sources, double pending, List<Long> review) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of());
+
+        private static final StreamCodec<FriendlyByteBuf, Long> LONG = StreamCodec.of(
+                (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
 
         private static final StreamCodec<FriendlyByteBuf, Double> DOUBLE = StreamCodec.of(
                 (buf, v) -> buf.writeDouble(v), FriendlyByteBuf::readDouble);
@@ -564,9 +568,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(s.renown);
                     writeList(buf, s.sources, DOUBLE);
                     buf.writeDouble(s.pending);
+                    writeList(buf, s.review, LONG);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble()));
+                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
+                        readList(buf, LONG, 8)));
     }
 
     // ------------------------------------------------------------------ codec
