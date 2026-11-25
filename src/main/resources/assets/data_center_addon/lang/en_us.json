@@ -548,5 +548,10 @@
   "data_center_addon.reputation.history": "Reputation over the last %s game days",
   "data_center_addon.reputation.history.legend": "Green: Ruf (0–100 %) · blue: renown",
   "data_center_addon.reputation.history.values": "Ruf / renown: %s then, %s now",
-  "data_center_addon.reputation.history.empty": "history from tomorrow"
+  "data_center_addon.reputation.history.empty": "history from tomorrow",
+  "data_center_addon.reputation.msg.loss_crash": "%s Ruf: rack at %s crashed. The dent fades over 30 days.",
+  "data_center_addon.reputation.msg.loss_down": "Ruf at risk: servers of the rack at %s are down. Every hour costs Ruf.",
+  "data_center_addon.reputation.msg.loss_throttled": "Ruf at risk: the rack at %s runs throttled (heat, attack or a slow network).",
+  "data_center_addon.configuration.lossNotices": "Loss notices",
+  "data_center_addon.configuration.lossNotices.tooltip": "Chat notices when a rack costs Ruf: a crash, servers going down, throttling."
 }

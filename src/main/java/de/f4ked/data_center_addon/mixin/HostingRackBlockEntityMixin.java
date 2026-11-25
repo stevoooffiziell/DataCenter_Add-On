@@ -12,6 +12,7 @@ import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
+import de.f4ked.data_center_addon.hosting.reputation.LossNotices;
 import de.f4ked.data_center_addon.hosting.reputation.RackService;
 import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
 import de.f4ked.data_center_addon.hosting.reputation.Sensitivity;
@@ -154,7 +155,9 @@ public abstract class HostingRackBlockEntityMixin {
         if (!Config.reputationModel()) {
             reputation.recordCrash(server);
         } else if (rack.getLevel() instanceof ServerLevel level) {
-            ReputationService.crash(server, OwnerMessages.ownerOf(level, rack.getBlockPos()));
+            UUID owner = OwnerMessages.ownerOf(level, rack.getBlockPos());
+            ReputationService.crash(server, owner);
+            LossNotices.crash(level, rack.getBlockPos(), owner);
         }
     }
 

@@ -69,6 +69,7 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue REPUTATION_MODEL;
     private static final ModConfigSpec.DoubleValue ORDER_RENOWN;
     private static final ModConfigSpec.BooleanValue RUF_PER_PRODUCT;
+    private static final ModConfigSpec.BooleanValue LOSS_NOTICES;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -205,6 +206,10 @@ public final class Config {
                         "Ruf and half the Ruf of that product's own service. A good game server Ruf then helps little",
                         "with colocation.")
                 .define("rufPerProduct", false);
+        LOSS_NOTICES = builder
+                .comment("Chat notices when a rack costs Ruf: a crash, servers going down, throttling (each at most once a",
+                        "game day per rack).")
+                .define("lossNotices", true);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -384,6 +389,10 @@ public final class Config {
 
     public static boolean rufPerProduct() {
         return reputationModel() && SPEC.isLoaded() && RUF_PER_PRODUCT.get();
+    }
+
+    public static boolean lossNotices() {
+        return reputationModel() && (!SPEC.isLoaded() || LOSS_NOTICES.get());
     }
 
     public static double hostingStorageBoost() {

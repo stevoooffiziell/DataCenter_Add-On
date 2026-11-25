@@ -548,5 +548,10 @@
   "data_center_addon.reputation.history": "Reputation der letzten %s Spieltage",
   "data_center_addon.reputation.history.legend": "Grün: Ruf (0–100 %) · Blau: Bekanntheit",
   "data_center_addon.reputation.history.values": "Ruf / Bekanntheit: damals %s, jetzt %s",
-  "data_center_addon.reputation.history.empty": "Verlauf ab morgen"
+  "data_center_addon.reputation.history.empty": "Verlauf ab morgen",
+  "data_center_addon.reputation.msg.loss_crash": "%s Ruf: Rack bei %s abgestürzt. Die Delle klingt über 30 Tage ab.",
+  "data_center_addon.reputation.msg.loss_down": "Ruf in Gefahr: Server des Racks bei %s sind ausgefallen. Jede Stunde kostet Ruf.",
+  "data_center_addon.reputation.msg.loss_throttled": "Ruf in Gefahr: Das Rack bei %s läuft gedrosselt (Hitze, Angriff oder langsames Netz).",
+  "data_center_addon.configuration.lossNotices": "Hinweise bei Verlust",
+  "data_center_addon.configuration.lossNotices.tooltip": "Chat-Hinweise, wenn ein Rack Ruf kostet: Absturz, Ausfall, Drosselung."
 }

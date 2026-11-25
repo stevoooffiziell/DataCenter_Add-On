@@ -60,6 +60,7 @@ public final class ReputationService {
     @SubscribeEvent
     static void onServerStopped(ServerStoppedEvent event) {
         QuickFix.clear();
+        LossNotices.clear();
         Sensitivity.clear();
     }
 
