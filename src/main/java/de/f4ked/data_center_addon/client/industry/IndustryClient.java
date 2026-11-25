@@ -16,5 +16,6 @@ public final class IndustryClient {
     @SubscribeEvent
     static void onRegisterScreens(RegisterMenuScreensEvent event) {
         event.register(IndustryContent.PURCHASE_TERMINAL_MENU.get(), PurchaseTerminalScreen::new);
+        event.register(IndustryContent.MACHINE_MENU.get(), FactoryMachineScreen::new);
     }
 }

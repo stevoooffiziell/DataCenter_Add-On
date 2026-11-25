@@ -10,6 +10,7 @@
     "data_center_addon:switch_arista_7060cx_32s",
     "data_center_addon:switch_nvidia_spectrum_sn4700",
     "data_center_addon:hosting_manager",
-    "data_center_addon:purchase_terminal"
+    "data_center_addon:purchase_terminal",
+    "data_center_addon:smelter"
   ]
 }

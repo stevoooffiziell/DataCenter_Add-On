@@ -580,5 +580,15 @@
   "data_center_addon.industry.commodity.plastic_pellets": "Kunststoffgranulat",
   "data_center_addon.configuration.industry": "Industrie",
   "data_center_addon.configuration.purchasePrices": "Rohstoffpreise",
-  "data_center_addon.configuration.purchasePrices.tooltip": "Faktor für die Preise des Einkaufsterminals."
+  "data_center_addon.configuration.purchasePrices.tooltip": "Faktor für die Preise des Einkaufsterminals.",
+  "block.data_center_addon.smelter": "Schmelze",
+  "item.data_center_addon.silicon": "Silizium",
+  "data_center_addon.industry.machine.energy": "Strom: %s / %s FE",
+  "data_center_addon.industry.machine.draw": "Verbraucht %s FE pro Tick",
+  "data_center_addon.industry.machine.progress": "Fortschritt: %s %%",
+  "data_center_addon.industry.machine.recipes": "Rezepte:",
+  "data_center_addon.configuration.machineSpeed": "Maschinentempo",
+  "data_center_addon.configuration.machineSpeed.tooltip": "Tempo der Fabrikmaschinen (und ihr Strom pro Tick).",
+  "data_center_addon.configuration.machineEnergy": "Maschinenstrom",
+  "data_center_addon.configuration.machineEnergy.tooltip": "Faktor für den Strom, den die Fabrikmaschinen verbrauchen."
 }

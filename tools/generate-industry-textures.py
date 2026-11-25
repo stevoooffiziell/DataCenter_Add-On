@@ -26,6 +26,10 @@ BLOCKS = {
     # the Purchase Terminal: Data Center's bank terminal with an amber screen
     'purchase_terminal_screen': ('bank_terminal_screen', 0.09),
 }
+# factory machines: Data Center's synthesizer with the front and tray in the machine's colour
+MACHINES = {
+    'smelter': 0.04,  # glowing orange
+}
 
 
 def blank():
@@ -51,8 +55,44 @@ def pellets():
     return img
 
 
+def silicon():
+    """A lump of metallurgical silicon: grey-blue, crystalline, with bright facets."""
+    img = blank()
+    shape = [
+        "................",
+        "................",
+        "......##........",
+        ".....####.......",
+        "....######......",
+        "...########.....",
+        "..##########....",
+        "..###########...",
+        "...###########..",
+        "...###########..",
+        "....##########..",
+        ".....########...",
+        "......######....",
+        "........##......",
+        "................",
+        "................",
+    ]
+    rnd = random.Random(3)
+    for y, row in enumerate(shape):
+        for x, ch in enumerate(row):
+            if ch != '#':
+                continue
+            facet = ((x // 3) + (y // 2)) % 3
+            base = [(0x6A, 0x74, 0x86), (0x8C, 0x96, 0xA8), (0x4E, 0x56, 0x66)][facet]
+            jitter = rnd.randint(-8, 8)
+            img[y][x] = [max(0, min(255, c + jitter)) for c in base] + [255]
+    for x, y in [(6, 3), (7, 4), (9, 7), (10, 8), (5, 6)]:
+        img[y][x] = [0xD8, 0xE2, 0xF0, 255]
+    return img
+
+
 ITEMS = {
     'plastic_pellets': pellets,
+    'silicon': silicon,
 }
 
 
@@ -65,9 +105,13 @@ def main():
 
         for name, (base, hue) in BLOCKS.items():
             pngio.write(os.path.join(BLOCK_OUT, name + '.png'), network.rehue(source(base), hue))
+        for name, hue in MACHINES.items():
+            for part in ('front', 'tray'):
+                pngio.write(os.path.join(BLOCK_OUT, f'{name}_{part}.png'),
+                            network.rehue(source(f'synthesizer_{part}'), hue, min_saturation=0.05))
     for name, draw in ITEMS.items():
         pngio.write(os.path.join(ITEM_OUT, name + '.png'), draw())
-    print(f'Wrote {len(BLOCKS)} block and {len(ITEMS)} item textures')
+    print(f'Wrote {len(BLOCKS) + 2 * len(MACHINES)} block and {len(ITEMS)} item textures')
 
 
 if __name__ == '__main__':

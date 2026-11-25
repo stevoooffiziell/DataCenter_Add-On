@@ -71,6 +71,8 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue RUF_PER_PRODUCT;
     private static final ModConfigSpec.BooleanValue LOSS_NOTICES;
     private static final ModConfigSpec.DoubleValue PURCHASE_PRICES;
+    private static final ModConfigSpec.DoubleValue MACHINE_SPEED;
+    private static final ModConfigSpec.DoubleValue MACHINE_ENERGY;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -217,6 +219,12 @@ public final class Config {
         PURCHASE_PRICES = builder
                 .comment("Multiplier for the prices of the raw materials sold by the Purchase Terminal.")
                 .defineInRange("purchasePrices", 1.0, 0.1, 10.0);
+        MACHINE_SPEED = builder
+                .comment("Speed of the factory machines. 2.0 = twice as fast (and twice the power per tick).")
+                .defineInRange("machineSpeed", 1.0, 0.1, 10.0);
+        MACHINE_ENERGY = builder
+                .comment("Multiplier for the power the factory machines draw.")
+                .defineInRange("machineEnergy", 1.0, 0.0, 10.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -404,6 +412,14 @@ public final class Config {
 
     public static double purchasePrices() {
         return SPEC.isLoaded() ? PURCHASE_PRICES.get() : 1.0;
+    }
+
+    public static double machineSpeed() {
+        return SPEC.isLoaded() ? MACHINE_SPEED.get() : 1.0;
+    }
+
+    public static double machineEnergy() {
+        return SPEC.isLoaded() ? MACHINE_ENERGY.get() : 1.0;
     }
 
     public static double hostingStorageBoost() {

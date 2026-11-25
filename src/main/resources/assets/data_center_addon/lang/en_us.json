@@ -580,5 +580,15 @@
   "data_center_addon.industry.commodity.plastic_pellets": "Plastic Pellets",
   "data_center_addon.configuration.industry": "Industry",
   "data_center_addon.configuration.purchasePrices": "Raw material prices",
-  "data_center_addon.configuration.purchasePrices.tooltip": "Multiplier for the prices of the Purchase Terminal."
+  "data_center_addon.configuration.purchasePrices.tooltip": "Multiplier for the prices of the Purchase Terminal.",
+  "block.data_center_addon.smelter": "Smelter",
+  "item.data_center_addon.silicon": "Silicon",
+  "data_center_addon.industry.machine.energy": "Power: %s / %s FE",
+  "data_center_addon.industry.machine.draw": "Drawing %s FE per tick",
+  "data_center_addon.industry.machine.progress": "Progress: %s %%",
+  "data_center_addon.industry.machine.recipes": "Recipes:",
+  "data_center_addon.configuration.machineSpeed": "Machine speed",
+  "data_center_addon.configuration.machineSpeed.tooltip": "Speed of the factory machines (and their power per tick).",
+  "data_center_addon.configuration.machineEnergy": "Machine power",
+  "data_center_addon.configuration.machineEnergy.tooltip": "Multiplier for the power the factory machines draw."
 }
