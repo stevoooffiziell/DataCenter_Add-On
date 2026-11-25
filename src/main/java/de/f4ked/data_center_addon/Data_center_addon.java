@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon;
 import com.mojang.serialization.MapCodec;
 import de.f4ked.data_center_addon.block.PoweredServerPanelBlock;
 import de.f4ked.data_center_addon.hosting.HostingContent;
+import de.f4ked.data_center_addon.industry.IndustryContent;
 import de.f4ked.data_center_addon.network.HideOriginalNetworkCondition;
 import de.f4ked.data_center_addon.network.NetworkContent;
 import de.f4ked.data_center_addon.part.HideOriginalPartCondition;
@@ -55,6 +56,7 @@ public class Data_center_addon {
                 output.accept(POWERED_SERVER_PANEL_ITEM.get());
                 output.accept(HostingContent.MANAGER_ITEM.get());
                 output.acceptAll(NetworkContent.creativeStacks());
+                output.acceptAll(IndustryContent.creativeStacks());
             })
             .build());
 
@@ -69,6 +71,7 @@ public class Data_center_addon {
     public Data_center_addon(IEventBus modEventBus, ModContainer modContainer) {
         NetworkContent.register(modEventBus);
         HostingContent.register(modEventBus);
+        IndustryContent.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

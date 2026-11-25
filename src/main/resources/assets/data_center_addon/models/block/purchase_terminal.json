@@ -1,0 +1,6 @@
+{
+  "parent": "datacenter:block/bank_terminal",
+  "textures": {
+    "screen": "data_center_addon:block/industry/purchase_terminal_screen"
+  }
+}

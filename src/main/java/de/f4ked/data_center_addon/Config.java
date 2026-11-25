@@ -70,6 +70,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue ORDER_RENOWN;
     private static final ModConfigSpec.BooleanValue RUF_PER_PRODUCT;
     private static final ModConfigSpec.BooleanValue LOSS_NOTICES;
+    private static final ModConfigSpec.DoubleValue PURCHASE_PRICES;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -210,6 +211,12 @@ public final class Config {
                 .comment("Chat notices when a rack costs Ruf: a crash, servers going down, throttling (each at most once a",
                         "game day per rack).")
                 .define("lossNotices", true);
+        builder.pop();
+
+        builder.comment("Industry: buying raw materials, processing them in factories and selling the components.").push("industry");
+        PURCHASE_PRICES = builder
+                .comment("Multiplier for the prices of the raw materials sold by the Purchase Terminal.")
+                .defineInRange("purchasePrices", 1.0, 0.1, 10.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -393,6 +400,10 @@ public final class Config {
 
     public static boolean lossNotices() {
         return reputationModel() && (!SPEC.isLoaded() || LOSS_NOTICES.get());
+    }
+
+    public static double purchasePrices() {
+        return SPEC.isLoaded() ? PURCHASE_PRICES.get() : 1.0;
     }
 
     public static double hostingStorageBoost() {
