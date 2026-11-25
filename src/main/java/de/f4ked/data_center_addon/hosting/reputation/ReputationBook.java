@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -32,6 +33,14 @@ public final class ReputationBook extends SavedData {
         final Deque<double[]> days = new ArrayDeque<>();
         /** Epoch day of {@link #today}; -1 before the first record. */
         long day = -1;
+        /** Renown booked by source since the add-on's reputation model runs ({@link Renown}). */
+        final EnumMap<Renown.Source, Double> sources = new EnumMap<>(Renown.Source.class);
+        /** Most customers the account ever had; NaN until first seen. */
+        double customerMark = Double.NaN;
+
+        public EnumMap<Renown.Source, Double> sources() {
+            return sources;
+        }
     }
 
     public static ReputationBook get(MinecraftServer server) {
@@ -71,6 +80,13 @@ public final class ReputationBook extends SavedData {
             while (account.days.size() > Ruf.WINDOW_DAYS) {
                 account.days.removeFirst();
             }
+            CompoundTag sources = a.getCompound("sources");
+            for (Renown.Source s : Renown.Source.values()) {
+                if (sources.contains(s.name())) {
+                    account.sources.put(s, sources.getDouble(s.name()));
+                }
+            }
+            account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
         }
         return book;
     }
@@ -88,6 +104,12 @@ public final class ReputationBook extends SavedData {
                 days.add(writeRecord(record));
             }
             a.put("days", days);
+            CompoundTag sources = new CompoundTag();
+            account.sources.forEach((s, v) -> sources.putDouble(s.name(), v));
+            a.put("sources", sources);
+            if (!Double.isNaN(account.customerMark)) {
+                a.putDouble("customerMark", account.customerMark);
+            }
             list.add(a);
         });
         tag.put("accounts", list);

@@ -1,6 +1,7 @@
 package de.f4ked.data_center_addon.hosting.reputation;
 
 import com.example.datacenter.api.DataCenterApi;
+import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.server.MinecraftServer;
@@ -10,7 +11,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -53,7 +57,11 @@ public final class ReputationService {
         }
         long today = DataCenterApi.currentDate(server.overworld()).toEpochDay();
         ReputationBook book = ReputationBook.get(server);
-        for (ReputationBook.Account a : book.accounts().values()) {
+        for (Map.Entry<UUID, ReputationBook.Account> e : new ArrayList<>(book.accounts().entrySet())) {
+            ReputationBook.Account a = e.getValue();
+            if (Config.reputationModel()) {
+                Renown.customers(server.overworld(), e.getKey(), a);
+            }
             if (a.day < 0) {
                 a.day = today;
             } else if (today > a.day) {
@@ -81,7 +89,19 @@ public final class ReputationService {
     }
 
     public static HostingSnapshot.Standing snapshot(ServerLevel level, UUID account) {
-        Ruf.Figures f = Ruf.figures(ReputationBook.get(level.getServer()).account(account));
-        return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days());
+        ReputationBook.Account a = ReputationBook.get(level.getServer()).account(account);
+        Ruf.Figures f = Ruf.figures(a);
+        double[] sources = new double[Renown.Source.values().length];
+        a.sources().forEach((s, v) -> sources[s.ordinal()] = v);
+        return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days(),
+                DataCenterApi.reputation(level, account), toList(sources));
+    }
+
+    private static List<Double> toList(double[] values) {
+        List<Double> out = new ArrayList<>();
+        for (double v : values) {
+            out.add(v);
+        }
+        return List.copyOf(out);
     }
 }

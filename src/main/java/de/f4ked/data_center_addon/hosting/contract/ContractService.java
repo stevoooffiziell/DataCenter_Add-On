@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting.contract;
 
+import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingCustomers;
@@ -184,7 +185,7 @@ public final class ContractService {
             } else if (c.daysDone >= c.days) {
                 it.remove();
                 DataCenterApi.deposit(level, accountId, c.bonusCents);
-                DataCenterApi.changeReputation(level, accountId, c.reputation);
+                Renown.add(level, accountId, c.reputation, Renown.Source.ORDERS);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.completed",
                         clientName(c), Money.usd(c.bonusCents), c.reputation).withStyle(ChatFormatting.GREEN));
                 Milestones.award(level, accountId, Milestone.FIRST_CONTRACT);
@@ -201,7 +202,7 @@ public final class ContractService {
         long take = Math.min(c.penaltyCents, Math.max(0, DataCenterApi.balanceCents(level, accountId)));
         DataCenterApi.withdraw(level, accountId, take);
         if (c.reputationLoss() > 0) {
-            DataCenterApi.changeReputation(level, accountId, -c.reputationLoss());
+            Renown.add(level, accountId, -c.reputationLoss(), Renown.Source.PENALTIES);
         }
     }
 

@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting.startup;
 
+import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
@@ -62,6 +63,9 @@ public final class Milestones {
 
     private static void reach(ServerLevel level, UUID id, StartupBook.Account a, Milestone m) {
         a.milestones |= m.bit();
+        if (m.renown > 0 && Config.reputationModel()) {
+            Renown.add(level, id, m.renown, Renown.Source.MILESTONES);
+        }
         long cents = rewardCents(m);
         if (cents > 0) {
             DataCenterApi.deposit(level, id, cents);

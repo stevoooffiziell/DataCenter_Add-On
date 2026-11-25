@@ -541,9 +541,15 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param throttle share of the serving that ran throttled
      * @param crashes  crashes in the window
      * @param days     days with service in the window
+     * @param renown   Bekanntheit: Data Center's reputation points
+     * @param sources  renown booked per {@code Renown.Source}, in its order
      */
-    public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0);
+    public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
+                           double renown, List<Double> sources) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of());
+
+        private static final StreamCodec<FriendlyByteBuf, Double> DOUBLE = StreamCodec.of(
+                (buf, v) -> buf.writeDouble(v), FriendlyByteBuf::readDouble);
 
         public static final StreamCodec<FriendlyByteBuf, Standing> STREAM_CODEC = StreamCodec.of(
                 (buf, s) -> {
@@ -554,9 +560,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(s.throttle);
                     buf.writeVarInt(s.crashes);
                     buf.writeVarInt(s.days);
+                    buf.writeDouble(s.renown);
+                    writeList(buf, s.sources, DOUBLE);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readVarInt(), buf.readVarInt()));
+                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32)));
     }
 
     // ------------------------------------------------------------------ codec

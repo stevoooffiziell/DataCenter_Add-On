@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting.contract;
 
+import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.catalog.PartPacks;
 import com.example.datacenter.component.ComponentCondition;
@@ -168,7 +169,7 @@ public final class DeliveryService {
             ContractBook.Delivery d = it.next();
             if (day > d.lastDay) {
                 it.remove();
-                DataCenterApi.changeReputation(level, accountId, -d.reputation);
+                Renown.add(level, accountId, -d.reputation, Renown.Source.PENALTIES);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.failed",
                         clientName(d), d.reputation).withStyle(ChatFormatting.RED));
             }
@@ -397,7 +398,7 @@ public final class DeliveryService {
                 if (d.complete()) {
                     account.deliveries.remove(d);
                     DataCenterApi.deposit(level, accountId, d.payCents);
-                    DataCenterApi.changeReputation(level, accountId, d.reputation);
+                    Renown.add(level, accountId, d.reputation, Renown.Source.ORDERS);
                     OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.completed",
                             clientName(d), Money.usd(d.payCents), d.reputation).withStyle(ChatFormatting.GREEN));
                     Milestones.award(level, accountId, Milestone.FIRST_DELIVERY);
@@ -411,7 +412,7 @@ public final class DeliveryService {
                     return;
                 }
                 account.deliveries.remove(d);
-                DataCenterApi.changeReputation(level, accountId, -d.reputation);
+                Renown.add(level, accountId, -d.reputation, Renown.Source.PENALTIES);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.cancelled",
                         clientName(d), d.reputation).withStyle(ChatFormatting.RED));
             }
