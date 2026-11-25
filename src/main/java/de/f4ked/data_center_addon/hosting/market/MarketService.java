@@ -82,17 +82,18 @@ public final class MarketService {
                 continue;
             }
             MarketBook.Entry entry = market.entry(account, product);
-            MarketModel.Reach reach = MarketModel.reach(entry, product, date, reputation, rep.getUnlockedClass(),
-                    MarketEvents.factor(level, product, date), Competitors.factor(market, product));
+            MarketModel.Reach reach = MarketModel.sharedReach(market, entry, product, date, reputation, rep.getUnlockedClass(),
+                    MarketEvents.factor(level, product, date), Competitors.factor(market, product),
+                    level.getServer().getTickCount(), false);
             double customers = book.total(account, product);
             HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
                     nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.market(), reach.potential(),
                     reach.reputation(), reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap,
                     entry.ordersWord, quality, boosts(product, date), Config.marketModel() ? entry.priceStep() : 0,
-                    reach.price(), Competitors.competition(market, product), reach.rivals()));
+                    reach.price(), Competitors.competition(market, product), reach.rivals(), reach.sharing(), reach.accounts()));
         }
-        return new HostingSnapshot.Market(Config.marketModel(), MarketPool.internetUsers(date),
+        return new HostingSnapshot.Market(Config.marketModel(), Config.sharedPool(), MarketPool.internetUsers(date),
                 MarketEvents.phase(level, date).ordinal(), MarketEvents.mood(level, date) * MarketEvents.web20(date),
                 List.copyOf(rows), rivals(market));
     }

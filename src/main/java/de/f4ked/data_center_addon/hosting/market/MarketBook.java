@@ -40,6 +40,9 @@ public final class MarketBook extends SavedData {
         double awareness = Double.NaN;
         /** New customers waiting for a free place. */
         double waiting;
+        /** Standalone share of the pool at the last step, and the server tick of that step (not saved; {@link SharedPool}). */
+        double share;
+        long lastSeen = Long.MIN_VALUE / 2;
         /** Price in steps of {@link MarketModel#PRICE_STEP} from the list price ({@link MarketModel#PRICE_MIN}..{@link MarketModel#PRICE_MAX}). */
         int priceStep;
         /** The last step's new customers per month: closing the gap, and by word of mouth (not saved). */

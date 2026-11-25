@@ -60,11 +60,13 @@ public abstract class HostingCustomersMixin {
         if (!Config.marketModel()) {
             return;
         }
+        MarketBook book = MarketBook.get(server);
         CustomerClass unlocked = HostingReputation.get(server.overworld(), owner).getUnlockedClass();
         double market = MarketEvents.factor(server.overworld(), product, date);
-        double rivals = Competitors.factor(MarketBook.get(server), product);
-        MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reputationPoints, unlocked,
-                market, rivals, places, dtMonths);
+        double rivals = Competitors.factor(book, product);
+        MarketModel.Reach reach = MarketModel.sharedReach(book, entry, product, date, reputationPoints, unlocked, market, rivals,
+                server.getTickCount(), true);
+        MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reach, places, dtMonths);
         flows.computeIfAbsent(key(owner), k -> new EnumMap<>(HostingProduct.class))
                 .put(product, new HostingCustomers.Flow(flow.orders(), flow.cancellations()));
         self.setDirty();

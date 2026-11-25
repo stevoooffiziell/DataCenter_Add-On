@@ -32,6 +32,7 @@ import java.util.UUID;
  *       10 % cheaper raises the share by {@link #PRICE_ELASTICITY} × 10 %, each 10 % dearer lowers it as
  *       much. What the customers pay changes with the price.</li>
  * </ul>
+ * With several players in one market the potential is shared ({@link SharedPool}).
  * New customers close the gap between potential and customers and come by word of mouth ({@link #step}).
  */
 public final class MarketModel {
@@ -66,11 +67,18 @@ public final class MarketModel {
      * @param awareness  factor from awareness (0.5..1)
      * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
      * @param price      factor from the account's price
+     * @param sharing    factor from sharing the pool with other players (1 alone)
+     * @param accounts   accounts sharing the pool (1 alone)
      */
-    public record Reach(double pool, double market, double rivals, double reputation, double awareness, double classes, double price,
-                        double potential) {
+    public record Reach(double pool, double market, double rivals, double reputation, double awareness, double classes,
+                        double price, double sharing, int accounts, double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
+        }
+
+        Reach shared(SharedPool.Sharing s) {
+            return new Reach(pool, market, rivals, reputation, awareness, classes, price, s.factor(), s.accounts(),
+                    potential * s.factor());
         }
 
         /** Share of the potential that comes from the sub-pools of the higher customer classes. */
@@ -90,8 +98,23 @@ public final class MarketModel {
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
         double classes = classFactor(unlocked);
         double price = Config.marketModel() ? demandFactor(entry.priceStep) : 1.0;
-        return new Reach(pool, market, rivals, rep, aware, classes, price,
+        return new Reach(pool, market, rivals, rep, aware, classes, price, 1.0, 1,
                 pool * rivals * BASE_SHARE * rep * aware * classes * price);
+    }
+
+    /**
+     * The reach with the pool shared among the accounts in the market ({@link SharedPool}).
+     *
+     * @param tick the server tick; {@code step} notes the account as active, the Market tab only reads
+     */
+    public static Reach sharedReach(MarketBook book, MarketBook.Entry entry, HostingProduct product, LocalDate date,
+                                    double reputationPoints, CustomerClass unlocked, double market, double rivals, long tick,
+                                    boolean note) {
+        Reach alone = reach(entry, product, date, reputationPoints, unlocked, market, rivals);
+        if (note) {
+            SharedPool.note(entry, alone.share(), tick);
+        }
+        return alone.shared(SharedPool.sharing(book, product, entry, alone.share(), tick));
     }
 
     /** The price change of a step, e.g. +0.2 for two steps up. */
@@ -192,10 +215,10 @@ public final class MarketModel {
      * </ol>
      *
      * @param counts the account's customers of the product by segment, changed in place
+     * @param reach  what the account reaches of the product's pool ({@link #sharedReach})
      */
-    public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date,
-                            double reputationPoints, CustomerClass unlocked, double market, double rivals, double places,
-                            double dtMonths) {
+    public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date, Reach reach,
+                            double places, double dtMonths) {
         CustomerSegment[] segments = CustomerSegment.values();
         double total = 0;
         for (double c : counts) {
@@ -211,7 +234,6 @@ public final class MarketModel {
             }
         }
 
-        Reach reach = reach(entry, product, date, reputationPoints, unlocked, market, rivals);
         if (total > reach.potential() && total > 0) {
             double leaveShare = (total - reach.potential()) * Math.min(1, OVER_POTENTIAL_LEAVE * dtMonths) / total;
             for (int s = 0; s < counts.length; s++) {

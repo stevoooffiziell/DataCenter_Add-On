@@ -65,6 +65,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue CHURN_GOOD;
     private static final ModConfigSpec.DoubleValue CHURN_BAD;
     private static final ModConfigSpec.DoubleValue WAIT_DAYS;
+    private static final ModConfigSpec.BooleanValue SHARED_POOL;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -181,6 +182,10 @@ public final class Config {
                 .comment("New customers who find no free place wait this many in-game days on average before they give",
                         "up, instead of being lost at once. They get the next free places. 0 turns the waiting list off.")
                 .defineInRange("waitDays", 7.0, 0.0, 60.0);
+        SHARED_POOL = builder
+                .comment("Multiplayer: accounts that sell the same product share its pool and compete through reputation,",
+                        "customer classes, awareness and price. false: every account has the whole pool to itself.")
+                .define("sharedPool", false);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -340,6 +345,10 @@ public final class Config {
 
     public static double waitDays() {
         return SPEC.isLoaded() ? WAIT_DAYS.get() : 7.0;
+    }
+
+    public static boolean sharedPool() {
+        return SPEC.isLoaded() && SHARED_POOL.get();
     }
 
     public static double hostingStorageBoost() {

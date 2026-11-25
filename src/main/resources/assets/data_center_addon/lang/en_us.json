@@ -465,5 +465,9 @@
   "data_center_addon.market.reach.rivals": "Competition: %s of the market → %s",
   "data_center_addon.market.news.prefix": "[Market] ",
   "data_center_addon.market.news.bankrupt": "%s is bankrupt. Its %s customers (%s of the market) are looking for a new host.",
-  "data_center_addon.market.news.founded": "New competitor: %s sells %s and takes %s of those markets."
+  "data_center_addon.market.news.founded": "New competitor: %s sells %s and takes %s of those markets.",
+  "data_center_addon.market.reach.shared": "Shared with %s accounts: %s",
+  "data_center_addon.market.reach.shared.tip": "Accounts that sell the same product share its pool: the stronger your share (reputation, classes, awareness, price), the more you keep.",
+  "data_center_addon.configuration.sharedPool": "Shared pool (multiplayer)",
+  "data_center_addon.configuration.sharedPool.tooltip": "Accounts selling the same product share its pool and compete through reputation and price."
 }

@@ -84,7 +84,7 @@ final class MarketTab implements ManagerTab {
             if (panel.hover(col[1], ty, col[2] - col[1], ROW_H)) {
                 panel.tooltip(poolTooltip(row));
             } else if (panel.hover(col[2], ty, col[3] - col[2], ROW_H)) {
-                panel.tooltip(reachTooltip(row));
+                panel.tooltip(reachTooltip(m, row));
             } else if (panel.hover(col[3], ty, col[4] - col[3], ROW_H)) {
                 panel.tooltip(customersTooltip(row));
             } else if (panel.hover(col[4], ty, col[5] - col[4], ROW_H)) {
@@ -180,19 +180,28 @@ final class MarketTab implements ManagerTab {
     }
 
     /** How the reachable part of the pool comes together. */
-    private static List<Component> reachTooltip(HostingSnapshot.MarketRow row) {
-        return List.of(
-                Component.translatable("data_center_addon.market.reach.title", GuiText.compactNumber(Math.round(row.potential()))),
-                Component.translatable("data_center_addon.market.reach.base", GuiText.compactNumber(Math.round(row.pool())))
-                        .withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.reputation", factor(row.repFactor())).withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.awareness", factor(row.awareFactor())).withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.classes", factor(row.classFactor())).withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.classes.tip").withStyle(ChatFormatting.DARK_GRAY),
-                Component.translatable("data_center_addon.market.reach.price", factor(row.priceFactor())).withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.rivals", Texts.percent((float) row.competition()),
-                        factor(row.rivalFactor())).withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.reach.awareness.tip").withStyle(ChatFormatting.DARK_GRAY));
+    private static List<Component> reachTooltip(HostingSnapshot.Market m, HostingSnapshot.MarketRow row) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("data_center_addon.market.reach.title", GuiText.compactNumber(Math.round(row.potential()))));
+        lines.add(gray("data_center_addon.market.reach.base", GuiText.compactNumber(Math.round(row.pool()))));
+        lines.add(gray("data_center_addon.market.reach.rivals", Texts.percent((float) row.competition()), factor(row.rivalFactor())));
+        lines.add(gray("data_center_addon.market.reach.reputation", factor(row.repFactor())));
+        lines.add(gray("data_center_addon.market.reach.classes", factor(row.classFactor())));
+        lines.add(gray("data_center_addon.market.reach.awareness", factor(row.awareFactor())));
+        lines.add(gray("data_center_addon.market.reach.price", factor(row.priceFactor())));
+        if (m.shared()) {
+            lines.add(gray("data_center_addon.market.reach.shared", row.accounts(), factor(row.sharing())));
+        }
+        lines.add(Component.translatable("data_center_addon.market.reach.classes.tip").withStyle(ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatable("data_center_addon.market.reach.awareness.tip").withStyle(ChatFormatting.DARK_GRAY));
+        if (m.shared()) {
+            lines.add(Component.translatable("data_center_addon.market.reach.shared.tip").withStyle(ChatFormatting.DARK_GRAY));
+        }
+        return lines;
+    }
+
+    private static Component gray(String key, Object... args) {
+        return Component.translatable(key, args).withStyle(ChatFormatting.GRAY);
     }
 
     /** Where the new customers per month come from. */

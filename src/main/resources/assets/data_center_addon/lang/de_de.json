@@ -465,5 +465,9 @@
   "data_center_addon.market.reach.rivals": "Konkurrenz: %s des Markts → %s",
   "data_center_addon.market.news.prefix": "[Markt] ",
   "data_center_addon.market.news.bankrupt": "%s ist pleite. Seine Kunden (%s, %s des Markts) suchen einen neuen Anbieter.",
-  "data_center_addon.market.news.founded": "Neuer Konkurrent: %s verkauft %s und nimmt %s dieser Märkte."
+  "data_center_addon.market.news.founded": "Neuer Konkurrent: %s verkauft %s und nimmt %s dieser Märkte.",
+  "data_center_addon.market.reach.shared": "Geteilt mit %s Konten: %s",
+  "data_center_addon.market.reach.shared.tip": "Konten, die dasselbe Produkt verkaufen, teilen sich seinen Pool: Je stärker dein Anteil (Reputation, Klassen, Bekanntheit, Preis), desto mehr behältst du.",
+  "data_center_addon.configuration.sharedPool": "Gemeinsamer Pool (Mehrspieler)",
+  "data_center_addon.configuration.sharedPool.tooltip": "Konten, die dasselbe Produkt verkaufen, teilen sich seinen Pool und konkurrieren über Reputation und Preis."
 }
