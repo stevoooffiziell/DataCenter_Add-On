@@ -4,6 +4,7 @@ import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import com.example.datacenter.hosting.CustomerSegment;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.market.MarketEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -28,9 +29,21 @@ final class MarketTab implements ManagerTab {
     public void render(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h) {
         HostingSnapshot.Market m = s.market();
         String internet = Component.translatable("data_center_addon.market.internet", users(m.internetUsers())).getString();
+        int internetW = panel.font.width(internet);
         panel.line(g, internet, x, y, w, TechPanel.TEXT_MUTED);
-        if (panel.hover(x, y - 2, w, 12)) {
+        if (panel.hover(x, y - 2, internetW, 12)) {
             panel.tooltip(List.of(Component.translatable("data_center_addon.market.internet.tip").withStyle(ChatFormatting.GRAY)));
+        }
+        if (m.phase() > 0) {
+            String phase = Texts.market("event." + MarketEvents.Phase.values()[Math.min(m.phase(), MarketEvents.Phase.values().length - 1)]
+                    .name().toLowerCase(Locale.ROOT));
+            String event = Component.translatable("data_center_addon.market.event", phase, factor(m.mood())).getString();
+            int ex = x + internetW + 12;
+            panel.line(g, event, ex, y, x + w - ex, m.mood() < 1 ? TechPanel.WARN : TechPanel.GOOD);
+            if (panel.hover(ex, y - 2, x + w - ex, 12)) {
+                panel.tooltip(List.of(Component.literal(event),
+                        Component.translatable("data_center_addon.market.event.tip").withStyle(ChatFormatting.GRAY)));
+            }
         }
         int ty = y + 14;
         int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.56, 0.68, 0.81);
@@ -81,6 +94,10 @@ final class MarketTab implements ManagerTab {
     private static List<Component> poolTooltip(HostingSnapshot.MarketRow row) {
         List<Component> lines = new ArrayList<>();
         lines.add(Component.translatable("data_center_addon.market.pool.tip").withStyle(ChatFormatting.GRAY));
+        if (Math.abs(row.market() - 1) >= 0.005) {
+            lines.add(Component.translatable("data_center_addon.market.pool.events", factor(row.market()))
+                    .withStyle(row.market() < 1 ? ChatFormatting.GOLD : ChatFormatting.GREEN));
+        }
         CustomerSegment[] segments = CustomerSegment.values();
         for (HostingSnapshot.SegmentBoost b : row.boosts()) {
             Component segment = Component.translatable(segments[Mth.clamp(b.segment(), 0, segments.length - 1)].translationKey());

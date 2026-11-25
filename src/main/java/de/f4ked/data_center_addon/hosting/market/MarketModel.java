@@ -14,8 +14,9 @@ import java.util.UUID;
 /**
  * The add-on's customer model. Each product has a pool of potential customers ({@link MarketPool}); an
  * account reaches a share of it, its <b>potential</b>:
- * <pre>potential = pool × base share × reputation × awareness × customer classes</pre>
+ * <pre>potential = pool × market events × base share × reputation × awareness × customer classes</pre>
  * <ul>
+ *   <li><b>Market events</b>: dotcom boom and crash, Web 2.0 boom, financial crisis ({@link MarketEvents}).</li>
  *   <li><b>Base share</b>: {@code 1 / POOL_FACTOR}, so at 0 reputation and fully known the potential
  *       equals Data Center's own customer equilibrium.</li>
  *   <li><b>Reputation</b>: ×1 at 0 points up to ×2 at 1000.</li>
@@ -40,6 +41,8 @@ public final class MarketModel {
     static final double REPUTATION_MAX = 2.0;
     /** Size of each customer class's sub-pool, relative to the hobbyist pool, in {@link CustomerClass} order. */
     public static final double[] CLASS_POOLS = {1.0, 0.30, 0.30, 0.25, 0.20};
+    /** Share per game month of the customers above the potential that leave (a shrinking market, a lost class). */
+    static final double OVER_POTENTIAL_LEAVE = 0.10;
 
     private MarketModel() {
     }
@@ -47,11 +50,13 @@ public final class MarketModel {
     /**
      * What an account can reach of a product's pool.
      *
+     * @param pool       the pool after the market events
+     * @param market     factor of the market events on the pool
      * @param reputation factor from reputation
      * @param awareness  factor from awareness (0.5..1)
      * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
      */
-    public record Reach(double pool, double reputation, double awareness, double classes, double potential) {
+    public record Reach(double pool, double market, double reputation, double awareness, double classes, double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
         }
@@ -62,13 +67,14 @@ public final class MarketModel {
         }
     }
 
+    /** @param market factor of the market events ({@link MarketEvents#factor}) */
     public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints,
-                              CustomerClass unlocked) {
-        double pool = MarketPool.pool(product, date);
+                              CustomerClass unlocked, double market) {
+        double pool = MarketPool.pool(product, date) * market;
         double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
         double classes = classFactor(unlocked);
-        return new Reach(pool, rep, aware, classes, pool * BASE_SHARE * rep * aware * classes);
+        return new Reach(pool, market, rep, aware, classes, pool * BASE_SHARE * rep * aware * classes);
     }
 
     static double reputationFactor(double points) {
@@ -148,13 +154,15 @@ public final class MarketModel {
      *       Center's segment mix, the sub-pools' share of them leaning to the better paying segments.</li>
      *   <li>New customers who find no free place go on the waiting list; they give up after
      *       {@code waitDays} in-game days on average.</li>
+     *   <li>Customers above the potential (the market shrank, a class was lost) leave at
+     *       {@link #OVER_POTENTIAL_LEAVE} of the excess a month.</li>
      *   <li>When there are fewer places than customers, the excess leaves within days, as in Data Center.</li>
      * </ol>
      *
      * @param counts the account's customers of the product by segment, changed in place
      */
     public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date,
-                            double reputationPoints, CustomerClass unlocked, double places, double dtMonths) {
+                            double reputationPoints, CustomerClass unlocked, double market, double places, double dtMonths) {
         CustomerSegment[] segments = CustomerSegment.values();
         double total = 0;
         for (double c : counts) {
@@ -170,7 +178,14 @@ public final class MarketModel {
             }
         }
 
-        Reach reach = reach(entry, product, date, reputationPoints, unlocked);
+        Reach reach = reach(entry, product, date, reputationPoints, unlocked, market);
+        if (total > reach.potential() && total > 0) {
+            double leaveShare = (total - reach.potential()) * Math.min(1, OVER_POTENTIAL_LEAVE * dtMonths) / total;
+            for (int s = 0; s < counts.length; s++) {
+                counts[s] -= counts[s] * leaveShare;
+            }
+            total -= total * leaveShare;
+        }
         double interested = total + entry.waiting;
         double gap = Config.closeRate() * Math.max(0, reach.potential() - interested);
         double word = reach.potential() <= 0 ? 0

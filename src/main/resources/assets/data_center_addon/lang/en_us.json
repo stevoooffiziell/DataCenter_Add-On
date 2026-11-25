@@ -444,5 +444,13 @@
   "data_center_addon.configuration.waitDays": "Waiting list (days)",
   "data_center_addon.configuration.waitDays.tooltip": "New customers without a free place wait this many in-game days on average. 0 = off.",
   "data_center_addon.market.segment": "%s: pool %s",
-  "data_center_addon.market.segment.latest": "%s: pool %s (latest: %s, %s)"
+  "data_center_addon.market.segment.latest": "%s: pool %s (latest: %s, %s)",
+  "data_center_addon.market.event": "Market: %s %s",
+  "data_center_addon.market.event.dotcom_boom": "dotcom boom",
+  "data_center_addon.market.event.dotcom_crash": "dotcom crash",
+  "data_center_addon.market.event.recovery": "recovery",
+  "data_center_addon.market.event.web20_boom": "Web 2.0 boom",
+  "data_center_addon.market.event.financial_crisis": "financial crisis",
+  "data_center_addon.market.event.tip": "Market events change the size of the markets of shared hosting and VPS (not colocation). Customers above your potential leave over the months. Only in worlds that start before 2009, as in Data Center.",
+  "data_center_addon.market.pool.events": "Market events: %s"
 }

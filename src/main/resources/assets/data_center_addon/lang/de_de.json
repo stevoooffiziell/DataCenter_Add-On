@@ -444,5 +444,13 @@
   "data_center_addon.configuration.waitDays": "Warteliste (Tage)",
   "data_center_addon.configuration.waitDays.tooltip": "Neue Kunden ohne freien Platz warten im Mittel so viele Spieltage. 0 = aus.",
   "data_center_addon.market.segment": "%s: Pool %s",
-  "data_center_addon.market.segment.latest": "%s: Pool %s (zuletzt: %s, %s)"
+  "data_center_addon.market.segment.latest": "%s: Pool %s (zuletzt: %s, %s)",
+  "data_center_addon.market.event": "Markt: %s %s",
+  "data_center_addon.market.event.dotcom_boom": "Dotcom-Boom",
+  "data_center_addon.market.event.dotcom_crash": "Dotcom-Crash",
+  "data_center_addon.market.event.recovery": "Erholung",
+  "data_center_addon.market.event.web20_boom": "Web-2.0-Boom",
+  "data_center_addon.market.event.financial_crisis": "Finanzkrise",
+  "data_center_addon.market.event.tip": "Marktereignisse ändern die Größe der Märkte für Shared Hosting und VPS (nicht Colocation). Kunden über deinem Potenzial gehen nach und nach. Nur in Welten mit Start vor 2009, wie in Data Center.",
+  "data_center_addon.market.pool.events": "Marktereignisse: %s"
 }

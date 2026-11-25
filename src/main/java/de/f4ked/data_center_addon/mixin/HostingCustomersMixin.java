@@ -6,6 +6,7 @@ import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketBook;
+import de.f4ked.data_center_addon.hosting.market.MarketEvents;
 import de.f4ked.data_center_addon.hosting.market.MarketModel;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
@@ -59,8 +60,9 @@ public abstract class HostingCustomersMixin {
             return;
         }
         CustomerClass unlocked = HostingReputation.get(server.overworld(), owner).getUnlockedClass();
+        double market = MarketEvents.factor(server.overworld(), product, date);
         MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reputationPoints, unlocked,
-                places, dtMonths);
+                market, places, dtMonths);
         flows.computeIfAbsent(key(owner), k -> new EnumMap<>(HostingProduct.class))
                 .put(product, new HostingCustomers.Flow(flow.orders(), flow.cancellations()));
         self.setDirty();

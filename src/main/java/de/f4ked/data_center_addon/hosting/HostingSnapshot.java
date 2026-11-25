@@ -362,10 +362,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * The hosting market ({@code MarketService}).
      *
      * @param internetUsers internet users worldwide in millions
+     * @param phase         {@code MarketEvents.Phase} ordinal
+     * @param mood          factor of the market events on the pools (colocation excepted)
      * @param rows          one row per product that can be sold today
      */
-    public record Market(double internetUsers, List<MarketRow> rows) {
-        public static final Market NONE = new Market(0, List.of());
+    public record Market(double internetUsers, int phase, double mood, List<MarketRow> rows) {
+        public static final Market NONE = new Market(0, 0, 1, List.of());
 
         /** New customers of all products waiting for a free place. */
         public double waiting() {
@@ -375,16 +377,19 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
         public static final StreamCodec<FriendlyByteBuf, Market> STREAM_CODEC = StreamCodec.of(
                 (buf, m) -> {
                     buf.writeDouble(m.internetUsers);
+                    buf.writeVarInt(m.phase);
+                    buf.writeDouble(m.mood);
                     writeList(buf, m.rows, MarketRow.STREAM_CODEC);
                 },
-                buf -> new Market(buf.readDouble(), readList(buf, MarketRow.STREAM_CODEC, 16)));
+                buf -> new Market(buf.readDouble(), buf.readVarInt(), buf.readDouble(), readList(buf, MarketRow.STREAM_CODEC, 16)));
     }
 
     /**
      * The market of one product.
      *
      * @param product   {@code HostingProduct} ordinal
-     * @param pool        potential customers in the whole market
+     * @param pool        potential customers in the whole market (after the market events)
+     * @param market      factor of the market events on the pool
      * @param potential   the part of the pool the account can reach
      * @param repFactor   factor of the reach from reputation
      * @param awareFactor factor of the reach from awareness
@@ -396,7 +401,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param quality     the quality of the service and the cancellations it leads to
      * @param boosts      segments of the product raised by launches in the world
      */
-    public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
+    public record MarketRow(int product, double pool, double market, double potential, double repFactor, double awareFactor,
                             double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
                             Quality quality, List<SegmentBoost> boosts) {
         public double orders() {
@@ -407,6 +412,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 (buf, r) -> {
                     buf.writeVarInt(r.product);
                     buf.writeDouble(r.pool);
+                    buf.writeDouble(r.market);
                     buf.writeDouble(r.potential);
                     buf.writeDouble(r.repFactor);
                     buf.writeDouble(r.awareFactor);
@@ -418,7 +424,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     Quality.STREAM_CODEC.encode(buf, r.quality);
                     writeList(buf, r.boosts, SegmentBoost.STREAM_CODEC);
                 },
-                buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         Quality.STREAM_CODEC.decode(buf), readList(buf, SegmentBoost.STREAM_CODEC, 16)));
     }

@@ -1,20 +1,26 @@
 package de.f4ked.data_center_addon.mixin;
 
 import com.example.datacenter.component.StorageSpec;
+import com.example.datacenter.hosting.HostingDemand;
+import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
 import com.example.datacenter.machine.MachineBlockEntity;
 import com.example.datacenter.wallet.OwnerMessages;
+import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.time.LocalDate;
 
 /**
  * Hooks into the Hosting Rack's {@code runLoadout}, which runs once per tick while the rack works:
@@ -24,6 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *       {@link HostingStorageBoost}, which raises the capacity of the add-on's storage parts.</li>
  *   <li>At its end the rack's income of the tick is reported to {@link StartupService} (start bonus,
  *       service tickets). This hook only reads.</li>
+ *   <li>With the market model on, Data Center's market mood no longer scales shared and VPS income; it
+ *       changes the markets' size instead.</li>
  *   <li>The rack's service of the tick (customers served, down, overloaded, throttled), which it reports to
  *       Data Center's reputation, is also reported to {@link ServiceQuality}.</li>
  * </ul>
@@ -38,6 +46,23 @@ public abstract class HostingRackBlockEntityMixin {
             require = 0)
     private long data_center_addon$boostHostedStorage(StorageSpec spec) {
         return HostingStorageBoost.capacityGb(spec);
+    }
+
+    /**
+     * Data Center's market mood (dotcom crash ...) multiplies the income of shared hosting and VPS racks.
+     * With the market model on, the mood changes the size of the markets instead ({@code MarketEvents}),
+     * so it no longer touches these racks' income. Dedicated servers keep it; colocation never had it.
+     */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/HostingDemand;factor(Lnet/minecraft/world/level/Level;Ljava/time/LocalDate;Lcom/example/datacenter/hosting/HostingMode;)D"),
+            require = 0)
+    private double data_center_addon$marketMood(Level level, LocalDate today, HostingMode mode) {
+        if (Config.marketModel() && (mode == HostingMode.SHARED || mode == HostingMode.VPS)) {
+            return 1.0;
+        }
+        return HostingDemand.factor(level, today, mode);
     }
 
     /** Passes the rack's service on to Data Center's reputation and to {@link ServiceQuality} (shared, VPS, colocation). */
