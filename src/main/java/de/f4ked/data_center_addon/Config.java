@@ -62,6 +62,8 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue MARKET_MODEL;
     private static final ModConfigSpec.DoubleValue CLOSE_RATE;
     private static final ModConfigSpec.DoubleValue WORD_OF_MOUTH;
+    private static final ModConfigSpec.DoubleValue CHURN_GOOD;
+    private static final ModConfigSpec.DoubleValue CHURN_BAD;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -167,6 +169,13 @@ public final class Config {
                 .comment("Word of mouth: new customers per game month that every customer brings, while the reachable",
                         "potential is not used up (logistic growth). 0 turns it off.")
                 .defineInRange("wordOfMouth", 0.15, 0.0, 1.0);
+        CHURN_GOOD = builder
+                .comment("Cancellations per game month with perfect service (no downtime, no overload, no throttling).",
+                        "Data Center's usual value is about 0.03. Segments and events still shift it up or down.")
+                .defineInRange("churnGood", 0.01, 0.0, 0.5);
+        CHURN_BAD = builder
+                .comment("Cancellations per game month with bad service (servers down, overloaded or throttled).")
+                .defineInRange("churnBad", 0.08, 0.0, 1.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -314,6 +323,14 @@ public final class Config {
 
     public static double wordOfMouth() {
         return SPEC.isLoaded() ? WORD_OF_MOUTH.get() : 0.15;
+    }
+
+    public static double churnGood() {
+        return SPEC.isLoaded() ? CHURN_GOOD.get() : 0.01;
+    }
+
+    public static double churnBad() {
+        return SPEC.isLoaded() ? Math.max(CHURN_BAD.get(), CHURN_GOOD.get()) : 0.08;
     }
 
     public static double hostingStorageBoost() {

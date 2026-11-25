@@ -427,5 +427,16 @@
   "data_center_addon.configuration.wordOfMouth": "Word of mouth",
   "data_center_addon.configuration.wordOfMouth.tooltip": "New customers per game month every customer brings, while the potential is not used up. 0 = off.",
   "data_center_addon.market.reach.classes": "Customer classes: %s",
-  "data_center_addon.market.reach.classes.tip": "Every class you unlock opens its own sub-pool: small business +30 %%, mid-market +30 %%, enterprise +25 %%, finance & government +20 %%."
+  "data_center_addon.market.reach.classes.tip": "Every class you unlock opens its own sub-pool: small business +30 %%, mid-market +30 %%, enterprise +25 %%, finance & government +20 %%.",
+  "data_center_addon.hosting.column.churn": "Cancel / mo.",
+  "data_center_addon.market.quality.title": "Cancellations: %s of the customers per game month",
+  "data_center_addon.market.quality.unmeasured": "No service measured yet: Data Center's usual rate applies.",
+  "data_center_addon.market.quality.down": "Downtime: %s of the customers without a running server",
+  "data_center_addon.market.quality.overload": "Overload: %s",
+  "data_center_addon.market.quality.throttle": "Throttled (heat, attack, slow network): %s of the time",
+  "data_center_addon.market.quality.note": "Averages of the last 3 game days. 1 %% a month with good service, up to 8 %% with bad. Segments and events shift it.",
+  "data_center_addon.configuration.churnGood": "Cancellations, good service",
+  "data_center_addon.configuration.churnGood.tooltip": "Cancellations per game month with perfect service. Data Center: about 0.03.",
+  "data_center_addon.configuration.churnBad": "Cancellations, bad service",
+  "data_center_addon.configuration.churnBad.tooltip": "Cancellations per game month with servers down, overloaded or throttled."
 }

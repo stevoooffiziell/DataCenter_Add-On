@@ -387,9 +387,10 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param customers   the account's customers of the product
      * @param ordersGap   new customers per month closing the gap to the potential
      * @param ordersWord  new customers per month by word of mouth
+     * @param quality     the quality of the service and the cancellations it leads to
      */
     public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
-                            double classFactor, double customers, double ordersGap, double ordersWord) {
+                            double classFactor, double customers, double ordersGap, double ordersWord, Quality quality) {
         public double orders() {
             return ordersGap + ordersWord;
         }
@@ -405,9 +406,33 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(r.customers);
                     buf.writeDouble(r.ordersGap);
                     buf.writeDouble(r.ordersWord);
+                    Quality.STREAM_CODEC.encode(buf, r.quality);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()));
+                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), Quality.STREAM_CODEC.decode(buf)));
+    }
+
+    /**
+     * The service of one product ({@code ServiceQuality}); the shares are -1 before the first measurement.
+     *
+     * @param churn    cancellations per month the service leads to (before segments and events)
+     * @param down     share of customers whose server did not run
+     * @param overload how far the servers run over their real capacity
+     * @param throttle share of the time the racks ran throttled (heat, attack, slow network)
+     */
+    public record Quality(double churn, double down, double overload, double throttle) {
+        public boolean measured() {
+            return down >= 0;
+        }
+
+        public static final StreamCodec<FriendlyByteBuf, Quality> STREAM_CODEC = StreamCodec.of(
+                (buf, q) -> {
+                    buf.writeDouble(q.churn);
+                    buf.writeDouble(q.down);
+                    buf.writeDouble(q.overload);
+                    buf.writeDouble(q.throttle);
+                },
+                buf -> new Quality(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()));
     }
 
     // ------------------------------------------------------------------ codec

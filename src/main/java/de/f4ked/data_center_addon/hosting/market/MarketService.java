@@ -4,8 +4,14 @@ import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingReputation;
+import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,11 +20,28 @@ import java.util.UUID;
 
 /**
  * The hosting market as the Hosting Manager's Market tab shows it: per product the pool of potential
- * customers ({@link MarketPool}), the part the account can reach ({@link MarketModel}) and its own
- * customers.
+ * customers ({@link MarketPool}), the part the account can reach ({@link MarketModel}), its own
+ * customers and the quality of its service ({@link ServiceQuality}, sampled once a second).
  */
+@EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class MarketService {
+    private static final int SAMPLE_TICKS = 20;
+
     private MarketService() {
+    }
+
+    @SubscribeEvent
+    static void onServerTick(ServerTickEvent.Post event) {
+        MinecraftServer server = event.getServer();
+        if (server.getTickCount() % SAMPLE_TICKS != 0) {
+            return;
+        }
+        ServiceQuality.flush(server, SAMPLE_TICKS);
+    }
+
+    @SubscribeEvent
+    static void onServerStopped(ServerStoppedEvent event) {
+        ServiceQuality.clear();
     }
 
     public static HostingSnapshot.Market snapshot(ServerLevel level, UUID account) {
@@ -34,9 +57,17 @@ public final class MarketService {
             }
             MarketBook.Entry entry = market.entry(account, product);
             MarketModel.Reach reach = MarketModel.reach(entry, product, date, reputation, rep.getUnlockedClass());
+            double customers = book.total(account, product);
+            HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
+                    nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
-                    reach.awareness(), reach.classes(), book.total(account, product), entry.ordersGap, entry.ordersWord));
+                    reach.awareness(), reach.classes(), customers, entry.ordersGap, entry.ordersWord, quality));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
+    }
+
+    /** -1 for "not measured yet". */
+    private static double nanToMinus(double v) {
+        return Double.isNaN(v) ? -1 : v;
     }
 }

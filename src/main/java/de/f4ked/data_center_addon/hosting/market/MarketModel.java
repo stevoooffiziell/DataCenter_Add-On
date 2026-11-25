@@ -137,7 +137,8 @@ public final class MarketModel {
     /**
      * Moves one account's customers of one product on by one tick, in place of Data Center's own step.
      * <ol>
-     *   <li>Customers cancel as in Data Center (about 3 % a month, by segment and year).</li>
+     *   <li>Customers cancel as in Data Center (by segment and year), scaled by the quality of the service
+     *       ({@link ServiceQuality}): 1 % a month with good service up to 8 % with bad.</li>
      *   <li>New customers close the gap to the potential: {@code (potential − customers) × closeRate} a
      *       month.</li>
      *   <li>Word of mouth: every customer brings {@code wordOfMouth} new ones a month, less the closer the
@@ -157,9 +158,10 @@ public final class MarketModel {
             total += c;
         }
 
+        double quality = ServiceQuality.churnFactor(entry);
         for (int s = 0; s < segments.length && s < counts.length; s++) {
             if (counts[s] > 0) {
-                double lost = counts[s] * Math.min(1, HostingGrowth.churn(product, segments[s], date) * dtMonths);
+                double lost = counts[s] * Math.min(1, HostingGrowth.churn(product, segments[s], date) * quality * dtMonths);
                 counts[s] -= lost;
                 total -= lost;
             }
@@ -187,7 +189,7 @@ public final class MarketModel {
                 counts[s] = 0;
             }
         }
-        return new Flow(orders, HostingGrowth.churnPerMonth(product, counts, date));
+        return new Flow(orders, HostingGrowth.churnPerMonth(product, counts, date) * quality);
     }
 
     /** Customers above the places offered leave within days, the more outage-sensitive the faster (as in Data Center). */

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 /**
  * What the add-on keeps about each account's markets ({@link MarketModel}): per account and product how
- * well known the account is. Stored with the overworld.
+ * well known the account is and how well it serves its customers. Stored with the overworld.
  */
 public final class MarketBook extends SavedData {
     private static final String NAME = "data_center_addon_market";
@@ -31,6 +31,8 @@ public final class MarketBook extends SavedData {
         double awareness = Double.NaN;
         /** The last step's new customers per month: closing the gap, and by word of mouth (not saved). */
         double ordersGap, ordersWord;
+        /** Averages of the service ({@link ServiceQuality}): downtime, overload, throttling, 0..1; NaN before the first report. */
+        double down = Double.NaN, overload = Double.NaN, throttle = Double.NaN;
 
         public double awareness() {
             return Double.isNaN(awareness) ? 0 : awareness;
@@ -76,6 +78,11 @@ public final class MarketBook extends SavedData {
                 if (p.contains("awareness")) {
                     e.awareness = clamp01(p.getDouble("awareness"));
                 }
+                if (p.contains("down")) {
+                    e.down = clamp01(p.getDouble("down"));
+                    e.overload = clamp01(p.getDouble("overload"));
+                    e.throttle = clamp01(p.getDouble("throttle"));
+                }
             }
         }
         return book;
@@ -90,6 +97,11 @@ public final class MarketBook extends SavedData {
                 CompoundTag p = new CompoundTag();
                 if (!Double.isNaN(e.awareness)) {
                     p.putDouble("awareness", e.awareness);
+                }
+                if (!Double.isNaN(e.down)) {
+                    p.putDouble("down", e.down);
+                    p.putDouble("overload", e.overload);
+                    p.putDouble("throttle", e.throttle);
                 }
                 products.put(product.id(), p);
             });

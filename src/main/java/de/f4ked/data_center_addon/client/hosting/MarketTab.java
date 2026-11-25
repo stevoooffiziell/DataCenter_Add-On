@@ -30,9 +30,9 @@ final class MarketTab implements ManagerTab {
             panel.tooltip(List.of(Component.translatable("data_center_addon.market.internet.tip").withStyle(ChatFormatting.GRAY)));
         }
         int ty = y + 14;
-        int[] col = Panel.columns(x, w, 0, 0.25, 0.37, 0.51, 0.63, 0.77);
+        int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.56, 0.68, 0.81);
         panel.header(g, x, ty, w, col, "column.product", "column.pool", "column.reachable", "column.customers",
-                "column.inflow", "column.market_share");
+                "column.inflow", "column.churn", "column.market_share");
         ty += ROW_H + 2;
         int index = 0;
         for (HostingSnapshot.MarketRow row : m.rows()) {
@@ -45,18 +45,22 @@ final class MarketTab implements ManagerTab {
             panel.cell(g, GuiText.compactNumber(Math.round(row.potential())), col, 2, ty, TechPanel.ACCENT);
             panel.cell(g, GuiText.compactNumber(Math.round(row.customers())), col, 3, ty, TechPanel.TEXT);
             panel.cell(g, "+" + GuiText.compactNumber(Math.round(row.orders())), col, 4, ty, TechPanel.GOOD);
+            HostingSnapshot.Quality q = row.quality();
+            panel.cell(g, Texts.percent((float) q.churn()), col, 5, ty, churnColor(q));
             float share = row.pool() <= 0 ? 0 : (float) Math.min(1, row.customers() / row.pool());
             float reach = row.pool() <= 0 ? 0 : (float) Math.min(1, row.potential() / row.pool());
-            int barW = x + w - col[5] - 50;
-            TechPanel.bar(g, col[5], ty + 3, barW, 9, reach, Panel.HEADER_LINE);
-            TechPanel.bar(g, col[5], ty + 3, (int) (barW * reach), 9, reach <= 0 ? 0 : share / reach, TechPanel.VIOLET);
-            g.drawString(panel.font, Texts.percent(share), col[5] + barW + 6, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
+            int barW = x + w - col[6] - 46;
+            TechPanel.bar(g, col[6], ty + 3, barW, 9, reach, Panel.HEADER_LINE);
+            TechPanel.bar(g, col[6], ty + 3, (int) (barW * reach), 9, reach <= 0 ? 0 : share / reach, TechPanel.VIOLET);
+            g.drawString(panel.font, Texts.percent(share), col[6] + barW + 4, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
             if (panel.hover(col[1], ty, col[2] - col[1], ROW_H)) {
                 panel.tooltip(List.of(Component.translatable("data_center_addon.market.pool.tip").withStyle(ChatFormatting.GRAY)));
             } else if (panel.hover(col[2], ty, col[3] - col[2], ROW_H)) {
                 panel.tooltip(reachTooltip(row));
             } else if (panel.hover(col[4], ty, col[5] - col[4], ROW_H)) {
                 panel.tooltip(inflowTooltip(row));
+            } else if (panel.hover(col[5], ty, col[6] - col[5], ROW_H)) {
+                panel.tooltip(qualityTooltip(q));
             }
             ty += ROW_H;
         }
@@ -84,6 +88,29 @@ final class MarketTab implements ManagerTab {
                 Component.translatable("data_center_addon.market.inflow.word", GuiText.compactNumber(Math.round(row.ordersWord())))
                         .withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.inflow.note").withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    /** Green for good service, amber for middling, red for bad. */
+    private static int churnColor(HostingSnapshot.Quality q) {
+        if (!q.measured()) {
+            return TechPanel.TEXT_MUTED;
+        }
+        return q.churn() <= 0.025 ? TechPanel.GOOD : q.churn() <= 0.05 ? TechPanel.WARN : TechPanel.DANGER;
+    }
+
+    /** What the cancellations come from. */
+    private static List<Component> qualityTooltip(HostingSnapshot.Quality q) {
+        if (!q.measured()) {
+            return List.of(Component.translatable("data_center_addon.market.quality.title", Texts.percent((float) q.churn())),
+                    Component.translatable("data_center_addon.market.quality.unmeasured").withStyle(ChatFormatting.GRAY));
+        }
+        return List.of(Component.translatable("data_center_addon.market.quality.title", Texts.percent((float) q.churn())),
+                Component.translatable("data_center_addon.market.quality.down", Texts.percent((float) q.down())).withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.quality.overload", Texts.percent((float) q.overload()))
+                        .withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.quality.throttle", Texts.percent((float) q.throttle()))
+                        .withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.quality.note").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     /** "×1.25" */

@@ -427,5 +427,16 @@
   "data_center_addon.configuration.wordOfMouth": "Mundpropaganda",
   "data_center_addon.configuration.wordOfMouth.tooltip": "Neue Kunden pro Spielmonat, die jeder Kunde bringt, solange das Potenzial nicht ausgeschöpft ist. 0 = aus.",
   "data_center_addon.market.reach.classes": "Kundenklassen: %s",
-  "data_center_addon.market.reach.classes.tip": "Jede freigeschaltete Klasse öffnet einen eigenen Teilpool: Kleinunternehmen +30 %%, Mittelstand +30 %%, Großunternehmen +25 %%, Finanzen & Behörden +20 %%."
+  "data_center_addon.market.reach.classes.tip": "Jede freigeschaltete Klasse öffnet einen eigenen Teilpool: Kleinunternehmen +30 %%, Mittelstand +30 %%, Großunternehmen +25 %%, Finanzen & Behörden +20 %%.",
+  "data_center_addon.hosting.column.churn": "Kündig. / Mon.",
+  "data_center_addon.market.quality.title": "Kündigungen: %s der Kunden pro Spielmonat",
+  "data_center_addon.market.quality.unmeasured": "Noch kein Betrieb gemessen: Es gilt die übliche Rate aus Data Center.",
+  "data_center_addon.market.quality.down": "Ausfall: %s der Kunden ohne laufenden Server",
+  "data_center_addon.market.quality.overload": "Überlast: %s",
+  "data_center_addon.market.quality.throttle": "Gedrosselt (Hitze, Angriff, langsames Netz): %s der Zeit",
+  "data_center_addon.market.quality.note": "Mittel der letzten 3 Spieltage. 1 %% pro Monat bei gutem Betrieb, bis 8 %% bei schlechtem. Segmente und Ereignisse verschieben das.",
+  "data_center_addon.configuration.churnGood": "Kündigungen, guter Betrieb",
+  "data_center_addon.configuration.churnGood.tooltip": "Kündigungen pro Spielmonat bei perfektem Betrieb. Data Center: etwa 0,03.",
+  "data_center_addon.configuration.churnBad": "Kündigungen, schlechter Betrieb",
+  "data_center_addon.configuration.churnBad.tooltip": "Kündigungen pro Spielmonat, wenn Server ausfallen, überlastet oder gedrosselt sind."
 }
