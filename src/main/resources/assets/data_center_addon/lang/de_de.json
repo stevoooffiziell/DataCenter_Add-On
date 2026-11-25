@@ -413,5 +413,10 @@
   "data_center_addon.market.reach.base": "Basis: 20 %% des Markts (%s)",
   "data_center_addon.market.reach.reputation": "Reputation: %s",
   "data_center_addon.market.reach.awareness": "Bekanntheit: %s",
-  "data_center_addon.market.reach.awareness.tip": "Die Bekanntheit wächst, solange du Plätze des Produkts anbietest, und sinkt, wenn du keine anbietest."
+  "data_center_addon.market.reach.awareness.tip": "Die Bekanntheit wächst, solange du Plätze des Produkts anbietest, und sinkt, wenn du keine anbietest.",
+  "data_center_addon.configuration.market": "Hosting-Markt",
+  "data_center_addon.configuration.marketModel": "Marktmodell",
+  "data_center_addon.configuration.marketModel.tooltip": "Neue Kunden schließen die Lücke zum erreichbaren Potenzial. Aus: Kunden kommen wie in Data Center.",
+  "data_center_addon.configuration.closeRate": "Abschlussrate",
+  "data_center_addon.configuration.closeRate.tooltip": "Anteil der Lücke zwischen Potenzial und Kunden, der pro Spielmonat zu Kunden wird."
 }

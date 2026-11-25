@@ -59,6 +59,8 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue SERVICE_TICKETS;
     private static final ModConfigSpec.DoubleValue PREPAY_SHARE;
     private static final ModConfigSpec.DoubleValue PREPAY_DISCOUNT;
+    private static final ModConfigSpec.BooleanValue MARKET_MODEL;
+    private static final ModConfigSpec.DoubleValue CLOSE_RATE;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -148,6 +150,18 @@ public final class Config {
                 .comment("Service tickets: clients ask you to look at one of your racks. Right-click the rack before the",
                         "deadline to be paid.")
                 .define("serviceTickets", true);
+        builder.pop();
+
+        builder.comment("The hosting market: where new customers come from.").push("market");
+        MARKET_MODEL = builder
+                .comment("Use the add-on's market model for shared hosting, VPS and colocation customers: each product has",
+                        "a pool of potential customers, you reach a share of it, and new customers close the gap.",
+                        "false: customers arrive the way Data Center does it (the Market tab still shows the market).")
+                .define("marketModel", true);
+        CLOSE_RATE = builder
+                .comment("Share of the gap between your reachable potential and your customers that becomes customers",
+                        "per game month. 0.25 = 63 % of the gap is closed in about 4 game months.")
+                .defineInRange("closeRate", 0.25, 0.01, 1.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -283,6 +297,14 @@ public final class Config {
 
     public static boolean serviceTickets() {
         return !SPEC.isLoaded() || SERVICE_TICKETS.get();
+    }
+
+    public static boolean marketModel() {
+        return !SPEC.isLoaded() || MARKET_MODEL.get();
+    }
+
+    public static double closeRate() {
+        return SPEC.isLoaded() ? CLOSE_RATE.get() : 0.25;
     }
 
     public static double hostingStorageBoost() {

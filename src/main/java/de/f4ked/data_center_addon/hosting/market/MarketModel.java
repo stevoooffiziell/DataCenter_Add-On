@@ -1,7 +1,10 @@
 package de.f4ked.data_center_addon.hosting.market;
 
+import com.example.datacenter.hosting.CustomerSegment;
+import com.example.datacenter.hosting.HostingGrowth;
 import com.example.datacenter.hosting.HostingModeRates;
 import com.example.datacenter.hosting.HostingProduct;
+import de.f4ked.data_center_addon.Config;
 import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,6 +23,7 @@ import java.util.UUID;
  *       account offers places of the product (63 % of the way in {@link #AWARENESS_UP_MONTHS} game
  *       months) and fades slowly while it offers none.</li>
  * </ul>
+ * New customers close the gap between potential and customers ({@link #step}).
  */
 public final class MarketModel {
     public static final double BASE_SHARE = 1.0 / MarketPool.POOL_FACTOR;
@@ -55,8 +59,8 @@ public final class MarketModel {
      * Called by Data Center's customer book every tick for every product an account sells or has
      * customers of, before the book moves on: awareness grows while places are offered.
      */
-    public static void observe(MinecraftServer server, @Nullable UUID owner, HostingProduct product, double customers,
-                               double places, double dtMonths) {
+    public static MarketBook.Entry observe(MinecraftServer server, @Nullable UUID owner, HostingProduct product,
+                                           double customers, double places, double dtMonths) {
         MarketBook book = MarketBook.get(server);
         MarketBook.Entry e = book.entry(owner, product);
         if (Double.isNaN(e.awareness)) {
@@ -69,5 +73,75 @@ public final class MarketModel {
         }
         e.awareness = MarketBook.clamp01(e.awareness);
         book.setDirty();
+        return e;
+    }
+
+    // ------------------------------------------------------------------ one tick of the customer book
+
+    /** New customers and cancellations per game month, as Data Center's rack menu shows them. */
+    public record Flow(double orders, double cancellations) {
+    }
+
+    /**
+     * Moves one account's customers of one product on by one tick, in place of Data Center's own step.
+     * <ol>
+     *   <li>Customers cancel as in Data Center (about 3 % a month, by segment and year).</li>
+     *   <li>New customers close the gap to the potential: {@code (potential − customers) × closeRate} a
+     *       month, as far as there are free places. They come in Data Center's segment mix.</li>
+     *   <li>When there are fewer places than customers, the excess leaves within days, as in Data Center.</li>
+     * </ol>
+     *
+     * @param counts the account's customers of the product by segment, changed in place
+     */
+    public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date,
+                            double reputationPoints, double places, double dtMonths) {
+        CustomerSegment[] segments = CustomerSegment.values();
+        double total = 0;
+        for (double c : counts) {
+            total += c;
+        }
+
+        for (int s = 0; s < segments.length && s < counts.length; s++) {
+            if (counts[s] > 0) {
+                double lost = counts[s] * Math.min(1, HostingGrowth.churn(product, segments[s], date) * dtMonths);
+                counts[s] -= lost;
+                total -= lost;
+            }
+        }
+
+        Reach reach = reach(entry, product, date, reputationPoints);
+        double orders = Config.closeRate() * Math.max(0, reach.potential() - total);
+        double free = Math.max(0, places - total);
+        double arriving = Math.min(free, orders * dtMonths);
+        if (arriving > 0) {
+            double[] mix = HostingGrowth.orderMix(product, date);
+            for (int s = 0; s < segments.length && s < counts.length; s++) {
+                counts[s] += arriving * mix[s];
+            }
+            total += arriving;
+        }
+
+        leaveOverPlaces(segments, counts, total, places, dtMonths);
+        for (int s = 0; s < counts.length; s++) {
+            if (counts[s] < 1.0E-9) {
+                counts[s] = 0;
+            }
+        }
+        return new Flow(orders, HostingGrowth.churnPerMonth(product, counts, date));
+    }
+
+    /** Customers above the places offered leave within days, the more outage-sensitive the faster (as in Data Center). */
+    private static void leaveOverPlaces(CustomerSegment[] segments, double[] counts, double total, double places, double dtMonths) {
+        if (total <= places + 1.0E-9 || total <= 0) {
+            return;
+        }
+        double excessShare = (total - Math.max(0, places)) / total;
+        double days = dtMonths * 730.5 / 24.0;
+        for (int s = 0; s < segments.length && s < counts.length; s++) {
+            if (counts[s] > 0) {
+                double leave = 1 - Math.exp(-days * segments[s].outage / HostingGrowth.EXCESS_LEAVE_DAYS);
+                counts[s] -= counts[s] * excessShare * leave;
+            }
+        }
     }
 }

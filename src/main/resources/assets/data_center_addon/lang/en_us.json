@@ -413,5 +413,10 @@
   "data_center_addon.market.reach.base": "Base: 20 %% of the market (%s)",
   "data_center_addon.market.reach.reputation": "Reputation: %s",
   "data_center_addon.market.reach.awareness": "Awareness: %s",
-  "data_center_addon.market.reach.awareness.tip": "Awareness grows while you offer places of the product and fades while you offer none."
+  "data_center_addon.market.reach.awareness.tip": "Awareness grows while you offer places of the product and fades while you offer none.",
+  "data_center_addon.configuration.market": "Hosting market",
+  "data_center_addon.configuration.marketModel": "Market model",
+  "data_center_addon.configuration.marketModel.tooltip": "New customers close the gap to your reachable potential. Off: customers arrive the way Data Center does it.",
+  "data_center_addon.configuration.closeRate": "Close rate",
+  "data_center_addon.configuration.closeRate.tooltip": "Share of the gap between potential and customers that becomes customers per game month."
 }
