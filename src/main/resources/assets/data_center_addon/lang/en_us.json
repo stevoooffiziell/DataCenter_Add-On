@@ -438,5 +438,9 @@
   "data_center_addon.configuration.churnGood": "Cancellations, good service",
   "data_center_addon.configuration.churnGood.tooltip": "Cancellations per game month with perfect service. Data Center: about 0.03.",
   "data_center_addon.configuration.churnBad": "Cancellations, bad service",
-  "data_center_addon.configuration.churnBad.tooltip": "Cancellations per game month with servers down, overloaded or throttled."
+  "data_center_addon.configuration.churnBad.tooltip": "Cancellations per game month with servers down, overloaded or throttled.",
+  "data_center_addon.hosting.overview.waiting": "%s customers are waiting for a free place: build capacity.",
+  "data_center_addon.market.waiting": "%s new customers are waiting for a free place. They get the next free places and give up after a few game days.",
+  "data_center_addon.configuration.waitDays": "Waiting list (days)",
+  "data_center_addon.configuration.waitDays.tooltip": "New customers without a free place wait this many in-game days on average. 0 = off."
 }

@@ -29,6 +29,8 @@ public final class MarketBook extends SavedData {
     public static final class Entry {
         /** How well known the account is for the product, 0..1; NaN until first seen. */
         double awareness = Double.NaN;
+        /** New customers waiting for a free place. */
+        double waiting;
         /** The last step's new customers per month: closing the gap, and by word of mouth (not saved). */
         double ordersGap, ordersWord;
         /** Averages of the service ({@link ServiceQuality}): downtime, overload, throttling, 0..1; NaN before the first report. */
@@ -36,6 +38,10 @@ public final class MarketBook extends SavedData {
 
         public double awareness() {
             return Double.isNaN(awareness) ? 0 : awareness;
+        }
+
+        public double waiting() {
+            return waiting;
         }
     }
 
@@ -78,6 +84,8 @@ public final class MarketBook extends SavedData {
                 if (p.contains("awareness")) {
                     e.awareness = clamp01(p.getDouble("awareness"));
                 }
+                double waiting = p.getDouble("waiting");
+                e.waiting = Double.isFinite(waiting) ? Math.max(0, waiting) : 0;
                 if (p.contains("down")) {
                     e.down = clamp01(p.getDouble("down"));
                     e.overload = clamp01(p.getDouble("overload"));
@@ -97,6 +105,9 @@ public final class MarketBook extends SavedData {
                 CompoundTag p = new CompoundTag();
                 if (!Double.isNaN(e.awareness)) {
                     p.putDouble("awareness", e.awareness);
+                }
+                if (e.waiting > 0) {
+                    p.putDouble("waiting", e.waiting);
                 }
                 if (!Double.isNaN(e.down)) {
                     p.putDouble("down", e.down);

@@ -438,5 +438,9 @@
   "data_center_addon.configuration.churnGood": "Kündigungen, guter Betrieb",
   "data_center_addon.configuration.churnGood.tooltip": "Kündigungen pro Spielmonat bei perfektem Betrieb. Data Center: etwa 0,03.",
   "data_center_addon.configuration.churnBad": "Kündigungen, schlechter Betrieb",
-  "data_center_addon.configuration.churnBad.tooltip": "Kündigungen pro Spielmonat, wenn Server ausfallen, überlastet oder gedrosselt sind."
+  "data_center_addon.configuration.churnBad.tooltip": "Kündigungen pro Spielmonat, wenn Server ausfallen, überlastet oder gedrosselt sind.",
+  "data_center_addon.hosting.overview.waiting": "%s Kunden warten auf einen freien Platz: Baue Kapazität.",
+  "data_center_addon.market.waiting": "%s neue Kunden warten auf einen freien Platz. Sie bekommen die nächsten freien Plätze und geben nach einigen Spieltagen auf.",
+  "data_center_addon.configuration.waitDays": "Warteliste (Tage)",
+  "data_center_addon.configuration.waitDays.tooltip": "Neue Kunden ohne freien Platz warten im Mittel so viele Spieltage. 0 = aus."
 }

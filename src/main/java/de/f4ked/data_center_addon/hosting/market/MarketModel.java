@@ -139,12 +139,14 @@ public final class MarketModel {
      * <ol>
      *   <li>Customers cancel as in Data Center (by segment and year), scaled by the quality of the service
      *       ({@link ServiceQuality}): 1 % a month with good service up to 8 % with bad.</li>
-     *   <li>New customers close the gap to the potential: {@code (potential − customers) × closeRate} a
-     *       month.</li>
+     *   <li>New customers close the gap to the potential: {@code (potential − customers − waiting) ×
+     *       closeRate} a month.</li>
      *   <li>Word of mouth: every customer brings {@code wordOfMouth} new ones a month, less the closer the
      *       customers are to the potential ({@code × (1 − customers / potential)}, logistic growth).</li>
-     *   <li>New customers only take free places. They come in Data Center's segment mix, the sub-pools'
-     *       share of them leaning to the better paying segments.</li>
+     *   <li>New customers only take free places, those on the waiting list first. They come in Data
+     *       Center's segment mix, the sub-pools' share of them leaning to the better paying segments.</li>
+     *   <li>New customers who find no free place go on the waiting list; they give up after
+     *       {@code waitDays} in-game days on average.</li>
      *   <li>When there are fewer places than customers, the excess leaves within days, as in Data Center.</li>
      * </ol>
      *
@@ -168,13 +170,30 @@ public final class MarketModel {
         }
 
         Reach reach = reach(entry, product, date, reputationPoints, unlocked);
-        double gap = Config.closeRate() * Math.max(0, reach.potential() - total);
-        double word = reach.potential() <= 0 ? 0 : Config.wordOfMouth() * total * Math.max(0, 1 - total / reach.potential());
+        double interested = total + entry.waiting;
+        double gap = Config.closeRate() * Math.max(0, reach.potential() - interested);
+        double word = reach.potential() <= 0 ? 0
+                : Config.wordOfMouth() * total * Math.max(0, 1 - interested / reach.potential());
         entry.ordersGap = gap;
         entry.ordersWord = word;
         double orders = gap + word;
         double free = Math.max(0, places - total);
-        double arriving = Math.min(free, orders * dtMonths);
+        double fromList = Math.min(free, entry.waiting);
+        double newcomers = orders * dtMonths;
+        double placed = Math.min(free - fromList, newcomers);
+        double arriving = fromList + placed;
+        entry.waiting -= fromList;
+        double waitDays = Config.waitDays();
+        if (waitDays > 0) {
+            double days = dtMonths * 730.5 / 24.0;
+            entry.waiting += newcomers - placed;
+            entry.waiting -= entry.waiting * Math.min(1, days / waitDays);
+        } else {
+            entry.waiting = 0;
+        }
+        if (entry.waiting < 1.0E-6) {
+            entry.waiting = 0;
+        }
         if (arriving > 0) {
             double[] mix = arrivalMix(product, date, reach.premiumShare());
             for (int s = 0; s < segments.length && s < counts.length; s++) {

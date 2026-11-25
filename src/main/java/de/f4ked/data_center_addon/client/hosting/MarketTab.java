@@ -43,7 +43,12 @@ final class MarketTab implements ManagerTab {
             panel.cell(g, Texts.productName(row.product()).getString(), col, 0, ty, TechPanel.TEXT);
             panel.cell(g, GuiText.compactNumber(Math.round(row.pool())), col, 1, ty, TechPanel.TEXT);
             panel.cell(g, GuiText.compactNumber(Math.round(row.potential())), col, 2, ty, TechPanel.ACCENT);
-            panel.cell(g, GuiText.compactNumber(Math.round(row.customers())), col, 3, ty, TechPanel.TEXT);
+            String customers = GuiText.compactNumber(Math.round(row.customers()));
+            g.drawString(panel.font, customers, col[3], ty + TEXT_DY, TechPanel.TEXT, false);
+            if (row.waiting() >= 0.5) {
+                g.drawString(panel.font, " +" + GuiText.compactNumber(Math.round(row.waiting())), col[3] + panel.font.width(customers),
+                        ty + TEXT_DY, TechPanel.WARN, false);
+            }
             panel.cell(g, "+" + GuiText.compactNumber(Math.round(row.orders())), col, 4, ty, TechPanel.GOOD);
             HostingSnapshot.Quality q = row.quality();
             panel.cell(g, Texts.percent((float) q.churn()), col, 5, ty, churnColor(q));
@@ -57,6 +62,9 @@ final class MarketTab implements ManagerTab {
                 panel.tooltip(List.of(Component.translatable("data_center_addon.market.pool.tip").withStyle(ChatFormatting.GRAY)));
             } else if (panel.hover(col[2], ty, col[3] - col[2], ROW_H)) {
                 panel.tooltip(reachTooltip(row));
+            } else if (panel.hover(col[3], ty, col[4] - col[3], ROW_H) && row.waiting() >= 0.5) {
+                panel.tooltip(List.of(Component.translatable("data_center_addon.market.waiting",
+                        GuiText.compactNumber(Math.round(row.waiting()))).withStyle(ChatFormatting.GOLD)));
             } else if (panel.hover(col[4], ty, col[5] - col[4], ROW_H)) {
                 panel.tooltip(inflowTooltip(row));
             } else if (panel.hover(col[5], ty, col[6] - col[5], ROW_H)) {

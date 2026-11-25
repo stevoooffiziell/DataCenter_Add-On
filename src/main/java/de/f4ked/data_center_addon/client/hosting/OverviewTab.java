@@ -97,6 +97,12 @@ final class OverviewTab implements ManagerTab {
                     : Component.translatable("data_center_addon.hosting.overview.overlong", net.overlongRuns());
             panel.line(g, "⚠ " + warning.getString(), x, ny + 1, w, net.unpoweredSwitches() > 0 ? TechPanel.DANGER : TechPanel.WARN);
         }
+        long waiting = Math.round(s.market().waiting());
+        if (waiting > 0) {
+            ny += 14;
+            panel.line(g, "⚠ " + Component.translatable("data_center_addon.hosting.overview.waiting", GuiText.compactNumber(waiting))
+                    .getString(), x, ny + 1, w, TechPanel.WARN);
+        }
         int licenceBound = s.licenceBoundRacks();
         if (licenceBound > 0) {
             ny += 14;

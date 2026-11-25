@@ -61,7 +61,7 @@ public final class MarketService {
             HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
                     nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
-                    reach.awareness(), reach.classes(), customers, entry.ordersGap, entry.ordersWord, quality));
+                    reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap, entry.ordersWord, quality));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
     }

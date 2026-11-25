@@ -367,6 +367,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
     public record Market(double internetUsers, List<MarketRow> rows) {
         public static final Market NONE = new Market(0, List.of());
 
+        /** New customers of all products waiting for a free place. */
+        public double waiting() {
+            return rows.stream().mapToDouble(MarketRow::waiting).sum();
+        }
+
         public static final StreamCodec<FriendlyByteBuf, Market> STREAM_CODEC = StreamCodec.of(
                 (buf, m) -> {
                     buf.writeDouble(m.internetUsers);
@@ -385,12 +390,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param awareFactor factor of the reach from awareness
      * @param classFactor factor of the reach from the customer classes' sub-pools
      * @param customers   the account's customers of the product
+     * @param waiting     new customers waiting for a free place
      * @param ordersGap   new customers per month closing the gap to the potential
      * @param ordersWord  new customers per month by word of mouth
      * @param quality     the quality of the service and the cancellations it leads to
      */
     public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
-                            double classFactor, double customers, double ordersGap, double ordersWord, Quality quality) {
+                            double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
+                            Quality quality) {
         public double orders() {
             return ordersGap + ordersWord;
         }
@@ -404,12 +411,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(r.awareFactor);
                     buf.writeDouble(r.classFactor);
                     buf.writeDouble(r.customers);
+                    buf.writeDouble(r.waiting);
                     buf.writeDouble(r.ordersGap);
                     buf.writeDouble(r.ordersWord);
                     Quality.STREAM_CODEC.encode(buf, r.quality);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), Quality.STREAM_CODEC.decode(buf)));
+                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                        Quality.STREAM_CODEC.decode(buf)));
     }
 
     /**

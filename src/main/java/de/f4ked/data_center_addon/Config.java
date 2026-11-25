@@ -64,6 +64,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue WORD_OF_MOUTH;
     private static final ModConfigSpec.DoubleValue CHURN_GOOD;
     private static final ModConfigSpec.DoubleValue CHURN_BAD;
+    private static final ModConfigSpec.DoubleValue WAIT_DAYS;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -176,6 +177,10 @@ public final class Config {
         CHURN_BAD = builder
                 .comment("Cancellations per game month with bad service (servers down, overloaded or throttled).")
                 .defineInRange("churnBad", 0.08, 0.0, 1.0);
+        WAIT_DAYS = builder
+                .comment("New customers who find no free place wait this many in-game days on average before they give",
+                        "up, instead of being lost at once. They get the next free places. 0 turns the waiting list off.")
+                .defineInRange("waitDays", 7.0, 0.0, 60.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -331,6 +336,10 @@ public final class Config {
 
     public static double churnBad() {
         return SPEC.isLoaded() ? Math.max(CHURN_BAD.get(), CHURN_GOOD.get()) : 0.08;
+    }
+
+    public static double waitDays() {
+        return SPEC.isLoaded() ? WAIT_DAYS.get() : 7.0;
     }
 
     public static double hostingStorageBoost() {
