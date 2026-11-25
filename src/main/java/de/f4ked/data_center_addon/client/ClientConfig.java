@@ -86,6 +86,7 @@ public final class ClientConfig {
     static final ModConfigSpec.BooleanValue TIERED_TOOLTIPS;
     static final ModConfigSpec.BooleanValue SERVER_COMPONENTS;
     static final ModConfigSpec.IntValue SHOP_EXTRA_WIDTH;
+    static final ModConfigSpec.BooleanValue TECH_STYLE_SCREENS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -161,10 +162,20 @@ public final class ClientConfig {
                 .defineInRange("extraWidth", 140, 0, 1000);
         b.pop();
 
+        b.comment("Minecraft's own screens.").push("screens");
+        TECH_STYLE_SCREENS = b.comment("Draw chests, hoppers, dispensers, the crafting table, the furnaces and the inventory in Data",
+                        "Center's dark tech-panel look.")
+                .define("techStyle", true);
+        b.pop();
+
         SPEC = b.build();
     }
 
     private ClientConfig() {
+    }
+
+    public static boolean techStyleScreens() {
+        return !SPEC.isLoaded() || TECH_STYLE_SCREENS.get();
     }
 
     private static boolean isColor(Object o) {

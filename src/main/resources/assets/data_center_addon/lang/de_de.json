@@ -593,5 +593,9 @@
   "data_center_addon.configuration.machineEnergy.tooltip": "Faktor für den Strom, den die Fabrikmaschinen verbrauchen.",
   "data_center_addon.industry.column.material": "Rohstoff",
   "data_center_addon.industry.column.price": "Preis",
-  "data_center_addon.industry.column.buy": "Kaufen"
+  "data_center_addon.industry.column.buy": "Kaufen",
+  "data_center_addon.configuration.screens": "Minecraft-Fenster",
+  "data_center_addon.configuration.screens.tooltip": "Die eigenen Fenster von Minecraft.",
+  "data_center_addon.configuration.techStyle": "Tech-Panel-Stil",
+  "data_center_addon.configuration.techStyle.tooltip": "Kisten, Trichter, Werfer, Werkbank, Öfen und Inventar im dunklen Tech-Panel-Stil von Data Center zeichnen."
 }
