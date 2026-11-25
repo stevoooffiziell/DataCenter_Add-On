@@ -5,6 +5,9 @@ import com.example.datacenter.shop.ShopCatalog;
 import com.example.datacenter.shop.ShopCategory;
 import com.example.datacenter.shop.ShopEntry;
 import de.f4ked.data_center_addon.Data_center_addon;
+import de.f4ked.data_center_addon.industry.chipfab.ChipFabBlockEntity;
+import de.f4ked.data_center_addon.industry.chipfab.ChipFabControllerBlock;
+import de.f4ked.data_center_addon.industry.chipfab.ChipFabMenu;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlock;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlockEntity;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineMenu;
@@ -14,6 +17,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -62,6 +66,46 @@ public final class IndustryContent {
     public static final DeferredItem<Item> CAPACITOR = Data_center_addon.ITEMS.registerSimpleItem("capacitor");
     /** Connectors: gold contacts in a plastic body, for cables and boards. */
     public static final DeferredItem<Item> CONNECTOR = Data_center_addon.ITEMS.registerSimpleItem("connector");
+    /** Microchips, made on the chip production line from wafers, gold contacts and redstone. */
+    public static final DeferredItem<Item> MICROCHIP = Data_center_addon.ITEMS.registerSimpleItem("microchip");
+
+    // ------------------------------------------------------------------ chip production line
+
+    public static final DeferredBlock<ChipFabControllerBlock> CHIP_FAB_CONTROLLER = Data_center_addon.BLOCKS.registerBlock(
+            "chip_fab_controller", ChipFabControllerBlock::new,
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(FactoryMachineBlock::lightLevel)
+                    .noOcclusion());
+    public static final DeferredItem<BlockItem> CHIP_FAB_CONTROLLER_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(CHIP_FAB_CONTROLLER);
+    /** A cleanroom wall panel: part of the chip production line. */
+    public static final DeferredBlock<Block> CLEANROOM_WALL = Data_center_addon.BLOCKS.registerSimpleBlock("cleanroom_wall",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.SNOW)
+                    .strength(2.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops());
+    public static final DeferredItem<BlockItem> CLEANROOM_WALL_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(CLEANROOM_WALL);
+    /** A lithography unit: every one makes the chip production line one step faster. */
+    public static final DeferredBlock<Block> LITHOGRAPHY_UNIT = Data_center_addon.BLOCKS.registerSimpleBlock("lithography_unit",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(s -> 6));
+    public static final DeferredItem<BlockItem> LITHOGRAPHY_UNIT_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(LITHOGRAPHY_UNIT);
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ChipFabBlockEntity>> CHIP_FAB_ENTITY =
+            BLOCK_ENTITIES.register("chip_fab_controller",
+                    () -> BlockEntityType.Builder.of(ChipFabBlockEntity::new, CHIP_FAB_CONTROLLER.get()).build(null));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ChipFabMenu>> CHIP_FAB_MENU = MENUS.register("chip_fab",
+            () -> IMenuTypeExtension.create((id, inventory, buf) -> new ChipFabMenu(id, inventory, buf.readBlockPos())));
 
     // ------------------------------------------------------------------ factory machines
 
@@ -125,6 +169,12 @@ public final class IndustryContent {
         modEventBus.addListener(IndustryContent::registerCapabilities);
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(PURCHASE_TERMINAL_ITEM.get()),
                 PURCHASE_TERMINAL_CENTS, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(CHIP_FAB_CONTROLLER_ITEM.get()),
+                40_000_00L, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(CLEANROOM_WALL_ITEM.get()),
+                200_00L, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(LITHOGRAPHY_UNIT_ITEM.get()),
+                15_000_00L, MiningEra.FROM_WORLD_START));
         for (MachineKind kind : MachineKind.values()) {
             DeferredItem<BlockItem> item = MACHINE_ITEMS.get(kind);
             ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(item.get()), kind.priceCents,
@@ -137,6 +187,9 @@ public final class IndustryContent {
         List<ItemStack> stacks = new ArrayList<>();
         stacks.add(PURCHASE_TERMINAL_ITEM.get().getDefaultInstance());
         MACHINE_ITEMS.values().forEach(item -> stacks.add(item.get().getDefaultInstance()));
+        stacks.add(CHIP_FAB_CONTROLLER_ITEM.get().getDefaultInstance());
+        stacks.add(CLEANROOM_WALL_ITEM.get().getDefaultInstance());
+        stacks.add(LITHOGRAPHY_UNIT_ITEM.get().getDefaultInstance());
         stacks.add(PLASTIC_PELLETS.get().getDefaultInstance());
         stacks.add(SILICON.get().getDefaultInstance());
         stacks.add(COPPER_FOIL.get().getDefaultInstance());
@@ -148,6 +201,7 @@ public final class IndustryContent {
         stacks.add(CIRCUIT_BOARD.get().getDefaultInstance());
         stacks.add(CAPACITOR.get().getDefaultInstance());
         stacks.add(CONNECTOR.get().getDefaultInstance());
+        stacks.add(MICROCHIP.get().getDefaultInstance());
         return List.copyOf(stacks);
     }
 
@@ -157,5 +211,7 @@ public final class IndustryContent {
         // machines: inputs in, outputs out, power from every side
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.automation());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.energy());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CHIP_FAB_ENTITY.get(), (be, side) -> be.automation());
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CHIP_FAB_ENTITY.get(), (be, side) -> be.energy());
     }
 }

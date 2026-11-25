@@ -15,6 +15,9 @@
     "data_center_addon:rolling_mill",
     "data_center_addon:wire_drawer",
     "data_center_addon:press",
-    "data_center_addon:assembler"
+    "data_center_addon:assembler",
+    "data_center_addon:chip_fab_controller",
+    "data_center_addon:cleanroom_wall",
+    "data_center_addon:lithography_unit"
   ]
 }

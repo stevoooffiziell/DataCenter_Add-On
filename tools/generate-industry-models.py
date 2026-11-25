@@ -13,9 +13,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, 'src/main/resources/assets/data_center_addon')
 DATA = os.path.join(ROOT, 'src/main/resources/data')
 
-MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press', 'assembler']
+MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press', 'assembler', 'chip_fab_controller']
+# plain full blocks with one texture on every side
+CUBES = ['cleanroom_wall', 'lithography_unit']
 ITEMS = ['plastic_pellets', 'silicon', 'copper_foil', 'gold_contacts', 'copper_wire', 'plastic_parts', 'pcb_blank', 'wafer',
-         'circuit_board', 'capacitor', 'connector']
+         'circuit_board', 'capacitor', 'connector', 'microchip']
 
 
 def write(path, data):
@@ -45,6 +47,21 @@ def machine(name):
                    'conditions': [{'condition': 'minecraft:survives_explosion'}]}]})
 
 
+def loot(name):
+    write(os.path.join(DATA, 'data_center_addon/loot_table/blocks', name + '.json'), {
+        'type': 'minecraft:block',
+        'pools': [{'rolls': 1, 'entries': [{'type': 'minecraft:item', 'name': f'data_center_addon:{name}'}],
+                   'conditions': [{'condition': 'minecraft:survives_explosion'}]}]})
+
+
+def cube(name):
+    write(os.path.join(ASSETS, 'blockstates', name + '.json'), {'variants': {'': {'model': f'data_center_addon:block/{name}'}}})
+    write(os.path.join(ASSETS, 'models/block', name + '.json'), {
+        'parent': 'minecraft:block/cube_all', 'textures': {'all': f'data_center_addon:block/industry/{name}'}})
+    write(os.path.join(ASSETS, 'models/item', name + '.json'), {'parent': f'data_center_addon:block/{name}'})
+    loot(name)
+
+
 def item(name):
     write(os.path.join(ASSETS, 'models/item', name + '.json'), {
         'parent': 'minecraft:item/generated',
@@ -54,12 +71,14 @@ def item(name):
 def main():
     for name in MACHINES:
         machine(name)
+    for name in CUBES:
+        cube(name)
     for name in ITEMS:
         item(name)
     tag = os.path.join(DATA, 'minecraft/tags/block/mineable/pickaxe.json')
     with open(tag, encoding='utf-8') as f:
         data = json.load(f)
-    for name in MACHINES:
+    for name in MACHINES + CUBES:
         if f'data_center_addon:{name}' not in data['values']:
             data['values'].append(f'data_center_addon:{name}')
     write(tag, data)

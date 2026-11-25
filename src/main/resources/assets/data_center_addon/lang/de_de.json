@@ -612,5 +612,16 @@
   "block.data_center_addon.assembler": "Bestückungsautomat",
   "item.data_center_addon.circuit_board": "Platine",
   "item.data_center_addon.capacitor": "Kondensator",
-  "item.data_center_addon.connector": "Steckverbinder"
+  "item.data_center_addon.connector": "Steckverbinder",
+  "block.data_center_addon.chip_fab_controller": "Chip-Fertigungsstraße (Steuerung)",
+  "block.data_center_addon.cleanroom_wall": "Reinraum-Wand",
+  "block.data_center_addon.lithography_unit": "Belichter",
+  "item.data_center_addon.microchip": "Mikrochip",
+  "data_center_addon.industry.chip_fab.recipe": "Silizium-Wafer + 2 Goldkontakte + 2 Redstone → 4 Mikrochips (20 s und 80 FE/t je Belichter-Stufe)",
+  "data_center_addon.industry.chip_fab.rules": "Die Straße besteht aus der Steuerung und allen Reinraum-Wänden und Belichtern, die sie oder einander berühren. Sie braucht %s Wände und einen Belichter. Jeder Belichter macht sie eine Stufe schneller, braucht aber %s Wände; höchstens %s zählen.",
+  "data_center_addon.industry.chip_fab.structure": "Reinraum: %s Wände · %s Belichter",
+  "data_center_addon.industry.chip_fab.speed": "Bereit: Tempo ×%s",
+  "data_center_addon.industry.chip_fab.status.formed": "Bereit",
+  "data_center_addon.industry.chip_fab.status.no_walls": "Nicht bereit: mindestens %s Reinraum-Wände nötig",
+  "data_center_addon.industry.chip_fab.status.no_unit": "Nicht bereit: Es fehlt ein Belichter"
 }

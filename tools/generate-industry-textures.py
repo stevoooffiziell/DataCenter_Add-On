@@ -33,6 +33,7 @@ MACHINES = {
     'wire_drawer': 0.08,  # copper
     'press': 0.78,  # violet
     'assembler': 0.33,  # green
+    'chip_fab_controller': 0.50,  # cleanroom cyan
 }
 
 
@@ -246,7 +247,69 @@ def connector():
     return img
 
 
+def cleanroom_wall():
+    """A white cleanroom panel with seams and a small grille."""
+    img = [[[0, 0, 0, 255] for _ in range(16)] for _ in range(16)]
+    rnd = random.Random(11)
+    for y in range(16):
+        for x in range(16):
+            v = 0xE4 + rnd.randint(-4, 4)
+            if x in (0, 15) or y in (0, 15):
+                v = 0xB8
+            elif x == 1 or y == 1:
+                v = 0xF2
+            img[y][x] = [v, v + 2 if v < 253 else v, v + 4 if v < 251 else v, 255]
+    for y in range(10, 13):
+        for x in range(4, 12):
+            img[y][x] = [0x9A, 0xA0, 0xA8, 255] if (x % 2 == 0) else [0xC8, 0xCE, 0xD4, 255]
+    return img
+
+
+def lithography_unit():
+    """A steel lithography unit with a glowing violet exposure window."""
+    img = [[[0, 0, 0, 255] for _ in range(16)] for _ in range(16)]
+    rnd = random.Random(5)
+    for y in range(16):
+        for x in range(16):
+            v = 0x5A + rnd.randint(-5, 5)
+            if x in (0, 15) or y in (0, 15):
+                v = 0x3A
+            img[y][x] = [v, v + 4, v + 10, 255]
+    for y in range(4, 12):
+        for x in range(3, 13):
+            edge = x in (3, 12) or y in (4, 11)
+            glow = 1.0 - abs(x - 7.5) / 8
+            img[y][x] = [0x2A, 0x2E, 0x36, 255] if edge else [int(0x90 + 0x50 * glow), int(0x40 + 0x30 * glow), 0xF0, 255]
+    for x in range(3, 13, 3):
+        img[13][x] = [0x7C, 0xD0, 0x6C, 255]
+    return img
+
+
+def microchip():
+    """A microchip: a black package with silver legs and a pin-1 dot."""
+    img = blank()
+    for y in range(4, 12):
+        for x in range(4, 12):
+            edge = x in (4, 11) or y in (4, 11)
+            img[y][x] = [0x18, 0x1A, 0x1E, 255] if edge else [0x2A, 0x2D, 0x33, 255]
+    img[6][6] = [0x8A, 0x90, 0x9A, 255]
+    for i in range(5, 11, 2):
+        for leg in (3, 2):
+            img[i][leg] = [0xC0, 0xC4, 0xCC, 255]
+            img[i][15 - leg] = [0xC0, 0xC4, 0xCC, 255]
+            img[leg][i] = [0xC0, 0xC4, 0xCC, 255]
+            img[15 - leg][i] = [0xC0, 0xC4, 0xCC, 255]
+    return img
+
+
+CUBES = {
+    'cleanroom_wall': cleanroom_wall,
+    'lithography_unit': lithography_unit,
+}
+
+
 ITEMS = {
+    'microchip': microchip,
     'circuit_board': circuit_board,
     'capacitor': capacitor,
     'connector': connector,
@@ -276,6 +339,8 @@ def main():
                             network.rehue(source(f'synthesizer_{part}'), hue, min_saturation=0.05))
     for name, draw in ITEMS.items():
         pngio.write(os.path.join(ITEM_OUT, name + '.png'), draw())
+    for name, draw in CUBES.items():
+        pngio.write(os.path.join(BLOCK_OUT, name + '.png'), draw())
     print(f'Wrote {len(BLOCKS) + 2 * len(MACHINES)} block and {len(ITEMS)} item textures')
 
 

@@ -17,5 +17,6 @@ public final class IndustryClient {
     static void onRegisterScreens(RegisterMenuScreensEvent event) {
         event.register(IndustryContent.PURCHASE_TERMINAL_MENU.get(), PurchaseTerminalScreen::new);
         event.register(IndustryContent.MACHINE_MENU.get(), FactoryMachineScreen::new);
+        event.register(IndustryContent.CHIP_FAB_MENU.get(), ChipFabScreen::new);
     }
 }

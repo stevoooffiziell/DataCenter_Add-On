@@ -1,0 +1,7 @@
+{
+  "parent": "datacenter:block/synthesizer",
+  "textures": {
+    "front": "data_center_addon:block/industry/chip_fab_controller_front",
+    "tray": "data_center_addon:block/industry/chip_fab_controller_tray"
+  }
+}
