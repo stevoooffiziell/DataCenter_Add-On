@@ -31,7 +31,14 @@ public enum MachineKind {
 
     /** Copper drawn into wire, the core of every cable. */
     WIRE_DRAWER(7_000_00L, () -> List.of(
-            of(() -> IndustryContent.COPPER_WIRE.get(), 4, 60, 20, in(() -> Items.COPPER_INGOT, 1))));
+            of(() -> IndustryContent.COPPER_WIRE.get(), 4, 60, 20, in(() -> Items.COPPER_INGOT, 1)))),
+
+    /** Pressing and cutting: plastic parts from pellets, circuit board blanks from foil and glass, wafers from silicon. */
+    PRESS(9_000_00L, () -> List.of(
+            of(() -> IndustryContent.PLASTIC_PARTS.get(), 2, 60, 25, in(() -> IndustryContent.PLASTIC_PELLETS.get(), 4)),
+            of(() -> IndustryContent.PCB_BLANK.get(), 1, 100, 35, in(() -> IndustryContent.COPPER_FOIL.get(), 1),
+                    in(() -> Items.GLASS, 1)),
+            of(() -> IndustryContent.WAFER.get(), 2, 120, 45, in(() -> IndustryContent.SILICON.get(), 1))));
 
     /** Shop price in US cents. */
     public final long priceCents;

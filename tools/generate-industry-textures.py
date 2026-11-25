@@ -31,6 +31,7 @@ MACHINES = {
     'smelter': 0.04,  # glowing orange
     'rolling_mill': 0.58,  # steel blue
     'wire_drawer': 0.08,  # copper
+    'press': 0.78,  # violet
 }
 
 
@@ -139,8 +140,62 @@ def copper_wire():
     return img
 
 
+def plastic_parts():
+    """Small pressed plastic parts: a dark housing shell and a light clip."""
+    img = blank()
+    for y in range(4, 12):
+        for x in range(2, 10):
+            edge = x in (2, 9) or y in (4, 11)
+            img[y][x] = [0x2C, 0x30, 0x36, 255] if edge else [0x40, 0x46, 0x4E, 255]
+    for y in range(6, 10):
+        for x in range(4, 8):
+            img[y][x] = [0x22, 0x25, 0x2A, 255]
+    for y in range(7, 14):
+        for x in range(10, 14):
+            edge = x in (10, 13) or y in (7, 13)
+            img[y][x] = [0xB8, 0xBC, 0xC2, 255] if edge else [0xDA, 0xDE, 0xE4, 255]
+    img[9][11] = img[9][12] = [0x9A, 0x9E, 0xA6, 255]
+    return img
+
+
+def pcb_blank():
+    """A circuit board blank: green glass-fibre board, the copper face showing at one corner."""
+    img = blank()
+    for y in range(3, 13):
+        for x in range(2, 14):
+            edge = x in (2, 13) or y in (3, 12)
+            img[y][x] = [0x1E, 0x5A, 0x32, 255] if edge else [0x2A, 0x78, 0x44, 255]
+    for y in range(3, 7):
+        for x in range(10 - (y - 3), 14):
+            img[y][x] = [0xD0, 0x7A, 0x45, 255] if (x + y) % 4 else [0xF0, 0xA0, 0x70, 255]
+    for x, y in [(4, 5), (4, 10), (11, 10)]:
+        img[y][x] = [0xC8, 0xC8, 0xB0, 255]
+    return img
+
+
+def wafer():
+    """A round silicon wafer with an iridescent die grid."""
+    img = blank()
+    import colorsys
+    for y in range(16):
+        for x in range(16):
+            dx, dy = x - 7.5, y - 7.5
+            d = (dx * dx + dy * dy) ** 0.5
+            if d > 6.8 or (y >= 13 and abs(dx) < 2):
+                continue
+            hue = (0.55 + 0.04 * dx - 0.03 * dy) % 1.0
+            r, g, b = colorsys.hls_to_rgb(hue, 0.55 if (x % 3 and y % 3) else 0.35, 0.45)
+            if d > 6.0:
+                r, g, b = 0.62, 0.66, 0.72
+            img[y][x] = [int(r * 255), int(g * 255), int(b * 255), 255]
+    return img
+
+
 ITEMS = {
     'plastic_pellets': pellets,
+    'plastic_parts': plastic_parts,
+    'pcb_blank': pcb_blank,
+    'wafer': wafer,
     'silicon': silicon,
     'copper_foil': copper_foil,
     'gold_contacts': gold_contacts,

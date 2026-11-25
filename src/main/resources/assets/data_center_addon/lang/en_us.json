@@ -604,5 +604,9 @@
   "block.data_center_addon.wire_drawer": "Wire Drawer",
   "item.data_center_addon.copper_foil": "Copper Foil",
   "item.data_center_addon.gold_contacts": "Gold Contacts",
-  "item.data_center_addon.copper_wire": "Copper Wire"
+  "item.data_center_addon.copper_wire": "Copper Wire",
+  "block.data_center_addon.press": "Press",
+  "item.data_center_addon.plastic_parts": "Plastic Parts",
+  "item.data_center_addon.pcb_blank": "Circuit Board Blank",
+  "item.data_center_addon.wafer": "Silicon Wafer"
 }

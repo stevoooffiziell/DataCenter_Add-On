@@ -50,6 +50,12 @@ public final class IndustryContent {
     public static final DeferredItem<Item> GOLD_CONTACTS = Data_center_addon.ITEMS.registerSimpleItem("gold_contacts");
     /** Copper wire, drawn from copper ingots: the core of cables. */
     public static final DeferredItem<Item> COPPER_WIRE = Data_center_addon.ITEMS.registerSimpleItem("copper_wire");
+    /** Plastic parts, pressed from pellets: housings, cable jackets, connector bodies. */
+    public static final DeferredItem<Item> PLASTIC_PARTS = Data_center_addon.ITEMS.registerSimpleItem("plastic_parts");
+    /** A circuit board blank: glass fibre laminated with copper foil, not yet etched. */
+    public static final DeferredItem<Item> PCB_BLANK = Data_center_addon.ITEMS.registerSimpleItem("pcb_blank");
+    /** A silicon wafer, sliced from silicon: the base of microchips. */
+    public static final DeferredItem<Item> WAFER = Data_center_addon.ITEMS.registerSimpleItem("wafer");
 
     // ------------------------------------------------------------------ factory machines
 
@@ -130,6 +136,9 @@ public final class IndustryContent {
         stacks.add(COPPER_FOIL.get().getDefaultInstance());
         stacks.add(GOLD_CONTACTS.get().getDefaultInstance());
         stacks.add(COPPER_WIRE.get().getDefaultInstance());
+        stacks.add(PLASTIC_PARTS.get().getDefaultInstance());
+        stacks.add(PCB_BLANK.get().getDefaultInstance());
+        stacks.add(WAFER.get().getDefaultInstance());
         return List.copyOf(stacks);
     }
 

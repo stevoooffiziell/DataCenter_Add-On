@@ -13,8 +13,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, 'src/main/resources/assets/data_center_addon')
 DATA = os.path.join(ROOT, 'src/main/resources/data')
 
-MACHINES = ['smelter', 'rolling_mill', 'wire_drawer']
-ITEMS = ['plastic_pellets', 'silicon', 'copper_foil', 'gold_contacts', 'copper_wire']
+MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press']
+ITEMS = ['plastic_pellets', 'silicon', 'copper_foil', 'gold_contacts', 'copper_wire', 'plastic_parts', 'pcb_blank', 'wafer']
 
 
 def write(path, data):

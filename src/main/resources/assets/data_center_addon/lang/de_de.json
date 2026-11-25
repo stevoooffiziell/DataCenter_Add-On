@@ -604,5 +604,9 @@
   "block.data_center_addon.wire_drawer": "Drahtzieher",
   "item.data_center_addon.copper_foil": "Kupferfolie",
   "item.data_center_addon.gold_contacts": "Goldkontakte",
-  "item.data_center_addon.copper_wire": "Kupferdraht"
+  "item.data_center_addon.copper_wire": "Kupferdraht",
+  "block.data_center_addon.press": "Presse",
+  "item.data_center_addon.plastic_parts": "Kunststoffteile",
+  "item.data_center_addon.pcb_blank": "Leiterplatten-Rohling",
+  "item.data_center_addon.wafer": "Silizium-Wafer"
 }
