@@ -87,6 +87,7 @@ public final class ClientConfig {
     static final ModConfigSpec.BooleanValue SERVER_COMPONENTS;
     static final ModConfigSpec.IntValue SHOP_EXTRA_WIDTH;
     static final ModConfigSpec.BooleanValue TECH_STYLE_SCREENS;
+    static final ModConfigSpec.BooleanValue TECH_STYLE_HOTBAR;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -166,12 +167,18 @@ public final class ClientConfig {
         TECH_STYLE_SCREENS = b.comment("Draw chests, hoppers, dispensers, the crafting table, the furnaces and the inventory in Data",
                         "Center's dark tech-panel look.")
                 .define("techStyle", true);
+        TECH_STYLE_HOTBAR = b.comment("Draw the hotbar in Data Center's dark tech-panel look.")
+                .define("techHotbar", true);
         b.pop();
 
         SPEC = b.build();
     }
 
     private ClientConfig() {
+    }
+
+    public static boolean techStyleHotbar() {
+        return !SPEC.isLoaded() || TECH_STYLE_HOTBAR.get();
     }
 
     public static boolean techStyleScreens() {

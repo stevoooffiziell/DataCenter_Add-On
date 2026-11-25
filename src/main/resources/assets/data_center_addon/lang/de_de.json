@@ -597,5 +597,7 @@
   "data_center_addon.configuration.screens": "Minecraft-Fenster",
   "data_center_addon.configuration.screens.tooltip": "Die eigenen Fenster von Minecraft.",
   "data_center_addon.configuration.techStyle": "Tech-Panel-Stil",
-  "data_center_addon.configuration.techStyle.tooltip": "Kisten, Trichter, Werfer, Werkbank, Öfen und Inventar im dunklen Tech-Panel-Stil von Data Center zeichnen."
+  "data_center_addon.configuration.techStyle.tooltip": "Kisten, Trichter, Werfer, Werkbank, Öfen und Inventar im dunklen Tech-Panel-Stil von Data Center zeichnen.",
+  "data_center_addon.configuration.techHotbar": "Hotbar im Tech-Panel-Stil",
+  "data_center_addon.configuration.techHotbar.tooltip": "Die Hotbar im dunklen Tech-Panel-Stil von Data Center zeichnen."
 }
