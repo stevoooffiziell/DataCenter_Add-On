@@ -475,5 +475,16 @@
   "data_center_addon.market.summary.more": "Details im Markt-Tab.",
   "data_center_addon.configuration.reputation": "Hosting-Reputation",
   "data_center_addon.configuration.reputationModel": "Reputationsmodell",
-  "data_center_addon.configuration.reputationModel.tooltip": "Laufende Server bringen keine Reputation pro Stunde mehr; sie kommt aus Ereignissen. Aus: Reputation wie in Data Center."
+  "data_center_addon.configuration.reputationModel.tooltip": "Laufende Server bringen keine Reputation pro Stunde mehr; sie kommt aus Ereignissen. Aus: Reputation wie in Data Center.",
+  "data_center_addon.hosting.tab.reputation": "Reputation",
+  "data_center_addon.reputation.ruf": "Ruf (Qualität der letzten 30 Tage)",
+  "data_center_addon.reputation.ruf.short": "Ruf %s",
+  "data_center_addon.reputation.ruf.unmeasured": "Noch kein Betrieb. Der Ruf startet bei 100 % und folgt der Qualität deiner Racks über die letzten 30 Spieltage.",
+  "data_center_addon.reputation.ruf.uptime": "Uptime",
+  "data_center_addon.reputation.ruf.overload": "Überlast",
+  "data_center_addon.reputation.ruf.throttle": "Gedrosselt (Hitze, Angriff, Netz)",
+  "data_center_addon.reputation.ruf.crashes": "Abstürze",
+  "data_center_addon.reputation.ruf.days": "Tage mit Betrieb",
+  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × Ausfall − ½ Überlast − ½ Drosselung − 2 %% je Absturz. Bei gleicher Qualität bleibt er, wo er ist. Er skaliert deinen erreichbaren Marktanteil: ×0,5 bei 0 %%, ×1 bei 100 %%.",
+  "data_center_addon.market.reach.ruf": "Ruf: %s"
 }

@@ -475,5 +475,16 @@
   "data_center_addon.market.summary.more": "Details in the Market tab.",
   "data_center_addon.configuration.reputation": "Hosting reputation",
   "data_center_addon.configuration.reputationModel": "Reputation model",
-  "data_center_addon.configuration.reputationModel.tooltip": "Running servers no longer earn reputation by the hour; it comes from events. Off: Data Center's own reputation."
+  "data_center_addon.configuration.reputationModel.tooltip": "Running servers no longer earn reputation by the hour; it comes from events. Off: Data Center's own reputation.",
+  "data_center_addon.hosting.tab.reputation": "Reputation",
+  "data_center_addon.reputation.ruf": "Ruf (quality of the last 30 days)",
+  "data_center_addon.reputation.ruf.short": "Ruf %s",
+  "data_center_addon.reputation.ruf.unmeasured": "No service yet. The Ruf starts at 100 % and follows the quality of your racks over the last 30 game days.",
+  "data_center_addon.reputation.ruf.uptime": "Uptime",
+  "data_center_addon.reputation.ruf.overload": "Overload",
+  "data_center_addon.reputation.ruf.throttle": "Throttled (heat, attack, network)",
+  "data_center_addon.reputation.ruf.crashes": "Crashes",
+  "data_center_addon.reputation.ruf.days": "Days with service",
+  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × downtime − ½ overload − ½ throttling − 2 %% per crash. With the same quality it stays where it is. It scales the share of the markets you reach: ×0.5 at 0 %%, ×1 at 100 %%.",
+  "data_center_addon.market.reach.ruf": "Ruf: %s"
 }

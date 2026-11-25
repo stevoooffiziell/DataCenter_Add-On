@@ -37,6 +37,11 @@ final class Texts {
         return Component.translatable("data_center_addon.startup." + key).getString();
     }
 
+    /** {@code data_center_addon.reputation.<key>} */
+    static String reputation(String key) {
+        return Component.translatable("data_center_addon.reputation." + key).getString();
+    }
+
     /** {@code data_center_addon.market.<key>} */
     static String market(String key) {
         return Component.translatable("data_center_addon.market." + key).getString();

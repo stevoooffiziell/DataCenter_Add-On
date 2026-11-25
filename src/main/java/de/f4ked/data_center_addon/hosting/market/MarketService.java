@@ -8,6 +8,8 @@ import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
+import de.f4ked.data_center_addon.hosting.reputation.Ruf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -77,6 +79,7 @@ public final class MarketService {
         MarketBook market = MarketBook.get(level.getServer());
         HostingReputation rep = HostingReputation.get(level, account);
         double reputation = rep.getPoints();
+        double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.ruf(level.getServer(), account)) : 1.0;
         List<HostingSnapshot.MarketRow> rows = new ArrayList<>();
         for (HostingProduct product : HostingProduct.values()) {
             if (!MarketPool.exists(product, date)) {
@@ -84,7 +87,7 @@ public final class MarketService {
             }
             MarketBook.Entry entry = market.entry(account, product);
             MarketModel.Reach reach = MarketModel.sharedReach(market, entry, product, date, reputation, rep.getUnlockedClass(),
-                    MarketEvents.factor(level, product, date), Competitors.factor(market, product),
+                    MarketEvents.factor(level, product, date), Competitors.factor(market, product), ruf,
                     level.getServer().getTickCount(), false);
             double customers = book.total(account, product);
             // what the next customer class would add: its reputation threshold, its sub-pool
@@ -94,7 +97,7 @@ public final class MarketService {
             if (next.ordinal() > rep.getUnlockedClass().ordinal()) {
                 nextClass = next.ordinal();
                 MarketModel.Reach then = MarketModel.sharedReach(market, entry, product, date, Math.max(reputation, next.threshold),
-                        next, MarketEvents.factor(level, product, date), Competitors.factor(market, product),
+                        next, MarketEvents.factor(level, product, date), Competitors.factor(market, product), ruf,
                         level.getServer().getTickCount(), false);
                 nextGain = Math.max(0, then.potential() - reach.potential());
             }
@@ -103,7 +106,7 @@ public final class MarketService {
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.market(), reach.potential(),
                     reach.reputation(), reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap,
                     entry.ordersWord, quality, boosts(product, date), Config.marketModel() ? entry.priceStep() : 0,
-                    reach.price(), Competitors.competition(market, product), reach.rivals(), reach.sharing(), reach.accounts(),
+                    reach.price(), reach.ruf(), Competitors.competition(market, product), reach.rivals(), reach.sharing(), reach.accounts(),
                     nextClass, nextGain));
         }
         return new HostingSnapshot.Market(Config.marketModel(), Config.sharedPool(), MarketPool.internetUsers(date),

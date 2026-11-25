@@ -18,8 +18,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Hosting Manager screen, in Data Center's tech-panel look: a frame with six tabs (overview,
- * customers, racks, contracts, startup, market). Each tab is its own class; {@link Panel} draws for them and
+ * The Hosting Manager screen, in Data Center's tech-panel look: a frame with seven tabs (overview,
+ * customers, racks, contracts, startup, market, reputation). Each tab is its own class; {@link Panel} draws for them and
  * collects what can be clicked.
  * <p>
  * The window grows with the screen (between {@link #MIN_W}x{@link #MIN_H} and
@@ -39,16 +39,16 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
 
     /** The tabs in order; the name gives the label key {@code data_center_addon.hosting.tab.<name>}. */
     private enum Tab {
-        OVERVIEW, SEGMENTS, RACKS, CONTRACTS, STARTUP, MARKET;
+        OVERVIEW, SEGMENTS, RACKS, CONTRACTS, STARTUP, MARKET, REPUTATION;
 
         /** Tabs that have something to show without racks on the network. */
         boolean worksWithoutRacks() {
-            return this == CONTRACTS || this == STARTUP || this == MARKET;
+            return this == CONTRACTS || this == STARTUP || this == MARKET || this == REPUTATION;
         }
 
         /** Tabs that work when no cable is plugged into the manager. */
         boolean worksWithoutNetwork() {
-            return this == STARTUP || this == MARKET;
+            return this == STARTUP || this == MARKET || this == REPUTATION;
         }
     }
 
@@ -66,6 +66,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         tabs.put(Tab.CONTRACTS, new ContractsTab(panel, menu::managerPos));
         tabs.put(Tab.STARTUP, new StartupTab(panel, menu::managerPos));
         tabs.put(Tab.MARKET, new MarketTab(panel, menu::managerPos));
+        tabs.put(Tab.REPUTATION, new ReputationTab(panel));
     }
 
     @Override
@@ -97,8 +98,9 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         panel.begin(mouseX, mouseY);
         int x = leftPos, y = topPos, w = imageWidth, h = imageHeight;
         TechPanel.background(g, x, y, w, h);
-        g.drawString(font, title, x + PAD + 2, y + 10, TechPanel.TEXT, true);
-        tabBar(g, x, y, w);
+        if (tabBar(g, x, y, w)) {
+            g.drawString(font, title, x + PAD + 2, y + 10, TechPanel.TEXT, true);
+        }
 
         int cx = x + PAD, cy = y + HEADER_H, cw = w - 2 * PAD, ch = h - HEADER_H - PAD;
         g.fill(cx, cy, cx + cw, cy + ch, 0x80000000);
@@ -110,10 +112,15 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         tabs.get(tab).render(g, snapshot(), cx + 8, cy + 8, cw - 16, ch - 16);
     }
 
-    /** The tab buttons, right of the title; their width shrinks to fit narrow windows. */
-    private void tabBar(GuiGraphics g, int x, int y, int w) {
+    /**
+     * The tab buttons, right of the title; their width shrinks to fit narrow windows. When they do not fit
+     * next to the title they take the whole width; returns whether the title fits.
+     */
+    private boolean tabBar(GuiGraphics g, int x, int y, int w) {
         Tab[] all = Tab.values();
-        int tabW = Mth.clamp((w - 2 * PAD - font.width(title) - 16) / all.length - 3, TAB_W_MIN, TAB_W_MAX);
+        int beside = (w - 2 * PAD - font.width(title) - 16) / all.length - 3;
+        boolean titleFits = beside >= TAB_W_MIN;
+        int tabW = titleFits ? Math.min(beside, TAB_W_MAX) : Mth.clamp((w - 2 * PAD) / all.length - 3, 20, TAB_W_MAX);
         for (int i = 0; i < all.length; i++) {
             Tab t = all[i];
             int tx = x + w - PAD - (all.length - i) * (tabW + 3) + 3;
@@ -127,6 +134,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
                 panel.scroll = 0;
             });
         }
+        return titleFits;
     }
 
     /** Why the current tab cannot be shown (no data yet, no cable, no racks), or null. */

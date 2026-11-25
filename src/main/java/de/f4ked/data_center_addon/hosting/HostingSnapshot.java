@@ -22,14 +22,16 @@ import java.util.List;
  * @param foreignRacks racks in the network the player may not control (not listed)
  * @param network      state of the compute network the manager is plugged into
  * @param market       the hosting market of the viewer's account (Market tab)
+ * @param standing     the add-on's reputation of the viewer's account (Reputation tab)
  * @param ticksPerDay  ticks in one in-game day (depends on Data Center's calendar pace)
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
                               Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
-                              List<Delivery> deliveries, Startup startup, Market market, double ticksPerDay) {
+                              List<Delivery> deliveries, Startup startup, Market market, Standing standing,
+                              double ticksPerDay) {
 
     public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of(),
-            List.of(), Startup.NONE, Market.NONE, 1000);
+            List.of(), Startup.NONE, Market.NONE, Standing.NONE, 1000);
 
     /** Ticks in one real hour (the unit of the Hosting Rack's own "Rate: $/h"). */
     public static final double TICKS_PER_HOUR = 20.0 * 3600.0;
@@ -436,6 +438,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param boosts      segments of the product raised by launches in the world
      * @param priceStep   the account's price in 10 % steps from the list price
      * @param priceFactor factor of the reach from the price
+     * @param rufFactor   factor of the reach from the account's Ruf
      * @param competition summed market share of the competitors that sell the product
      * @param rivalFactor factor of the reach from the competitors
      * @param sharing     factor of the reach from sharing the pool with other players
@@ -445,7 +448,8 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      */
     public record MarketRow(int product, double pool, double market, double potential, double repFactor, double awareFactor,
                             double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
-                            Quality quality, List<SegmentBoost> boosts, int priceStep, double priceFactor, double competition,
+                            Quality quality, List<SegmentBoost> boosts, int priceStep, double priceFactor, double rufFactor,
+                            double competition,
                             double rivalFactor, double sharing, int accounts, int nextClass, double nextGain) {
         public double orders() {
             return ordersGap + ordersWord;
@@ -468,6 +472,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     writeList(buf, r.boosts, SegmentBoost.STREAM_CODEC);
                     buf.writeVarInt(r.priceStep);
                     buf.writeDouble(r.priceFactor);
+                    buf.writeDouble(r.rufFactor);
                     buf.writeDouble(r.competition);
                     buf.writeDouble(r.rivalFactor);
                     buf.writeDouble(r.sharing);
@@ -478,7 +483,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         Quality.STREAM_CODEC.decode(buf), readList(buf, SegmentBoost.STREAM_CODEC, 16), buf.readVarInt(),
-                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(),
+                        buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readVarInt(),
                         buf.readVarInt() - 1, buf.readDouble()));
     }
 
@@ -524,6 +529,36 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 buf -> new Quality(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()));
     }
 
+    // ------------------------------------------------------------------ reputation
+
+    /**
+     * The add-on's reputation of the account ({@code ReputationService}).
+     *
+     * @param ruf      quality of the last 30 days, 0..1
+     * @param measured whether there was any service in the window
+     * @param uptime   share of servers that ran
+     * @param overload how far serving servers ran over capacity
+     * @param throttle share of the serving that ran throttled
+     * @param crashes  crashes in the window
+     * @param days     days with service in the window
+     */
+    public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0);
+
+        public static final StreamCodec<FriendlyByteBuf, Standing> STREAM_CODEC = StreamCodec.of(
+                (buf, s) -> {
+                    buf.writeDouble(s.ruf);
+                    buf.writeBoolean(s.measured);
+                    buf.writeDouble(s.uptime);
+                    buf.writeDouble(s.overload);
+                    buf.writeDouble(s.throttle);
+                    buf.writeVarInt(s.crashes);
+                    buf.writeVarInt(s.days);
+                },
+                buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                        buf.readVarInt(), buf.readVarInt()));
+    }
+
     // ------------------------------------------------------------------ codec
 
     public static final StreamCodec<FriendlyByteBuf, HostingSnapshot> STREAM_CODEC = StreamCodec.of(
@@ -539,12 +574,13 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 writeList(buf, s.deliveries, Delivery.STREAM_CODEC);
                 Startup.STREAM_CODEC.encode(buf, s.startup);
                 Market.STREAM_CODEC.encode(buf, s.market);
+                Standing.STREAM_CODEC.encode(buf, s.standing);
                 buf.writeDouble(s.ticksPerDay);
             },
             buf -> new HostingSnapshot(buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
                     Network.STREAM_CODEC.decode(buf), readList(buf, Rack.STREAM_CODEC, 4096), readList(buf, Segment.STREAM_CODEC, 64),
                     readList(buf, Contract.STREAM_CODEC, 64), readList(buf, Delivery.STREAM_CODEC, 64), Startup.STREAM_CODEC.decode(buf),
-                    Market.STREAM_CODEC.decode(buf), buf.readDouble()));
+                    Market.STREAM_CODEC.decode(buf), Standing.STREAM_CODEC.decode(buf), buf.readDouble()));
 
     private static <T> void writeList(FriendlyByteBuf buf, List<T> list, StreamCodec<FriendlyByteBuf, T> codec) {
         buf.writeVarInt(list.size());

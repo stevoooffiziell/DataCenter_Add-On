@@ -202,6 +202,7 @@ final class MarketTab implements ManagerTab {
         lines.add(gray("data_center_addon.market.reach.classes", factor(row.classFactor())));
         lines.add(gray("data_center_addon.market.reach.awareness", factor(row.awareFactor())));
         lines.add(gray("data_center_addon.market.reach.price", factor(row.priceFactor())));
+        lines.add(gray("data_center_addon.market.reach.ruf", factor(row.rufFactor())));
         if (m.shared()) {
             lines.add(gray("data_center_addon.market.reach.shared", row.accounts(), factor(row.sharing())));
         }

@@ -13,6 +13,7 @@ import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
 import de.f4ked.data_center_addon.hosting.reputation.RackService;
+import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * Hooks into the Hosting Rack's {@code runLoadout}, which runs once per tick while the rack works:
@@ -115,12 +117,10 @@ public abstract class HostingRackBlockEntityMixin {
             require = 0)
     private void data_center_addon$recordService(HostingReputation reputation, MinecraftServer server, double earning,
                                                  boolean throttled, int certification, double down, double overloaded) {
-        RackService.service(reputation, server, earning, throttled, certification, down, overloaded);
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
-        if (rack.getLevel() instanceof ServerLevel level) {
-            ServiceQuality.report(OwnerMessages.ownerOf(level, rack.getBlockPos()), rack.getProduct(), earning, throttled, down,
-                    overloaded);
-        }
+        UUID owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
+        RackService.service(reputation, server, owner, earning, throttled, certification, down, overloaded);
+        ServiceQuality.report(owner, rack.getProduct(), earning, throttled, down, overloaded);
     }
 
     /** Dedicated servers: their service goes to the reputation ({@link RackService}). */
@@ -131,7 +131,23 @@ public abstract class HostingRackBlockEntityMixin {
             require = 0)
     private void data_center_addon$recordDedicated(HostingReputation reputation, MinecraftServer server, int earningBays,
                                                    boolean throttled, int certification, int downBays) {
-        RackService.service(reputation, server, earningBays, throttled, certification, downBays, 0);
+        HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
+        UUID owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
+        RackService.service(reputation, server, owner, earningBays, throttled, certification, downBays, 0);
+    }
+
+    /** A crash: Data Center's penalty, and the crash counts in the account's Ruf. */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/HostingReputation;recordCrash(Lnet/minecraft/server/MinecraftServer;)V"),
+            require = 0)
+    private void data_center_addon$recordCrash(HostingReputation reputation, MinecraftServer server) {
+        reputation.recordCrash(server);
+        HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
+        if (Config.reputationModel() && rack.getLevel() instanceof ServerLevel level) {
+            ReputationService.crash(server, OwnerMessages.ownerOf(level, rack.getBlockPos()));
+        }
     }
 
     /** Reports the rack and its income of this tick to the founding phase (start bonus, service tickets). */

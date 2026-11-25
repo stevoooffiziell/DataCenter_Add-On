@@ -77,7 +77,8 @@ final class OverviewTab implements ManagerTab {
         int barX = x + labelW, barW = w - labelW - valueW - 8;
         panel.line(g, Texts.hosting("overview.reputation"), x, ry + 1, labelW, TechPanel.TEXT_MUTED);
         TechPanel.bar(g, barX, ry, barW, 10, s.reputation() / 1000f, TechPanel.ACCENT);
-        String rep = s.reputation() + " / 1000 · " + Component.translatable(CustomerClass.ofOrdinal(s.customerClass()).translationKey()).getString();
+        String rep = s.reputation() + " / 1000 · " + Component.translatable(CustomerClass.ofOrdinal(s.customerClass()).translationKey()).getString()
+                + " · " + Component.translatable("data_center_addon.reputation.ruf.short", Texts.percent((float) s.standing().ruf())).getString();
         panel.line(g, rep, barX + barW + 8, ry + 1, valueW, TechPanel.TEXT);
 
         int ny = ry + 16;

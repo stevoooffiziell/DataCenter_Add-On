@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * The add-on's customer model. Each product has a pool of potential customers ({@link MarketPool}); an
  * account reaches a share of it, its <b>potential</b>:
- * <pre>potential = pool × market events × competition × base share × reputation × awareness × customer classes × price</pre>
+ * <pre>potential = pool × market events × competition × base share × reputation × awareness × customer classes × price × Ruf</pre>
  * <ul>
  *   <li><b>Competition</b>: the world's fictional competitors ({@link Competitors}).</li>
  *   <li><b>Market events</b>: dotcom boom and crash, Web 2.0 boom, financial crisis ({@link MarketEvents}).</li>
@@ -67,17 +67,18 @@ public final class MarketModel {
      * @param awareness  factor from awareness (0.5..1)
      * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
      * @param price      factor from the account's price
+     * @param ruf        factor from the account's Ruf (quality of the last 30 days)
      * @param sharing    factor from sharing the pool with other players (1 alone)
      * @param accounts   accounts sharing the pool (1 alone)
      */
     public record Reach(double pool, double market, double rivals, double reputation, double awareness, double classes,
-                        double price, double sharing, int accounts, double potential) {
+                        double price, double ruf, double sharing, int accounts, double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
         }
 
         Reach shared(SharedPool.Sharing s) {
-            return new Reach(pool, market, rivals, reputation, awareness, classes, price, s.factor(), s.accounts(),
+            return new Reach(pool, market, rivals, reputation, awareness, classes, price, ruf, s.factor(), s.accounts(),
                     potential * s.factor());
         }
 
@@ -90,16 +91,17 @@ public final class MarketModel {
     /**
      * @param market factor of the market events ({@link MarketEvents#factor})
      * @param rivals factor of the competitors ({@link Competitors#factor})
+     * @param ruf    factor of the account's Ruf ({@code Ruf#reachFactor})
      */
     public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints,
-                              CustomerClass unlocked, double market, double rivals) {
+                              CustomerClass unlocked, double market, double rivals, double ruf) {
         double pool = MarketPool.pool(product, date) * market;
         double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
         double classes = classFactor(unlocked);
         double price = Config.marketModel() ? demandFactor(entry.priceStep) : 1.0;
-        return new Reach(pool, market, rivals, rep, aware, classes, price, 1.0, 1,
-                pool * rivals * BASE_SHARE * rep * aware * classes * price);
+        return new Reach(pool, market, rivals, rep, aware, classes, price, ruf, 1.0, 1,
+                pool * rivals * BASE_SHARE * rep * aware * classes * price * ruf);
     }
 
     /**
@@ -108,9 +110,9 @@ public final class MarketModel {
      * @param tick the server tick; {@code step} notes the account as active, the Market tab only reads
      */
     public static Reach sharedReach(MarketBook book, MarketBook.Entry entry, HostingProduct product, LocalDate date,
-                                    double reputationPoints, CustomerClass unlocked, double market, double rivals, long tick,
-                                    boolean note) {
-        Reach alone = reach(entry, product, date, reputationPoints, unlocked, market, rivals);
+                                    double reputationPoints, CustomerClass unlocked, double market, double rivals, double ruf,
+                                    long tick, boolean note) {
+        Reach alone = reach(entry, product, date, reputationPoints, unlocked, market, rivals, ruf);
         if (note) {
             SharedPool.note(entry, alone.share(), tick);
         }
