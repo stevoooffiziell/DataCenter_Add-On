@@ -14,6 +14,7 @@ import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
 import de.f4ked.data_center_addon.hosting.reputation.RackService;
 import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
+import de.f4ked.data_center_addon.hosting.reputation.Sensitivity;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import net.minecraft.server.MinecraftServer;
@@ -119,8 +120,11 @@ public abstract class HostingRackBlockEntityMixin {
                                                  boolean throttled, int certification, double down, double overloaded) {
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
         UUID owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
-        RackService.service(rack, reputation, server, owner, earning, throttled, certification, down, overloaded);
-        ServiceQuality.report(owner, rack.getProduct(), earning, throttled, down, overloaded);
+        // complaints by segment: game server customers mind an outage four times as much as company websites
+        double weightedDown = Config.reputationModel() && rack.getLevel() instanceof ServerLevel level
+                ? down * Sensitivity.factor(level, owner, rack.getProduct()) : down;
+        RackService.service(rack, reputation, server, owner, earning, throttled, certification, weightedDown, overloaded);
+        ServiceQuality.report(owner, rack.getProduct(), earning, throttled, weightedDown, overloaded);
     }
 
     /** Dedicated servers: their service goes to the reputation ({@link RackService}). */

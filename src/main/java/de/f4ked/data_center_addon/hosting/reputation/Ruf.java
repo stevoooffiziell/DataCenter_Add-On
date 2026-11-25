@@ -6,7 +6,8 @@ package de.f4ked.data_center_addon.hosting.reputation;
  * quality it stays at the same level.
  * <pre>Ruf = 1 − 5 × downtime − 0.5 × overload − 0.5 × throttling − incidents</pre>
  * <ul>
- *   <li><b>Downtime</b>: share of servers (or colocation customers) that did not run. 99 % uptime costs 5 %.</li>
+ *   <li><b>Downtime</b>: share of servers (or colocation customers) that did not run, weighted by how much
+ *       the product's customers mind an outage ({@link Sensitivity}). 99 % uptime costs about 5 %.</li>
  *   <li><b>Overload</b>: how far serving servers ran over their real capacity.</li>
  *   <li><b>Throttling</b>: share of the serving that ran throttled (heat, attack, a network too slow).</li>
  *   <li><b>Incidents</b>: a crash is a serious incident. It presses the Ruf by {@link #INCIDENT} at once,
