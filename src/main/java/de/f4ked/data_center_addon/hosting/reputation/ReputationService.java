@@ -79,6 +79,7 @@ public final class ReputationService {
             } else if (today > a.day) {
                 if (Config.reputationModel() && !ReputationBook.NOBODY.equals(e.getKey())) {
                     Renown.closeDay(server.overworld(), e.getKey(), a, a.today, today);
+                    Sla.closeDay(server.overworld(), e.getKey(), a, a.today, a.day, today);
                     Reviews.day(server.overworld(), e.getKey(), a, today);
                 }
                 closeDay(a);
@@ -113,7 +114,14 @@ public final class ReputationService {
                 DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a),
                 a.lastReview == null ? List.of() : List.of(a.lastReview[0], a.lastReview[1], a.lastReview[2], a.lastReview[3],
                         a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()),
-                Campaigns.snapshot(a, DataCenterApi.currentDate(level)));
+                Campaigns.snapshot(a, DataCenterApi.currentDate(level)), slaUptime(a));
+    }
+
+    /** Uptime of the calendar month so far (finished days and today); -1 without service. */
+    private static double slaUptime(ReputationBook.Account a) {
+        double served = a.slaServed + a.today[Ruf.SERVED];
+        double total = served + a.slaDown + a.today[Ruf.DOWN];
+        return total <= 0 ? -1 : served / total;
     }
 
     private static List<Double> toList(double[] values) {

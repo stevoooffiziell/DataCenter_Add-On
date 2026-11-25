@@ -546,10 +546,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param pending  new customers still in an undisturbed first month
      * @param review   the last customer review {day, positive, product, segment, text, today}; empty before the first
      * @param campaigns the advertising campaigns that exist today
+     * @param slaUptime uptime of the calendar month so far (-1 without service)
      */
     public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
-                           double renown, List<Double> sources, double pending, List<Long> review, List<Campaign> campaigns) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of());
+                           double renown, List<Double> sources, double pending, List<Long> review, List<Campaign> campaigns,
+                           double slaUptime) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of(), -1);
 
         private static final StreamCodec<FriendlyByteBuf, Long> LONG = StreamCodec.of(
                 (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
@@ -571,10 +573,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(s.pending);
                     writeList(buf, s.review, LONG);
                     writeList(buf, s.campaigns, Campaign.STREAM_CODEC);
+                    buf.writeDouble(s.slaUptime);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
-                        readList(buf, LONG, 8), readList(buf, Campaign.STREAM_CODEC, 16)));
+                        readList(buf, LONG, 8), readList(buf, Campaign.STREAM_CODEC, 16),
+                        buf.readDouble()));
     }
 
     /**

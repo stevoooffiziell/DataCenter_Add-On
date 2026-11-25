@@ -42,6 +42,9 @@ public final class ReputationBook extends SavedData {
         long[] lastReview;
         /** Epoch day each {@link Campaigns.Campaign} was last booked; -1 never. */
         final long[] campaignDays = new long[Campaigns.Campaign.values().length];
+        /** The calendar month being counted for the SLA (yyyymm, 0 before) and its service. */
+        int slaMonth;
+        double slaServed, slaDown;
         /** Highest room certification level a serving rack of the account had; -1 until first seen. */
         int maxTier = -1;
         /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
@@ -101,6 +104,9 @@ public final class ReputationBook extends SavedData {
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
+            account.slaMonth = a.getInt("slaMonth");
+            account.slaServed = Math.max(0, a.getDouble("slaServed"));
+            account.slaDown = Math.max(0, a.getDouble("slaDown"));
             long[] campaigns = a.getLongArray("campaigns");
             for (int i = 0; i < campaigns.length && i < account.campaignDays.length; i++) {
                 account.campaignDays[i] = campaigns[i];
@@ -136,6 +142,9 @@ public final class ReputationBook extends SavedData {
                 a.putDouble("customerMark", account.customerMark);
             }
             a.putInt("maxTier", account.maxTier);
+            a.putInt("slaMonth", account.slaMonth);
+            a.putDouble("slaServed", account.slaServed);
+            a.putDouble("slaDown", account.slaDown);
             a.putLongArray("campaigns", account.campaignDays);
             if (account.lastReview != null) {
                 a.putLongArray("lastReview", account.lastReview);

@@ -528,5 +528,10 @@
   "data_center_addon.reputation.campaign.social": "Social Media",
   "data_center_addon.reputation.campaign.video": "Video",
   "data_center_addon.reputation.campaign.fair": "Messe",
-  "data_center_addon.reputation.msg.campaign": "Kampagne gebucht: %s für %s. %s Bekanntheit."
+  "data_center_addon.reputation.msg.campaign": "Kampagne gebucht: %s für %s. %s Bekanntheit.",
+  "data_center_addon.reputation.source.sla": "SLA-Monate (99,9 %)",
+  "data_center_addon.reputation.sla": "Uptime diesen Monat (SLA)",
+  "data_center_addon.reputation.sla.tip": "Am Monatsende: +10 Bekanntheit bei mindestens 99,9 % Uptime.",
+  "data_center_addon.reputation.msg.sla_met": "SLA erfüllt: %s Uptime im letzten Monat. %s Bekanntheit.",
+  "data_center_addon.reputation.msg.sla_missed": "SLA verfehlt: %s Uptime im letzten Monat (99,9 %% nötig)."
 }

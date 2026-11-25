@@ -172,7 +172,17 @@ final class ReputationTab implements ManagerTab {
         line(g, x, ty, w, "ruf.crashes", Integer.toString(st.crashes()));
         ty += LINE_H;
         line(g, x, ty, w, "ruf.days", Integer.toString(st.days()));
-        ty += LINE_H + 4;
+        ty += LINE_H;
+        if (st.slaUptime() >= 0) {
+            boolean met = st.slaUptime() >= 0.999;
+            line(g, x, ty, w, Texts.reputation("sla"), String.format(Locale.ROOT, "%.2f %%", st.slaUptime() * 100),
+                    met ? TechPanel.GOOD : TechPanel.WARN);
+            if (panel.hover(x, ty - 1, w, LINE_H)) {
+                panel.tooltip(List.of(Component.translatable("data_center_addon.reputation.sla.tip").withStyle(ChatFormatting.GRAY)));
+            }
+            ty += LINE_H;
+        }
+        ty += 4;
         panel.wrapped(g, Component.translatable("data_center_addon.reputation.ruf.note"), x, ty, w, TechPanel.TEXT_MUTED, 4);
     }
 
