@@ -12,7 +12,8 @@ import java.time.LocalDate;
  * Up to 2008 Data Center's own demand curve sets the size: its customer book settles where new orders
  * and cancellations balance ({@link HostingGrowth#equilibrium} at 0 reputation), and the pool is
  * {@link #POOL_FACTOR} times that. After 2008 Data Center's curve stays flat, so the pool grows on with
- * the number of internet users.
+ * the number of internet users. Segments that grow with launches in the world (game servers, streaming)
+ * raise it further ({@link SegmentPools}).
  */
 public final class MarketPool {
     /** The pool is this many times Data Center's own customer equilibrium at 0 reputation. */
@@ -60,6 +61,7 @@ public final class MarketPool {
         if (!exists(product, date)) {
             return 0;
         }
-        return HostingGrowth.equilibrium(product, date, 0) * POOL_FACTOR * internetGrowth(date);
+        return HostingGrowth.equilibrium(product, date, 0) * POOL_FACTOR * internetGrowth(date)
+                * SegmentPools.poolFactor(product, date);
     }
 }

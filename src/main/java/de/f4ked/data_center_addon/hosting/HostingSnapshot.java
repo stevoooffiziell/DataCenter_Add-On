@@ -394,10 +394,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param ordersGap   new customers per month closing the gap to the potential
      * @param ordersWord  new customers per month by word of mouth
      * @param quality     the quality of the service and the cancellations it leads to
+     * @param boosts      segments of the product raised by launches in the world
      */
     public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
                             double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
-                            Quality quality) {
+                            Quality quality, List<SegmentBoost> boosts) {
         public double orders() {
             return ordersGap + ordersWord;
         }
@@ -415,10 +416,30 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(r.ordersGap);
                     buf.writeDouble(r.ordersWord);
                     Quality.STREAM_CODEC.encode(buf, r.quality);
+                    writeList(buf, r.boosts, SegmentBoost.STREAM_CODEC);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        Quality.STREAM_CODEC.decode(buf)));
+                        Quality.STREAM_CODEC.decode(buf), readList(buf, SegmentBoost.STREAM_CODEC, 16)));
+    }
+
+    /**
+     * A customer segment raised by launches in the world ({@code SegmentPools}).
+     *
+     * @param segment {@code CustomerSegment} ordinal
+     * @param factor  how much its pool is raised
+     * @param latest  the latest launch ("" if none)
+     * @param year    the year of the latest launch
+     */
+    public record SegmentBoost(int segment, double factor, String latest, int year) {
+        public static final StreamCodec<FriendlyByteBuf, SegmentBoost> STREAM_CODEC = StreamCodec.of(
+                (buf, b) -> {
+                    buf.writeVarInt(b.segment);
+                    buf.writeDouble(b.factor);
+                    buf.writeUtf(b.latest, 64);
+                    buf.writeVarInt(b.year);
+                },
+                buf -> new SegmentBoost(buf.readVarInt(), buf.readDouble(), buf.readUtf(64), buf.readVarInt()));
     }
 
     /**

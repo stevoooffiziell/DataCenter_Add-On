@@ -442,5 +442,7 @@
   "data_center_addon.hosting.overview.waiting": "%s Kunden warten auf einen freien Platz: Baue Kapazität.",
   "data_center_addon.market.waiting": "%s neue Kunden warten auf einen freien Platz. Sie bekommen die nächsten freien Plätze und geben nach einigen Spieltagen auf.",
   "data_center_addon.configuration.waitDays": "Warteliste (Tage)",
-  "data_center_addon.configuration.waitDays.tooltip": "Neue Kunden ohne freien Platz warten im Mittel so viele Spieltage. 0 = aus."
+  "data_center_addon.configuration.waitDays.tooltip": "Neue Kunden ohne freien Platz warten im Mittel so viele Spieltage. 0 = aus.",
+  "data_center_addon.market.segment": "%s: Pool %s",
+  "data_center_addon.market.segment.latest": "%s: Pool %s (zuletzt: %s, %s)"
 }

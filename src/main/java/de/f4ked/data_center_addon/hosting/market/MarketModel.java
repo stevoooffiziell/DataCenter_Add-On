@@ -85,11 +85,12 @@ public final class MarketModel {
     }
 
     /**
-     * The segment mix of new customers: Data Center's mix of the year for the hobbyist pool, and for the
-     * classes' sub-pools the same mix weighted by what each segment pays.
+     * The segment mix of new customers: Data Center's mix of the year, raised by the segment pools
+     * ({@link SegmentPools}), for the hobbyist pool; for the classes' sub-pools the same mix weighted by
+     * what each segment pays.
      */
     static double[] arrivalMix(HostingProduct product, LocalDate date, double premiumShare) {
-        double[] mix = HostingGrowth.orderMix(product, date);
+        double[] mix = SegmentPools.mix(product, date);
         if (premiumShare <= 0) {
             return mix;
         }

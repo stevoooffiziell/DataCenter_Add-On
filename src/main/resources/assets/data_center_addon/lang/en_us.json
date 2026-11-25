@@ -442,5 +442,7 @@
   "data_center_addon.hosting.overview.waiting": "%s customers are waiting for a free place: build capacity.",
   "data_center_addon.market.waiting": "%s new customers are waiting for a free place. They get the next free places and give up after a few game days.",
   "data_center_addon.configuration.waitDays": "Waiting list (days)",
-  "data_center_addon.configuration.waitDays.tooltip": "New customers without a free place wait this many in-game days on average. 0 = off."
+  "data_center_addon.configuration.waitDays.tooltip": "New customers without a free place wait this many in-game days on average. 0 = off.",
+  "data_center_addon.market.segment": "%s: pool %s",
+  "data_center_addon.market.segment.latest": "%s: pool %s (latest: %s, %s)"
 }

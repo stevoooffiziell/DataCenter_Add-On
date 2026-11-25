@@ -61,9 +61,19 @@ public final class MarketService {
             HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
                     nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
-                    reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap, entry.ordersWord, quality));
+                    reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap, entry.ordersWord, quality,
+                    boosts(product, date)));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
+    }
+
+    private static List<HostingSnapshot.SegmentBoost> boosts(HostingProduct product, LocalDate date) {
+        List<HostingSnapshot.SegmentBoost> out = new ArrayList<>();
+        for (SegmentPools.Boost b : SegmentPools.boosts(product, date)) {
+            out.add(new HostingSnapshot.SegmentBoost(b.segment().ordinal(), b.factor(), b.latest() == null ? "" : b.latest().name(),
+                    b.latest() == null ? 0 : b.latest().date().getYear()));
+        }
+        return List.copyOf(out);
     }
 
     /** -1 for "not measured yet". */

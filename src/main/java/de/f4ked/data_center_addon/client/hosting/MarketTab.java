@@ -2,11 +2,14 @@ package de.f4ked.data_center_addon.client.hosting;
 
 import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
+import com.example.datacenter.hosting.CustomerSegment;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,7 +62,7 @@ final class MarketTab implements ManagerTab {
             TechPanel.bar(g, col[6], ty + 3, (int) (barW * reach), 9, reach <= 0 ? 0 : share / reach, TechPanel.VIOLET);
             g.drawString(panel.font, Texts.percent(share), col[6] + barW + 4, ty + TEXT_DY, TechPanel.TEXT_MUTED, false);
             if (panel.hover(col[1], ty, col[2] - col[1], ROW_H)) {
-                panel.tooltip(List.of(Component.translatable("data_center_addon.market.pool.tip").withStyle(ChatFormatting.GRAY)));
+                panel.tooltip(poolTooltip(row));
             } else if (panel.hover(col[2], ty, col[3] - col[2], ROW_H)) {
                 panel.tooltip(reachTooltip(row));
             } else if (panel.hover(col[3], ty, col[4] - col[3], ROW_H) && row.waiting() >= 0.5) {
@@ -72,6 +75,21 @@ final class MarketTab implements ManagerTab {
             }
             ty += ROW_H;
         }
+    }
+
+    /** The market and the segments raised by launches in the world. */
+    private static List<Component> poolTooltip(HostingSnapshot.MarketRow row) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("data_center_addon.market.pool.tip").withStyle(ChatFormatting.GRAY));
+        CustomerSegment[] segments = CustomerSegment.values();
+        for (HostingSnapshot.SegmentBoost b : row.boosts()) {
+            Component segment = Component.translatable(segments[Mth.clamp(b.segment(), 0, segments.length - 1)].translationKey());
+            lines.add(b.latest().isEmpty()
+                    ? Component.translatable("data_center_addon.market.segment", segment, factor(b.factor())).withStyle(ChatFormatting.AQUA)
+                    : Component.translatable("data_center_addon.market.segment.latest", segment, factor(b.factor()), b.latest(), b.year())
+                    .withStyle(ChatFormatting.AQUA));
+        }
+        return lines;
     }
 
     /** How the reachable part of the pool comes together. */
