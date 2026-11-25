@@ -2,6 +2,7 @@ package de.f4ked.data_center_addon.industry.machine;
 
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.industry.IndustryContent;
+import de.f4ked.data_center_addon.industry.manager.FactoryMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * Automation: items put in from any side go to the input slots (only items one of the machine's recipes
  * uses), items taken out come from the output slots. Power is accepted from every side.
  */
-public class FactoryMachineBlockEntity extends BlockEntity implements MenuProvider {
+public class FactoryMachineBlockEntity extends BlockEntity implements MenuProvider, FactoryMachine {
     public static final int INPUTS = 2, OUTPUTS = 2, SLOTS = INPUTS + OUTPUTS;
     public static final int ENERGY_CAPACITY = 20_000, MAX_RECEIVE = 1_000;
 
@@ -61,6 +62,7 @@ public class FactoryMachineBlockEntity extends BlockEntity implements MenuProvid
     private int recipe = -1;
     /** Power drawn in the last tick (for the screen). */
     private int lastDraw;
+    private FactoryMachine.State state = FactoryMachine.State.IDLE;
 
     private final IItemHandler automation = new IItemHandler() {
         @Override
@@ -167,14 +169,21 @@ public class FactoryMachineBlockEntity extends BlockEntity implements MenuProvid
             setChanged();
         }
         MachineRecipe r = current();
-        if (r == null || !outputFits(r.result())) {
+        if (r == null) {
+            state = FactoryMachine.State.IDLE;
+            return;
+        }
+        if (!outputFits(r.result())) {
+            state = FactoryMachine.State.BLOCKED;
             return;
         }
         double speed = Config.machineSpeed();
         int draw = (int) Math.ceil(r.fePerTick() * speed * Config.machineEnergy());
         if (energy.getEnergyStored() < draw) {
+            state = FactoryMachine.State.NO_POWER;
             return;
         }
+        state = FactoryMachine.State.WORKING;
         energy.consume(draw);
         lastDraw = draw;
         progress += speed;
@@ -183,6 +192,22 @@ public class FactoryMachineBlockEntity extends BlockEntity implements MenuProvid
             progress = 0;
         }
         setChanged();
+    }
+
+    @Override
+    public FactoryMachine.State factoryState() {
+        return state;
+    }
+
+    @Override
+    public ItemStack factoryOutput() {
+        MachineRecipe r = current();
+        return r == null ? ItemStack.EMPTY : r.result();
+    }
+
+    @Override
+    public float factoryEnergy() {
+        return (float) energy.getEnergyStored() / energy.getMaxEnergyStored();
     }
 
     @Nullable

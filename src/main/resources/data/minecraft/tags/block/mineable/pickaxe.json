@@ -20,6 +20,7 @@
     "data_center_addon:cleanroom_wall",
     "data_center_addon:lithography_unit",
     "data_center_addon:sales_terminal",
-    "data_center_addon:hardware_fab"
+    "data_center_addon:hardware_fab",
+    "data_center_addon:factory_manager"
   ]
 }

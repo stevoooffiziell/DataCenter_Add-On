@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon.industry.chipfab;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.industry.IndustryContent;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlock;
+import de.f4ked.data_center_addon.industry.manager.FactoryMachine;
 import de.f4ked.data_center_addon.industry.machine.MachineRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -36,7 +37,7 @@ import static de.f4ked.data_center_addon.industry.machine.MachineRecipe.of;
  * Automation as with the factory machines: items in from any side go to the inputs (one kind per slot),
  * items out come from the outputs; power from every side.
  */
-public class ChipFabBlockEntity extends BlockEntity implements MenuProvider {
+public class ChipFabBlockEntity extends BlockEntity implements MenuProvider, FactoryMachine {
     public static final int INPUTS = 3, OUTPUTS = 2, SLOTS = INPUTS + OUTPUTS;
     public static final int ENERGY_CAPACITY = 200_000, MAX_RECEIVE = 8_000;
     private static final int SCAN_TICKS = 40;
@@ -66,6 +67,7 @@ public class ChipFabBlockEntity extends BlockEntity implements MenuProvider {
     private int lastDraw;
     private ChipFabStructure.Scan scan = new ChipFabStructure.Scan(0, 0, ChipFabStructure.Status.NO_WALLS);
     private boolean scanned;
+    private FactoryMachine.State state = FactoryMachine.State.IDLE;
 
     private final IItemHandler automation = new IItemHandler() {
         @Override
@@ -186,14 +188,21 @@ public class ChipFabBlockEntity extends BlockEntity implements MenuProvider {
         }
         MachineRecipe r = current();
         int units = scan.speed();
-        if (r == null || units <= 0 || !outputFits(r.result())) {
+        if (r == null) {
+            state = FactoryMachine.State.IDLE;
+            return;
+        }
+        if (units <= 0 || !outputFits(r.result())) {
+            state = FactoryMachine.State.BLOCKED;
             return;
         }
         double speed = units * Config.machineSpeed();
         int draw = (int) Math.ceil(r.fePerTick() * speed * Config.machineEnergy());
         if (energy.getEnergyStored() < draw) {
+            state = FactoryMachine.State.NO_POWER;
             return;
         }
+        state = FactoryMachine.State.WORKING;
         energy.consume(draw);
         lastDraw = draw;
         progress += speed;
@@ -202,6 +211,22 @@ public class ChipFabBlockEntity extends BlockEntity implements MenuProvider {
             progress = 0;
         }
         setChanged();
+    }
+
+    @Override
+    public FactoryMachine.State factoryState() {
+        return state;
+    }
+
+    @Override
+    public ItemStack factoryOutput() {
+        MachineRecipe r = current();
+        return r == null ? RECIPES.get(0).result() : r.result();
+    }
+
+    @Override
+    public float factoryEnergy() {
+        return (float) energy.getEnergyStored() / energy.getMaxEnergyStored();
     }
 
     private MachineRecipe current() {

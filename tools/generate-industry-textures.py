@@ -27,6 +27,8 @@ BLOCKS = {
     'purchase_terminal_screen': ('bank_terminal_screen', 0.09),
     # the Sales Terminal: the same terminal with a green screen
     'sales_terminal_screen': ('bank_terminal_screen', 0.33),
+    # the Factory Manager: Data Center's mining dashboard with an orange screen
+    'factory_manager_screen': ('mining_dashboard_screen', 0.07),
 }
 # factory machines: Data Center's synthesizer with the front and tray in the machine's colour
 MACHINES = {

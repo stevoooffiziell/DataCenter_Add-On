@@ -135,6 +135,15 @@ public class PurchaseTerminalBlockEntity extends BlockEntity implements MenuProv
         return output;
     }
 
+    @Nullable
+    public UUID account() {
+        return account;
+    }
+
+    public long budgetCents() {
+        return budgetCents;
+    }
+
     public void setAccount(@Nullable UUID account) {
         this.account = account;
         setChanged();
@@ -224,6 +233,7 @@ public class PurchaseTerminalBlockEntity extends BlockEntity implements MenuProv
         }
         budgetCents -= fromBudget;
         spentCents += cost;
+        IndustryStats.get(level.getServer()).bought(id, c, affordable, cost, date.toEpochDay());
         ItemHandlerHelper.insertItemStacked(inventory, new ItemStack(c.item(), affordable), false);
         setChanged();
         return affordable;

@@ -127,6 +127,11 @@ public class SalesTerminalBlockEntity extends BlockEntity implements MenuProvide
         return input;
     }
 
+    @Nullable
+    public UUID account() {
+        return account;
+    }
+
     public void setAccount(@Nullable UUID account) {
         this.account = account;
         setChanged();
@@ -154,7 +159,9 @@ public class SalesTerminalBlockEntity extends BlockEntity implements MenuProvide
             if (p == null) {
                 continue;
             }
-            owedCents += market.sell(account, p, p.baseCents(date), stack.getCount(), today);
+            double pay = market.sell(account, p, p.baseCents(date), stack.getCount(), today);
+            owedCents += pay;
+            IndustryStats.get(server.getServer()).sold(account, p, stack.getCount(), Math.round(pay), today);
             inbox.setStackInSlot(i, ItemStack.EMPTY);
             sold = true;
         }

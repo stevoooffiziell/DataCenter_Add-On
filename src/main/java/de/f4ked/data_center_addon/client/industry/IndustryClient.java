@@ -20,5 +20,6 @@ public final class IndustryClient {
         event.register(IndustryContent.CHIP_FAB_MENU.get(), ChipFabScreen::new);
         event.register(IndustryContent.SALES_TERMINAL_MENU.get(), SalesTerminalScreen::new);
         event.register(IndustryContent.HARDWARE_FAB_MENU.get(), HardwareFabScreen::new);
+        event.register(IndustryContent.FACTORY_MANAGER_MENU.get(), FactoryManagerScreen::new);
     }
 }

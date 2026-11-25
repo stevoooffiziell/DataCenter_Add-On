@@ -12,6 +12,8 @@ import de.f4ked.data_center_addon.industry.hardware.HardwareFabBlock;
 import de.f4ked.data_center_addon.industry.hardware.HardwareFabBlockEntity;
 import de.f4ked.data_center_addon.industry.hardware.HardwareFabMenu;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlock;
+import de.f4ked.data_center_addon.industry.manager.FactoryManagerBlock;
+import de.f4ked.data_center_addon.industry.manager.FactoryManagerMenu;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlockEntity;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineMenu;
 import de.f4ked.data_center_addon.industry.machine.MachineKind;
@@ -172,6 +174,22 @@ public final class IndustryContent {
     public static final DeferredHolder<MenuType<?>, MenuType<HardwareFabMenu>> HARDWARE_FAB_MENU = MENUS.register(
             "hardware_fab", () -> IMenuTypeExtension.create(HardwareFabMenu::new));
 
+    // ------------------------------------------------------------------ factory manager
+
+    public static final DeferredBlock<FactoryManagerBlock> FACTORY_MANAGER = Data_center_addon.BLOCKS.registerBlock(
+            "factory_manager", FactoryManagerBlock::new,
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(2.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion());
+    public static final DeferredItem<BlockItem> FACTORY_MANAGER_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(FACTORY_MANAGER);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<FactoryManagerMenu>> FACTORY_MANAGER_MENU = MENUS.register(
+            "factory_manager",
+            () -> IMenuTypeExtension.create((id, inventory, buf) -> new FactoryManagerMenu(id, inventory, buf.readBlockPos())));
+
     // ------------------------------------------------------------------ sales terminal
 
     public static final DeferredBlock<SalesTerminalBlock> SALES_TERMINAL = Data_center_addon.BLOCKS.registerBlock(
@@ -214,6 +232,8 @@ public final class IndustryContent {
         modEventBus.addListener(IndustryContent::registerCapabilities);
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(PURCHASE_TERMINAL_ITEM.get()),
                 PURCHASE_TERMINAL_CENTS, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(FACTORY_MANAGER_ITEM.get()),
+                2_500_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(HARDWARE_FAB_ITEM.get()),
                 25_000_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(SALES_TERMINAL_ITEM.get()),
@@ -234,6 +254,7 @@ public final class IndustryContent {
     /** For the creative tab. */
     public static List<ItemStack> creativeStacks() {
         List<ItemStack> stacks = new ArrayList<>();
+        stacks.add(FACTORY_MANAGER_ITEM.get().getDefaultInstance());
         stacks.add(PURCHASE_TERMINAL_ITEM.get().getDefaultInstance());
         stacks.add(SALES_TERMINAL_ITEM.get().getDefaultInstance());
         MACHINE_ITEMS.values().forEach(item -> stacks.add(item.get().getDefaultInstance()));

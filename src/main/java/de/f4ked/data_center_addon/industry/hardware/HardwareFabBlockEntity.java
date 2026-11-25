@@ -5,6 +5,7 @@ import com.example.datacenter.shop.ShopEntry;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.industry.IndustryContent;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlock;
+import de.f4ked.data_center_addon.industry.manager.FactoryMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
  * parts. A finished part carries the value of its components as the price paid for it, so Data Center's
  * Shop buys it back for at most 80 % of that.
  */
-public class HardwareFabBlockEntity extends BlockEntity implements MenuProvider {
+public class HardwareFabBlockEntity extends BlockEntity implements MenuProvider, FactoryMachine {
     public static final int INPUTS = 9, OUTPUTS = 3, SLOTS = INPUTS + OUTPUTS;
     public static final int ENERGY_CAPACITY = 100_000, MAX_RECEIVE = 4_000;
     private static final ResourceLocation PAID_CENTS = ResourceLocation.fromNamespaceAndPath("datacenter", "paid_cents");
@@ -147,6 +148,27 @@ public class HardwareFabBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     public ResourceLocation selected() {
         return selected;
+    }
+
+    @Override
+    public FactoryMachine.State factoryState() {
+        return switch (status) {
+            case WORKING -> FactoryMachine.State.WORKING;
+            case NONE_SELECTED, MISSING -> FactoryMachine.State.IDLE;
+            case NO_POWER -> FactoryMachine.State.NO_POWER;
+            case NOT_ON_SALE, OUTPUT_FULL -> FactoryMachine.State.BLOCKED;
+        };
+    }
+
+    @Override
+    public ItemStack factoryOutput() {
+        ShopEntry entry = selected == null ? null : HardwarePlan.entry(selected);
+        return entry == null ? ItemStack.EMPTY : entry.createStack();
+    }
+
+    @Override
+    public float factoryEnergy() {
+        return (float) energy.getEnergyStored() / energy.getMaxEnergyStored();
     }
 
     static boolean accepts(ItemStack stack) {
