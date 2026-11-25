@@ -544,5 +544,9 @@
   "data_center_addon.reputation.summary.ruf": "Ruf %s (uptime %s, %s crashes, %s overload)",
   "data_center_addon.reputation.summary.renown": "Renown %s (%s)",
   "data_center_addon.reputation.summary.renown_plain": "Renown %s",
-  "data_center_addon.reputation.summary.tip": "Ruf: the last 30 days. Renown: what changed it in the last 30 days. Details in the Reputation tab."
+  "data_center_addon.reputation.summary.tip": "Ruf: the last 30 days. Renown: what changed it in the last 30 days. Details in the Reputation tab.",
+  "data_center_addon.reputation.history": "Reputation over the last %s game days",
+  "data_center_addon.reputation.history.legend": "Green: Ruf (0–100 %) · blue: renown",
+  "data_center_addon.reputation.history.values": "Ruf / renown: %s then, %s now",
+  "data_center_addon.reputation.history.empty": "history from tomorrow"
 }

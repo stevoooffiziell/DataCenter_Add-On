@@ -86,6 +86,10 @@ public final class ReputationService {
                     Renown.closeDay(server.overworld(), e.getKey(), a, a.today, today);
                     Sla.closeDay(server.overworld(), e.getKey(), a, a.today, a.day, today);
                     Renown.forget(server.overworld(), e.getKey(), a, today);
+                    a.history.addLast(new double[]{a.day, Ruf.figures(a).ruf(), DataCenterApi.reputation(server.overworld(), e.getKey())});
+                    while (a.history.size() > Ruf.WINDOW_DAYS) {
+                        a.history.removeFirst();
+                    }
                     Reviews.day(server.overworld(), e.getKey(), a, today);
                 }
                 closeDay(a);
@@ -141,7 +145,18 @@ public final class ReputationService {
                         a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()),
                 Campaigns.snapshot(a, DataCenterApi.currentDate(level)), slaUptime(a),
                 a.lastGainDay < 0 ? 0 : (int) Math.max(0, DataCenterApi.currentDate(level).toEpochDay() - a.lastGainDay),
-                toList(Renown.recent(a, DataCenterApi.currentDate(level).toEpochDay())));
+                toList(Renown.recent(a, DataCenterApi.currentDate(level).toEpochDay())),
+                history(a, 1, f.ruf()), history(a, 2, DataCenterApi.reputation(level, account)));
+    }
+
+    /** One column of the history, with today's value at the end. */
+    private static List<Double> history(ReputationBook.Account a, int column, double now) {
+        List<Double> out = new ArrayList<>();
+        for (double[] point : a.history) {
+            out.add(point[column]);
+        }
+        out.add(now);
+        return List.copyOf(out);
     }
 
     /** Uptime of the calendar month so far (finished days and today); -1 without service. */

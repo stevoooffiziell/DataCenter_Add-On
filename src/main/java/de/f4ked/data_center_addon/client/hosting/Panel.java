@@ -184,6 +184,30 @@ final class Panel {
         g.fill(x, thumbY, x + 2, thumbY + thumbH, TechPanel.ACCENT);
     }
 
+    /**
+     * A line chart of {@code values} between {@code min} and {@code max}, left to right, drawn as small
+     * squares along the line between the points.
+     */
+    static void chart(GuiGraphics g, int x, int y, int w, int h, List<Double> values, double min, double max, int color) {
+        if (values.size() < 2 || max <= min) {
+            return;
+        }
+        int n = values.size();
+        double px = x, py = y + h - (values.get(0) - min) / (max - min) * h;
+        for (int i = 1; i < n; i++) {
+            double nx = x + (double) w * i / (n - 1);
+            double ny = y + h - (Math.max(min, Math.min(max, values.get(i))) - min) / (max - min) * h;
+            int steps = (int) Math.max(1, Math.ceil(Math.max(Math.abs(nx - px), Math.abs(ny - py))));
+            for (int s = 0; s <= steps; s++) {
+                int cx = (int) Math.round(px + (nx - px) * s / steps);
+                int cy = (int) Math.round(py + (ny - py) * s / steps);
+                g.fill(cx, cy, cx + 1, cy + 1, color);
+            }
+            px = nx;
+            py = ny;
+        }
+    }
+
     /** Green up to 95 % load, amber above. */
     static void loadBar(GuiGraphics g, int x, int y, int w, float ratio) {
         TechPanel.bar(g, x, y, Math.max(20, w), 9, ratio, ratio > 0.95f ? TechPanel.WARN : TechPanel.GOOD);

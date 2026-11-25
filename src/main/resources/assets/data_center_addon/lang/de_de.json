@@ -544,5 +544,9 @@
   "data_center_addon.reputation.summary.ruf": "Ruf %s (Uptime %s, %s Abstürze, %s Überlast)",
   "data_center_addon.reputation.summary.renown": "Bekanntheit %s (%s)",
   "data_center_addon.reputation.summary.renown_plain": "Bekanntheit %s",
-  "data_center_addon.reputation.summary.tip": "Ruf: die letzten 30 Tage. Bekanntheit: was sie in den letzten 30 Tagen verändert hat. Details im Reputation-Tab."
+  "data_center_addon.reputation.summary.tip": "Ruf: die letzten 30 Tage. Bekanntheit: was sie in den letzten 30 Tagen verändert hat. Details im Reputation-Tab.",
+  "data_center_addon.reputation.history": "Reputation der letzten %s Spieltage",
+  "data_center_addon.reputation.history.legend": "Grün: Ruf (0–100 %) · Blau: Bekanntheit",
+  "data_center_addon.reputation.history.values": "Ruf / Bekanntheit: damals %s, jetzt %s",
+  "data_center_addon.reputation.history.empty": "Verlauf ab morgen"
 }

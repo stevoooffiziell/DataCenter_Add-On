@@ -73,8 +73,12 @@ final class OverviewTab implements ManagerTab {
 
     /** Reputation and network bars (label | bar | value) and the warnings; returns the y of the last line. */
     private int reputationAndNetwork(GuiGraphics g, HostingSnapshot s, int x, int ry, int w) {
-        int labelW = 78, valueW = Math.max(130, w / 3);
-        int barX = x + labelW, barW = w - labelW - valueW - 8;
+        // the history of the last 30 days takes the right of the two bars
+        int chartW = Math.max(60, w / 4);
+        history(g, s.standing(), x + w - chartW, ry - 2, chartW, 26);
+        int bw = w - chartW - 10;
+        int labelW = 78, valueW = Math.max(110, bw / 3);
+        int barX = x + labelW, barW = bw - labelW - valueW - 8;
         panel.line(g, Texts.hosting("overview.reputation"), x, ry + 1, labelW, TechPanel.TEXT_MUTED);
         TechPanel.bar(g, barX, ry, barW, 10, s.reputation() / 1000f, TechPanel.ACCENT);
         String rep = s.reputation() + " / 1000 · " + Component.translatable(CustomerClass.ofOrdinal(s.customerClass()).translationKey()).getString()
@@ -125,6 +129,30 @@ final class OverviewTab implements ManagerTab {
             ny += Math.min(lines.size(), 2) * 10 - 10;
         }
         return ny;
+    }
+
+    /** Ruf (green) and renown (blue) over the last 30 days; hover for the values. */
+    private void history(GuiGraphics g, HostingSnapshot.Standing st, int x, int y, int w, int h) {
+        g.fill(x, y, x + w, y + h, TechPanel.SLOT_BG);
+        if (st.rufHistory().size() < 2) {
+            g.drawCenteredString(panel.font, Texts.reputation("history.empty"), x + w / 2, y + h / 2 - 4, TechPanel.TEXT_MUTED);
+        } else {
+            double maxRenown = 100;
+            for (double v : st.renownHistory()) {
+                maxRenown = Math.max(maxRenown, v * 1.1);
+            }
+            Panel.chart(g, x + 2, y + 2, w - 4, h - 4, st.renownHistory(), 0, maxRenown, TechPanel.ACCENT);
+            Panel.chart(g, x + 2, y + 2, w - 4, h - 4, st.rufHistory(), 0, 1, TechPanel.GOOD);
+        }
+        if (panel.hover(x, y, w, h)) {
+            List<Double> ruf = st.rufHistory(), renown = st.renownHistory();
+            String first = ruf.isEmpty() ? "–" : Texts.percent(ruf.get(0).floatValue()) + " / " + Math.round(renown.get(0));
+            String last = ruf.isEmpty() ? "–" : Texts.percent(ruf.get(ruf.size() - 1).floatValue()) + " / "
+                    + Math.round(renown.get(renown.size() - 1));
+            panel.tooltip(List.of(Component.translatable("data_center_addon.reputation.history", ruf.size() - 1),
+                    Component.translatable("data_center_addon.reputation.history.legend").withStyle(ChatFormatting.GRAY),
+                    Component.translatable("data_center_addon.reputation.history.values", first, last).withStyle(ChatFormatting.GRAY)));
+        }
     }
 
     /** Sums of one product row. */

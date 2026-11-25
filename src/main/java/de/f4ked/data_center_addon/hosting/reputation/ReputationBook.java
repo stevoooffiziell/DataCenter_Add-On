@@ -37,6 +37,8 @@ public final class ReputationBook extends SavedData {
         final EnumMap<Renown.Source, Double> sources = new EnumMap<>(Renown.Source.class);
         /** Renown per source and day of the last 30 days: {day, source 0, source 1, ...}, oldest first. */
         final Deque<double[]> recent = new ArrayDeque<>();
+        /** Ruf and renown at the end of each of the last 30 days: {day, Ruf, renown}, oldest first. */
+        final Deque<double[]> history = new ArrayDeque<>();
         /** Most customers the account ever had; NaN until first seen. */
         double customerMark = Double.NaN;
         /** The last customer review: {day, positive (1/0), product, segment, text}; null before the first. */
@@ -109,6 +111,11 @@ public final class ReputationBook extends SavedData {
                 }
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
+            for (Tag hd : a.getList("history", Tag.TAG_LIST)) {
+                double[] point = new double[3];
+                readRecord((ListTag) hd, point);
+                account.history.addLast(point);
+            }
             for (Tag r : a.getList("recent", Tag.TAG_LIST)) {
                 ListTag list = (ListTag) r;
                 double[] bucket = new double[1 + Renown.Source.values().length];
@@ -169,6 +176,11 @@ public final class ReputationBook extends SavedData {
             if (account.lastReview != null) {
                 a.putLongArray("lastReview", account.lastReview);
             }
+            ListTag history = new ListTag();
+            for (double[] point : account.history) {
+                history.add(writeRecord(point));
+            }
+            a.put("history", history);
             ListTag recent = new ListTag();
             for (double[] bucket : account.recent) {
                 ListTag b = new ListTag();
