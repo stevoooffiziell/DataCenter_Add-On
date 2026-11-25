@@ -119,7 +119,7 @@ public abstract class HostingRackBlockEntityMixin {
                                                  boolean throttled, int certification, double down, double overloaded) {
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
         UUID owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
-        RackService.service(reputation, server, owner, earning, throttled, certification, down, overloaded);
+        RackService.service(rack, reputation, server, owner, earning, throttled, certification, down, overloaded);
         ServiceQuality.report(owner, rack.getProduct(), earning, throttled, down, overloaded);
     }
 
@@ -133,7 +133,7 @@ public abstract class HostingRackBlockEntityMixin {
                                                    boolean throttled, int certification, int downBays) {
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
         UUID owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
-        RackService.service(reputation, server, owner, earningBays, throttled, certification, downBays, 0);
+        RackService.service(rack, reputation, server, owner, earningBays, throttled, certification, downBays, 0);
     }
 
     /** A crash: Data Center's penalty, and the crash counts in the account's Ruf. */

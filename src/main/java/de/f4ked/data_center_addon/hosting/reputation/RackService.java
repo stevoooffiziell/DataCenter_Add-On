@@ -1,8 +1,10 @@
 package de.f4ked.data_center_addon.hosting.reputation;
 
+import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -30,12 +32,16 @@ public final class RackService {
      * @param down       servers (or customers) that did not run
      * @param overloaded how far the servers ran over their real capacity
      */
-    public static void service(HostingReputation reputation, MinecraftServer server, @Nullable UUID owner, double earning,
-                               boolean throttled, int certification, double down, double overloaded) {
+    public static void service(HostingRackBlockEntity rack, HostingReputation reputation, MinecraftServer server,
+                               @Nullable UUID owner, double earning, boolean throttled, int certification, double down,
+                               double overloaded) {
         if (!Config.reputationModel()) {
             reputation.recordService(server, earning, throttled, certification, down, overloaded);
             return;
         }
         ReputationService.record(server, owner, earning, down, overloaded, throttled);
+        if (rack.getLevel() instanceof ServerLevel level) {
+            QuickFix.service(level, rack.getBlockPos(), owner, earning, down);
+        }
     }
 }

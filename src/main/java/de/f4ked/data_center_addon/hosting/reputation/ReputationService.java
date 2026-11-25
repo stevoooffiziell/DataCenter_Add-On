@@ -10,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,6 +51,11 @@ public final class ReputationService {
         ReputationBook book = ReputationBook.get(server);
         book.account(owner).today[Ruf.CRASHES]++;
         book.setDirty();
+    }
+
+    @SubscribeEvent
+    static void onServerStopped(ServerStoppedEvent event) {
+        QuickFix.clear();
     }
 
     @SubscribeEvent
