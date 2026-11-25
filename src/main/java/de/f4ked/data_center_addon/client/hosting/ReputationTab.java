@@ -127,6 +127,13 @@ final class ReputationTab implements ManagerTab {
                     (v > 0 ? "+" : "") + Math.round(v), v > 0 ? TechPanel.GOOD : TechPanel.DANGER);
             ty += LINE_H;
         }
+        if (st.quietDays() > 20) {
+            boolean forgetting = st.quietDays() > 30;
+            line(g, x, ty, w, Component.translatable(forgetting ? "data_center_addon.reputation.forgetting"
+                    : "data_center_addon.reputation.quiet", st.quietDays()).getString(), forgetting ? "−1 %/" + Texts.reputation("month") : "",
+                    TechPanel.WARN);
+            ty += LINE_H;
+        }
         if (st.pending() >= 1) {
             line(g, x, ty, w, Component.translatable("data_center_addon.reputation.pending",
                     Math.round(st.pending())).getString(), "+" + Math.round(st.pending() * 0.1), TechPanel.TEXT_MUTED);

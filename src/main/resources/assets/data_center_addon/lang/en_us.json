@@ -533,5 +533,9 @@
   "data_center_addon.reputation.sla": "Uptime this month (SLA)",
   "data_center_addon.reputation.sla.tip": "At the end of the month: +10 renown with an uptime of at least 99.9 %.",
   "data_center_addon.reputation.msg.sla_met": "SLA met: %s uptime last month. %s renown.",
-  "data_center_addon.reputation.msg.sla_missed": "SLA missed: %s uptime last month (99.9 %% needed)."
+  "data_center_addon.reputation.msg.sla_missed": "SLA missed: %s uptime last month (99.9 %% needed).",
+  "data_center_addon.reputation.source.forgetting": "Forgotten",
+  "data_center_addon.reputation.quiet": "Nothing new for %s days",
+  "data_center_addon.reputation.forgetting": "Being forgotten (%s quiet days)",
+  "data_center_addon.reputation.month": "mo."
 }

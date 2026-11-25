@@ -24,12 +24,17 @@ import java.util.UUID;
  *   <li>advertising ({@link Campaigns}),</li>
  *   <li>a month with an uptime of 99.9 % ({@link Sla}),</li>
  * </ul>
- * and fall through failed or cancelled orders. Renown sets the share of the markets the account reaches.
+ * and fall through failed or cancelled orders and bad reviews. Without anything new for
+ * {@link #FORGET_AFTER_DAYS} days it is slowly forgotten ({@link #FORGET_PER_MONTH} a month).
+ * Renown sets the share of the markets the account reaches.
  * Every change is booked by its source, for the Reputation tab.
  */
 public final class Renown {
     /** Renown for every new customer whose first month went without a disruption (one point per 10 customers). */
     static final double PER_CUSTOMER = 0.1;
+    /** Days without any renown gained after which renown starts to be forgotten, and how fast. */
+    static final int FORGET_AFTER_DAYS = 30;
+    static final double FORGET_PER_MONTH = 0.01;
     /** The first month of a new customer, in in-game days. */
     static final int FIRST_MONTH_DAYS = 30;
     /** A day with more downtime than this, or with a crash, disrupts every new customer in its first month. */
@@ -37,7 +42,7 @@ public final class Renown {
 
     /** Where renown comes from; the name gives {@code data_center_addon.reputation.source.<name>}. */
     public enum Source {
-        ORDERS, CUSTOMERS, MILESTONES, QUICK_FIX, CERTIFICATION, REVIEWS, ADVERTISING, SLA, PENALTIES;
+        ORDERS, CUSTOMERS, MILESTONES, QUICK_FIX, CERTIFICATION, REVIEWS, ADVERTISING, SLA, PENALTIES, FORGETTING;
 
         public String key() {
             return "data_center_addon.reputation.source." + name().toLowerCase(Locale.ROOT);
@@ -55,7 +60,11 @@ public final class Renown {
         DataCenterApi.changeReputation(level, account, amount);
         if (Config.reputationModel()) {
             ReputationBook book = ReputationBook.get(level.getServer());
-            book.account(account).sources.merge(source, amount, Double::sum);
+            ReputationBook.Account a = book.account(account);
+            a.sources.merge(source, amount, Double::sum);
+            if (amount > 0) {
+                a.lastGainDay = DataCenterApi.currentDate(level).toEpochDay();
+            }
             book.setDirty();
         }
     }
@@ -99,6 +108,21 @@ public final class Renown {
             if (cohort[2] == 0) {
                 add(level, id, cohort[1] * PER_CUSTOMER, Source.CUSTOMERS);
             }
+        }
+    }
+
+    /** A new day: without a gain for {@link #FORGET_AFTER_DAYS} days, a day's share of the monthly forgetting. */
+    static void forget(ServerLevel level, UUID id, ReputationBook.Account a, long today) {
+        if (a.lastGainDay < 0) {
+            a.lastGainDay = today;
+            return;
+        }
+        if (today - a.lastGainDay <= FORGET_AFTER_DAYS) {
+            return;
+        }
+        double points = DataCenterApi.reputation(level, id);
+        if (points > 0) {
+            add(level, id, -points * FORGET_PER_MONTH / 30.44, Source.FORGETTING);
         }
     }
 
