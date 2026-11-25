@@ -459,5 +459,11 @@
   "data_center_addon.market.price.share": "Erreichbarer Anteil %s",
   "data_center_addon.market.price.tip": "Billiger bringt mehr Kunden und weniger pro Kunde, teurer das Gegenteil. Einrichtungsgebühren und Jahrespläne folgen dem Preis.",
   "data_center_addon.market.reach.price": "Preis: %s",
-  "data_center_addon.market.customers": "%s Kunden · %s des Markts"
+  "data_center_addon.market.customers": "%s Kunden · %s des Markts",
+  "data_center_addon.market.rivals": "Konkurrenz",
+  "data_center_addon.market.rivals.tip": "Hosting-Firmen der Welt. Jede hält diesen Anteil an den Märkten, in denen sie verkauft. Sie wachsen in guten Zeiten und gehen in schlechten pleite; ein pleite gegangener Konkurrent gibt seinen Anteil frei.",
+  "data_center_addon.market.reach.rivals": "Konkurrenz: %s des Markts → %s",
+  "data_center_addon.market.news.prefix": "[Markt] ",
+  "data_center_addon.market.news.bankrupt": "%s ist pleite. Seine Kunden (%s, %s des Markts) suchen einen neuen Anbieter.",
+  "data_center_addon.market.news.founded": "Neuer Konkurrent: %s verkauft %s und nimmt %s dieser Märkte."
 }

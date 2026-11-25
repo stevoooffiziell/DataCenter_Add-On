@@ -366,9 +366,10 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param phase         {@code MarketEvents.Phase} ordinal
      * @param mood          factor of the market events on the pools (colocation excepted)
      * @param rows          one row per product that can be sold today
+     * @param rivals        the world's fictional competitors, strongest first
      */
-    public record Market(boolean model, double internetUsers, int phase, double mood, List<MarketRow> rows) {
-        public static final Market NONE = new Market(false, 0, 0, 1, List.of());
+    public record Market(boolean model, double internetUsers, int phase, double mood, List<MarketRow> rows, List<Rival> rivals) {
+        public static final Market NONE = new Market(false, 0, 0, 1, List.of(), List.of());
 
         /** New customers of all products waiting for a free place. */
         public double waiting() {
@@ -382,8 +383,26 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(m.phase);
                     buf.writeDouble(m.mood);
                     writeList(buf, m.rows, MarketRow.STREAM_CODEC);
+                    writeList(buf, m.rivals, Rival.STREAM_CODEC);
                 },
-                buf -> new Market(buf.readBoolean(), buf.readDouble(), buf.readVarInt(), buf.readDouble(), readList(buf, MarketRow.STREAM_CODEC, 16)));
+                buf -> new Market(buf.readBoolean(), buf.readDouble(), buf.readVarInt(), buf.readDouble(),
+                        readList(buf, MarketRow.STREAM_CODEC, 16), readList(buf, Rival.STREAM_CODEC, 16)));
+    }
+
+    /**
+     * A fictional competitor ({@code Competitors}).
+     *
+     * @param products bit per {@code HostingProduct} ordinal it sells
+     * @param strength its share of the markets it sells in
+     */
+    public record Rival(String name, int products, double strength) {
+        public static final StreamCodec<FriendlyByteBuf, Rival> STREAM_CODEC = StreamCodec.of(
+                (buf, r) -> {
+                    buf.writeUtf(r.name, 64);
+                    buf.writeVarInt(r.products);
+                    buf.writeDouble(r.strength);
+                },
+                buf -> new Rival(buf.readUtf(64), buf.readVarInt(), buf.readDouble()));
     }
 
     /**
@@ -404,10 +423,13 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param boosts      segments of the product raised by launches in the world
      * @param priceStep   the account's price in 10 % steps from the list price
      * @param priceFactor factor of the reach from the price
+     * @param competition summed market share of the competitors that sell the product
+     * @param rivalFactor factor of the reach from the competitors
      */
     public record MarketRow(int product, double pool, double market, double potential, double repFactor, double awareFactor,
                             double classFactor, double customers, double waiting, double ordersGap, double ordersWord,
-                            Quality quality, List<SegmentBoost> boosts, int priceStep, double priceFactor) {
+                            Quality quality, List<SegmentBoost> boosts, int priceStep, double priceFactor, double competition,
+                            double rivalFactor) {
         public double orders() {
             return ordersGap + ordersWord;
         }
@@ -429,11 +451,13 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     writeList(buf, r.boosts, SegmentBoost.STREAM_CODEC);
                     buf.writeVarInt(r.priceStep);
                     buf.writeDouble(r.priceFactor);
+                    buf.writeDouble(r.competition);
+                    buf.writeDouble(r.rivalFactor);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         Quality.STREAM_CODEC.decode(buf), readList(buf, SegmentBoost.STREAM_CODEC, 16), buf.readVarInt(),
-                        buf.readDouble()));
+                        buf.readDouble(), buf.readDouble(), buf.readDouble()));
     }
 
     /**

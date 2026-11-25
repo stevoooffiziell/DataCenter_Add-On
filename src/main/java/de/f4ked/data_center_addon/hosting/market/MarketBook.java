@@ -9,14 +9,17 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
  * What the add-on keeps about each account's markets ({@link MarketModel}): per account and product how
- * well known the account is and how well it serves its customers. Stored with the overworld.
+ * well known the account is, how well it serves its customers, its waiting list and price; and the
+ * world's fictional competitors. Stored with the overworld.
  */
 public final class MarketBook extends SavedData {
     private static final String NAME = "data_center_addon_market";
@@ -24,6 +27,12 @@ public final class MarketBook extends SavedData {
     static final UUID NOBODY = new UUID(0L, 0L);
 
     private final Map<UUID, EnumMap<HostingProduct, Entry>> entries = new HashMap<>();
+    /** The world's fictional competitors ({@link Competitors}), shared by all accounts. */
+    private final List<Competitors.Competitor> competitors = new ArrayList<>();
+    private boolean competitorsSeeded;
+    /** Epoch day the competitors were last moved on to. */
+    private long competitorsDay;
+    private int nextCompetitorId = 1;
 
     /** One account's market of one product. */
     public static final class Entry {
@@ -69,10 +78,43 @@ public final class MarketBook extends SavedData {
         return entries;
     }
 
+    public List<Competitors.Competitor> competitors() {
+        return competitors;
+    }
+
+    boolean competitorsSeeded() {
+        return competitorsSeeded;
+    }
+
+    long competitorsDay() {
+        return competitorsDay;
+    }
+
+    void seedCompetitors(long day) {
+        competitorsSeeded = true;
+        competitorsDay = day;
+    }
+
+    int nextCompetitorId() {
+        return nextCompetitorId++;
+    }
+
     // ------------------------------------------------------------------ saving
 
     private static MarketBook load(CompoundTag tag, HolderLookup.Provider registries) {
         MarketBook book = new MarketBook();
+        if (tag.contains("competitors")) {
+            CompoundTag rivals = tag.getCompound("competitors");
+            book.competitorsSeeded = true;
+            book.competitorsDay = rivals.getLong("day");
+            book.nextCompetitorId = Math.max(1, rivals.getInt("next"));
+            for (Tag t : rivals.getList("list", Tag.TAG_COMPOUND)) {
+                CompoundTag c = (CompoundTag) t;
+                book.competitors.add(new Competitors.Competitor(c.getInt("id"), c.getString("name"), c.getInt("products"),
+                        Math.max(Competitors.MIN_STRENGTH, Math.min(Competitors.MAX_STRENGTH, c.getDouble("strength"))),
+                        c.getLong("founded")));
+            }
+        }
         for (Tag t : tag.getList("owners", Tag.TAG_COMPOUND)) {
             CompoundTag o = (CompoundTag) t;
             if (!o.hasUUID("owner")) {
@@ -132,6 +174,23 @@ public final class MarketBook extends SavedData {
             owners.add(o);
         });
         tag.put("owners", owners);
+        if (competitorsSeeded) {
+            CompoundTag rivals = new CompoundTag();
+            rivals.putLong("day", competitorsDay);
+            rivals.putInt("next", nextCompetitorId);
+            ListTag list = new ListTag();
+            for (Competitors.Competitor c : competitors) {
+                CompoundTag e = new CompoundTag();
+                e.putInt("id", c.id);
+                e.putString("name", c.name);
+                e.putInt("products", c.products);
+                e.putDouble("strength", c.strength);
+                e.putLong("founded", c.foundedDay);
+                list.add(e);
+            }
+            rivals.put("list", list);
+            tag.put("competitors", rivals);
+        }
         return tag;
     }
 

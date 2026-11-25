@@ -459,5 +459,11 @@
   "data_center_addon.market.price.share": "Reachable share %s",
   "data_center_addon.market.price.tip": "Cheaper brings more customers and less per customer, dearer the opposite. Setup fees and annual plans follow the price.",
   "data_center_addon.market.reach.price": "Price: %s",
-  "data_center_addon.market.customers": "%s customers · %s of the market"
+  "data_center_addon.market.customers": "%s customers · %s of the market",
+  "data_center_addon.market.rivals": "Competitors",
+  "data_center_addon.market.rivals.tip": "Hosting companies of the world. Each holds this share of the markets it sells in. They grow in good times and go bankrupt in bad ones; a bankrupt competitor frees its share.",
+  "data_center_addon.market.reach.rivals": "Competition: %s of the market → %s",
+  "data_center_addon.market.news.prefix": "[Market] ",
+  "data_center_addon.market.news.bankrupt": "%s is bankrupt. Its %s customers (%s of the market) are looking for a new host.",
+  "data_center_addon.market.news.founded": "New competitor: %s sells %s and takes %s of those markets."
 }

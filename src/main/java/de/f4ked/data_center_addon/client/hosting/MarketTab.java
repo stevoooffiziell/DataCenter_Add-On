@@ -3,6 +3,7 @@ package de.f4ked.data_center_addon.client.hosting;
 import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import com.example.datacenter.hosting.CustomerSegment;
+import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import de.f4ked.data_center_addon.hosting.market.MarketEvents;
@@ -53,6 +54,9 @@ final class MarketTab implements ManagerTab {
                         Component.translatable("data_center_addon.market.event.tip").withStyle(ChatFormatting.GRAY)));
             }
         }
+        int rivalsH = m.rivals().isEmpty() ? 0 : 30;
+        rivals(g, m, x, y + h - rivalsH + 4, w);
+        h -= rivalsH;
         int ty = y + 14;
         int[] col = Panel.columns(x, w, 0, 0.22, 0.33, 0.45, 0.57, 0.68, 0.80);
         panel.header(g, x, ty, w, col, "column.product", "column.pool", "column.reachable", "column.customers",
@@ -89,6 +93,37 @@ final class MarketTab implements ManagerTab {
                 panel.tooltip(qualityTooltip(q));
             }
             ty += ROW_H;
+        }
+    }
+
+    /** The competitors in one line under the table; hover for the products each sells. */
+    private void rivals(GuiGraphics g, HostingSnapshot.Market m, int x, int y, int w) {
+        if (m.rivals().isEmpty()) {
+            return;
+        }
+        panel.sectionTitle(g, x, y, w, Texts.market("rivals"));
+        StringBuilder line = new StringBuilder();
+        for (HostingSnapshot.Rival r : m.rivals()) {
+            if (!line.isEmpty()) {
+                line.append("  ·  ");
+            }
+            line.append(r.name()).append(' ').append(Math.round(r.strength() * 100)).append(" %");
+        }
+        panel.line(g, line.toString(), x, y + 14, w, TechPanel.TEXT_MUTED);
+        if (panel.hover(x, y, w, 24)) {
+            List<Component> lines = new ArrayList<>();
+            lines.add(Component.translatable("data_center_addon.market.rivals.tip").withStyle(ChatFormatting.GRAY));
+            HostingProduct[] products = HostingProduct.values();
+            for (HostingSnapshot.Rival r : m.rivals()) {
+                StringBuilder sells = new StringBuilder();
+                for (HostingProduct p : products) {
+                    if ((r.products() & (1 << p.ordinal())) != 0) {
+                        sells.append(sells.isEmpty() ? "" : ", ").append(Component.translatable(p.translationKey()).getString());
+                    }
+                }
+                lines.add(Component.literal(r.name() + " " + Math.round(r.strength() * 100) + " %: " + sells));
+            }
+            panel.tooltip(lines);
         }
     }
 
@@ -155,6 +190,8 @@ final class MarketTab implements ManagerTab {
                 Component.translatable("data_center_addon.market.reach.classes", factor(row.classFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.classes.tip").withStyle(ChatFormatting.DARK_GRAY),
                 Component.translatable("data_center_addon.market.reach.price", factor(row.priceFactor())).withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.reach.rivals", Texts.percent((float) row.competition()),
+                        factor(row.rivalFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.awareness.tip").withStyle(ChatFormatting.DARK_GRAY));
     }
 

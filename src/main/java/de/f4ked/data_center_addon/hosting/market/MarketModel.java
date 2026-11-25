@@ -14,8 +14,9 @@ import java.util.UUID;
 /**
  * The add-on's customer model. Each product has a pool of potential customers ({@link MarketPool}); an
  * account reaches a share of it, its <b>potential</b>:
- * <pre>potential = pool × market events × base share × reputation × awareness × customer classes × price</pre>
+ * <pre>potential = pool × market events × competition × base share × reputation × awareness × customer classes × price</pre>
  * <ul>
+ *   <li><b>Competition</b>: the world's fictional competitors ({@link Competitors}).</li>
  *   <li><b>Market events</b>: dotcom boom and crash, Web 2.0 boom, financial crisis ({@link MarketEvents}).</li>
  *   <li><b>Base share</b>: {@code 1 / POOL_FACTOR}, so at 0 reputation and fully known the potential
  *       equals Data Center's own customer equilibrium.</li>
@@ -60,12 +61,13 @@ public final class MarketModel {
      *
      * @param pool       the pool after the market events
      * @param market     factor of the market events on the pool
+     * @param rivals     factor of the fictional competitors
      * @param reputation factor from reputation
      * @param awareness  factor from awareness (0.5..1)
      * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
      * @param price      factor from the account's price
      */
-    public record Reach(double pool, double market, double reputation, double awareness, double classes, double price,
+    public record Reach(double pool, double market, double rivals, double reputation, double awareness, double classes, double price,
                         double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
@@ -77,15 +79,19 @@ public final class MarketModel {
         }
     }
 
-    /** @param market factor of the market events ({@link MarketEvents#factor}) */
+    /**
+     * @param market factor of the market events ({@link MarketEvents#factor})
+     * @param rivals factor of the competitors ({@link Competitors#factor})
+     */
     public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints,
-                              CustomerClass unlocked, double market) {
+                              CustomerClass unlocked, double market, double rivals) {
         double pool = MarketPool.pool(product, date) * market;
         double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
         double classes = classFactor(unlocked);
         double price = Config.marketModel() ? demandFactor(entry.priceStep) : 1.0;
-        return new Reach(pool, market, rep, aware, classes, price, pool * BASE_SHARE * rep * aware * classes * price);
+        return new Reach(pool, market, rivals, rep, aware, classes, price,
+                pool * rivals * BASE_SHARE * rep * aware * classes * price);
     }
 
     /** The price change of a step, e.g. +0.2 for two steps up. */
@@ -188,7 +194,8 @@ public final class MarketModel {
      * @param counts the account's customers of the product by segment, changed in place
      */
     public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date,
-                            double reputationPoints, CustomerClass unlocked, double market, double places, double dtMonths) {
+                            double reputationPoints, CustomerClass unlocked, double market, double rivals, double places,
+                            double dtMonths) {
         CustomerSegment[] segments = CustomerSegment.values();
         double total = 0;
         for (double c : counts) {
@@ -204,7 +211,7 @@ public final class MarketModel {
             }
         }
 
-        Reach reach = reach(entry, product, date, reputationPoints, unlocked, market);
+        Reach reach = reach(entry, product, date, reputationPoints, unlocked, market, rivals);
         if (total > reach.potential() && total > 0) {
             double leaveShare = (total - reach.potential()) * Math.min(1, OVER_POTENTIAL_LEAVE * dtMonths) / total;
             for (int s = 0; s < counts.length; s++) {
