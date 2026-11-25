@@ -40,10 +40,16 @@ public final class ReputationBook extends SavedData {
         /** The last customer review: {day, positive (1/0), product, segment, text}; null before the first. */
         @Nullable
         long[] lastReview;
+        /** Epoch day each {@link Campaigns.Campaign} was last booked; -1 never. */
+        final long[] campaignDays = new long[Campaigns.Campaign.values().length];
         /** Highest room certification level a serving rack of the account had; -1 until first seen. */
         int maxTier = -1;
         /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
         final Deque<double[]> cohorts = new ArrayDeque<>();
+
+        Account() {
+            java.util.Arrays.fill(campaignDays, -1);
+        }
 
         public EnumMap<Renown.Source, Double> sources() {
             return sources;
@@ -95,6 +101,10 @@ public final class ReputationBook extends SavedData {
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
+            long[] campaigns = a.getLongArray("campaigns");
+            for (int i = 0; i < campaigns.length && i < account.campaignDays.length; i++) {
+                account.campaignDays[i] = campaigns[i];
+            }
             long[] review = a.getLongArray("lastReview");
             account.lastReview = review.length == 5 ? review : null;
             for (Tag c : a.getList("cohorts", Tag.TAG_LIST)) {
@@ -126,6 +136,7 @@ public final class ReputationBook extends SavedData {
                 a.putDouble("customerMark", account.customerMark);
             }
             a.putInt("maxTier", account.maxTier);
+            a.putLongArray("campaigns", account.campaignDays);
             if (account.lastReview != null) {
                 a.putLongArray("lastReview", account.lastReview);
             }

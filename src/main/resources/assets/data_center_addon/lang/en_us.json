@@ -517,5 +517,16 @@
   "data_center_addon.reputation.review.bad.0": "Down again. Our customers could not reach us all evening.",
   "data_center_addon.reputation.review.bad.1": "Slow as a dial-up modem. Looking for a new host.",
   "data_center_addon.reputation.review.bad.2": "The server is full, everything lags.",
-  "data_center_addon.reputation.review.bad.3": "Not what we paid for."
+  "data_center_addon.reputation.review.bad.3": "Not what we paid for.",
+  "data_center_addon.reputation.source.advertising": "Advertising",
+  "data_center_addon.reputation.campaigns": "Advertising:",
+  "data_center_addon.reputation.campaign.confirm": "Book?",
+  "data_center_addon.reputation.campaign.tip": "Costs %s, brings %s renown. Once every 7 game days. Click twice to book.",
+  "data_center_addon.reputation.campaign.banner": "Banner",
+  "data_center_addon.reputation.campaign.magazine": "Magazine",
+  "data_center_addon.reputation.campaign.search": "Search ads",
+  "data_center_addon.reputation.campaign.social": "Social media",
+  "data_center_addon.reputation.campaign.video": "Video",
+  "data_center_addon.reputation.campaign.fair": "Trade fair",
+  "data_center_addon.reputation.msg.campaign": "Campaign booked: %s for %s. %s renown."
 }

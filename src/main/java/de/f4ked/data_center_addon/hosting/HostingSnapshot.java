@@ -545,10 +545,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param sources  renown booked per {@code Renown.Source}, in its order
      * @param pending  new customers still in an undisturbed first month
      * @param review   the last customer review {day, positive, product, segment, text, today}; empty before the first
+     * @param campaigns the advertising campaigns that exist today
      */
     public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
-                           double renown, List<Double> sources, double pending, List<Long> review) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of());
+                           double renown, List<Double> sources, double pending, List<Long> review, List<Campaign> campaigns) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of());
 
         private static final StreamCodec<FriendlyByteBuf, Long> LONG = StreamCodec.of(
                 (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
@@ -569,10 +570,28 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     writeList(buf, s.sources, DOUBLE);
                     buf.writeDouble(s.pending);
                     writeList(buf, s.review, LONG);
+                    writeList(buf, s.campaigns, Campaign.STREAM_CODEC);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
-                        readList(buf, LONG, 8)));
+                        readList(buf, LONG, 8), readList(buf, Campaign.STREAM_CODEC, 16)));
+    }
+
+    /**
+     * An advertising campaign ({@code Campaigns}).
+     *
+     * @param kind     {@code Campaigns.Campaign} ordinal
+     * @param daysLeft days until it can be booked again (0 = now)
+     */
+    public record Campaign(int kind, long costCents, int renown, int daysLeft) {
+        public static final StreamCodec<FriendlyByteBuf, Campaign> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeVarInt(c.kind);
+                    buf.writeVarLong(c.costCents);
+                    buf.writeVarInt(c.renown);
+                    buf.writeVarInt(c.daysLeft);
+                },
+                buf -> new Campaign(buf.readVarInt(), buf.readVarLong(), buf.readVarInt(), buf.readVarInt()));
     }
 
     // ------------------------------------------------------------------ codec

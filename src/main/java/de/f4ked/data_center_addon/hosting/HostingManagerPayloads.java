@@ -6,6 +6,7 @@ import de.f4ked.data_center_addon.client.hosting.HostingManagerClient;
 import de.f4ked.data_center_addon.hosting.contract.ContractService;
 import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
 import de.f4ked.data_center_addon.hosting.market.MarketService;
+import de.f4ked.data_center_addon.hosting.reputation.Campaigns;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -136,6 +137,23 @@ public final class HostingManagerPayloads {
         }
     }
 
+    /** Book an advertising campaign, from the manager's Reputation tab. */
+    public record CampaignBooking(BlockPos manager, int campaign) implements CustomPacketPayload {
+        public static final Type<CampaignBooking> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(Data_center_addon.MODID, "hosting_campaign"));
+        public static final StreamCodec<FriendlyByteBuf, CampaignBooking> STREAM_CODEC = StreamCodec.of(
+                (buf, c) -> {
+                    buf.writeBlockPos(c.manager);
+                    buf.writeVarInt(c.campaign);
+                },
+                buf -> new CampaignBooking(buf.readBlockPos(), buf.readVarInt()));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
         // the add-on's version: the snapshot changes with most releases, so server and client must match
@@ -170,6 +188,13 @@ public final class HostingManagerPayloads {
             if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
                     && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
                 StartupService.apply(level, DataCenterApi.accountOf(level, player.getUUID()), payload.action());
+                sendSnapshot(player, level, payload.manager());
+            }
+        });
+        registrar.playToServer(CampaignBooking.TYPE, CampaignBooking.STREAM_CODEC, (payload, context) -> {
+            if (context.player() instanceof ServerPlayer player && player.level() instanceof ServerLevel level
+                    && player.containerMenu instanceof HostingManagerMenu menu && menu.managerPos().equals(payload.manager())) {
+                Campaigns.book(level, DataCenterApi.accountOf(level, player.getUUID()), payload.campaign());
                 sendSnapshot(player, level, payload.manager());
             }
         });

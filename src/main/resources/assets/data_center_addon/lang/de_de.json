@@ -517,5 +517,16 @@
   "data_center_addon.reputation.review.bad.0": "Schon wieder down. Unsere Kunden konnten uns den ganzen Abend nicht erreichen.",
   "data_center_addon.reputation.review.bad.1": "Langsam wie ein Modem. Wir suchen einen neuen Hoster.",
   "data_center_addon.reputation.review.bad.2": "Der Server ist voll, alles ruckelt.",
-  "data_center_addon.reputation.review.bad.3": "Nicht das, wofür wir bezahlt haben."
+  "data_center_addon.reputation.review.bad.3": "Nicht das, wofür wir bezahlt haben.",
+  "data_center_addon.reputation.source.advertising": "Werbung",
+  "data_center_addon.reputation.campaigns": "Werbung:",
+  "data_center_addon.reputation.campaign.confirm": "Buchen?",
+  "data_center_addon.reputation.campaign.tip": "Kostet %s, bringt %s Bekanntheit. Einmal alle 7 Spieltage. Zweimal klicken zum Buchen.",
+  "data_center_addon.reputation.campaign.banner": "Banner",
+  "data_center_addon.reputation.campaign.magazine": "Magazin",
+  "data_center_addon.reputation.campaign.search": "Suchanzeigen",
+  "data_center_addon.reputation.campaign.social": "Social Media",
+  "data_center_addon.reputation.campaign.video": "Video",
+  "data_center_addon.reputation.campaign.fair": "Messe",
+  "data_center_addon.reputation.msg.campaign": "Kampagne gebucht: %s für %s. %s Bekanntheit."
 }

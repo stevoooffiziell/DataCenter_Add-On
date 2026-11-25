@@ -112,7 +112,8 @@ public final class ReputationService {
         return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days(),
                 DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a),
                 a.lastReview == null ? List.of() : List.of(a.lastReview[0], a.lastReview[1], a.lastReview[2], a.lastReview[3],
-                        a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()));
+                        a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()),
+                Campaigns.snapshot(a, DataCenterApi.currentDate(level)));
     }
 
     private static List<Double> toList(double[] values) {

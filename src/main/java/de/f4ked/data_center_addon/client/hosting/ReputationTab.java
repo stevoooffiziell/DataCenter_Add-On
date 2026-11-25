@@ -1,19 +1,24 @@
 package de.f4ked.data_center_addon.client.hosting;
 
+import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingProduct;
+import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.reputation.Campaigns;
 import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
 import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import de.f4ked.data_center_addon.hosting.reputation.Reviews;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import static de.f4ked.data_center_addon.client.hosting.Panel.LINE_H;
 
@@ -23,19 +28,52 @@ import static de.f4ked.data_center_addon.client.hosting.Panel.LINE_H;
  */
 final class ReputationTab implements ManagerTab {
     private final Panel panel;
+    private final Supplier<BlockPos> manager;
+    private final Confirm book = new Confirm();
 
-    ReputationTab(Panel panel) {
+    ReputationTab(Panel panel, Supplier<BlockPos> manager) {
         this.panel = panel;
+        this.manager = manager;
     }
 
     @Override
     public void render(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h) {
         int leftW = (w - 12) / 2;
-        int classH = 36;
+        int classH = s.standing().campaigns().isEmpty() ? 36 : 52;
         ruf(g, s.standing(), x, y, leftW);
         g.fill(x + leftW + 5, y, x + leftW + 6, y + h - classH - 4, Panel.HEADER_LINE);
         renown(g, s.standing(), x + leftW + 12, y, w - leftW - 12);
         classes(g, s, x, y + h - classH, w);
+        campaigns(g, s.standing(), x, y + h - 14, w);
+    }
+
+    /** "Advertising: [Magazine $1.5K +10] [Fair $5K +35] ..."; two clicks book one. */
+    private void campaigns(GuiGraphics g, HostingSnapshot.Standing st, int x, int y, int w) {
+        if (st.campaigns().isEmpty()) {
+            return;
+        }
+        String label = Texts.reputation("campaigns") + " ";
+        g.drawString(panel.font, label, x, y + 3, TechPanel.TEXT_MUTED, false);
+        int bx = x + panel.font.width(label);
+        int n = st.campaigns().size();
+        int bw = Math.max(40, (x + w - bx) / n - 3);
+        Campaigns.Campaign[] kinds = Campaigns.Campaign.values();
+        for (HostingSnapshot.Campaign c : st.campaigns()) {
+            Campaigns.Campaign kind = kinds[Math.min(c.kind(), kinds.length - 1)];
+            String name = Component.translatable(kind.key()).getString();
+            boolean ready = c.daysLeft() <= 0;
+            boolean armed = book.armed(c.kind());
+            String text = armed ? Texts.reputation("campaign.confirm") : ready ? name + " " + GuiText.compactUsd(c.costCents())
+                    : name + " " + Texts.days(c.daysLeft());
+            panel.button(g, bx, y, bw, text, armed ? Panel.BUTTON_PRIMARY : TechPanel.SLOT_BG, !ready ? null : () ->
+                    book.click(c.kind(), () -> Panel.send(new HostingManagerPayloads.CampaignBooking(manager.get(), c.kind()))));
+            if (panel.hover(bx, y, bw, Panel.ROW_H)) {
+                panel.tooltip(List.of(Component.translatable(kind.key()),
+                        Component.translatable("data_center_addon.reputation.campaign.tip", GuiText.compactUsd(c.costCents()),
+                                "+" + c.renown()).withStyle(ChatFormatting.GRAY)));
+            }
+            bx += bw + 3;
+        }
     }
 
     /** The customer class and what the next one needs: Ruf, renown and the room's tier. */
