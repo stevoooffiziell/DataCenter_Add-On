@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting.contract;
 
+import de.f4ked.data_center_addon.industry.Product;
 import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.catalog.PartPacks;
@@ -70,6 +71,11 @@ public final class DeliveryService {
     /** Pay for cables and switches as a multiple of their price (they are cheap to make). */
     private static final double CABLE_PAY = 2.5;
     private static final double SWITCH_PAY = 1.25;
+    /** Delivery orders pay this times what the Sales Terminal pays at full demand for a component. */
+    private static final double COMPONENT_PAY = 1.6;
+    /** The factory components clients order. */
+    private static final Product[] COMPONENT_GOALS = {Product.CIRCUIT_BOARD, Product.CAPACITOR, Product.CONNECTOR,
+            Product.MICROCHIP, Product.COPPER_WIRE, Product.PLASTIC_PARTS};
 
     public enum Action { ACCEPT, DECLINE, DELIVER, CANCEL }
 
@@ -222,7 +228,7 @@ public final class DeliveryService {
 
         double usd = 0;
         for (ContractBook.Goal goal : goals) {
-            usd += goal.count * unitUsd(goal);
+            usd += goal.count * unitUsd(goal, today);
         }
         usd *= CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier();
         long pay = Math.max(100, Math.round(usd) * 100);
@@ -250,7 +256,10 @@ public final class DeliveryService {
         if (roll < 64) {
             return new ContractBook.Goal(GoalKind.SCRAP, icon(GoalKind.SCRAP, random), between(random, 2, 6, scale));
         }
-        if (roll < 86) {
+        if (roll < 74) {
+            return componentGoal(scale, random);
+        }
+        if (roll < 88) {
             List<CableType> cables = releasedCables(today);
             if (cables.isEmpty()) {
                 return null;
@@ -263,6 +272,17 @@ public final class DeliveryService {
             return null;
         }
         return new ContractBook.Goal(GoalKind.ITEM, switchId(newerOf(switches, random)), cls >= 3 ? 2 : 1);
+    }
+
+    /** Factory components ({@link Product}): the cheaper the component, the more the client wants. */
+    private static ContractBook.Goal componentGoal(double scale, RandomSource random) {
+        Product product = COMPONENT_GOALS[random.nextInt(COMPONENT_GOALS.length)];
+        int count = switch (product) {
+            case MICROCHIP -> between(random, 4, 12, scale);
+            case CIRCUIT_BOARD, CONNECTOR -> between(random, 8, 24, scale);
+            default -> between(random, 16, 48, scale);
+        };
+        return new ContractBook.Goal(GoalKind.ITEM, itemId(product.item()), count);
     }
 
     /** A goal for a young company: cables of the time or a few small parts, things it can make or buy cheaply. */
@@ -316,9 +336,14 @@ public final class DeliveryService {
         return Math.max(1, (int) Math.round((min + random.nextInt(max - min + 1)) * scale));
     }
 
-    private static double unitUsd(ContractBook.Goal goal) {
+    private static double unitUsd(ContractBook.Goal goal, LocalDate today) {
         if (goal.kind != GoalKind.ITEM) {
             return goal.kind.usd;
+        }
+        for (Product product : COMPONENT_GOALS) {
+            if (itemId(product.item()).equals(goal.item)) {
+                return product.baseCents(today) / 100.0 * COMPONENT_PAY;
+            }
         }
         for (CableType type : CableType.values()) {
             if (cableId(type).equals(goal.item)) {

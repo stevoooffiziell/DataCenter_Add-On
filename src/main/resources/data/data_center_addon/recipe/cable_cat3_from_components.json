@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "data_center_addon:copper_wire"
+    },
+    {
+      "item": "data_center_addon:copper_wire"
+    },
+    {
+      "item": "data_center_addon:plastic_parts"
+    }
+  ],
+  "result": {
+    "count": 16,
+    "id": "data_center_addon:cable_cat3",
+    "components": {
+      "datacenter:paid_cents": 11
+    }
+  }
+}

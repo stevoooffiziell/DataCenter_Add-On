@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PCP",
+    "BMB",
+    "CKC"
+  ],
+  "key": {
+    "P": {
+      "item": "data_center_addon:plastic_parts"
+    },
+    "C": {
+      "item": "data_center_addon:connector"
+    },
+    "B": {
+      "item": "data_center_addon:circuit_board"
+    },
+    "K": {
+      "item": "data_center_addon:capacitor"
+    },
+    "M": {
+      "item": "data_center_addon:microchip"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "data_center_addon:switch_cisco_catalyst_2924xl",
+    "components": {
+      "datacenter:paid_cents": 5130
+    }
+  }
+}

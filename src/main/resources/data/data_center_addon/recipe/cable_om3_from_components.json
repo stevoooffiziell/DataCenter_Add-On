@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GGG",
+    "PSP",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "P": {
+      "item": "data_center_addon:plastic_parts"
+    },
+    "S": {
+      "item": "data_center_addon:silicon"
+    }
+  },
+  "result": {
+    "count": 12,
+    "id": "data_center_addon:cable_om3",
+    "components": {
+      "datacenter:paid_cents": 40
+    }
+  }
+}
