@@ -32,6 +32,8 @@ import java.util.UUID;
 public final class Renown {
     /** Renown for every new customer whose first month went without a disruption (one point per 10 customers). */
     static final double PER_CUSTOMER = 0.1;
+    /** Days the breakdown of recent renown covers. */
+    static final int RECENT_DAYS = 30;
     /** Days without any renown gained after which renown starts to be forgotten, and how fast. */
     static final int FORGET_AFTER_DAYS = 30;
     static final double FORGET_PER_MONTH = 0.01;
@@ -62,6 +64,17 @@ public final class Renown {
             ReputationBook book = ReputationBook.get(level.getServer());
             ReputationBook.Account a = book.account(account);
             a.sources.merge(source, amount, Double::sum);
+            long today = DataCenterApi.currentDate(level).toEpochDay();
+            double[] bucket = a.recent.peekLast();
+            if (bucket == null || bucket[0] != today) {
+                bucket = new double[1 + Source.values().length];
+                bucket[0] = today;
+                a.recent.addLast(bucket);
+            }
+            bucket[1 + source.ordinal()] += amount;
+            while (today - a.recent.peekFirst()[0] >= RECENT_DAYS) {
+                a.recent.removeFirst();
+            }
             if (amount > 0) {
                 a.lastGainDay = DataCenterApi.currentDate(level).toEpochDay();
             }
@@ -124,6 +137,19 @@ public final class Renown {
         if (points > 0) {
             add(level, id, -points * FORGET_PER_MONTH / 30.44, Source.FORGETTING);
         }
+    }
+
+    /** Renown per source over the last {@link #RECENT_DAYS} days. */
+    static double[] recent(ReputationBook.Account a, long today) {
+        double[] sum = new double[Source.values().length];
+        for (double[] bucket : a.recent) {
+            if (today - bucket[0] < RECENT_DAYS) {
+                for (int i = 0; i < sum.length && i + 1 < bucket.length; i++) {
+                    sum[i] += bucket[i + 1];
+                }
+            }
+        }
+        return sum;
     }
 
     /** New customers still in an undisturbed first month. */

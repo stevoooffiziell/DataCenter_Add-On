@@ -540,5 +540,9 @@
   "data_center_addon.reputation.month": "Mon.",
   "data_center_addon.market.quality.ruf": "Ruf dieses Produkts (30 Tage): %s",
   "data_center_addon.configuration.rufPerProduct": "Ruf pro Produkt",
-  "data_center_addon.configuration.rufPerProduct.tooltip": "Der Markt eines Produkts folgt zur Hälfte dem Ruf deiner Firma und zur Hälfte dem Ruf dieses Produkts."
+  "data_center_addon.configuration.rufPerProduct.tooltip": "Der Markt eines Produkts folgt zur Hälfte dem Ruf deiner Firma und zur Hälfte dem Ruf dieses Produkts.",
+  "data_center_addon.reputation.summary.ruf": "Ruf %s (Uptime %s, %s Abstürze, %s Überlast)",
+  "data_center_addon.reputation.summary.renown": "Bekanntheit %s (%s)",
+  "data_center_addon.reputation.summary.renown_plain": "Bekanntheit %s",
+  "data_center_addon.reputation.summary.tip": "Ruf: die letzten 30 Tage. Bekanntheit: was sie in den letzten 30 Tagen verändert hat. Details im Reputation-Tab."
 }

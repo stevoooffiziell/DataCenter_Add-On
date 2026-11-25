@@ -551,12 +551,14 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param campaigns the advertising campaigns that exist today
      * @param slaUptime uptime of the calendar month so far (-1 without service)
      * @param quietDays days since renown was last gained (forgetting starts after 30)
+     * @param recent    renown per {@code Renown.Source} over the last 30 days
      */
     public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes,
                            double incidents, int days,
                            double renown, List<Double> sources, double pending, List<Long> review, List<Campaign> campaigns,
-                           double slaUptime, int quietDays) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of(), -1, 0);
+                           double slaUptime, int quietDays, List<Double> recent) {
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of(), -1, 0,
+                List.of());
 
         private static final StreamCodec<FriendlyByteBuf, Long> LONG = StreamCodec.of(
                 (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
@@ -581,11 +583,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     writeList(buf, s.campaigns, Campaign.STREAM_CODEC);
                     buf.writeDouble(s.slaUptime);
                     buf.writeVarInt(s.quietDays);
+                    writeList(buf, s.recent, DOUBLE);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                         buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
                         readList(buf, LONG, 8), readList(buf, Campaign.STREAM_CODEC, 16),
-                        buf.readDouble(), buf.readVarInt()));
+                        buf.readDouble(), buf.readVarInt(), readList(buf, DOUBLE, 32)));
     }
 
     /**

@@ -44,6 +44,9 @@ final class ReputationTab implements ManagerTab {
         g.fill(x + leftW + 5, y, x + leftW + 6, y + h - classH - 4, Panel.HEADER_LINE);
         renown(g, s.standing(), x + leftW + 12, y, w - leftW - 12);
         classes(g, s, x, y + h - classH, w);
+        if (panel.hover(x, y, w, 12)) {
+            panel.tooltip(List.of(Texts.standingSummary(s.standing(), 10)));
+        }
         campaigns(g, s.standing(), x, y + h - 14, w);
     }
 

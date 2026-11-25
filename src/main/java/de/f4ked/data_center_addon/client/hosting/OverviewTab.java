@@ -104,6 +104,15 @@ final class OverviewTab implements ManagerTab {
             panel.line(g, "⚠ " + Component.translatable("data_center_addon.hosting.overview.waiting", GuiText.compactNumber(waiting))
                     .getString(), x, ny + 1, w, TechPanel.WARN);
         }
+        if (s.standing().measured() || !s.standing().recent().isEmpty()) {
+            ny += 14;
+            Component summary = Texts.standingSummary(s.standing(), 2);
+            panel.line(g, summary.getString(), x, ny + 1, w, TechPanel.TEXT_MUTED);
+            if (panel.hover(x, ny - 1, w, 12)) {
+                panel.tooltip(List.of(Texts.standingSummary(s.standing(), 10),
+                        Component.translatable("data_center_addon.reputation.summary.tip").withStyle(ChatFormatting.GRAY)));
+            }
+        }
         int licenceBound = s.licenceBoundRacks();
         if (licenceBound > 0) {
             ny += 14;

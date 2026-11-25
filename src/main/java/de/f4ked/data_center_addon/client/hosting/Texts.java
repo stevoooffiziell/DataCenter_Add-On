@@ -64,6 +64,38 @@ final class Texts {
                 "+" + GuiText.compactNumber(Math.round(row.nextGain())));
     }
 
+    /**
+     * "Ruf 94 % (uptime 99.2 %, 1 crash, 0 % overload) · Renown 312 (+40 orders, +12 reviews …)": the
+     * reputation in one line; the renown sources are those of the last 30 days, largest first.
+     */
+    static Component standingSummary(HostingSnapshot.Standing st, int maxSources) {
+        Component ruf = Component.translatable("data_center_addon.reputation.summary.ruf", percent((float) st.ruf()),
+                String.format(Locale.ROOT, "%.1f %%", st.uptime() * 100), st.crashes(), percent((float) st.overload()));
+        StringBuilder sources = new StringBuilder();
+        de.f4ked.data_center_addon.hosting.reputation.Renown.Source[] all =
+                de.f4ked.data_center_addon.hosting.reputation.Renown.Source.values();
+        java.util.List<Integer> order = new java.util.ArrayList<>();
+        for (int i = 0; i < st.recent().size() && i < all.length; i++) {
+            if (Math.abs(st.recent().get(i)) >= 0.5) {
+                order.add(i);
+            }
+        }
+        order.sort((a, b) -> Double.compare(Math.abs(st.recent().get(b)), Math.abs(st.recent().get(a))));
+        for (int k = 0; k < order.size() && k < maxSources; k++) {
+            int i = order.get(k);
+            double v = st.recent().get(i);
+            sources.append(k == 0 ? "" : ", ").append(v > 0 ? "+" : "−").append(Math.round(Math.abs(v))).append(' ')
+                    .append(Component.translatable(all[i].key()).getString());
+        }
+        if (order.size() > maxSources) {
+            sources.append(" …");
+        }
+        Component renown = sources.isEmpty()
+                ? Component.translatable("data_center_addon.reputation.summary.renown_plain", Math.round(st.renown()))
+                : Component.translatable("data_center_addon.reputation.summary.renown", Math.round(st.renown()), sources.toString());
+        return Component.empty().append(ruf).append(" · ").append(renown);
+    }
+
     /** "5 d." */
     static String days(int days) {
         return days + " " + contract("days_short");

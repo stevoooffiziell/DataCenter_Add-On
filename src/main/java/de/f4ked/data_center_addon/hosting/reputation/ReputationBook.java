@@ -35,6 +35,8 @@ public final class ReputationBook extends SavedData {
         long day = -1;
         /** Renown booked by source since the add-on's reputation model runs ({@link Renown}). */
         final EnumMap<Renown.Source, Double> sources = new EnumMap<>(Renown.Source.class);
+        /** Renown per source and day of the last 30 days: {day, source 0, source 1, ...}, oldest first. */
+        final Deque<double[]> recent = new ArrayDeque<>();
         /** Most customers the account ever had; NaN until first seen. */
         double customerMark = Double.NaN;
         /** The last customer review: {day, positive (1/0), product, segment, text}; null before the first. */
@@ -107,6 +109,14 @@ public final class ReputationBook extends SavedData {
                 }
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
+            for (Tag r : a.getList("recent", Tag.TAG_LIST)) {
+                ListTag list = (ListTag) r;
+                double[] bucket = new double[1 + Renown.Source.values().length];
+                for (int i = 0; i < bucket.length && i < list.size(); i++) {
+                    bucket[i] = list.getDouble(i);
+                }
+                account.recent.addLast(bucket);
+            }
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
             for (long day : a.getLongArray("incidents")) {
                 account.incidents.addLast(day);
@@ -159,6 +169,15 @@ public final class ReputationBook extends SavedData {
             if (account.lastReview != null) {
                 a.putLongArray("lastReview", account.lastReview);
             }
+            ListTag recent = new ListTag();
+            for (double[] bucket : account.recent) {
+                ListTag b = new ListTag();
+                for (double v : bucket) {
+                    b.add(net.minecraft.nbt.DoubleTag.valueOf(v));
+                }
+                recent.add(b);
+            }
+            a.put("recent", recent);
             ListTag cohorts = new ListTag();
             for (double[] cohort : account.cohorts) {
                 cohorts.add(writeRecord(cohort));

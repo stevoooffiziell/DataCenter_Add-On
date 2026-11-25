@@ -140,7 +140,8 @@ public final class ReputationService {
                 a.lastReview == null ? List.of() : List.of(a.lastReview[0], a.lastReview[1], a.lastReview[2], a.lastReview[3],
                         a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()),
                 Campaigns.snapshot(a, DataCenterApi.currentDate(level)), slaUptime(a),
-                a.lastGainDay < 0 ? 0 : (int) Math.max(0, DataCenterApi.currentDate(level).toEpochDay() - a.lastGainDay));
+                a.lastGainDay < 0 ? 0 : (int) Math.max(0, DataCenterApi.currentDate(level).toEpochDay() - a.lastGainDay),
+                toList(Renown.recent(a, DataCenterApi.currentDate(level).toEpochDay())));
     }
 
     /** Uptime of the calendar month so far (finished days and today); -1 without service. */
