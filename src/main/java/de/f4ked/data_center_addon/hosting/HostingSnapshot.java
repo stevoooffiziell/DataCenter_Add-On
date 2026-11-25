@@ -21,14 +21,15 @@ import java.util.List;
  * @param connected    whether a cable is plugged into the manager
  * @param foreignRacks racks in the network the player may not control (not listed)
  * @param network      state of the compute network the manager is plugged into
+ * @param market       the hosting market of the viewer's account (Market tab)
  * @param ticksPerDay  ticks in one in-game day (depends on Data Center's calendar pace)
  */
 public record HostingSnapshot(boolean connected, int reputation, int customerClass, int foreignRacks,
                               Network network, List<Rack> racks, List<Segment> segments, List<Contract> contracts,
-                              List<Delivery> deliveries, Startup startup, double ticksPerDay) {
+                              List<Delivery> deliveries, Startup startup, Market market, double ticksPerDay) {
 
     public static final HostingSnapshot EMPTY = new HostingSnapshot(false, 0, 0, 0, Network.NONE, List.of(), List.of(), List.of(),
-            List.of(), Startup.NONE, 1000);
+            List.of(), Startup.NONE, Market.NONE, 1000);
 
     /** Ticks in one real hour (the unit of the Hosting Rack's own "Rate: $/h"). */
     public static final double TICKS_PER_HOUR = 20.0 * 3600.0;
@@ -355,6 +356,42 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 buf -> new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
     }
 
+    // ------------------------------------------------------------------ market
+
+    /**
+     * The hosting market ({@code MarketService}).
+     *
+     * @param internetUsers internet users worldwide in millions
+     * @param rows          one row per product that can be sold today
+     */
+    public record Market(double internetUsers, List<MarketRow> rows) {
+        public static final Market NONE = new Market(0, List.of());
+
+        public static final StreamCodec<FriendlyByteBuf, Market> STREAM_CODEC = StreamCodec.of(
+                (buf, m) -> {
+                    buf.writeDouble(m.internetUsers);
+                    writeList(buf, m.rows, MarketRow.STREAM_CODEC);
+                },
+                buf -> new Market(buf.readDouble(), readList(buf, MarketRow.STREAM_CODEC, 16)));
+    }
+
+    /**
+     * The market of one product.
+     *
+     * @param product   {@code HostingProduct} ordinal
+     * @param pool      potential customers in the whole market
+     * @param customers the account's customers of the product
+     */
+    public record MarketRow(int product, double pool, double customers) {
+        public static final StreamCodec<FriendlyByteBuf, MarketRow> STREAM_CODEC = StreamCodec.of(
+                (buf, r) -> {
+                    buf.writeVarInt(r.product);
+                    buf.writeDouble(r.pool);
+                    buf.writeDouble(r.customers);
+                },
+                buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble()));
+    }
+
     // ------------------------------------------------------------------ codec
 
     public static final StreamCodec<FriendlyByteBuf, HostingSnapshot> STREAM_CODEC = StreamCodec.of(
@@ -369,12 +406,13 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 writeList(buf, s.contracts, Contract.STREAM_CODEC);
                 writeList(buf, s.deliveries, Delivery.STREAM_CODEC);
                 Startup.STREAM_CODEC.encode(buf, s.startup);
+                Market.STREAM_CODEC.encode(buf, s.market);
                 buf.writeDouble(s.ticksPerDay);
             },
             buf -> new HostingSnapshot(buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
                     Network.STREAM_CODEC.decode(buf), readList(buf, Rack.STREAM_CODEC, 4096), readList(buf, Segment.STREAM_CODEC, 64),
                     readList(buf, Contract.STREAM_CODEC, 64), readList(buf, Delivery.STREAM_CODEC, 64), Startup.STREAM_CODEC.decode(buf),
-                    buf.readDouble()));
+                    Market.STREAM_CODEC.decode(buf), buf.readDouble()));
 
     private static <T> void writeList(FriendlyByteBuf buf, List<T> list, StreamCodec<FriendlyByteBuf, T> codec) {
         buf.writeVarInt(list.size());

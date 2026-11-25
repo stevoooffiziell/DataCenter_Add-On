@@ -18,8 +18,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Hosting Manager screen, in Data Center's tech-panel look: a frame with five tabs (overview,
- * customers, racks, contracts, startup). Each tab is its own class; {@link Panel} draws for them and
+ * The Hosting Manager screen, in Data Center's tech-panel look: a frame with six tabs (overview,
+ * customers, racks, contracts, startup, market). Each tab is its own class; {@link Panel} draws for them and
  * collects what can be clicked.
  * <p>
  * The window grows with the screen (between {@link #MIN_W}x{@link #MIN_H} and
@@ -33,17 +33,22 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
     private static final int SCREEN_MARGIN = 16;
     private static final int PAD = 10;
     private static final int HEADER_H = 28;
-    private static final int TAB_W_MIN = 46;
+    private static final int TAB_W_MIN = 42;
     private static final int TAB_W_MAX = 64;
     private static final int TAB_H = 16;
 
     /** The tabs in order; the name gives the label key {@code data_center_addon.hosting.tab.<name>}. */
     private enum Tab {
-        OVERVIEW, SEGMENTS, RACKS, CONTRACTS, STARTUP;
+        OVERVIEW, SEGMENTS, RACKS, CONTRACTS, STARTUP, MARKET;
 
         /** Tabs that have something to show without racks on the network. */
         boolean worksWithoutRacks() {
-            return this == CONTRACTS || this == STARTUP;
+            return this == CONTRACTS || this == STARTUP || this == MARKET;
+        }
+
+        /** Tabs that work when no cable is plugged into the manager. */
+        boolean worksWithoutNetwork() {
+            return this == STARTUP || this == MARKET;
         }
     }
 
@@ -60,6 +65,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         tabs.put(Tab.RACKS, new RacksTab(panel, menu::managerPos));
         tabs.put(Tab.CONTRACTS, new ContractsTab(panel, menu::managerPos));
         tabs.put(Tab.STARTUP, new StartupTab(panel, menu::managerPos));
+        tabs.put(Tab.MARKET, new MarketTab(panel));
     }
 
     @Override
@@ -129,7 +135,7 @@ public class HostingManagerScreen extends TechPanelScreen<HostingManagerMenu> {
         if (!HostingManagerClient.hasSnapshot(menu.managerPos())) {
             return Component.translatable("data_center_addon.hosting.loading");
         }
-        if (!s.connected() && tab != Tab.STARTUP) {
+        if (!s.connected() && !tab.worksWithoutNetwork()) {
             return Component.translatable("data_center_addon.hosting.not_connected");
         }
         if (s.racks().isEmpty() && !tab.worksWithoutRacks()) {

@@ -34,6 +34,11 @@ final class Texts {
         return Component.translatable("data_center_addon.startup." + key).getString();
     }
 
+    /** {@code data_center_addon.market.<key>} */
+    static String market(String key) {
+        return Component.translatable("data_center_addon.market." + key).getString();
+    }
+
     /** "5 d." */
     static String days(int days) {
         return days + " " + contract("days_short");

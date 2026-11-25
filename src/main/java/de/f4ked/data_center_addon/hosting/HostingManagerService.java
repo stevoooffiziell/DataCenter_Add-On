@@ -17,6 +17,7 @@ import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.hosting.contract.ContractBook;
 import de.f4ked.data_center_addon.hosting.contract.ContractService;
 import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
+import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.startup.StartupService;
 import de.f4ked.data_center_addon.mixin.ComputeNetInvoker;
 import de.f4ked.data_center_addon.network.NetworkSwitchBlockEntity;
@@ -113,7 +114,8 @@ public final class HostingManagerService {
         return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()), reputation.getUnlockedClass().ordinal(),
                 foreign, network(level, manager), List.copyOf(racks), segments(level, pools), ContractService.snapshot(level, account),
                 DeliveryService.snapshot(level, account, ContractBook.get(level.getServer()).account(account), player.getInventory()),
-                StartupService.snapshot(level, account), 24.0 / MiningEra.fictionalHoursPerTick());
+                StartupService.snapshot(level, account), MarketService.snapshot(level, account),
+                24.0 / MiningEra.fictionalHoursPerTick());
     }
 
     /**

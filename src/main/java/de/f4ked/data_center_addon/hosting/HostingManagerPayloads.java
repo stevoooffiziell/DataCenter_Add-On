@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -26,6 +27,8 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 @EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class HostingManagerPayloads {
     private static final int INTERVAL_TICKS = 20;
+    private static final String NETWORK_VERSION = ModList.get().getModContainerById(Data_center_addon.MODID)
+            .map(c -> c.getModInfo().getVersion().toString()).orElse("0");
 
     private HostingManagerPayloads() {
     }
@@ -116,8 +119,9 @@ public final class HostingManagerPayloads {
 
     @SubscribeEvent
     static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
-        // "2": the snapshot changed in 1.6.0 (deliveries, startup); a mismatch is refused at login
-        var registrar = event.registrar("2");
+        // the add-on's version: the snapshot changes with most releases, so server and client must match
+        // exactly (a mismatch is refused at login)
+        var registrar = event.registrar(NETWORK_VERSION);
         registrar.playToClient(Snapshot.TYPE, Snapshot.STREAM_CODEC,
                 (payload, context) -> HostingManagerClient.receive(payload.manager(), payload.snapshot()));
         registrar.playToServer(Change.TYPE, Change.STREAM_CODEC, (payload, context) -> {

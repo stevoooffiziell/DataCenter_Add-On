@@ -399,5 +399,13 @@
   "data_center_addon.configuration.prepayDiscount.tooltip": "Discount prepaying customers get.",
   "data_center_addon.configuration.serviceTickets": "Service tickets",
   "data_center_addon.configuration.serviceTickets.tooltip": "Clients ask you to look at one of your racks. Right-clicking it before the deadline pays.",
-  "data_center_addon.hosting.racks.tip.customers": "Customers: %s + %s places from contracts (paying %s per game day, included)"
+  "data_center_addon.hosting.racks.tip.customers": "Customers: %s + %s places from contracts (paying %s per game day, included)",
+  "data_center_addon.hosting.tab.market": "Market",
+  "data_center_addon.hosting.column.pool": "Market",
+  "data_center_addon.hosting.column.market_share": "Your share",
+  "data_center_addon.market.internet": "Internet users worldwide: %s",
+  "data_center_addon.market.internet.tip": "The markets grow with the internet. Up to 2008 they follow Data Center's demand of the year, after that the number of internet users.",
+  "data_center_addon.market.pool.tip": "Potential customers of this product in the whole market.",
+  "data_center_addon.market.billion": "bn",
+  "data_center_addon.market.million": "M"
 }

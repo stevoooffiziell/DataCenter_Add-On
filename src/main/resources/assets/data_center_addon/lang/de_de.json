@@ -399,5 +399,13 @@
   "data_center_addon.configuration.prepayDiscount.tooltip": "Rabatt, den vorauszahlende Kunden bekommen.",
   "data_center_addon.configuration.serviceTickets": "Service-Tickets",
   "data_center_addon.configuration.serviceTickets.tooltip": "Kunden bitten darum, nach einem Rack zu sehen. Rechtsklick auf das Rack vor Fristende zahlt.",
-  "data_center_addon.hosting.racks.tip.customers": "Kunden: %s + %s Plätze aus Aufträgen (zahlen %s pro Spieltag, eingerechnet)"
+  "data_center_addon.hosting.racks.tip.customers": "Kunden: %s + %s Plätze aus Aufträgen (zahlen %s pro Spieltag, eingerechnet)",
+  "data_center_addon.hosting.tab.market": "Markt",
+  "data_center_addon.hosting.column.pool": "Markt",
+  "data_center_addon.hosting.column.market_share": "Dein Anteil",
+  "data_center_addon.market.internet": "Internetnutzer weltweit: %s",
+  "data_center_addon.market.internet.tip": "Die Märkte wachsen mit dem Internet. Bis 2008 folgen sie der Nachfrage des Jahres aus Data Center, danach der Zahl der Internetnutzer.",
+  "data_center_addon.market.pool.tip": "Potenzielle Kunden dieses Produkts im ganzen Markt.",
+  "data_center_addon.market.billion": "Mrd.",
+  "data_center_addon.market.million": "Mio."
 }
