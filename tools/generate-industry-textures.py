@@ -25,6 +25,8 @@ ITEM_OUT = os.path.join(ROOT, 'src/main/resources/assets/data_center_addon/textu
 BLOCKS = {
     # the Purchase Terminal: Data Center's bank terminal with an amber screen
     'purchase_terminal_screen': ('bank_terminal_screen', 0.09),
+    # the Sales Terminal: the same terminal with a green screen
+    'sales_terminal_screen': ('bank_terminal_screen', 0.33),
 }
 # factory machines: Data Center's synthesizer with the front and tray in the machine's colour
 MACHINES = {

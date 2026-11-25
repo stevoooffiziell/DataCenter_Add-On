@@ -18,6 +18,7 @@
     "data_center_addon:assembler",
     "data_center_addon:chip_fab_controller",
     "data_center_addon:cleanroom_wall",
-    "data_center_addon:lithography_unit"
+    "data_center_addon:lithography_unit",
+    "data_center_addon:sales_terminal"
   ]
 }

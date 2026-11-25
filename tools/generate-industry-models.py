@@ -14,6 +14,8 @@ ASSETS = os.path.join(ROOT, 'src/main/resources/assets/data_center_addon')
 DATA = os.path.join(ROOT, 'src/main/resources/data')
 
 MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press', 'assembler', 'chip_fab_controller']
+# Data Center's bank terminal with the block's own screen
+TERMINALS = ['purchase_terminal', 'sales_terminal']
 # plain full blocks with one texture on every side
 CUBES = ['cleanroom_wall', 'lithography_unit']
 ITEMS = ['plastic_pellets', 'silicon', 'copper_foil', 'gold_contacts', 'copper_wire', 'plastic_parts', 'pcb_blank', 'wafer',
@@ -54,6 +56,21 @@ def loot(name):
                    'conditions': [{'condition': 'minecraft:survives_explosion'}]}]})
 
 
+def terminal(name):
+    variants = {}
+    for facing, y in (('north', 0), ('east', 90), ('south', 180), ('west', 270)):
+        v = {'model': f'data_center_addon:block/{name}'}
+        if y:
+            v['y'] = y
+        variants[f'facing={facing}'] = v
+    write(os.path.join(ASSETS, 'blockstates', name + '.json'), {'variants': variants})
+    write(os.path.join(ASSETS, 'models/block', name + '.json'), {
+        'parent': 'datacenter:block/bank_terminal',
+        'textures': {'screen': f'data_center_addon:block/industry/{name}_screen'}})
+    write(os.path.join(ASSETS, 'models/item', name + '.json'), {'parent': f'data_center_addon:block/{name}'})
+    loot(name)
+
+
 def cube(name):
     write(os.path.join(ASSETS, 'blockstates', name + '.json'), {'variants': {'': {'model': f'data_center_addon:block/{name}'}}})
     write(os.path.join(ASSETS, 'models/block', name + '.json'), {
@@ -71,6 +88,8 @@ def item(name):
 def main():
     for name in MACHINES:
         machine(name)
+    for name in TERMINALS:
+        terminal(name)
     for name in CUBES:
         cube(name)
     for name in ITEMS:
@@ -78,7 +97,7 @@ def main():
     tag = os.path.join(DATA, 'minecraft/tags/block/mineable/pickaxe.json')
     with open(tag, encoding='utf-8') as f:
         data = json.load(f)
-    for name in MACHINES + CUBES:
+    for name in MACHINES + TERMINALS + CUBES:
         if f'data_center_addon:{name}' not in data['values']:
             data['values'].append(f'data_center_addon:{name}')
     write(tag, data)

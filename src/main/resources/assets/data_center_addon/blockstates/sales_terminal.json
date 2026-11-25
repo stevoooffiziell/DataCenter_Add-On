@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "data_center_addon:block/sales_terminal"
+    },
+    "facing=east": {
+      "model": "data_center_addon:block/sales_terminal",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "data_center_addon:block/sales_terminal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "data_center_addon:block/sales_terminal",
+      "y": 270
+    }
+  }
+}

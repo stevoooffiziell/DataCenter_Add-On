@@ -623,5 +623,21 @@
   "data_center_addon.industry.chip_fab.speed": "Formed: speed ×%s",
   "data_center_addon.industry.chip_fab.status.formed": "Formed",
   "data_center_addon.industry.chip_fab.status.no_walls": "Not formed: at least %s cleanroom walls needed",
-  "data_center_addon.industry.chip_fab.status.no_unit": "Not formed: a lithography unit is missing"
+  "data_center_addon.industry.chip_fab.status.no_unit": "Not formed: a lithography unit is missing",
+  "block.data_center_addon.sales_terminal": "Sales Terminal",
+  "data_center_addon.industry.sales.revenue": "Sold through this terminal: %s",
+  "data_center_addon.industry.sales.inbox": "Inbox (sold every second)",
+  "data_center_addon.industry.sales.note": "Put products in by hand, hopper or pipe. The money goes to the wallet of the company that placed the terminal.",
+  "data_center_addon.industry.sales.price": "%s each now · demand %s %%",
+  "data_center_addon.industry.sales.demand.tip": "Selling a lot of one product lowers its price; the demand comes back by half every 7 game days.",
+  "data_center_addon.industry.column.product": "Product",
+  "data_center_addon.industry.column.demand": "Demand",
+  "data_center_addon.configuration.salesPrices": "Sales prices",
+  "data_center_addon.configuration.salesPrices.tooltip": "Multiplier for what the Sales Terminal pays.",
+  "data_center_addon.configuration.salesHalfLifeUsd": "Saturation ($)",
+  "data_center_addon.configuration.salesHalfLifeUsd.tooltip": "After this much of one product sold recently, its price is halfway down to the floor.",
+  "data_center_addon.configuration.salesRecoveryDays": "Demand recovery (days)",
+  "data_center_addon.configuration.salesRecoveryDays.tooltip": "In-game days for the sold amount to fade by half.",
+  "data_center_addon.configuration.salesDemandFloor": "Demand floor",
+  "data_center_addon.configuration.salesDemandFloor.tooltip": "Lowest share of the price a saturated market still pays."
 }

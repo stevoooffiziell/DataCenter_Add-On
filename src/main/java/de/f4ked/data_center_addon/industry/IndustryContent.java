@@ -148,6 +148,27 @@ public final class IndustryContent {
                     .noOcclusion());
     public static final DeferredItem<BlockItem> PURCHASE_TERMINAL_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(PURCHASE_TERMINAL);
 
+    // ------------------------------------------------------------------ sales terminal
+
+    public static final DeferredBlock<SalesTerminalBlock> SALES_TERMINAL = Data_center_addon.BLOCKS.registerBlock(
+            "sales_terminal", SalesTerminalBlock::new,
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(2.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion());
+    public static final DeferredItem<BlockItem> SALES_TERMINAL_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(SALES_TERMINAL);
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SalesTerminalBlockEntity>> SALES_TERMINAL_ENTITY =
+            BLOCK_ENTITIES.register("sales_terminal",
+                    () -> BlockEntityType.Builder.of(SalesTerminalBlockEntity::new, SALES_TERMINAL.get()).build(null));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<SalesTerminalMenu>> SALES_TERMINAL_MENU = MENUS.register(
+            "sales_terminal",
+            () -> IMenuTypeExtension.create((id, inventory, buf) -> new SalesTerminalMenu(id, inventory, buf.readBlockPos())));
+
     @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PurchaseTerminalBlockEntity>> PURCHASE_TERMINAL_ENTITY =
             BLOCK_ENTITIES.register("purchase_terminal",
@@ -169,6 +190,8 @@ public final class IndustryContent {
         modEventBus.addListener(IndustryContent::registerCapabilities);
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(PURCHASE_TERMINAL_ITEM.get()),
                 PURCHASE_TERMINAL_CENTS, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(SALES_TERMINAL_ITEM.get()),
+                5_000_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(CHIP_FAB_CONTROLLER_ITEM.get()),
                 40_000_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(CLEANROOM_WALL_ITEM.get()),
@@ -186,6 +209,7 @@ public final class IndustryContent {
     public static List<ItemStack> creativeStacks() {
         List<ItemStack> stacks = new ArrayList<>();
         stacks.add(PURCHASE_TERMINAL_ITEM.get().getDefaultInstance());
+        stacks.add(SALES_TERMINAL_ITEM.get().getDefaultInstance());
         MACHINE_ITEMS.values().forEach(item -> stacks.add(item.get().getDefaultInstance()));
         stacks.add(CHIP_FAB_CONTROLLER_ITEM.get().getDefaultInstance());
         stacks.add(CLEANROOM_WALL_ITEM.get().getDefaultInstance());
@@ -208,6 +232,8 @@ public final class IndustryContent {
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         // hoppers and pipes may take the goods, but put nothing in
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PURCHASE_TERMINAL_ENTITY.get(), (be, side) -> be.output());
+        // the sales terminal takes products from any side and gives nothing back
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SALES_TERMINAL_ENTITY.get(), (be, side) -> be.input());
         // machines: inputs in, outputs out, power from every side
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.automation());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.energy());

@@ -73,6 +73,10 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue PURCHASE_PRICES;
     private static final ModConfigSpec.DoubleValue MACHINE_SPEED;
     private static final ModConfigSpec.DoubleValue MACHINE_ENERGY;
+    private static final ModConfigSpec.DoubleValue SALES_PRICES;
+    private static final ModConfigSpec.IntValue SALES_HALF_LIFE;
+    private static final ModConfigSpec.DoubleValue SALES_RECOVERY_DAYS;
+    private static final ModConfigSpec.DoubleValue SALES_DEMAND_FLOOR;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -225,6 +229,19 @@ public final class Config {
         MACHINE_ENERGY = builder
                 .comment("Multiplier for the power the factory machines draw.")
                 .defineInRange("machineEnergy", 1.0, 0.0, 10.0);
+        SALES_PRICES = builder
+                .comment("Multiplier for what the Sales Terminal pays for materials and components.")
+                .defineInRange("salesPrices", 1.0, 0.1, 10.0);
+        SALES_HALF_LIFE = builder
+                .comment("Market saturation: after this many dollars (at full price) of one product sold recently, the",
+                        "price is halfway down to the floor.")
+                .defineInRange("salesHalfLifeUsd", 5_000, 100, 100_000_000);
+        SALES_RECOVERY_DAYS = builder
+                .comment("In-game days for the sold amount to fade by half, so the demand comes back.")
+                .defineInRange("salesRecoveryDays", 7.0, 0.1, 365.0);
+        SALES_DEMAND_FLOOR = builder
+                .comment("Lowest share of the price a saturated market still pays.")
+                .defineInRange("salesDemandFloor", 0.3, 0.0, 1.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -420,6 +437,22 @@ public final class Config {
 
     public static double machineEnergy() {
         return SPEC.isLoaded() ? MACHINE_ENERGY.get() : 1.0;
+    }
+
+    public static double salesPrices() {
+        return SPEC.isLoaded() ? SALES_PRICES.get() : 1.0;
+    }
+
+    public static double salesHalfLifeUsd() {
+        return SPEC.isLoaded() ? SALES_HALF_LIFE.get() : 5_000;
+    }
+
+    public static double salesRecoveryDays() {
+        return SPEC.isLoaded() ? SALES_RECOVERY_DAYS.get() : 7.0;
+    }
+
+    public static double salesDemandFloor() {
+        return SPEC.isLoaded() ? SALES_DEMAND_FLOOR.get() : 0.3;
     }
 
     public static double hostingStorageBoost() {

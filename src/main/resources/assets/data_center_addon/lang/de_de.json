@@ -623,5 +623,21 @@
   "data_center_addon.industry.chip_fab.speed": "Bereit: Tempo ×%s",
   "data_center_addon.industry.chip_fab.status.formed": "Bereit",
   "data_center_addon.industry.chip_fab.status.no_walls": "Nicht bereit: mindestens %s Reinraum-Wände nötig",
-  "data_center_addon.industry.chip_fab.status.no_unit": "Nicht bereit: Es fehlt ein Belichter"
+  "data_center_addon.industry.chip_fab.status.no_unit": "Nicht bereit: Es fehlt ein Belichter",
+  "block.data_center_addon.sales_terminal": "Ankauf-Terminal",
+  "data_center_addon.industry.sales.revenue": "Über dieses Terminal verkauft: %s",
+  "data_center_addon.industry.sales.inbox": "Eingang (wird jede Sekunde verkauft)",
+  "data_center_addon.industry.sales.note": "Produkte von Hand, per Hopper oder Pipe einlegen. Das Geld geht ins Wallet der Firma, die das Terminal aufgestellt hat.",
+  "data_center_addon.industry.sales.price": "Jetzt %s pro Stück · Nachfrage %s %%",
+  "data_center_addon.industry.sales.demand.tip": "Viel von einem Produkt zu verkaufen senkt seinen Preis; die Nachfrage erholt sich alle 7 Spieltage zur Hälfte.",
+  "data_center_addon.industry.column.product": "Produkt",
+  "data_center_addon.industry.column.demand": "Nachfrage",
+  "data_center_addon.configuration.salesPrices": "Verkaufspreise",
+  "data_center_addon.configuration.salesPrices.tooltip": "Faktor für das, was das Ankauf-Terminal zahlt.",
+  "data_center_addon.configuration.salesHalfLifeUsd": "Sättigung ($)",
+  "data_center_addon.configuration.salesHalfLifeUsd.tooltip": "Nach so viel kürzlich verkauftem Umsatz eines Produkts ist sein Preis auf halbem Weg zum Minimum.",
+  "data_center_addon.configuration.salesRecoveryDays": "Erholung der Nachfrage (Tage)",
+  "data_center_addon.configuration.salesRecoveryDays.tooltip": "Spieltage, bis die verkaufte Menge zur Hälfte vergessen ist.",
+  "data_center_addon.configuration.salesDemandFloor": "Mindestnachfrage",
+  "data_center_addon.configuration.salesDemandFloor.tooltip": "Geringster Anteil am Preis, den ein gesättigter Markt noch zahlt."
 }
