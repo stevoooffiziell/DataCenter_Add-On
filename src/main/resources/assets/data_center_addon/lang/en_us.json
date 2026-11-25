@@ -557,7 +557,7 @@
   "block.data_center_addon.purchase_terminal": "Purchase Terminal",
   "item.data_center_addon.plastic_pellets": "Plastic Pellets",
   "data_center_addon.industry.not_yours": "This terminal belongs to another company.",
-  "data_center_addon.industry.stock": "Stock (hoppers and pipes can take it)",
+  "data_center_addon.industry.stock": "Stock (hoppers can take it)",
   "data_center_addon.industry.budget": "Budget: %s",
   "data_center_addon.industry.budget.tip": "Purchases are paid from the budget. Pay in from your wallet; breaking the terminal pays the rest back.",
   "data_center_addon.industry.wallet": "Wallet: %s",
@@ -590,5 +590,8 @@
   "data_center_addon.configuration.machineSpeed": "Machine speed",
   "data_center_addon.configuration.machineSpeed.tooltip": "Speed of the factory machines (and their power per tick).",
   "data_center_addon.configuration.machineEnergy": "Machine power",
-  "data_center_addon.configuration.machineEnergy.tooltip": "Multiplier for the power the factory machines draw."
+  "data_center_addon.configuration.machineEnergy.tooltip": "Multiplier for the power the factory machines draw.",
+  "data_center_addon.industry.column.material": "Material",
+  "data_center_addon.industry.column.price": "Price",
+  "data_center_addon.industry.column.buy": "Buy"
 }

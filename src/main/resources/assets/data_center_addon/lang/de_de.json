@@ -557,7 +557,7 @@
   "block.data_center_addon.purchase_terminal": "Einkaufsterminal",
   "item.data_center_addon.plastic_pellets": "Kunststoffgranulat",
   "data_center_addon.industry.not_yours": "Dieses Terminal gehört einer anderen Firma.",
-  "data_center_addon.industry.stock": "Lager (Hopper und Pipes können entnehmen)",
+  "data_center_addon.industry.stock": "Lager (Hopper können entnehmen)",
   "data_center_addon.industry.budget": "Budget: %s",
   "data_center_addon.industry.budget.tip": "Einkäufe werden aus dem Budget bezahlt. Einzahlen aus dem Wallet; wird das Terminal abgebaut, kommt der Rest zurück.",
   "data_center_addon.industry.wallet": "Wallet: %s",
@@ -590,5 +590,8 @@
   "data_center_addon.configuration.machineSpeed": "Maschinentempo",
   "data_center_addon.configuration.machineSpeed.tooltip": "Tempo der Fabrikmaschinen (und ihr Strom pro Tick).",
   "data_center_addon.configuration.machineEnergy": "Maschinenstrom",
-  "data_center_addon.configuration.machineEnergy.tooltip": "Faktor für den Strom, den die Fabrikmaschinen verbrauchen."
+  "data_center_addon.configuration.machineEnergy.tooltip": "Faktor für den Strom, den die Fabrikmaschinen verbrauchen.",
+  "data_center_addon.industry.column.material": "Rohstoff",
+  "data_center_addon.industry.column.price": "Preis",
+  "data_center_addon.industry.column.buy": "Kaufen"
 }

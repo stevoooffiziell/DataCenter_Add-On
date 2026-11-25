@@ -22,12 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Purchase Terminal screen: budget and its buttons at the top, a card per commodity (price, buy one,
- * buy a stack, auto-reorder target), the terminal's stock and the player's inventory below.
+ * The Purchase Terminal screen: budget and its buttons at the top; on the left a table with one row per
+ * commodity (price, buy one, buy a stack, auto-reorder target), on the right the terminal's stock and the
+ * player's inventory.
  */
 public class PurchaseTerminalScreen extends TechPanelScreen<PurchaseTerminalMenu> {
-    private static final int W = 330, H = 282;
-    private static final int CARD_Y = 30, CARD_H = 26, CARD_GAP = 2;
+    private static final int W = 478, H = 222;
+    private static final int TABLE_X = 10, TABLE_W = 284, HEADER_Y = 34, ROW_Y = 48, ROW_H = 21;
+    /** Column offsets inside the table: name, price, buy buttons, auto-reorder. */
+    private static final int COL_PRICE = 118, COL_BUY = 168, COL_AUTO = 222;
     private static final int BUTTON_BG = 0xFF26303A, BUTTON_HOVER = TechPanel.ACCENT;
 
     private record Button(int x, int y, int w, int h, int id) {
@@ -64,17 +67,23 @@ public class PurchaseTerminalScreen extends TechPanelScreen<PurchaseTerminalMenu
         tooltip = null;
         int x = leftPos, y = topPos;
         TechPanel.background(g, x, y, W, H);
-        g.drawString(font, title, x + 10, y + 7, TechPanel.TEXT, true);
-        budget(g, x + 10, y + 17, mouseX, mouseY);
+        g.drawString(font, title, x + 10, y + 8, TechPanel.TEXT, true);
+        budget(g, x + 10, y + 19, mouseX, mouseY);
+
+        // table of commodities
+        int tx = x + TABLE_X;
+        header(g, tx, y + HEADER_Y);
         Commodity[] all = Commodity.values();
-        int cardW = (W - 20 - 6) / 2;
         for (int i = 0; i < all.length; i++) {
-            int cx = x + 10 + (i % 2) * (cardW + 6);
-            int cy = y + CARD_Y + (i / 2) * (CARD_H + CARD_GAP);
-            card(g, all[i], cx, cy, cardW, mouseX, mouseY);
+            row(g, all[i], tx, y + ROW_Y + i * ROW_H, i, mouseX, mouseY);
         }
+        g.fill(x + TABLE_X + TABLE_W + 5, y + HEADER_Y, x + TABLE_X + TABLE_W + 6, y + H - 10, 0x605AB0E0);
+
+        // stock and inventory on the right
         g.drawString(font, Component.translatable("data_center_addon.industry.stock"), x + PurchaseTerminalMenu.SLOTS_X,
-                y + PurchaseTerminalMenu.SLOTS_Y - 10, TechPanel.TEXT_MUTED, false);
+                y + PurchaseTerminalMenu.SLOTS_Y - 11, TechPanel.ACCENT, false);
+        g.drawString(font, playerInventoryTitle, x + PurchaseTerminalMenu.INV_X, y + PurchaseTerminalMenu.INV_Y - 11,
+                TechPanel.ACCENT, false);
         for (Slot slot : menu.slots) {
             TechPanel.slot(g, x + slot.x - 1, y + slot.y - 1, slot.index < PurchaseTerminalBlockEntity.SLOTS ? TechPanel.OUTPUT
                     : TechPanel.SLOT_BG);
@@ -103,34 +112,44 @@ public class PurchaseTerminalScreen extends TechPanelScreen<PurchaseTerminalMenu
         }
     }
 
-    /** One commodity: icon, name, price, buy buttons and the auto-reorder target. */
-    private void card(GuiGraphics g, Commodity c, int x, int y, int w, int mouseX, int mouseY) {
-        g.fill(x, y, x + w, y + CARD_H, TechPanel.SLOT_BG);
-        g.fill(x, y, x + 2, y + CARD_H, TechPanel.ACCENT);
+    /** Column titles with a line under them. */
+    private void header(GuiGraphics g, int x, int y) {
+        g.drawString(font, Component.translatable("data_center_addon.industry.column.material"), x + 24, y, TechPanel.ACCENT, false);
+        g.drawString(font, Component.translatable("data_center_addon.industry.column.price"), x + COL_PRICE, y, TechPanel.ACCENT, false);
+        g.drawString(font, Component.translatable("data_center_addon.industry.column.buy"), x + COL_BUY, y, TechPanel.ACCENT, false);
+        g.drawString(font, Component.translatable("data_center_addon.industry.auto"), x + COL_AUTO, y, TechPanel.ACCENT, false);
+        g.fill(x, y + 10, x + TABLE_W, y + 11, 0x605AB0E0);
+    }
+
+    /** One commodity: icon, name, price per item, buy buttons and the auto-reorder target. */
+    private void row(GuiGraphics g, Commodity c, int x, int y, int index, int mouseX, int mouseY) {
+        if (index % 2 == 1) {
+            g.fill(x - 2, y - 2, x + TABLE_W + 2, y + ROW_H - 2, 0x14FFFFFF);
+        }
         ItemStack stack = new ItemStack(c.item());
-        g.renderItem(stack, x + 5, y + 5);
+        g.renderItem(stack, x + 2, y);
+        int ty = y + 4;
         String name = Component.translatable(c.key()).getString();
-        g.drawString(font, GuiText.fit(font, name, w - 90), x + 24, y + 3, TechPanel.TEXT, false);
+        g.drawString(font, GuiText.fit(font, name, COL_PRICE - 30), x + 24, ty, TechPanel.TEXT, false);
         long price = menu.priceCents(c);
-        String priceText = Component.translatable("data_center_addon.industry.price", GuiText.compactUsd(price)).getString();
-        g.drawString(font, priceText, x + 24, y + 14, TechPanel.TEXT_MUTED, false);
+        g.drawString(font, GuiText.compactUsd(price), x + COL_PRICE, ty, TechPanel.TEXT_MUTED, false);
+        if (mouseX >= x && mouseX < x + COL_BUY - 4 && mouseY >= y - 2 && mouseY < y + ROW_H - 2) {
+            tooltip = List.of(Component.translatable(c.key()),
+                    Component.translatable("data_center_addon.industry.price", GuiText.compactUsd(price)).withStyle(ChatFormatting.GRAY));
+        }
         int stackSize = stack.getMaxStackSize();
-        int bx = x + w - 86;
-        bx = button(g, bx, y + 2, "+1", PurchaseTerminalMenu.button(Action.BUY_ONE, c.ordinal()), mouseX, mouseY,
+        int bx = button(g, x + COL_BUY, ty - 2, "+1", PurchaseTerminalMenu.button(Action.BUY_ONE, c.ordinal()), mouseX, mouseY,
                 List.of(Component.translatable("data_center_addon.industry.buy", 1, GuiText.compactUsd(price))));
-        button(g, bx, y + 2, "+" + stackSize, PurchaseTerminalMenu.button(Action.BUY_STACK, c.ordinal()), mouseX, mouseY,
+        button(g, bx, ty - 2, "+" + stackSize, PurchaseTerminalMenu.button(Action.BUY_STACK, c.ordinal()), mouseX, mouseY,
                 List.of(Component.translatable("data_center_addon.industry.buy", stackSize, GuiText.compactUsd(price * stackSize))));
-        // auto-reorder: "Auto ‹ 64 ›"
+        // auto-reorder: "‹ 64 ›"
         int target = menu.target(c);
-        int ty = y + 14;
-        int ax = x + w - 86;
-        g.drawString(font, Component.translatable("data_center_addon.industry.auto"), ax, ty, TechPanel.TEXT_MUTED, false);
-        int sx = ax + 30;
-        sx = button(g, sx, ty - 2, "‹", PurchaseTerminalMenu.button(Action.TARGET_DOWN, c.ordinal()), mouseX, mouseY, null);
+        int ax = x + COL_AUTO;
+        int after = button(g, ax, ty - 2, "‹", PurchaseTerminalMenu.button(Action.TARGET_DOWN, c.ordinal()), mouseX, mouseY, null);
         String value = target == 0 ? "–" : Integer.toString(target);
-        g.drawCenteredString(font, value, sx + 12, ty, target > 0 ? TechPanel.GOOD : TechPanel.TEXT_MUTED);
-        button(g, sx + 24, ty - 2, "›", PurchaseTerminalMenu.button(Action.TARGET_UP, c.ordinal()), mouseX, mouseY, null);
-        if (mouseX >= ax && mouseX < x + w && mouseY >= ty - 2 && mouseY < ty + 10 && tooltip == null) {
+        g.drawCenteredString(font, value, after + 13, ty, target > 0 ? TechPanel.GOOD : TechPanel.TEXT_MUTED);
+        button(g, after + 27, ty - 2, "›", PurchaseTerminalMenu.button(Action.TARGET_UP, c.ordinal()), mouseX, mouseY, null);
+        if (mouseX >= ax && mouseX < x + TABLE_W && mouseY >= y - 2 && mouseY < y + ROW_H - 2 && tooltip == null) {
             tooltip = List.of(Component.translatable("data_center_addon.industry.auto.tip", PurchaseTerminalBlockEntity.TARGET_STEP)
                     .withStyle(ChatFormatting.GRAY));
         }
@@ -138,10 +157,10 @@ public class PurchaseTerminalScreen extends TechPanelScreen<PurchaseTerminalMenu
 
     /** A small button; returns the x after it. */
     private int button(GuiGraphics g, int x, int y, String label, int id, int mouseX, int mouseY, List<Component> tip) {
-        int w = font.width(label) + 8, h = 11;
+        int w = font.width(label) + 10, h = 13;
         boolean hovered = mouseX >= x && mouseY >= y && mouseX < x + w && mouseY < y + h;
         g.fill(x, y, x + w, y + h, hovered ? BUTTON_HOVER : BUTTON_BG);
-        g.drawCenteredString(font, label, x + w / 2, y + 2, hovered ? 0xFF101418 : TechPanel.TEXT);
+        g.drawCenteredString(font, label, x + w / 2, y + 3, hovered ? 0xFF101418 : TechPanel.TEXT);
         buttons.add(new Button(x, y, w, h, id));
         if (hovered && tip != null) {
             tooltip = tip;

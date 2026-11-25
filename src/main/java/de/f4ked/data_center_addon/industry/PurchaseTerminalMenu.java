@@ -21,7 +21,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
  */
 public class PurchaseTerminalMenu extends AbstractContainerMenu {
     /** Layout shared with the screen. */
-    public static final int SLOTS_X = 84, SLOTS_Y = 154, INV_X = 84, INV_Y = 200;
+    public static final int SLOTS_X = 306, SLOTS_Y = 46, INV_X = 306, INV_Y = 110;
 
     private final BlockPos pos;
     private final ContainerLevelAccess access;
