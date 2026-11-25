@@ -12,11 +12,13 @@ import net.minecraft.server.MinecraftServer;
  * <p>
  * Data Center adds 0.05 points per serving server and game hour (more with a certified room) and takes
  * points for downtime, throttling and overload. With the add-on's reputation model on
- * ({@link Config#reputationModel()}) running servers no longer earn points; the deductions stay.
+ * ({@link Config#reputationModel()}) running is the baseline, not a source: a rack that serves reliably
+ * neither earns nor loses anything. Only real failures cost points: throttling and servers that are down.
+ * Overload no longer drains points by the hour (it costs customers through cancellations instead).
  */
 public final class RackService {
-    /** Data Center's points per server and game hour: throttled, overloaded, down. */
-    static final double THROTTLE_PER_HOUR = 0.05, OVERLOAD_PER_HOUR = 0.05, DOWN_PER_HOUR = 0.025;
+    /** Data Center's points per server and game hour: throttled, down. */
+    static final double THROTTLE_PER_HOUR = 0.05, DOWN_PER_HOUR = 0.025;
 
     private RackService() {
     }
@@ -37,10 +39,8 @@ public final class RackService {
         }
         double hours = MiningEra.fictionalHoursPerTick();
         double delta = 0;
-        if (earning > 0) {
-            delta -= throttled
-                    ? THROTTLE_PER_HOUR * earning * hours
-                    : OVERLOAD_PER_HOUR * Math.min(earning, Math.max(0, overloaded)) * hours;
+        if (earning > 0 && throttled) {
+            delta -= THROTTLE_PER_HOUR * earning * hours;
         }
         delta -= DOWN_PER_HOUR * Math.max(0, down) * hours;
         if (delta != 0) {
