@@ -70,6 +70,8 @@ final class MarketTab implements ManagerTab {
                         .withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.reputation", factor(row.repFactor())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.reach.awareness", factor(row.awareFactor())).withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.reach.classes", factor(row.classFactor())).withStyle(ChatFormatting.GRAY),
+                Component.translatable("data_center_addon.market.reach.classes.tip").withStyle(ChatFormatting.DARK_GRAY),
                 Component.translatable("data_center_addon.market.reach.awareness.tip").withStyle(ChatFormatting.DARK_GRAY));
     }
 

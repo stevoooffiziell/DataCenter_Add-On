@@ -25,16 +25,17 @@ public final class MarketService {
         LocalDate date = DataCenterApi.currentDate(level);
         HostingCustomers book = HostingCustomers.get(level);
         MarketBook market = MarketBook.get(level.getServer());
-        double reputation = HostingReputation.get(level, account).getPoints();
+        HostingReputation rep = HostingReputation.get(level, account);
+        double reputation = rep.getPoints();
         List<HostingSnapshot.MarketRow> rows = new ArrayList<>();
         for (HostingProduct product : HostingProduct.values()) {
             if (!MarketPool.exists(product, date)) {
                 continue;
             }
             MarketBook.Entry entry = market.entry(account, product);
-            MarketModel.Reach reach = MarketModel.reach(entry, product, date, reputation);
+            MarketModel.Reach reach = MarketModel.reach(entry, product, date, reputation, rep.getUnlockedClass());
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
-                    reach.awareness(), book.total(account, product), entry.ordersGap, entry.ordersWord));
+                    reach.awareness(), reach.classes(), book.total(account, product), entry.ordersGap, entry.ordersWord));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
     }

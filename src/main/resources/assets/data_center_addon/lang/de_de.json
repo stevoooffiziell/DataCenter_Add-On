@@ -425,5 +425,7 @@
   "data_center_addon.market.inflow.word": "Mundpropaganda: %s",
   "data_center_addon.market.inflow.note": "Neue Kunden nehmen nur freie Plätze.",
   "data_center_addon.configuration.wordOfMouth": "Mundpropaganda",
-  "data_center_addon.configuration.wordOfMouth.tooltip": "Neue Kunden pro Spielmonat, die jeder Kunde bringt, solange das Potenzial nicht ausgeschöpft ist. 0 = aus."
+  "data_center_addon.configuration.wordOfMouth.tooltip": "Neue Kunden pro Spielmonat, die jeder Kunde bringt, solange das Potenzial nicht ausgeschöpft ist. 0 = aus.",
+  "data_center_addon.market.reach.classes": "Kundenklassen: %s",
+  "data_center_addon.market.reach.classes.tip": "Jede freigeschaltete Klasse öffnet einen eigenen Teilpool: Kleinunternehmen +30 %%, Mittelstand +30 %%, Großunternehmen +25 %%, Finanzen & Behörden +20 %%."
 }

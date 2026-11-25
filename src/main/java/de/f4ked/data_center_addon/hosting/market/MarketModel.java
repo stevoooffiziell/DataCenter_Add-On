@@ -1,8 +1,8 @@
 package de.f4ked.data_center_addon.hosting.market;
 
+import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingGrowth;
-import com.example.datacenter.hosting.HostingModeRates;
 import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.Config;
 import net.minecraft.server.MinecraftServer;
@@ -14,11 +14,15 @@ import java.util.UUID;
 /**
  * The add-on's customer model. Each product has a pool of potential customers ({@link MarketPool}); an
  * account reaches a share of it, its <b>potential</b>:
- * <pre>potential = pool × base share × reputation × awareness</pre>
+ * <pre>potential = pool × base share × reputation × awareness × customer classes</pre>
  * <ul>
  *   <li><b>Base share</b>: {@code 1 / POOL_FACTOR}, so at 0 reputation and fully known the potential
  *       equals Data Center's own customer equilibrium.</li>
- *   <li><b>Reputation</b>: Data Center's reach, ×1 at 0 points up to ×3 at 1000.</li>
+ *   <li><b>Reputation</b>: ×1 at 0 points up to ×2 at 1000.</li>
+ *   <li><b>Customer classes</b>: every customer class the account has unlocked opens a sub-pool of its
+ *       own ({@link #CLASS_POOLS}): small business +30 %, mid-market +30 %, enterprise +25 %, finance
+ *       +20 % of the hobbyist pool. Their customers pay better (they lean to the better paying
+ *       segments).</li>
  *   <li><b>Awareness</b>: ×0.5 for a product nobody knows the account for, up to ×1. It grows while the
  *       account offers places of the product (63 % of the way in {@link #AWARENESS_UP_MONTHS} game
  *       months) and fades slowly while it offers none.</li>
@@ -32,6 +36,10 @@ public final class MarketModel {
     /** Time constant of awareness fading while no places are offered, in game months. */
     static final double AWARENESS_DOWN_MONTHS = 6.0;
     static final double AWARENESS_FLOOR = 0.5;
+    /** Reputation factor at 1000 points (×1 at 0). */
+    static final double REPUTATION_MAX = 2.0;
+    /** Size of each customer class's sub-pool, relative to the hobbyist pool, in {@link CustomerClass} order. */
+    public static final double[] CLASS_POOLS = {1.0, 0.30, 0.30, 0.25, 0.20};
 
     private MarketModel() {
     }
@@ -39,20 +47,64 @@ public final class MarketModel {
     /**
      * What an account can reach of a product's pool.
      *
-     * @param reputation factor from reputation (Data Center's reach)
+     * @param reputation factor from reputation
      * @param awareness  factor from awareness (0.5..1)
+     * @param classes    factor from the customer classes' sub-pools (1 for hobbyists only)
      */
-    public record Reach(double pool, double reputation, double awareness, double potential) {
+    public record Reach(double pool, double reputation, double awareness, double classes, double potential) {
         public double share() {
             return pool <= 0 ? 0 : potential / pool;
         }
+
+        /** Share of the potential that comes from the sub-pools of the higher customer classes. */
+        public double premiumShare() {
+            return classes <= 0 ? 0 : (classes - 1) / classes;
+        }
     }
 
-    public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints) {
+    public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints,
+                              CustomerClass unlocked) {
         double pool = MarketPool.pool(product, date);
-        double rep = HostingModeRates.reachFactor(reputationPoints);
+        double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
-        return new Reach(pool, rep, aware, pool * BASE_SHARE * rep * aware);
+        double classes = classFactor(unlocked);
+        return new Reach(pool, rep, aware, classes, pool * BASE_SHARE * rep * aware * classes);
+    }
+
+    static double reputationFactor(double points) {
+        return 1 + (REPUTATION_MAX - 1) * Math.max(0, Math.min(1000, points)) / 1000;
+    }
+
+    /** The hobbyist pool plus the sub-pools of every class up to {@code unlocked}. */
+    public static double classFactor(CustomerClass unlocked) {
+        double sum = 0;
+        for (int c = 0; c <= unlocked.ordinal() && c < CLASS_POOLS.length; c++) {
+            sum += CLASS_POOLS[c];
+        }
+        return sum;
+    }
+
+    /**
+     * The segment mix of new customers: Data Center's mix of the year for the hobbyist pool, and for the
+     * classes' sub-pools the same mix weighted by what each segment pays.
+     */
+    static double[] arrivalMix(HostingProduct product, LocalDate date, double premiumShare) {
+        double[] mix = HostingGrowth.orderMix(product, date);
+        if (premiumShare <= 0) {
+            return mix;
+        }
+        CustomerSegment[] segments = CustomerSegment.values();
+        double[] premium = new double[mix.length];
+        double total = 0;
+        for (int s = 0; s < mix.length && s < segments.length; s++) {
+            premium[s] = mix[s] * segments[s].pay;
+            total += premium[s];
+        }
+        double[] out = new double[mix.length];
+        for (int s = 0; s < mix.length; s++) {
+            out[s] = (1 - premiumShare) * mix[s] + premiumShare * (total <= 0 ? mix[s] : premium[s] / total);
+        }
+        return out;
     }
 
     /**
@@ -90,14 +142,15 @@ public final class MarketModel {
      *       month.</li>
      *   <li>Word of mouth: every customer brings {@code wordOfMouth} new ones a month, less the closer the
      *       customers are to the potential ({@code × (1 − customers / potential)}, logistic growth).</li>
-     *   <li>New customers only take free places. They come in Data Center's segment mix.</li>
+     *   <li>New customers only take free places. They come in Data Center's segment mix, the sub-pools'
+     *       share of them leaning to the better paying segments.</li>
      *   <li>When there are fewer places than customers, the excess leaves within days, as in Data Center.</li>
      * </ol>
      *
      * @param counts the account's customers of the product by segment, changed in place
      */
     public static Flow step(MarketBook.Entry entry, HostingProduct product, double[] counts, LocalDate date,
-                            double reputationPoints, double places, double dtMonths) {
+                            double reputationPoints, CustomerClass unlocked, double places, double dtMonths) {
         CustomerSegment[] segments = CustomerSegment.values();
         double total = 0;
         for (double c : counts) {
@@ -112,7 +165,7 @@ public final class MarketModel {
             }
         }
 
-        Reach reach = reach(entry, product, date, reputationPoints);
+        Reach reach = reach(entry, product, date, reputationPoints, unlocked);
         double gap = Config.closeRate() * Math.max(0, reach.potential() - total);
         double word = reach.potential() <= 0 ? 0 : Config.wordOfMouth() * total * Math.max(0, 1 - total / reach.potential());
         entry.ordersGap = gap;
@@ -121,7 +174,7 @@ public final class MarketModel {
         double free = Math.max(0, places - total);
         double arriving = Math.min(free, orders * dtMonths);
         if (arriving > 0) {
-            double[] mix = HostingGrowth.orderMix(product, date);
+            double[] mix = arrivalMix(product, date, reach.premiumShare());
             for (int s = 0; s < segments.length && s < counts.length; s++) {
                 counts[s] += arriving * mix[s];
             }

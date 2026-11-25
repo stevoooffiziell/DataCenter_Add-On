@@ -1,7 +1,9 @@
 package de.f4ked.data_center_addon.mixin;
 
+import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
+import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketBook;
 import de.f4ked.data_center_addon.hosting.market.MarketModel;
@@ -56,7 +58,9 @@ public abstract class HostingCustomersMixin {
         if (!Config.marketModel()) {
             return;
         }
-        MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reputationPoints, places, dtMonths);
+        CustomerClass unlocked = HostingReputation.get(server.overworld(), owner).getUnlockedClass();
+        MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reputationPoints, unlocked,
+                places, dtMonths);
         flows.computeIfAbsent(key(owner), k -> new EnumMap<>(HostingProduct.class))
                 .put(product, new HostingCustomers.Flow(flow.orders(), flow.cancellations()));
         self.setDirty();
