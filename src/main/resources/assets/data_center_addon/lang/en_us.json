@@ -537,5 +537,8 @@
   "data_center_addon.reputation.source.forgetting": "Forgotten",
   "data_center_addon.reputation.quiet": "Nothing new for %s days",
   "data_center_addon.reputation.forgetting": "Being forgotten (%s quiet days)",
-  "data_center_addon.reputation.month": "mo."
+  "data_center_addon.reputation.month": "mo.",
+  "data_center_addon.market.quality.ruf": "Ruf of this product (30 days): %s",
+  "data_center_addon.configuration.rufPerProduct": "Ruf per product",
+  "data_center_addon.configuration.rufPerProduct.tooltip": "A product's market follows half your company's Ruf and half the Ruf of that product's own service."
 }

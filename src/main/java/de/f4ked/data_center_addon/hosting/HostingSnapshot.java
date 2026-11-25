@@ -513,8 +513,9 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param down     share of customers whose server did not run
      * @param overload how far the servers run over their real capacity
      * @param throttle share of the time the racks ran throttled (heat, attack, slow network)
+     * @param ruf      the product's own Ruf over about 30 days (-1: not measured or {@code rufPerProduct} off)
      */
-    public record Quality(double churn, double down, double overload, double throttle) {
+    public record Quality(double churn, double down, double overload, double throttle, double ruf) {
         public boolean measured() {
             return down >= 0;
         }
@@ -525,8 +526,9 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(q.down);
                     buf.writeDouble(q.overload);
                     buf.writeDouble(q.throttle);
+                    buf.writeDouble(q.ruf);
                 },
-                buf -> new Quality(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()));
+                buf -> new Quality(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()));
     }
 
     // ------------------------------------------------------------------ reputation

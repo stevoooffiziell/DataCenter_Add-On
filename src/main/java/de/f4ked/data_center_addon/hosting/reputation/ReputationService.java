@@ -6,6 +6,8 @@ import de.f4ked.data_center_addon.mixin.HostingReputationInvoker;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.market.MarketBook;
+import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -105,6 +107,21 @@ public final class ReputationService {
             }
         }
         Arrays.fill(a.today, 0);
+    }
+
+    /**
+     * The Ruf that counts for the market of one product: the account's Ruf, or with
+     * {@code rufPerProduct} half of it and half the product's own Ruf (once measured).
+     */
+    public static double rufFor(MinecraftServer server, @Nullable UUID owner, MarketBook.Entry entry) {
+        double ruf = ruf(server, owner);
+        if (Config.rufPerProduct()) {
+            double product = ServiceQuality.productRuf(entry);
+            if (!Double.isNaN(product)) {
+                return 0.5 * ruf + 0.5 * product;
+            }
+        }
+        return ruf;
     }
 
     /** The account's Ruf, 0..1 (1 without any service yet). */

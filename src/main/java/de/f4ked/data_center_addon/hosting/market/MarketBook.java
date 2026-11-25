@@ -49,6 +49,8 @@ public final class MarketBook extends SavedData {
         double ordersGap, ordersWord;
         /** Averages of the service ({@link ServiceQuality}): downtime, overload, throttling, 0..1; NaN before the first report. */
         double down = Double.NaN, overload = Double.NaN, throttle = Double.NaN;
+        /** The same over about 30 in-game days, for the product's own Ruf ({@link ServiceQuality#productRuf}). */
+        double down30 = Double.NaN, overload30 = Double.NaN, throttle30 = Double.NaN;
 
         public double awareness() {
             return Double.isNaN(awareness) ? 0 : awareness;
@@ -142,6 +144,11 @@ public final class MarketBook extends SavedData {
                     e.down = clamp01(p.getDouble("down"));
                     e.overload = clamp01(p.getDouble("overload"));
                     e.throttle = clamp01(p.getDouble("throttle"));
+                    if (p.contains("down30")) {
+                        e.down30 = clamp01(p.getDouble("down30"));
+                        e.overload30 = clamp01(p.getDouble("overload30"));
+                        e.throttle30 = clamp01(p.getDouble("throttle30"));
+                    }
                 }
             }
         }
@@ -168,6 +175,11 @@ public final class MarketBook extends SavedData {
                     p.putDouble("down", e.down);
                     p.putDouble("overload", e.overload);
                     p.putDouble("throttle", e.throttle);
+                    if (!Double.isNaN(e.down30)) {
+                        p.putDouble("down30", e.down30);
+                        p.putDouble("overload30", e.overload30);
+                        p.putDouble("throttle30", e.throttle30);
+                    }
                 }
                 products.put(product.id(), p);
             });

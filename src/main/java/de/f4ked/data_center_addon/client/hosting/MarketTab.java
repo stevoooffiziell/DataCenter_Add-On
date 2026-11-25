@@ -243,13 +243,19 @@ final class MarketTab implements ManagerTab {
             return List.of(Component.translatable("data_center_addon.market.quality.title", Texts.percent((float) q.churn())),
                     Component.translatable("data_center_addon.market.quality.unmeasured").withStyle(ChatFormatting.GRAY));
         }
-        return List.of(Component.translatable("data_center_addon.market.quality.title", Texts.percent((float) q.churn())),
+        List<Component> lines = new ArrayList<>();
+        if (q.ruf() >= 0) {
+            lines.add(Component.translatable("data_center_addon.market.quality.ruf", Texts.percent((float) q.ruf()))
+                    .withStyle(ChatFormatting.AQUA));
+        }
+        lines.addAll(List.of(Component.translatable("data_center_addon.market.quality.title", Texts.percent((float) q.churn())),
                 Component.translatable("data_center_addon.market.quality.down", Texts.percent((float) q.down())).withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.quality.overload", Texts.percent((float) q.overload()))
                         .withStyle(ChatFormatting.GRAY),
                 Component.translatable("data_center_addon.market.quality.throttle", Texts.percent((float) q.throttle()))
                         .withStyle(ChatFormatting.GRAY),
-                Component.translatable("data_center_addon.market.quality.note").withStyle(ChatFormatting.DARK_GRAY));
+                Component.translatable("data_center_addon.market.quality.note").withStyle(ChatFormatting.DARK_GRAY)));
+        return lines;
     }
 
     /** "×1.25" */

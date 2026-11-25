@@ -79,13 +79,13 @@ public final class MarketService {
         MarketBook market = MarketBook.get(level.getServer());
         HostingReputation rep = HostingReputation.get(level, account);
         double reputation = rep.getPoints();
-        double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.ruf(level.getServer(), account)) : 1.0;
         List<HostingSnapshot.MarketRow> rows = new ArrayList<>();
         for (HostingProduct product : HostingProduct.values()) {
             if (!MarketPool.exists(product, date)) {
                 continue;
             }
             MarketBook.Entry entry = market.entry(account, product);
+            double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.rufFor(level.getServer(), account, entry)) : 1.0;
             MarketModel.Reach reach = MarketModel.sharedReach(market, entry, product, date, reputation, rep.getUnlockedClass(),
                     MarketEvents.factor(level, product, date), Competitors.factor(market, product), ruf,
                     level.getServer().getTickCount(), false);
@@ -102,7 +102,8 @@ public final class MarketService {
                 nextGain = Math.max(0, then.potential() - reach.potential());
             }
             HostingSnapshot.Quality quality = new HostingSnapshot.Quality(ServiceQuality.churnTarget(entry),
-                    nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle));
+                    nanToMinus(entry.down), nanToMinus(entry.overload), nanToMinus(entry.throttle),
+                    Config.rufPerProduct() ? nanToMinus(ServiceQuality.productRuf(entry)) : -1);
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.market(), reach.potential(),
                     reach.reputation(), reach.awareness(), reach.classes(), customers, entry.waiting(), entry.ordersGap,
                     entry.ordersWord, quality, boosts(product, date), Config.marketModel() ? entry.priceStep() : 0,

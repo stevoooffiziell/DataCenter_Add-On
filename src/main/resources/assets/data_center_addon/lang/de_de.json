@@ -537,5 +537,8 @@
   "data_center_addon.reputation.source.forgetting": "Vergessen",
   "data_center_addon.reputation.quiet": "Seit %s Tagen nichts Neues",
   "data_center_addon.reputation.forgetting": "Wirst vergessen (%s ruhige Tage)",
-  "data_center_addon.reputation.month": "Mon."
+  "data_center_addon.reputation.month": "Mon.",
+  "data_center_addon.market.quality.ruf": "Ruf dieses Produkts (30 Tage): %s",
+  "data_center_addon.configuration.rufPerProduct": "Ruf pro Produkt",
+  "data_center_addon.configuration.rufPerProduct.tooltip": "Der Markt eines Produkts folgt zur Hälfte dem Ruf deiner Firma und zur Hälfte dem Ruf dieses Produkts."
 }

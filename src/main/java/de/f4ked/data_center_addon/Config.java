@@ -68,6 +68,7 @@ public final class Config {
     private static final ModConfigSpec.BooleanValue SHARED_POOL;
     private static final ModConfigSpec.BooleanValue REPUTATION_MODEL;
     private static final ModConfigSpec.DoubleValue ORDER_RENOWN;
+    private static final ModConfigSpec.BooleanValue RUF_PER_PRODUCT;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -199,6 +200,11 @@ public final class Config {
                 .comment("Multiplier for the reputation (renown) contracts and delivery orders give and cost, with the",
                         "reputation model on. Orders are meant to be the main source of renown.")
                 .defineInRange("orderRenown", 3.0, 0.0, 20.0);
+        RUF_PER_PRODUCT = builder
+                .comment("Reputation per product: the share of a product's market you reach follows half your company's",
+                        "Ruf and half the Ruf of that product's own service. A good game server Ruf then helps little",
+                        "with colocation.")
+                .define("rufPerProduct", false);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -374,6 +380,10 @@ public final class Config {
             return 1.0;
         }
         return SPEC.isLoaded() ? ORDER_RENOWN.get() : 3.0;
+    }
+
+    public static boolean rufPerProduct() {
+        return reputationModel() && SPEC.isLoaded() && RUF_PER_PRODUCT.get();
     }
 
     public static double hostingStorageBoost() {

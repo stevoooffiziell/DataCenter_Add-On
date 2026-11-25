@@ -62,6 +62,7 @@ public final class ServiceQuality {
         MarketBook book = MarketBook.get(server);
         double ticksPerDay = 24.0 / MiningEra.fictionalHoursPerTick();
         double alpha = Math.min(1, ticks / (AVERAGE_DAYS * ticksPerDay));
+        double alpha30 = Math.min(1, ticks / (30 * ticksPerDay));
         for (Map.Entry<Key, double[]> e : SAMPLE.entrySet()) {
             double[] s = e.getValue();
             double served = s[0] + s[1];
@@ -72,6 +73,9 @@ public final class ServiceQuality {
             entry.down = average(entry.down, s[1] / served, alpha);
             entry.overload = average(entry.overload, s[0] <= 0 ? 0 : s[2] / s[0], alpha);
             entry.throttle = average(entry.throttle, s[0] <= 0 ? 0 : s[3] / s[0], alpha);
+            entry.down30 = average(entry.down30, s[1] / served, alpha30);
+            entry.overload30 = average(entry.overload30, s[0] <= 0 ? 0 : s[2] / s[0], alpha30);
+            entry.throttle30 = average(entry.throttle30, s[0] <= 0 ? 0 : s[3] / s[0], alpha30);
         }
         SAMPLE.clear();
         book.setDirty();
@@ -91,6 +95,17 @@ public final class ServiceQuality {
             return Double.NaN;
         }
         return MarketBook.clamp01(W_DOWN * e.down + W_OVERLOAD * e.overload + W_THROTTLE * e.throttle);
+    }
+
+    /**
+     * The Ruf of the product's own service over about 30 days, with the Ruf's weights (5 × downtime,
+     * ½ overload, ½ throttling); NaN before the first report.
+     */
+    public static double productRuf(MarketBook.Entry e) {
+        if (Double.isNaN(e.down30)) {
+            return Double.NaN;
+        }
+        return MarketBook.clamp01(1 - 5 * e.down30 - 0.5 * e.overload30 - 0.5 * e.throttle30);
     }
 
     /** Cancellations per month the quality aims at: churnGood at badness 0 up to churnBad at 1. */

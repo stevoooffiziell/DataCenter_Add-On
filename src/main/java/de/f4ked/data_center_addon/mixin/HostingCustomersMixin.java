@@ -66,7 +66,7 @@ public abstract class HostingCustomersMixin {
         CustomerClass unlocked = HostingReputation.get(server.overworld(), owner).getUnlockedClass();
         double market = MarketEvents.factor(server.overworld(), product, date);
         double rivals = Competitors.factor(book, product);
-        double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.ruf(server, owner)) : 1.0;
+        double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.rufFor(server, owner, entry)) : 1.0;
         MarketModel.Reach reach = MarketModel.sharedReach(book, entry, product, date, reputationPoints, unlocked, market, rivals,
                 ruf, server.getTickCount(), true);
         MarketModel.Flow flow = MarketModel.step(entry, product, countsOf(owner, product), date, reach, places, dtMonths);
