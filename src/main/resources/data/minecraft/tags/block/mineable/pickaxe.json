@@ -11,6 +11,8 @@
     "data_center_addon:switch_nvidia_spectrum_sn4700",
     "data_center_addon:hosting_manager",
     "data_center_addon:purchase_terminal",
-    "data_center_addon:smelter"
+    "data_center_addon:smelter",
+    "data_center_addon:rolling_mill",
+    "data_center_addon:wire_drawer"
   ]
 }

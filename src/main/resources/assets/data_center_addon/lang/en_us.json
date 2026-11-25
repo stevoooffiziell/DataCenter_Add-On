@@ -599,5 +599,10 @@
   "data_center_addon.configuration.techStyle": "Tech-panel look",
   "data_center_addon.configuration.techStyle.tooltip": "Draw chests, hoppers, dispensers, the crafting table, the furnaces and the inventory in Data Center's dark tech-panel look.",
   "data_center_addon.configuration.techHotbar": "Tech-panel hotbar",
-  "data_center_addon.configuration.techHotbar.tooltip": "Draw the hotbar in Data Center's dark tech-panel look."
+  "data_center_addon.configuration.techHotbar.tooltip": "Draw the hotbar in Data Center's dark tech-panel look.",
+  "block.data_center_addon.rolling_mill": "Rolling Mill",
+  "block.data_center_addon.wire_drawer": "Wire Drawer",
+  "item.data_center_addon.copper_foil": "Copper Foil",
+  "item.data_center_addon.gold_contacts": "Gold Contacts",
+  "item.data_center_addon.copper_wire": "Copper Wire"
 }

@@ -29,6 +29,8 @@ BLOCKS = {
 # factory machines: Data Center's synthesizer with the front and tray in the machine's colour
 MACHINES = {
     'smelter': 0.04,  # glowing orange
+    'rolling_mill': 0.58,  # steel blue
+    'wire_drawer': 0.08,  # copper
 }
 
 
@@ -90,9 +92,59 @@ def silicon():
     return img
 
 
+def copper_foil():
+    """A thin sheet of copper, slightly curled, with a bright rolled sheen."""
+    img = blank()
+    for y in range(3, 13):
+        shift = 1 if y in (3, 12) else 0
+        for x in range(2 + shift, 14 - shift):
+            sheen = 1.25 if (x + y) % 7 == 0 else 1.1 if (x - y) % 9 == 0 else 1.0
+            edge = 0.75 if y in (3, 12) or x in (2 + shift, 13 - shift) else 1.0
+            base = (0xD0, 0x7A, 0x45)
+            img[y][x] = [min(255, int(c * sheen * edge)) for c in base] + [255]
+    for x in range(11, 14):
+        img[12][x] = [0xF0, 0xA0, 0x70, 255]
+        img[11][x + 0] = [0xE0, 0x90, 0x60, 255]
+    return img
+
+
+def gold_contacts():
+    """A strip of gold contact pins on a dark carrier."""
+    img = blank()
+    for x in range(2, 14):
+        img[8][x] = [0x3A, 0x34, 0x2A, 255]
+        img[9][x] = [0x2A, 0x26, 0x20, 255]
+    for x in range(3, 14, 2):
+        for y in range(3, 8):
+            img[y][x] = [0xF2, 0xC8, 0x4C, 255] if y > 3 else [0xFF, 0xE8, 0x90, 255]
+        for y in range(10, 13):
+            img[y][x] = [0xC8, 0x9A, 0x2A, 255]
+    return img
+
+
+def copper_wire():
+    """A coil of copper wire."""
+    img = blank()
+    import math
+    for i in range(240):
+        a = i / 240 * math.pi * 2 * 5
+        r = 5.2
+        x = int(round(8 + r * math.cos(a)))
+        y = int(round(8 + r * 0.55 * math.sin(a) + (i / 240 - 0.5) * 6))
+        if 0 <= x < 16 and 0 <= y < 16:
+            light = 1.2 if math.sin(a) < -0.3 else 0.85 if math.sin(a) > 0.5 else 1.0
+            img[y][x] = [min(255, int(c * light)) for c in (0xC8, 0x6E, 0x3A)] + [255]
+    for x, y in [(13, 4), (14, 3), (15, 2)]:
+        img[y][x] = [0xE8, 0x96, 0x60, 255]
+    return img
+
+
 ITEMS = {
     'plastic_pellets': pellets,
     'silicon': silicon,
+    'copper_foil': copper_foil,
+    'gold_contacts': gold_contacts,
+    'copper_wire': copper_wire,
 }
 
 

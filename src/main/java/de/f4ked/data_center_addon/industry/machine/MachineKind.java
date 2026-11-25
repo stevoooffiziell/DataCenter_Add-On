@@ -22,7 +22,16 @@ public enum MachineKind {
             of(() -> Items.IRON_INGOT, 1, 60, 20, in(() -> Items.RAW_IRON, 1)),
             of(() -> Items.GOLD_INGOT, 1, 60, 20, in(() -> Items.RAW_GOLD, 1)),
             of(() -> Items.GLASS, 1, 40, 15, in(() -> Items.SAND, 1)),
-            of(() -> IndustryContent.SILICON.get(), 1, 120, 40, in(() -> Items.QUARTZ, 1), in(() -> Items.COAL, 1))));
+            of(() -> IndustryContent.SILICON.get(), 1, 120, 40, in(() -> Items.QUARTZ, 1), in(() -> Items.COAL, 1)))),
+
+    /** Ingots rolled thin: copper foil for circuit boards and capacitors, gold contacts for connectors and chips. */
+    ROLLING_MILL(8_000_00L, () -> List.of(
+            of(() -> IndustryContent.COPPER_FOIL.get(), 2, 80, 25, in(() -> Items.COPPER_INGOT, 1)),
+            of(() -> IndustryContent.GOLD_CONTACTS.get(), 4, 100, 30, in(() -> Items.GOLD_INGOT, 1)))),
+
+    /** Copper drawn into wire, the core of every cable. */
+    WIRE_DRAWER(7_000_00L, () -> List.of(
+            of(() -> IndustryContent.COPPER_WIRE.get(), 4, 60, 20, in(() -> Items.COPPER_INGOT, 1))));
 
     /** Shop price in US cents. */
     public final long priceCents;

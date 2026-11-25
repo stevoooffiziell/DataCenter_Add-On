@@ -44,6 +44,12 @@ public final class IndustryContent {
     public static final DeferredItem<Item> PLASTIC_PELLETS = Data_center_addon.ITEMS.registerSimpleItem("plastic_pellets");
     /** Silicon, made from quartz and coal in the smelter: the base of wafers and chips. */
     public static final DeferredItem<Item> SILICON = Data_center_addon.ITEMS.registerSimpleItem("silicon");
+    /** Copper foil, rolled from copper ingots: the conductor layer of circuit boards and capacitors. */
+    public static final DeferredItem<Item> COPPER_FOIL = Data_center_addon.ITEMS.registerSimpleItem("copper_foil");
+    /** Gold contacts, rolled from gold ingots: for connectors and chips. */
+    public static final DeferredItem<Item> GOLD_CONTACTS = Data_center_addon.ITEMS.registerSimpleItem("gold_contacts");
+    /** Copper wire, drawn from copper ingots: the core of cables. */
+    public static final DeferredItem<Item> COPPER_WIRE = Data_center_addon.ITEMS.registerSimpleItem("copper_wire");
 
     // ------------------------------------------------------------------ factory machines
 
@@ -121,6 +127,9 @@ public final class IndustryContent {
         MACHINE_ITEMS.values().forEach(item -> stacks.add(item.get().getDefaultInstance()));
         stacks.add(PLASTIC_PELLETS.get().getDefaultInstance());
         stacks.add(SILICON.get().getDefaultInstance());
+        stacks.add(COPPER_FOIL.get().getDefaultInstance());
+        stacks.add(GOLD_CONTACTS.get().getDefaultInstance());
+        stacks.add(COPPER_WIRE.get().getDefaultInstance());
         return List.copyOf(stacks);
     }
 

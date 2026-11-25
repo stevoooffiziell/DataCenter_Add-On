@@ -599,5 +599,10 @@
   "data_center_addon.configuration.techStyle": "Tech-Panel-Stil",
   "data_center_addon.configuration.techStyle.tooltip": "Kisten, Trichter, Werfer, Werkbank, Öfen und Inventar im dunklen Tech-Panel-Stil von Data Center zeichnen.",
   "data_center_addon.configuration.techHotbar": "Hotbar im Tech-Panel-Stil",
-  "data_center_addon.configuration.techHotbar.tooltip": "Die Hotbar im dunklen Tech-Panel-Stil von Data Center zeichnen."
+  "data_center_addon.configuration.techHotbar.tooltip": "Die Hotbar im dunklen Tech-Panel-Stil von Data Center zeichnen.",
+  "block.data_center_addon.rolling_mill": "Walzwerk",
+  "block.data_center_addon.wire_drawer": "Drahtzieher",
+  "item.data_center_addon.copper_foil": "Kupferfolie",
+  "item.data_center_addon.gold_contacts": "Goldkontakte",
+  "item.data_center_addon.copper_wire": "Kupferdraht"
 }
