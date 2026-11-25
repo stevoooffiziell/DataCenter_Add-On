@@ -29,6 +29,8 @@ public final class MarketBook extends SavedData {
     public static final class Entry {
         /** How well known the account is for the product, 0..1; NaN until first seen. */
         double awareness = Double.NaN;
+        /** The last step's new customers per month: closing the gap, and by word of mouth (not saved). */
+        double ordersGap, ordersWord;
 
         public double awareness() {
             return Double.isNaN(awareness) ? 0 : awareness;

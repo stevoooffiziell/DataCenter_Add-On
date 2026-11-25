@@ -23,7 +23,7 @@ import java.util.UUID;
  *       account offers places of the product (63 % of the way in {@link #AWARENESS_UP_MONTHS} game
  *       months) and fades slowly while it offers none.</li>
  * </ul>
- * New customers close the gap between potential and customers ({@link #step}).
+ * New customers close the gap between potential and customers and come by word of mouth ({@link #step}).
  */
 public final class MarketModel {
     public static final double BASE_SHARE = 1.0 / MarketPool.POOL_FACTOR;
@@ -87,7 +87,10 @@ public final class MarketModel {
      * <ol>
      *   <li>Customers cancel as in Data Center (about 3 % a month, by segment and year).</li>
      *   <li>New customers close the gap to the potential: {@code (potential − customers) × closeRate} a
-     *       month, as far as there are free places. They come in Data Center's segment mix.</li>
+     *       month.</li>
+     *   <li>Word of mouth: every customer brings {@code wordOfMouth} new ones a month, less the closer the
+     *       customers are to the potential ({@code × (1 − customers / potential)}, logistic growth).</li>
+     *   <li>New customers only take free places. They come in Data Center's segment mix.</li>
      *   <li>When there are fewer places than customers, the excess leaves within days, as in Data Center.</li>
      * </ol>
      *
@@ -110,7 +113,11 @@ public final class MarketModel {
         }
 
         Reach reach = reach(entry, product, date, reputationPoints);
-        double orders = Config.closeRate() * Math.max(0, reach.potential() - total);
+        double gap = Config.closeRate() * Math.max(0, reach.potential() - total);
+        double word = reach.potential() <= 0 ? 0 : Config.wordOfMouth() * total * Math.max(0, 1 - total / reach.potential());
+        entry.ordersGap = gap;
+        entry.ordersWord = word;
+        double orders = gap + word;
         double free = Math.max(0, places - total);
         double arriving = Math.min(free, orders * dtMonths);
         if (arriving > 0) {

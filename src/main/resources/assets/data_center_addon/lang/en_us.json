@@ -418,5 +418,12 @@
   "data_center_addon.configuration.marketModel": "Market model",
   "data_center_addon.configuration.marketModel.tooltip": "New customers close the gap to your reachable potential. Off: customers arrive the way Data Center does it.",
   "data_center_addon.configuration.closeRate": "Close rate",
-  "data_center_addon.configuration.closeRate.tooltip": "Share of the gap between potential and customers that becomes customers per game month."
+  "data_center_addon.configuration.closeRate.tooltip": "Share of the gap between potential and customers that becomes customers per game month.",
+  "data_center_addon.hosting.column.inflow": "New / month",
+  "data_center_addon.market.inflow.title": "New customers: %s per game month",
+  "data_center_addon.market.inflow.gap": "Closing the gap to the potential: %s",
+  "data_center_addon.market.inflow.word": "Word of mouth: %s",
+  "data_center_addon.market.inflow.note": "New customers only take free places.",
+  "data_center_addon.configuration.wordOfMouth": "Word of mouth",
+  "data_center_addon.configuration.wordOfMouth.tooltip": "New customers per game month every customer brings, while the potential is not used up. 0 = off."
 }

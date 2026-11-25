@@ -61,6 +61,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue PREPAY_DISCOUNT;
     private static final ModConfigSpec.BooleanValue MARKET_MODEL;
     private static final ModConfigSpec.DoubleValue CLOSE_RATE;
+    private static final ModConfigSpec.DoubleValue WORD_OF_MOUTH;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -162,6 +163,10 @@ public final class Config {
                 .comment("Share of the gap between your reachable potential and your customers that becomes customers",
                         "per game month. 0.25 = 63 % of the gap is closed in about 4 game months.")
                 .defineInRange("closeRate", 0.25, 0.01, 1.0);
+        WORD_OF_MOUTH = builder
+                .comment("Word of mouth: new customers per game month that every customer brings, while the reachable",
+                        "potential is not used up (logistic growth). 0 turns it off.")
+                .defineInRange("wordOfMouth", 0.15, 0.0, 1.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -305,6 +310,10 @@ public final class Config {
 
     public static double closeRate() {
         return SPEC.isLoaded() ? CLOSE_RATE.get() : 0.25;
+    }
+
+    public static double wordOfMouth() {
+        return SPEC.isLoaded() ? WORD_OF_MOUTH.get() : 0.15;
     }
 
     public static double hostingStorageBoost() {

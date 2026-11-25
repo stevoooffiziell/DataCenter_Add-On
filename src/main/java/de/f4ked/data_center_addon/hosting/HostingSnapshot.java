@@ -384,9 +384,15 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param repFactor   factor of the reach from reputation
      * @param awareFactor factor of the reach from awareness
      * @param customers   the account's customers of the product
+     * @param ordersGap   new customers per month closing the gap to the potential
+     * @param ordersWord  new customers per month by word of mouth
      */
     public record MarketRow(int product, double pool, double potential, double repFactor, double awareFactor,
-                            double customers) {
+                            double customers, double ordersGap, double ordersWord) {
+        public double orders() {
+            return ordersGap + ordersWord;
+        }
+
         public static final StreamCodec<FriendlyByteBuf, MarketRow> STREAM_CODEC = StreamCodec.of(
                 (buf, r) -> {
                     buf.writeVarInt(r.product);
@@ -395,9 +401,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(r.repFactor);
                     buf.writeDouble(r.awareFactor);
                     buf.writeDouble(r.customers);
+                    buf.writeDouble(r.ordersGap);
+                    buf.writeDouble(r.ordersWord);
                 },
                 buf -> new MarketRow(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readDouble()));
+                        buf.readDouble(), buf.readDouble(), buf.readDouble()));
     }
 
     // ------------------------------------------------------------------ codec

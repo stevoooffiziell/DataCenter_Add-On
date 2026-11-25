@@ -31,9 +31,10 @@ public final class MarketService {
             if (!MarketPool.exists(product, date)) {
                 continue;
             }
-            MarketModel.Reach reach = MarketModel.reach(market.entry(account, product), product, date, reputation);
+            MarketBook.Entry entry = market.entry(account, product);
+            MarketModel.Reach reach = MarketModel.reach(entry, product, date, reputation);
             rows.add(new HostingSnapshot.MarketRow(product.ordinal(), reach.pool(), reach.potential(), reach.reputation(),
-                    reach.awareness(), book.total(account, product)));
+                    reach.awareness(), book.total(account, product), entry.ordersGap, entry.ordersWord));
         }
         return new HostingSnapshot.Market(MarketPool.internetUsers(date), List.copyOf(rows));
     }

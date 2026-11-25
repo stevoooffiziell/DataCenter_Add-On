@@ -418,5 +418,12 @@
   "data_center_addon.configuration.marketModel": "Marktmodell",
   "data_center_addon.configuration.marketModel.tooltip": "Neue Kunden schließen die Lücke zum erreichbaren Potenzial. Aus: Kunden kommen wie in Data Center.",
   "data_center_addon.configuration.closeRate": "Abschlussrate",
-  "data_center_addon.configuration.closeRate.tooltip": "Anteil der Lücke zwischen Potenzial und Kunden, der pro Spielmonat zu Kunden wird."
+  "data_center_addon.configuration.closeRate.tooltip": "Anteil der Lücke zwischen Potenzial und Kunden, der pro Spielmonat zu Kunden wird.",
+  "data_center_addon.hosting.column.inflow": "Neu / Monat",
+  "data_center_addon.market.inflow.title": "Neue Kunden: %s pro Spielmonat",
+  "data_center_addon.market.inflow.gap": "Lücke zum Potenzial: %s",
+  "data_center_addon.market.inflow.word": "Mundpropaganda: %s",
+  "data_center_addon.market.inflow.note": "Neue Kunden nehmen nur freie Plätze.",
+  "data_center_addon.configuration.wordOfMouth": "Mundpropaganda",
+  "data_center_addon.configuration.wordOfMouth.tooltip": "Neue Kunden pro Spielmonat, die jeder Kunde bringt, solange das Potenzial nicht ausgeschöpft ist. 0 = aus."
 }
