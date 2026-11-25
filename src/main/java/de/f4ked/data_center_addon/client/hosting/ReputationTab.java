@@ -176,7 +176,8 @@ final class ReputationTab implements ManagerTab {
         ty += LINE_H;
         line(g, x, ty, w, "ruf.throttle", Texts.percent((float) st.throttle()));
         ty += LINE_H;
-        line(g, x, ty, w, "ruf.crashes", Integer.toString(st.crashes()));
+        line(g, x, ty, w, Texts.reputation("ruf.crashes"), st.crashes() + (st.incidents() > 0.0005
+                ? "  (−" + Texts.percent((float) st.incidents()) + ")" : ""), st.incidents() > 0.0005 ? TechPanel.WARN : TechPanel.TEXT);
         ty += LINE_H;
         line(g, x, ty, w, "ruf.days", Integer.toString(st.days()));
         ty += LINE_H;

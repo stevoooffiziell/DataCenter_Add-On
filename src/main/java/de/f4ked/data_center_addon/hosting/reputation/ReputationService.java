@@ -46,10 +46,12 @@ public final class ReputationService {
         today[Ruf.THROTTLED] += throttled ? Math.max(0, earning) : 0;
     }
 
-    /** A rack of the account crashed. */
+    /** A rack of the account crashed: a serious incident that presses the Ruf for 30 days. */
     public static void crash(MinecraftServer server, @Nullable UUID owner) {
         ReputationBook book = ReputationBook.get(server);
-        book.account(owner).today[Ruf.CRASHES]++;
+        ReputationBook.Account a = book.account(owner);
+        a.today[Ruf.CRASHES]++;
+        a.incidents.addLast(a.day < 0 ? DataCenterApi.currentDate(server.overworld()).toEpochDay() : a.day);
         book.setDirty();
     }
 
@@ -92,6 +94,9 @@ public final class ReputationService {
 
     /** Moves the recorded day into the window (days without service are left out). */
     private static void closeDay(ReputationBook.Account a) {
+        while (!a.incidents.isEmpty() && a.day - a.incidents.peekFirst() >= Ruf.WINDOW_DAYS) {
+            a.incidents.removeFirst();
+        }
         if (a.today[Ruf.SERVED] + a.today[Ruf.DOWN] > 0 || a.today[Ruf.CRASHES] > 0) {
             a.days.addLast(a.today.clone());
             while (a.days.size() > Ruf.WINDOW_DAYS) {
@@ -111,7 +116,8 @@ public final class ReputationService {
         Ruf.Figures f = Ruf.figures(a);
         double[] sources = new double[Renown.Source.values().length];
         a.sources().forEach((s, v) -> sources[s.ordinal()] = v);
-        return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.days(),
+        return new HostingSnapshot.Standing(f.ruf(), f.measured(), f.uptime(), f.overload(), f.throttle(), f.crashes(), f.incidents(),
+                f.days(),
                 DataCenterApi.reputation(level, account), toList(sources), Renown.pending(a),
                 a.lastReview == null ? List.of() : List.of(a.lastReview[0], a.lastReview[1], a.lastReview[2], a.lastReview[3],
                         a.lastReview[4], DataCenterApi.currentDate(level).toEpochDay()),

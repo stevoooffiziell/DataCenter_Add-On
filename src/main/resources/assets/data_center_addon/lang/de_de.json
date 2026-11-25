@@ -485,7 +485,7 @@
   "data_center_addon.reputation.ruf.throttle": "Gedrosselt (Hitze, Angriff, Netz)",
   "data_center_addon.reputation.ruf.crashes": "Abstürze",
   "data_center_addon.reputation.ruf.days": "Tage mit Betrieb",
-  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × Ausfall − ½ Überlast − ½ Drosselung − 2 %% je Absturz. Bei gleicher Qualität bleibt er, wo er ist. Er skaliert deinen erreichbaren Marktanteil: ×0,5 bei 0 %%, ×1 bei 100 %%.",
+  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × Ausfall − ½ Überlast − ½ Drosselung − Vorfälle (ein Absturz: −8 %%, klingt über 30 Tage ab). Bei gleicher Qualität bleibt er, wo er ist. Er skaliert deinen erreichbaren Anteil: ×0,5 bei 0 %%, ×1 bei 100 %%.",
   "data_center_addon.market.reach.ruf": "Ruf: %s",
   "data_center_addon.reputation.renown": "Bekanntheit",
   "data_center_addon.reputation.renown.note": "Bekanntheit sind die Reputationspunkte aus Data Center. Sie wächst nur durch das, was du tust: erledigte Aufträge, Neukunden mit störungsfreiem ersten Monat (+1 je 10), Meilensteine. Sie bestimmt deinen Marktanteil.",

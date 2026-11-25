@@ -47,6 +47,8 @@ public final class ReputationBook extends SavedData {
         double slaServed, slaDown;
         /** Epoch day renown was last gained; -1 until first seen. */
         long lastGainDay = -1;
+        /** Epoch days of the serious incidents (crashes) of the window, oldest first. */
+        final Deque<Long> incidents = new ArrayDeque<>();
         /** Highest room certification level a serving rack of the account had; -1 until first seen. */
         int maxTier = -1;
         /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
@@ -106,6 +108,9 @@ public final class ReputationBook extends SavedData {
             }
             account.customerMark = a.contains("customerMark") ? a.getDouble("customerMark") : Double.NaN;
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
+            for (long day : a.getLongArray("incidents")) {
+                account.incidents.addLast(day);
+            }
             account.lastGainDay = a.contains("lastGain") ? a.getLong("lastGain") : -1;
             account.slaMonth = a.getInt("slaMonth");
             account.slaServed = Math.max(0, a.getDouble("slaServed"));
@@ -145,6 +150,7 @@ public final class ReputationBook extends SavedData {
                 a.putDouble("customerMark", account.customerMark);
             }
             a.putInt("maxTier", account.maxTier);
+            a.putLongArray("incidents", account.incidents.stream().mapToLong(Long::longValue).toArray());
             a.putLong("lastGain", account.lastGainDay);
             a.putInt("slaMonth", account.slaMonth);
             a.putDouble("slaServed", account.slaServed);

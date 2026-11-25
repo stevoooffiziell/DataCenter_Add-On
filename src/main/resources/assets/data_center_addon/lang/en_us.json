@@ -485,7 +485,7 @@
   "data_center_addon.reputation.ruf.throttle": "Throttled (heat, attack, network)",
   "data_center_addon.reputation.ruf.crashes": "Crashes",
   "data_center_addon.reputation.ruf.days": "Days with service",
-  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × downtime − ½ overload − ½ throttling − 2 %% per crash. With the same quality it stays where it is. It scales the share of the markets you reach: ×0.5 at 0 %%, ×1 at 100 %%.",
+  "data_center_addon.reputation.ruf.note": "Ruf = 100 %% − 5 × downtime − ½ overload − ½ throttling − incidents (a crash: −8 %%, fading over 30 days). With the same quality it stays where it is. It scales your reachable share: ×0.5 at 0 %%, ×1 at 100 %%.",
   "data_center_addon.market.reach.ruf": "Ruf: %s",
   "data_center_addon.reputation.renown": "Bekanntheit (renown)",
   "data_center_addon.reputation.renown.note": "Renown is Data Center's reputation points. It only grows through what you do: finished orders, new customers whose first month runs without a disruption (+1 per 10), milestones. It sets your share of the markets.",

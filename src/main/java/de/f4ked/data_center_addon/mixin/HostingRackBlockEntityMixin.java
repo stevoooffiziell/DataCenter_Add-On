@@ -136,16 +136,20 @@ public abstract class HostingRackBlockEntityMixin {
         RackService.service(rack, reputation, server, owner, earningBays, throttled, certification, downBays, 0);
     }
 
-    /** A crash: Data Center's penalty, and the crash counts in the account's Ruf. */
+    /**
+     * A crash. Data Center takes 20 points at once; with the reputation model on the crash is a serious
+     * incident that presses the account's Ruf for 30 days instead.
+     */
     @Redirect(
             method = "runLoadout",
             at = @At(value = "INVOKE",
                     target = "Lcom/example/datacenter/hosting/HostingReputation;recordCrash(Lnet/minecraft/server/MinecraftServer;)V"),
             require = 0)
     private void data_center_addon$recordCrash(HostingReputation reputation, MinecraftServer server) {
-        reputation.recordCrash(server);
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
-        if (Config.reputationModel() && rack.getLevel() instanceof ServerLevel level) {
+        if (!Config.reputationModel()) {
+            reputation.recordCrash(server);
+        } else if (rack.getLevel() instanceof ServerLevel level) {
             ReputationService.crash(server, OwnerMessages.ownerOf(level, rack.getBlockPos()));
         }
     }

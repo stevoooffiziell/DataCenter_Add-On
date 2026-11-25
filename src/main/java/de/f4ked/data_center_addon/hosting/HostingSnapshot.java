@@ -540,6 +540,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param overload how far serving servers ran over capacity
      * @param throttle share of the serving that ran throttled
      * @param crashes  crashes in the window
+     * @param incidents what the incidents (crashes) of the window still take from the Ruf
      * @param days     days with service in the window
      * @param renown   Bekanntheit: Data Center's reputation points
      * @param sources  renown booked per {@code Renown.Source}, in its order
@@ -549,10 +550,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param slaUptime uptime of the calendar month so far (-1 without service)
      * @param quietDays days since renown was last gained (forgetting starts after 30)
      */
-    public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes, int days,
+    public record Standing(double ruf, boolean measured, double uptime, double overload, double throttle, int crashes,
+                           double incidents, int days,
                            double renown, List<Double> sources, double pending, List<Long> review, List<Campaign> campaigns,
                            double slaUptime, int quietDays) {
-        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of(), -1, 0);
+        public static final Standing NONE = new Standing(1, false, 1, 0, 0, 0, 0, 0, 0, List.of(), 0, List.of(), List.of(), -1, 0);
 
         private static final StreamCodec<FriendlyByteBuf, Long> LONG = StreamCodec.of(
                 (buf, v) -> buf.writeVarLong(v), FriendlyByteBuf::readVarLong);
@@ -568,6 +570,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeDouble(s.overload);
                     buf.writeDouble(s.throttle);
                     buf.writeVarInt(s.crashes);
+                    buf.writeDouble(s.incidents);
                     buf.writeVarInt(s.days);
                     buf.writeDouble(s.renown);
                     writeList(buf, s.sources, DOUBLE);
@@ -578,7 +581,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(s.quietDays);
                 },
                 buf -> new Standing(buf.readDouble(), buf.readBoolean(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                        buf.readVarInt(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
+                        buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readDouble(), readList(buf, DOUBLE, 32), buf.readDouble(),
                         readList(buf, LONG, 8), readList(buf, Campaign.STREAM_CODEC, 16),
                         buf.readDouble(), buf.readVarInt()));
     }
