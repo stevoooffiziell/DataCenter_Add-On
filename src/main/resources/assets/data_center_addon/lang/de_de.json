@@ -694,5 +694,18 @@
   "data_center_addon.industry.manager.state.blocked": "Blockiert",
   "data_center_addon.industry.manager.sales": "Verkäufe (letzte 30 Spieltage)",
   "data_center_addon.industry.manager.purchases": "Einkäufe (letzte 30 Spieltage)",
-  "data_center_addon.industry.manager.trade.note": "Alle Terminals deiner Firma zählen, egal wo sie stehen."
+  "data_center_addon.industry.manager.trade.note": "Alle Terminals deiner Firma zählen, egal wo sie stehen.",
+  "data_center_addon.jei.chip_fab": "Chip-Fertigungsstraße",
+  "data_center_addon.jei.chip_fab.note": "Schneller mit jedem Belichter, bis ×%s",
+  "data_center_addon.jei.hardware.share": "Etwa %s %% des Materialwerts",
+  "data_center_addon.jei.hardware.note": "Material ≈ 50 %% des Shop-Preises des Teils",
+  "data_center_addon.jei.price1999": "%s pro Stück im Jahr 1999",
+  "data_center_addon.jei.curve.copper": "Folgt dem Kupferkurs",
+  "data_center_addon.jei.curve.gold": "Folgt dem Goldkurs",
+  "data_center_addon.jei.curve.oil": "Folgt dem Ölpreis",
+  "data_center_addon.jei.curve.inflation": "Steigt mit der Inflation (2,5 %% pro Jahr)",
+  "data_center_addon.jei.sales.note": "Preis sinkt, wenn du viel verkaufst (Nachfrage)",
+  "data_center_addon.jei.info.chip_fab": "Teil der Chip-Fertigungsstraße: eine Steuerung und alle Reinraum-Wände und Belichter, die sie oder einander berühren. Die Straße braucht %s Wände und einen Belichter; jeder Belichter macht sie eine Stufe schneller, braucht aber %s Wände (höchstens %s zählen).",
+  "data_center_addon.jei.info.factory_manager": "Zeigt die Fabrik im Umkreis von 32 Blöcken: jede Maschine mit Status und Strom, das Budget deiner Einkaufsterminals und Einkäufe, Verkäufe und Marge deiner Firma der letzten 30 Spieltage.",
+  "data_center_addon.jei.info.plastic_pellets": "Gibt es am Einkaufsterminal. Die Presse macht daraus Kunststoffteile."
 }

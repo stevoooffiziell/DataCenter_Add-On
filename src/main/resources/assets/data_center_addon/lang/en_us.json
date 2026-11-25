@@ -694,5 +694,18 @@
   "data_center_addon.industry.manager.state.blocked": "Blocked",
   "data_center_addon.industry.manager.sales": "Sales (last 30 game days)",
   "data_center_addon.industry.manager.purchases": "Purchases (last 30 game days)",
-  "data_center_addon.industry.manager.trade.note": "All terminals of your company count, wherever they stand."
+  "data_center_addon.industry.manager.trade.note": "All terminals of your company count, wherever they stand.",
+  "data_center_addon.jei.chip_fab": "Chip Production Line",
+  "data_center_addon.jei.chip_fab.note": "Faster with each lithography unit, up to ×%s",
+  "data_center_addon.jei.hardware.share": "About %s %% of the material value",
+  "data_center_addon.jei.hardware.note": "Material ≈ 50 %% of the part's Shop price",
+  "data_center_addon.jei.price1999": "%s each in 1999",
+  "data_center_addon.jei.curve.copper": "Follows the copper market",
+  "data_center_addon.jei.curve.gold": "Follows the gold market",
+  "data_center_addon.jei.curve.oil": "Follows the oil price",
+  "data_center_addon.jei.curve.inflation": "Rises with inflation (2.5 %% a year)",
+  "data_center_addon.jei.sales.note": "Price falls when you sell a lot (demand)",
+  "data_center_addon.jei.info.chip_fab": "Part of the chip production line: a Chip Fab Controller and every Cleanroom Wall and Lithography Unit touching it or each other. The line needs %s walls and one lithography unit; each unit makes it one step faster but needs %s walls (at most %s units count).",
+  "data_center_addon.jei.info.factory_manager": "Shows the factory within 32 blocks: every machine with its state and power, the budget in your Purchase Terminals, and your company's purchases, sales and margin of the last 30 game days.",
+  "data_center_addon.jei.info.plastic_pellets": "Bought at the Purchase Terminal. The Press makes plastic parts from it."
 }

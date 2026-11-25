@@ -22,6 +22,18 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
+    // BlameJared Maven: the JEI API for the optional recipe integration
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'BlameJared'
+                url = 'https://maven.blamejared.com'
+            }
+        }
+        filter {
+            includeGroup 'mezz.jei'
+        }
+    }
     // Modrinth Maven: the Jade API for the optional look-at tooltips
     exclusiveContent {
         forRepository {
@@ -127,6 +139,11 @@ dependencies {
     // Jade (optional): look-at tooltips for racks, switches, cables and the Hosting Manager.
     // Only compiled against; the plugin class is loaded by Jade itself, so the add-on runs without it.
     compileOnly "maven.modrinth:jade:${jade_version}"
+
+    // JEI (optional): recipe pages for the factory machines, the chip line, the Hardware Fab and the terminals.
+    // Only compiled against; the plugin is found by JEI itself, so the add-on runs without it.
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

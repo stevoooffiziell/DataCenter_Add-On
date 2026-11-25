@@ -55,6 +55,11 @@ public final class HardwarePlan {
             return "data_center_addon.industry.hardware.group." + name().toLowerCase(Locale.ROOT);
         }
 
+        /** Share of the {@link #INPUTS} entry {@code i} in the material value. */
+        public double weight(int i) {
+            return i >= 0 && i < weights.length ? weights[i] : 0;
+        }
+
         @Nullable
         public static Group of(ShopCategory category) {
             for (Group g : values()) {

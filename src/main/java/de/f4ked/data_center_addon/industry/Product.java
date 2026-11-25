@@ -48,6 +48,11 @@ public enum Product {
         return item.get();
     }
 
+    /** Price of one item in 1999, in US cents, before the config multiplier. */
+    public double cents1999() {
+        return cents1999;
+    }
+
     public String id() {
         return name().toLowerCase(Locale.ROOT);
     }

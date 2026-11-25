@@ -40,6 +40,16 @@ public enum Commodity {
         return item.get();
     }
 
+    /** Price of one item in 1999, in US cents, before the config multiplier. */
+    public double cents1999() {
+        return cents1999;
+    }
+
+    /** How the price moves: copper, gold, oil or inflation. */
+    public String curveName() {
+        return curve.name().toLowerCase(Locale.ROOT);
+    }
+
     public String key() {
         return "data_center_addon.industry.commodity." + name().toLowerCase(Locale.ROOT);
     }
