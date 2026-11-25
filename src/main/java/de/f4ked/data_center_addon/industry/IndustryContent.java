@@ -8,6 +8,9 @@ import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.industry.chipfab.ChipFabBlockEntity;
 import de.f4ked.data_center_addon.industry.chipfab.ChipFabControllerBlock;
 import de.f4ked.data_center_addon.industry.chipfab.ChipFabMenu;
+import de.f4ked.data_center_addon.industry.hardware.HardwareFabBlock;
+import de.f4ked.data_center_addon.industry.hardware.HardwareFabBlockEntity;
+import de.f4ked.data_center_addon.industry.hardware.HardwareFabMenu;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlock;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineBlockEntity;
 import de.f4ked.data_center_addon.industry.machine.FactoryMachineMenu;
@@ -148,6 +151,27 @@ public final class IndustryContent {
                     .noOcclusion());
     public static final DeferredItem<BlockItem> PURCHASE_TERMINAL_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(PURCHASE_TERMINAL);
 
+    // ------------------------------------------------------------------ hardware fab
+
+    public static final DeferredBlock<HardwareFabBlock> HARDWARE_FAB = Data_center_addon.BLOCKS.registerBlock(
+            "hardware_fab", HardwareFabBlock::new,
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.0f, 6.0f)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(FactoryMachineBlock::lightLevel)
+                    .noOcclusion());
+    public static final DeferredItem<BlockItem> HARDWARE_FAB_ITEM = Data_center_addon.ITEMS.registerSimpleBlockItem(HARDWARE_FAB);
+
+    @SuppressWarnings("DataFlowIssue")
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HardwareFabBlockEntity>> HARDWARE_FAB_ENTITY =
+            BLOCK_ENTITIES.register("hardware_fab",
+                    () -> BlockEntityType.Builder.of(HardwareFabBlockEntity::new, HARDWARE_FAB.get()).build(null));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<HardwareFabMenu>> HARDWARE_FAB_MENU = MENUS.register(
+            "hardware_fab", () -> IMenuTypeExtension.create(HardwareFabMenu::new));
+
     // ------------------------------------------------------------------ sales terminal
 
     public static final DeferredBlock<SalesTerminalBlock> SALES_TERMINAL = Data_center_addon.BLOCKS.registerBlock(
@@ -190,6 +214,8 @@ public final class IndustryContent {
         modEventBus.addListener(IndustryContent::registerCapabilities);
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(PURCHASE_TERMINAL_ITEM.get()),
                 PURCHASE_TERMINAL_CENTS, MiningEra.FROM_WORLD_START));
+        ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(HARDWARE_FAB_ITEM.get()),
+                25_000_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(SALES_TERMINAL_ITEM.get()),
                 5_000_00L, MiningEra.FROM_WORLD_START));
         ShopCatalog.register(new ShopEntry(ShopCategory.INFRASTRUCTURE, () -> new ItemStack(CHIP_FAB_CONTROLLER_ITEM.get()),
@@ -212,6 +238,7 @@ public final class IndustryContent {
         stacks.add(SALES_TERMINAL_ITEM.get().getDefaultInstance());
         MACHINE_ITEMS.values().forEach(item -> stacks.add(item.get().getDefaultInstance()));
         stacks.add(CHIP_FAB_CONTROLLER_ITEM.get().getDefaultInstance());
+        stacks.add(HARDWARE_FAB_ITEM.get().getDefaultInstance());
         stacks.add(CLEANROOM_WALL_ITEM.get().getDefaultInstance());
         stacks.add(LITHOGRAPHY_UNIT_ITEM.get().getDefaultInstance());
         stacks.add(PLASTIC_PELLETS.get().getDefaultInstance());
@@ -238,6 +265,8 @@ public final class IndustryContent {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.automation());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, MACHINE_ENTITY.get(), (be, side) -> be.energy());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CHIP_FAB_ENTITY.get(), (be, side) -> be.automation());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HARDWARE_FAB_ENTITY.get(), (be, side) -> be.automation());
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, HARDWARE_FAB_ENTITY.get(), (be, side) -> be.energy());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CHIP_FAB_ENTITY.get(), (be, side) -> be.energy());
     }
 }

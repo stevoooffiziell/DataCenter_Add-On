@@ -29,7 +29,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 @EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class HostingManagerPayloads {
     private static final int INTERVAL_TICKS = 20;
-    private static final String NETWORK_VERSION = ModList.get().getModContainerById(Data_center_addon.MODID)
+    public static final String NETWORK_VERSION = ModList.get().getModContainerById(Data_center_addon.MODID)
             .map(c -> c.getModInfo().getVersion().toString()).orElse("0");
 
     private HostingManagerPayloads() {

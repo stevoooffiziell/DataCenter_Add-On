@@ -36,6 +36,7 @@ MACHINES = {
     'press': 0.78,  # violet
     'assembler': 0.33,  # green
     'chip_fab_controller': 0.50,  # cleanroom cyan
+    'hardware_fab': 0.92,  # magenta
 }
 
 

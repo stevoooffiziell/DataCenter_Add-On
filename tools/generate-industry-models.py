@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, 'src/main/resources/assets/data_center_addon')
 DATA = os.path.join(ROOT, 'src/main/resources/data')
 
-MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press', 'assembler', 'chip_fab_controller']
+MACHINES = ['smelter', 'rolling_mill', 'wire_drawer', 'press', 'assembler', 'chip_fab_controller', 'hardware_fab']
 # Data Center's bank terminal with the block's own screen
 TERMINALS = ['purchase_terminal', 'sales_terminal']
 # plain full blocks with one texture on every side

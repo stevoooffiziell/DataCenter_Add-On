@@ -77,6 +77,7 @@ public final class Config {
     private static final ModConfigSpec.IntValue SALES_HALF_LIFE;
     private static final ModConfigSpec.DoubleValue SALES_RECOVERY_DAYS;
     private static final ModConfigSpec.DoubleValue SALES_DEMAND_FLOOR;
+    private static final ModConfigSpec.DoubleValue HARDWARE_COST;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -242,6 +243,10 @@ public final class Config {
         SALES_DEMAND_FLOOR = builder
                 .comment("Lowest share of the price a saturated market still pays.")
                 .defineInRange("salesDemandFloor", 0.3, 0.0, 1.0);
+        HARDWARE_COST = builder
+                .comment("Hardware Fab: components a part needs, as a multiple of half its Shop price. 1.0 = components",
+                        "worth about 50 % of the Shop price, 2.0 = 100 %.")
+                .defineInRange("hardwareCost", 1.0, 0.1, 4.0);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -453,6 +458,10 @@ public final class Config {
 
     public static double salesDemandFloor() {
         return SPEC.isLoaded() ? SALES_DEMAND_FLOOR.get() : 0.3;
+    }
+
+    public static double hardwareCost() {
+        return SPEC.isLoaded() ? HARDWARE_COST.get() : 1.0;
     }
 
     public static double hostingStorageBoost() {
