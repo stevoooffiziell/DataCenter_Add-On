@@ -8,7 +8,7 @@
           "biome": "data_center_addon:skyblock",
           "features": false,
           "lakes": false,
-          "layers": [{"block": "minecraft:air", "height": 1}],
+          "layers": [],
           "structure_overrides": []
         }
       }
