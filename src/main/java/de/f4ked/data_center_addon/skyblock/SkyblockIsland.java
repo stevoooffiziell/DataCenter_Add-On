@@ -1,6 +1,7 @@
 package de.f4ked.data_center_addon.skyblock;
 
 import de.f4ked.data_center_addon.Data_center_addon;
+import com.example.datacenter.StarterKit;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,8 @@ import java.util.Optional;
  * whose only biome is the add-on's {@code skyblock} biome. On the first start of such a world the
  * starter island ({@code structure/skyblock_island.nbt}, built by {@code tools/generate-skyblock.py}) is
  * placed with its middle at 0, 0, the world spawn is set on its grass and the spawn radius to 0, so
- * nobody spawns over the void. The island is placed once per world.
+ * nobody spawns over the void. The island is placed once per world. Every player gets Data Center's
+ * starter kit on the first login.
  */
 @EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class SkyblockIsland {
@@ -80,11 +82,18 @@ public final class SkyblockIsland {
         LOGGER.info("SkyBlock: starter island placed at {}", ORIGIN);
     }
 
-    /** Greets each player once on the island. */
+    /**
+     * Each player's first login on the island: Data Center's starter kit (Data Center itself hands it out
+     * only by command or for a SkyWorlds island; {@code grant} gives it once per player, the add-on adds
+     * the Hosting Manager), and a greeting.
+     */
     @SubscribeEvent
     static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !isSkyblock(player.serverLevel().getServer().overworld())) {
             return;
+        }
+        if (com.example.datacenter.Config.GIVE_STARTER_KIT.get()) {
+            StarterKit.grant(player);
         }
         CompoundTag data = player.getPersistentData();
         if (data.getBoolean("data_center_addon_skyblock_greeted")) {
