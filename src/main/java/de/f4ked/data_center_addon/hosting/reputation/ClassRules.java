@@ -1,5 +1,6 @@
 package de.f4ked.data_center_addon.hosting.reputation;
 
+import com.example.datacenter.certification.CertificationTier;
 import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingReputation;
 import com.example.datacenter.wallet.OwnerMessages;
@@ -8,6 +9,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -17,6 +20,10 @@ import java.util.UUID;
  * The room certification each class needs stays as in Data Center and goes up to Tier IV for the top
  * classes: a rack only serves a class its room's tier allows.
  * <p>
+ * A class can only be newly unlocked while a serving rack of the account stands in a room of the
+ * certification it needs ({@link #roomLevel}): without a Tier I room an account stays at Start-ups,
+ * however good its Ruf and renown. A class already held is not lost when the room goes.
+ * <p>
  * Once unlocked, a class is kept while the Ruf stays within {@link #RUF_MARGIN} and the renown within
  * {@link #RENOWN_MARGIN} of its requirement.
  */
@@ -24,6 +31,11 @@ public final class ClassRules {
     /** Highest renown with the reputation model on (Data Center's own limit is 1000). */
     public static final double MAX_RENOWN = 2500;
     static final double RUF_MARGIN = 0.05, RENOWN_MARGIN = 25;
+    /** Ticks a room counts after its last serving rack reported. */
+    static final int ROOM_TICKS = 200;
+    /** Per account the server tick a serving rack last reported from a room of each certification level. */
+    private static final Map<UUID, long[]> ROOMS = new HashMap<>();
+    private static final UUID NOBODY = new UUID(0L, 0L);
 
     private ClassRules() {
     }
@@ -37,11 +49,41 @@ public final class ClassRules {
         return ruf >= t.ruf - 1e-9 && renown >= t.renown;
     }
 
-    /** The class the account holds now, given the class it had. */
-    public static CustomerTier tierFor(double ruf, double renown, CustomerTier current) {
+    /** A serving rack of the account stands in a room of this certification level. */
+    static void roomSeen(MinecraftServer server, @Nullable UUID account, int level) {
+        long[] seen = ROOMS.computeIfAbsent(account == null ? NOBODY : account, k -> new long[CertificationTier.values().length]);
+        if (level >= 0 && level < seen.length) {
+            seen[level] = Math.max(1, server.getTickCount());
+        }
+    }
+
+    /** The highest certification level of a room with a serving rack of the account (0: none). */
+    public static int roomLevel(MinecraftServer server, @Nullable UUID account) {
+        long[] seen = ROOMS.get(account == null ? NOBODY : account);
+        if (seen == null) {
+            return 0;
+        }
+        for (int level = seen.length - 1; level > 0; level--) {
+            if (seen[level] > 0 && server.getTickCount() - seen[level] <= ROOM_TICKS) {
+                return level;
+            }
+        }
+        return 0;
+    }
+
+    static void clearRooms() {
+        ROOMS.clear();
+    }
+
+    /**
+     * The class the account holds now, given the class it had.
+     *
+     * @param room the highest room certification level the account serves from
+     */
+    public static CustomerTier tierFor(double ruf, double renown, int room, CustomerTier current) {
         CustomerTier best = CustomerTier.HOBBYISTS;
         for (CustomerTier t : CustomerTier.values()) {
-            if (meets(t, ruf, renown)) {
+            if (meets(t, ruf, renown) && (t.room.level <= room || t.ordinal() <= current.ordinal())) {
                 best = t;
             }
         }
@@ -93,7 +135,7 @@ public final class ClassRules {
         ReputationBook book = ReputationBook.get(server);
         ReputationBook.Account a = book.account(account);
         CustomerTier before = a.tier < 0 ? CustomerTier.first(current) : CustomerTier.of(a.tier);
-        CustomerTier now = tierFor(ruf, renown, before);
+        CustomerTier now = tierFor(ruf, renown, roomLevel(server, account), before);
         if (a.tier != now.ordinal()) {
             if (a.tier >= 0 && account != null) {
                 boolean up = now.ordinal() > before.ordinal();

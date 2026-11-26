@@ -62,6 +62,7 @@ public final class ReputationService {
         QuickFix.clear();
         LossNotices.clear();
         Sensitivity.clear();
+        ClassRules.clearRooms();
     }
 
     @SubscribeEvent
@@ -147,7 +148,8 @@ public final class ReputationService {
                 Campaigns.snapshot(a, DataCenterApi.currentDate(level)), slaUptime(a),
                 a.lastGainDay < 0 ? 0 : (int) Math.max(0, DataCenterApi.currentDate(level).toEpochDay() - a.lastGainDay),
                 toList(Renown.recent(a, DataCenterApi.currentDate(level).toEpochDay())),
-                history(a, 1, f.ruf()), history(a, 2, DataCenterApi.reputation(level, account)));
+                history(a, 1, f.ruf()), history(a, 2, DataCenterApi.reputation(level, account)),
+                ClassRules.roomLevel(level.getServer(), account));
     }
 
     /** One column of the history, with today's value at the end. */

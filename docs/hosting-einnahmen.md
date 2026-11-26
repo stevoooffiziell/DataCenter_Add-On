@@ -143,6 +143,10 @@ und Grünstrom etwa ×3,8. Das ist viel, aber auf einer kleinen Basis.
 | Hyperscaler | Kritische Branchen | 99,3 % | 1950 | Tier IV | ×1,88 |
 | Kritische Infrastruktur | Kritische Branchen | 99,5 % | 2400 | Tier IV | ×2,00 |
 
+Eine Klasse lässt sich nur freischalten, wenn ein laufendes Rack in einem Raum mit der Zertifizierung
+aus der Spalte „Raum“ steht. Ohne Tier-I-Raum ist bei Start-ups Schluss, egal wie hoch Ruf und
+Bekanntheit sind. Eine erreichte Klasse geht nicht verloren, wenn der Raum wegfällt.
+
 Data Center selbst sieht nur die Gruppe: Sie entscheidet über seine Fortschritte und die maximale
 Klasse eines Racks. Jede Klasse öffnet einen eigenen Teil des Markts (15 % des Hobbyisten-Markts
 für die unteren Klassen, bis 5 % für die oberste). Aufträge und Lieferungen höherer Klassen zahlen

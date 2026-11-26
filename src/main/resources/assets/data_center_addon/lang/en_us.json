@@ -499,7 +499,7 @@
   "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
   "data_center_addon.reputation.class.renown": "Renown %s / %s",
   "data_center_addon.reputation.class.tier": "Room: %s",
-  "data_center_addon.reputation.class.tip": "A class needs both Ruf and renown, and a rack only serves the class its room's certification allows (the top classes need Tier IV). A class is kept while Ruf stays within 5 %% and renown within 25 of it. Renown goes up to 2500.",
+  "data_center_addon.reputation.class.tip": "A class needs Ruf, renown and a room of the right certification with a rack of yours running in it: without a Tier I room you cannot get past Start-ups, the top classes need Tier IV. A class is kept while Ruf stays within 5 %% and renown within 25 of it; losing the room does not cost it. Renown goes up to 2500.",
   "data_center_addon.reputation.class.row": "%s: Ruf %s · renown %s · %s · +%s %% income",
   "data_center_addon.reputation.tier_up": "Hosting reputation up: §a%s§r customers are signing with you now (+%s%% on hosting income)",
   "data_center_addon.reputation.tier_down": "Hosting reputation down: you are back to §c%s§r customers (+%s%% on hosting income)",

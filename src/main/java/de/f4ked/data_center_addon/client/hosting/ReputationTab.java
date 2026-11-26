@@ -101,8 +101,10 @@ final class ReputationTab implements ManagerTab {
                 Texts.percent((float) needRuf)).getString() + (rufOk ? " ✔" : " ✘") + "  ", rufOk ? TechPanel.GOOD : TechPanel.WARN);
         tx = part(g, tx, ty, Component.translatable("data_center_addon.reputation.class.renown", Math.round(st.renown()),
                 Math.round(needRenown)).getString() + (renownOk ? " ✔" : " ✘") + "  ", renownOk ? TechPanel.GOOD : TechPanel.WARN);
+        boolean roomOk = st.roomTier() >= next.room.level;
         part(g, tx, ty, Component.translatable("data_center_addon.reputation.class.tier",
-                Component.translatable(next.room.translationKey())).getString(), TechPanel.TEXT_MUTED);
+                Component.translatable(next.room.translationKey())).getString() + (roomOk ? " ✔" : " ✘"),
+                roomOk ? TechPanel.GOOD : TechPanel.WARN);
         if (panel.hover(x, y, w, 26)) {
             panel.tooltip(classTip(current));
         }

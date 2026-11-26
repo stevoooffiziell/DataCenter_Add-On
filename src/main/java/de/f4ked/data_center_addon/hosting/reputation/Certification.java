@@ -23,6 +23,7 @@ public final class Certification {
 
     /** A serving rack of the account stands in a room of this certification level. */
     static void seen(ServerLevel level, @Nullable UUID owner, int tier) {
+        ClassRules.roomSeen(level.getServer(), owner, tier);
         ReputationBook book = ReputationBook.get(level.getServer());
         ReputationBook.Account a = book.account(owner);
         if (a.maxTier < 0) {

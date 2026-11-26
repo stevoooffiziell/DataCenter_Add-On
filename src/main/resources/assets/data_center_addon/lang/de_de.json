@@ -499,7 +499,7 @@
   "data_center_addon.reputation.class.ruf": "Ruf %s / %s",
   "data_center_addon.reputation.class.renown": "Bekanntheit %s / %s",
   "data_center_addon.reputation.class.tier": "Raum: %s",
-  "data_center_addon.reputation.class.tip": "Eine Klasse braucht Ruf und Bekanntheit, und ein Rack bedient nur die Klasse, die die Zertifizierung seines Raums erlaubt (die obersten Klassen brauchen Tier IV). Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt. Die Bekanntheit reicht bis 2500.",
+  "data_center_addon.reputation.class.tip": "Eine Klasse braucht Ruf, Bekanntheit und einen Raum mit der passenden Zertifizierung, in dem ein Rack von dir läuft: Ohne Tier-I-Raum geht es nicht über Start-ups hinaus, die obersten Klassen brauchen Tier IV. Eine Klasse bleibt, solange der Ruf höchstens 5 %% und die Bekanntheit höchstens 25 darunter liegt; den Raum zu verlieren kostet sie nicht. Die Bekanntheit reicht bis 2500.",
   "data_center_addon.reputation.class.row": "%s: Ruf %s · Bekanntheit %s · %s · +%s %% Einnahmen",
   "data_center_addon.reputation.tier_up": "Hosting-Ruf gestiegen: §a%s§r unterschreiben jetzt bei dir (+%s%% auf das Hosting-Einkommen)",
   "data_center_addon.reputation.tier_down": "Hosting-Ruf gesunken: du bist zurück bei §c%s§r (+%s%% auf das Hosting-Einkommen)",
