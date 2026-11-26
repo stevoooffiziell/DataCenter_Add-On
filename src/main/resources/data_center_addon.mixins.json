@@ -14,7 +14,8 @@
     "HostingReputationMixin",
     "NetNodeAccessor",
     "NewsEventsMixin",
-    "ShopEntryMixin"
+    "ShopEntryMixin",
+    "StarterKitMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",
