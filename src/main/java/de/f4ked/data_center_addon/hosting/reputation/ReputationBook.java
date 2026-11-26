@@ -55,6 +55,8 @@ public final class ReputationBook extends SavedData {
         final Deque<Long> incidents = new ArrayDeque<>();
         /** Highest room certification level a serving rack of the account had; -1 until first seen. */
         int maxTier = -1;
+        /** The account's {@link CustomerTier} ordinal; -1 until first decided. */
+        int tier = -1;
         /** New customers in their first month: {start day, count, disrupted (1) or not (0)}, oldest first. */
         final Deque<double[]> cohorts = new ArrayDeque<>();
 
@@ -125,6 +127,7 @@ public final class ReputationBook extends SavedData {
                 account.recent.addLast(bucket);
             }
             account.maxTier = a.contains("maxTier") ? a.getInt("maxTier") : -1;
+            account.tier = a.contains("tier") ? a.getInt("tier") : -1;
             for (long day : a.getLongArray("incidents")) {
                 account.incidents.addLast(day);
             }
@@ -167,6 +170,7 @@ public final class ReputationBook extends SavedData {
                 a.putDouble("customerMark", account.customerMark);
             }
             a.putInt("maxTier", account.maxTier);
+            a.putInt("tier", account.tier);
             a.putLongArray("incidents", account.incidents.stream().mapToLong(Long::longValue).toArray());
             a.putLong("lastGain", account.lastGainDay);
             a.putInt("slaMonth", account.slaMonth);

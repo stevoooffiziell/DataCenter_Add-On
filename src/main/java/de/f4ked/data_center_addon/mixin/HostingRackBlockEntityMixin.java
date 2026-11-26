@@ -1,6 +1,8 @@
 package de.f4ked.data_center_addon.mixin;
 
+import com.example.datacenter.certification.CertificationTier;
 import com.example.datacenter.component.StorageSpec;
+import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingDemand;
 import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingModeRates;
@@ -12,6 +14,8 @@ import com.example.datacenter.wallet.OwnerMessages;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.MarketService;
 import de.f4ked.data_center_addon.hosting.market.ServiceQuality;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import de.f4ked.data_center_addon.hosting.reputation.LossNotices;
 import de.f4ked.data_center_addon.hosting.reputation.RackService;
 import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
@@ -21,6 +25,8 @@ import de.f4ked.data_center_addon.part.HostingStorageBoost;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,6 +51,8 @@ import java.util.UUID;
  *   <li>The rack's service of the tick (customers served, down, overloaded, throttled) goes to the
  *       add-on's {@link RackService} instead of straight to Data Center's reputation, and to
  *       {@link ServiceQuality}.</li>
+ *   <li>With the reputation model on, the income multiplier of the customer class comes from the
+ *       add-on's finer classes ({@link CustomerTier}).</li>
  * </ul>
  * {@code require = 0}: if a Data Center update changes this method, the hooks silently stop instead
  * of crashing the game.
@@ -54,13 +62,50 @@ public abstract class HostingRackBlockEntityMixin {
     /** What this rack's customers pay relative to the list price this tick (the owner's price, Market tab). */
     @Unique
     private double data_center_addon$price = 1.0;
+    /** The rack's owner this tick. */
+    @Unique
+    @Nullable
+    private UUID data_center_addon$owner;
+    /** The room certification the rack's customer class was limited by this tick. */
+    @Unique
+    private CertificationTier data_center_addon$room = CertificationTier.NONE;
 
     @Inject(method = "runLoadout", at = @At("HEAD"), require = 0)
     private void data_center_addon$readPrice(MachineBlockEntity.TickContext context, CallbackInfo ci) {
         HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
+        data_center_addon$owner = rack.getLevel() instanceof ServerLevel level ? OwnerMessages.ownerOf(level, rack.getBlockPos()) : null;
         data_center_addon$price = rack.getLevel() instanceof ServerLevel level
-                ? MarketService.priceFactor(level, OwnerMessages.ownerOf(level, rack.getBlockPos()), rack.getProduct())
+                ? MarketService.priceFactor(level, data_center_addon$owner, rack.getProduct())
                 : 1.0;
+    }
+
+    /** Notes the room's certification on the way to the rack's customer class. */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/example/datacenter/hosting/CustomerClass;effective(Lcom/example/datacenter/hosting/CustomerClass;Lcom/example/datacenter/certification/CertificationTier;)Lcom/example/datacenter/hosting/CustomerClass;"),
+            require = 0)
+    private CustomerClass data_center_addon$effectiveClass(CustomerClass unlocked, CertificationTier room) {
+        data_center_addon$room = room;
+        return CustomerClass.effective(unlocked, room);
+    }
+
+    /**
+     * The income multiplier of the class the rack serves: with the reputation model on, the add-on's class
+     * that the account has unlocked, as far as the rack's Data Center class and its room allow.
+     */
+    @Redirect(
+            method = "runLoadout",
+            at = @At(value = "FIELD", target = "Lcom/example/datacenter/hosting/CustomerClass;incomeMultiplier:D",
+                    opcode = Opcodes.GETFIELD),
+            require = 0)
+    private double data_center_addon$classIncome(CustomerClass served) {
+        HostingRackBlockEntity rack = (HostingRackBlockEntity) (Object) this;
+        if (!Config.reputationModel() || !(rack.getLevel() instanceof ServerLevel level)) {
+            return served.incomeMultiplier;
+        }
+        CustomerTier unlocked = ClassRules.tier(level.getServer(), data_center_addon$owner);
+        return CustomerTier.served(unlocked, served, data_center_addon$room).income;
     }
 
     /** Shared hosting and VPS: what a customer brings, at the owner's price. */

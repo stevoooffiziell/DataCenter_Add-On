@@ -1,10 +1,11 @@
 package de.f4ked.data_center_addon.hosting.market;
 
-import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingGrowth;
 import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.Config;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,10 +21,10 @@ import java.util.UUID;
  *   <li><b>Market events</b>: dotcom boom and crash, Web 2.0 boom, financial crisis ({@link MarketEvents}).</li>
  *   <li><b>Base share</b>: {@code 1 / POOL_FACTOR}, so at 0 reputation and fully known the potential
  *       equals Data Center's own customer equilibrium.</li>
- *   <li><b>Reputation</b>: ×1 at 0 points up to ×2 at 1000.</li>
+ *   <li><b>Reputation</b>: ×1 at 0 points up to ×2 at 1000, and on to ×2.5 at 2500.</li>
  *   <li><b>Customer classes</b>: every customer class the account has unlocked opens a sub-pool of its
- *       own ({@link #CLASS_POOLS}): small business +30 %, mid-market +30 %, enterprise +25 %, finance
- *       +20 % of the hobbyist pool. Their customers pay better (they lean to the better paying
+ *       own ({@link CustomerTier#pool}): 15 % of the hobbyist pool each for the lower classes, down to
+ *       5 % for the top class. Their customers pay better (they lean to the better paying
  *       segments).</li>
  *   <li><b>Awareness</b>: ×0.5 for a product nobody knows the account for, up to ×1. It grows while the
  *       account offers places of the product (63 % of the way in {@link #AWARENESS_UP_MONTHS} game
@@ -44,8 +45,8 @@ public final class MarketModel {
     static final double AWARENESS_FLOOR = 0.5;
     /** Reputation factor at 1000 points (×1 at 0). */
     static final double REPUTATION_MAX = 2.0;
-    /** Size of each customer class's sub-pool, relative to the hobbyist pool, in {@link CustomerClass} order. */
-    public static final double[] CLASS_POOLS = {1.0, 0.30, 0.30, 0.25, 0.20};
+    /** What the points above 1000 add to the reputation factor, up to {@link ClassRules#MAX_RENOWN}. */
+    static final double REPUTATION_BEYOND = 0.5;
     /** Price steps: 10 % each, from −30 % to +50 %. */
     public static final double PRICE_STEP = 0.10;
     public static final int PRICE_MIN = -3, PRICE_MAX = 5;
@@ -94,7 +95,7 @@ public final class MarketModel {
      * @param ruf    factor of the account's Ruf ({@code Ruf#reachFactor})
      */
     public static Reach reach(MarketBook.Entry entry, HostingProduct product, LocalDate date, double reputationPoints,
-                              CustomerClass unlocked, double market, double rivals, double ruf) {
+                              CustomerTier unlocked, double market, double rivals, double ruf) {
         double pool = MarketPool.pool(product, date) * market;
         double rep = reputationFactor(reputationPoints);
         double aware = AWARENESS_FLOOR + (1 - AWARENESS_FLOOR) * entry.awareness();
@@ -110,7 +111,7 @@ public final class MarketModel {
      * @param tick the server tick; {@code step} notes the account as active, the Market tab only reads
      */
     public static Reach sharedReach(MarketBook book, MarketBook.Entry entry, HostingProduct product, LocalDate date,
-                                    double reputationPoints, CustomerClass unlocked, double market, double rivals, double ruf,
+                                    double reputationPoints, CustomerTier unlocked, double market, double rivals, double ruf,
                                     long tick, boolean note) {
         Reach alone = reach(entry, product, date, reputationPoints, unlocked, market, rivals, ruf);
         if (note) {
@@ -135,14 +136,17 @@ public final class MarketModel {
     }
 
     static double reputationFactor(double points) {
-        return 1 + (REPUTATION_MAX - 1) * Math.max(0, Math.min(1000, points)) / 1000;
+        double beyond = Math.max(0, Math.min(ClassRules.MAX_RENOWN, points) - 1000) / (ClassRules.MAX_RENOWN - 1000);
+        return 1 + (REPUTATION_MAX - 1) * Math.max(0, Math.min(1000, points)) / 1000 + REPUTATION_BEYOND * beyond;
     }
 
     /** The hobbyist pool plus the sub-pools of every class up to {@code unlocked}. */
-    public static double classFactor(CustomerClass unlocked) {
+    public static double classFactor(CustomerTier unlocked) {
         double sum = 0;
-        for (int c = 0; c <= unlocked.ordinal() && c < CLASS_POOLS.length; c++) {
-            sum += CLASS_POOLS[c];
+        for (CustomerTier t : CustomerTier.values()) {
+            if (t.ordinal() <= unlocked.ordinal()) {
+                sum += t.pool;
+            }
         }
         return sum;
     }

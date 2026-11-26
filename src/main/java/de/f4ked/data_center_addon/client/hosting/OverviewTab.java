@@ -1,8 +1,9 @@
 package de.f4ked.data_center_addon.client.hosting;
 
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
 import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
-import com.example.datacenter.hosting.CustomerClass;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -80,8 +81,9 @@ final class OverviewTab implements ManagerTab {
         int labelW = 78, valueW = Math.max(110, bw / 3);
         int barX = x + labelW, barW = bw - labelW - valueW - 8;
         panel.line(g, Texts.hosting("overview.reputation"), x, ry + 1, labelW, TechPanel.TEXT_MUTED);
-        TechPanel.bar(g, barX, ry, barW, 10, s.reputation() / 1000f, TechPanel.ACCENT);
-        String rep = s.reputation() + " / 1000 · " + Component.translatable(CustomerClass.ofOrdinal(s.customerClass()).translationKey()).getString()
+        TechPanel.bar(g, barX, ry, barW, 10, (float) (s.reputation() / ClassRules.maxRenown()), TechPanel.ACCENT);
+        String rep = s.reputation() + " / " + Math.round(ClassRules.maxRenown()) + " · "
+                + Component.translatable(CustomerTier.of(s.customerClass()).translationKey()).getString()
                 + " · " + Component.translatable("data_center_addon.reputation.ruf.short", Texts.percent((float) s.standing().ruf())).getString();
         panel.line(g, rep, barX + barW + 8, ry + 1, valueW, TechPanel.TEXT);
 

@@ -1,5 +1,7 @@
 package de.f4ked.data_center_addon.hosting.contract;
 
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.CustomerClass;
@@ -225,9 +227,12 @@ public final class ContractService {
 
     private static ContractBook.Contract newOffer(ServerLevel level, UUID accountId, ContractBook.Account account,
                                                   LocalDate today, RandomSource random) {
-        CustomerClass unlocked = HostingReputation.get(level, accountId).getUnlockedClass();
+        CustomerTier unlocked = ClassRules.tier(level.getServer(), accountId);
         // two rolls, the better one: most offers come from the best class unlocked
-        int cls = Math.max(random.nextInt(unlocked.ordinal() + 1), random.nextInt(unlocked.ordinal() + 1));
+        int t = Math.max(random.nextInt(unlocked.ordinal() + 1), random.nextInt(unlocked.ordinal() + 1));
+        CustomerTier tier = CustomerTier.of(t);
+        // size, duration and client follow Data Center's class the add-on's class belongs to
+        int cls = tier.base.ordinal();
 
         // products the account already sells come up four times as often
         List<HostingProduct> products = new ArrayList<>();
@@ -243,7 +248,7 @@ public final class ContractService {
         HostingProduct product = products.isEmpty() ? HostingProduct.SHARED_WEB : products.get(random.nextInt(products.size()));
 
         // hobbyist accounts often get mini orders; any account now and then an emergency order
-        boolean mini = unlocked == CustomerClass.HOBBYISTS && random.nextFloat() < MINI_CHANCE;
+        boolean mini = unlocked.base == CustomerClass.HOBBYISTS && random.nextFloat() < MINI_CHANCE;
         boolean urgent = !mini && random.nextFloat() < URGENT_CHANCE;
 
         double size = SIZE_MIN[cls] + random.nextDouble() * (SIZE_MAX[cls] - SIZE_MIN[cls]);
@@ -256,11 +261,11 @@ public final class ContractService {
             days = 2 + random.nextInt(3);
         }
         double monthlyUsd = accounts * HostingModeRates.unitUsd(product, today) * PAY_SHARE
-                * CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
+                * tier.income * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
         long perDay = Math.max(25, Math.round(monthlyUsd / 30.0 * 100));
         long bonus = perDay * days / 2;
         long penalty = mini ? 0 : perDay * (urgent ? 3 : 5);
-        int reputation = (int) Math.round((mini ? 1 : 3 + cls * 4 + (urgent ? 2 : 0)) * Config.orderRenown());
+        int reputation = (int) Math.round((mini ? 1 : 3 + t * 2 + (urgent ? 2 : 0)) * Config.orderRenown());
 
         int client = pickClient(cls, product, random);
         ContractBook.Contract contract = new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus,

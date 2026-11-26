@@ -1,6 +1,8 @@
 package de.f4ked.data_center_addon.hosting.contract;
 
 import de.f4ked.data_center_addon.industry.Product;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import de.f4ked.data_center_addon.hosting.reputation.Renown;
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.catalog.PartPacks;
@@ -209,9 +211,12 @@ public final class DeliveryService {
 
     private static ContractBook.Delivery newOffer(ServerLevel level, UUID accountId, ContractBook.Account account,
                                                   LocalDate today, RandomSource random) {
-        CustomerClass unlocked = HostingReputation.get(level, accountId).getUnlockedClass();
-        int cls = Math.max(random.nextInt(unlocked.ordinal() + 1), random.nextInt(unlocked.ordinal() + 1));
-        double scale = 1 + cls * 0.75;
+        CustomerTier unlocked = ClassRules.tier(level.getServer(), accountId);
+        int t = Math.max(random.nextInt(unlocked.ordinal() + 1), random.nextInt(unlocked.ordinal() + 1));
+        CustomerTier tier = CustomerTier.of(t);
+        // the goals and the client follow Data Center's class the add-on's class belongs to
+        int cls = tier.base.ordinal();
+        double scale = 1 + t * 0.4;
         boolean early = StartupService.earlyPhase(level, accountId);
 
         List<ContractBook.Goal> goals = new ArrayList<>();
@@ -230,10 +235,10 @@ public final class DeliveryService {
         for (ContractBook.Goal goal : goals) {
             usd += goal.count * unitUsd(goal, today);
         }
-        usd *= CustomerClass.values()[cls].incomeMultiplier * Config.contractPayMultiplier();
+        usd *= tier.income * Config.contractPayMultiplier();
         long pay = Math.max(100, Math.round(usd) * 100);
-        int days = 4 + cls * 2 + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
-        int reputation = (int) Math.round((2 + cls * 3) * Config.orderRenown());
+        int days = 4 + t + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
+        int reputation = (int) Math.round((2 + t * 1.5) * Config.orderRenown());
         int client = ContractService.pickClient(cls, null, random);
         return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days,
                 today.toEpochDay() + OFFER_DAYS - 1);

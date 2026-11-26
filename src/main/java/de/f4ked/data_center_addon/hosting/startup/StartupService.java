@@ -1,5 +1,7 @@
 package de.f4ked.data_center_addon.hosting.startup;
 
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingModeRates;
@@ -232,7 +234,7 @@ public final class StartupService {
     private static void newCustomers(ServerLevel level, UUID id, StartupBook.Account a, LocalDate date) {
         HostingCustomers customers = HostingCustomers.get(level);
         double months = Config.setupFeeMonths();
-        double classMultiplier = HostingReputation.get(level, id).getUnlockedClass().incomeMultiplier;
+        double classMultiplier = ClassRules.tier(level.getServer(), id).income;
         HostingProduct[] products = HostingProduct.values();
         for (int i = 0; i < products.length && i < a.lastCustomers.length; i++) {
             double now = customers.total(id, products[i]);

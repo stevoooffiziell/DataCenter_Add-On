@@ -1,11 +1,12 @@
 package de.f4ked.data_center_addon.hosting.market;
 
 import com.example.datacenter.api.DataCenterApi;
-import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
 import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import de.f4ked.data_center_addon.Data_center_addon;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
 import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
@@ -79,6 +80,7 @@ public final class MarketService {
         MarketBook market = MarketBook.get(level.getServer());
         HostingReputation rep = HostingReputation.get(level, account);
         double reputation = rep.getPoints();
+        CustomerTier tier = ClassRules.tier(level.getServer(), account);
         List<HostingSnapshot.MarketRow> rows = new ArrayList<>();
         for (HostingProduct product : HostingProduct.values()) {
             if (!MarketPool.exists(product, date)) {
@@ -86,17 +88,18 @@ public final class MarketService {
             }
             MarketBook.Entry entry = market.entry(account, product);
             double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.rufFor(level.getServer(), account, entry)) : 1.0;
-            MarketModel.Reach reach = MarketModel.sharedReach(market, entry, product, date, reputation, rep.getUnlockedClass(),
+            MarketModel.Reach reach = MarketModel.sharedReach(market, entry, product, date, reputation, tier,
                     MarketEvents.factor(level, product, date), Competitors.factor(market, product), ruf,
                     level.getServer().getTickCount(), false);
             double customers = book.total(account, product);
             // what the next customer class would add: its reputation threshold, its sub-pool
-            CustomerClass next = CustomerClass.ofOrdinal(rep.getUnlockedClass().ordinal() + 1);
+            CustomerTier next = ClassRules.next(tier);
             double nextGain = 0;
             int nextClass = -1;
-            if (next.ordinal() > rep.getUnlockedClass().ordinal()) {
+            if (next != null) {
                 nextClass = next.ordinal();
-                MarketModel.Reach then = MarketModel.sharedReach(market, entry, product, date, Math.max(reputation, next.threshold),
+                double needed = Config.reputationModel() ? next.renown : next.base.threshold;
+                MarketModel.Reach then = MarketModel.sharedReach(market, entry, product, date, Math.max(reputation, needed),
                         next, MarketEvents.factor(level, product, date), Competitors.factor(market, product), ruf,
                         level.getServer().getTickCount(), false);
                 nextGain = Math.max(0, then.potential() - reach.potential());

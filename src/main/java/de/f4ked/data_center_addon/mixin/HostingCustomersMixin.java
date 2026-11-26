@@ -1,14 +1,14 @@
 package de.f4ked.data_center_addon.mixin;
 
-import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingCustomers;
 import com.example.datacenter.hosting.HostingProduct;
-import com.example.datacenter.hosting.HostingReputation;
 import de.f4ked.data_center_addon.Config;
 import de.f4ked.data_center_addon.hosting.market.Competitors;
 import de.f4ked.data_center_addon.hosting.market.MarketBook;
 import de.f4ked.data_center_addon.hosting.market.MarketEvents;
 import de.f4ked.data_center_addon.hosting.market.MarketModel;
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import de.f4ked.data_center_addon.hosting.reputation.ReputationService;
 import de.f4ked.data_center_addon.hosting.reputation.Ruf;
 import net.minecraft.server.MinecraftServer;
@@ -63,7 +63,7 @@ public abstract class HostingCustomersMixin {
             return;
         }
         MarketBook book = MarketBook.get(server);
-        CustomerClass unlocked = HostingReputation.get(server.overworld(), owner).getUnlockedClass();
+        CustomerTier unlocked = ClassRules.tier(server, owner);
         double market = MarketEvents.factor(server.overworld(), product, date);
         double rivals = Competitors.factor(book, product);
         double ruf = Config.reputationModel() ? Ruf.reachFactor(ReputationService.rufFor(server, owner, entry)) : 1.0;

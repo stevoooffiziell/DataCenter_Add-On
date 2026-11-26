@@ -1,5 +1,7 @@
 package de.f4ked.data_center_addon.hosting.startup;
 
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.HostingRackBlockEntity;
 import com.example.datacenter.hosting.HostingReputation;
@@ -67,8 +69,8 @@ final class ServiceTickets {
         if (rack == null) {
             return;
         }
-        int cls = HostingReputation.get(level, id).getUnlockedClass().ordinal();
-        long reward = Math.round((30 + random.nextInt(51)) * (1 + 0.5 * cls)) * 100L;
+        int tier = ClassRules.tier(server, id).ordinal();
+        long reward = Math.round((30 + random.nextInt(51)) * (1 + 0.25 * tier)) * 100L;
         StartupBook.Ticket ticket = new StartupBook.Ticket(a.nextTicketId++, rack.dimension().location(), rack.pos(),
                 random.nextInt(KINDS), reward, day + DAYS - 1);
         a.tickets.add(ticket);

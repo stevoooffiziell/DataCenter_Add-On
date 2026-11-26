@@ -1,5 +1,7 @@
 package de.f4ked.data_center_addon.hosting;
 
+import de.f4ked.data_center_addon.hosting.reputation.ClassRules;
+
 import com.example.datacenter.api.DataCenterApi;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingCustomers;
@@ -112,7 +114,8 @@ public final class HostingManagerService {
 
         UUID account = DataCenterApi.accountOf(level, player.getUUID());
         HostingReputation reputation = HostingReputation.get(level, account);
-        return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()), reputation.getUnlockedClass().ordinal(),
+        return new HostingSnapshot(connected, (int) Math.round(reputation.getPoints()),
+                ClassRules.tier(level.getServer(), account).ordinal(),
                 foreign, network(level, manager), List.copyOf(racks), segments(level, pools), ContractService.snapshot(level, account),
                 DeliveryService.snapshot(level, account, ContractBook.get(level.getServer()).account(account), player.getInventory()),
                 StartupService.snapshot(level, account), MarketService.snapshot(level, account),

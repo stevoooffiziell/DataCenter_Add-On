@@ -1,8 +1,8 @@
 package de.f4ked.data_center_addon.client.hosting;
 
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
-import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.CustomerSegment;
 import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
@@ -81,17 +81,18 @@ final class ReputationTab implements ManagerTab {
 
     /** The customer class and what the next one needs: Ruf, renown and the room's tier. */
     private void classes(GuiGraphics g, HostingSnapshot s, int x, int y, int w) {
-        CustomerClass current = CustomerClass.ofOrdinal(s.customerClass());
+        CustomerTier current = CustomerTier.of(s.customerClass());
         panel.sectionTitle(g, x, y, w, Component.translatable("data_center_addon.reputation.class",
-                Component.translatable(current.translationKey())).getString());
+                Component.translatable(current.translationKey())).getString()
+                + "  (" + (current.ordinal() + 1) + "/" + CustomerTier.values().length + ")");
         int ty = y + 15;
-        if (current.ordinal() >= CustomerClass.values().length - 1) {
+        CustomerTier next = ClassRules.next(current);
+        if (next == null) {
             panel.line(g, Texts.reputation("class.top"), x, ty, w, TechPanel.GOOD);
             return;
         }
-        CustomerClass next = CustomerClass.ofOrdinal(current.ordinal() + 1);
         HostingSnapshot.Standing st = s.standing();
-        double needRuf = ClassRules.RUF[next.ordinal()], needRenown = ClassRules.RENOWN[next.ordinal()];
+        double needRuf = next.ruf, needRenown = next.renown;
         boolean rufOk = st.ruf() >= needRuf - 1e-9, renownOk = st.renown() >= needRenown;
         int tx = x;
         tx = part(g, tx, ty, Component.translatable("data_center_addon.reputation.class.next",
@@ -101,10 +102,23 @@ final class ReputationTab implements ManagerTab {
         tx = part(g, tx, ty, Component.translatable("data_center_addon.reputation.class.renown", Math.round(st.renown()),
                 Math.round(needRenown)).getString() + (renownOk ? " ✔" : " ✘") + "  ", renownOk ? TechPanel.GOOD : TechPanel.WARN);
         part(g, tx, ty, Component.translatable("data_center_addon.reputation.class.tier",
-                Component.translatable(next.requiredTier.translationKey())).getString(), TechPanel.TEXT_MUTED);
+                Component.translatable(next.room.translationKey())).getString(), TechPanel.TEXT_MUTED);
         if (panel.hover(x, y, w, 26)) {
-            panel.tooltip(List.of(Component.translatable("data_center_addon.reputation.class.tip").withStyle(ChatFormatting.GRAY)));
+            panel.tooltip(classTip(current));
         }
+    }
+
+    /** Every class with what it needs and pays; the account's class marked. */
+    private static List<Component> classTip(CustomerTier current) {
+        List<Component> lines = new java.util.ArrayList<>();
+        lines.add(Component.translatable("data_center_addon.reputation.class.tip").withStyle(ChatFormatting.GRAY));
+        for (CustomerTier t : CustomerTier.values()) {
+            lines.add(Component.translatable("data_center_addon.reputation.class.row", Component.translatable(t.translationKey()),
+                    Texts.percent((float) t.ruf), Math.round(t.renown), Component.translatable(t.room.translationKey()),
+                    Math.round((t.income - 1) * 100)).withStyle(t == current ? ChatFormatting.GREEN
+                    : t.ordinal() < current.ordinal() ? ChatFormatting.DARK_GREEN : ChatFormatting.GRAY));
+        }
+        return lines;
     }
 
     /** Draws one piece of a line; returns the x after it. */
@@ -117,7 +131,7 @@ final class ReputationTab implements ManagerTab {
     private void renown(GuiGraphics g, HostingSnapshot.Standing st, int x, int y, int w) {
         panel.sectionTitle(g, x, y, w, Texts.reputation("renown"));
         int ty = y + 15;
-        TechPanel.bar(g, x, ty, w - 44, 10, (float) (st.renown() / 1000), TechPanel.ACCENT);
+        TechPanel.bar(g, x, ty, w - 44, 10, (float) (st.renown() / ClassRules.maxRenown()), TechPanel.ACCENT);
         panel.line(g, Long.toString(Math.round(st.renown())), x + w - 40, ty + 1, 40, TechPanel.TEXT);
         ty += 16;
         Renown.Source[] sources = Renown.Source.values();

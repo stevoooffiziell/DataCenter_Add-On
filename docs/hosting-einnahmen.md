@@ -111,7 +111,7 @@ hinauszukommen.
 
 | Faktor | Spanne | Wie man ihn hebt |
 |---|---|---|
-| Kundenklasse (Reputation) | 1,00 → 1,08 → 1,18 → 1,30 → **1,45** | Reputation: 150/350/600/850 Punkte. Ab Mid-Market braucht es auch die passende Zertifizierung des Raums. Racks haben eine maximale Klasse. |
+| Kundenklasse (Reputation) | 1,00 → … → 1,45 (Finanzsektor) → … → **2,00** | Mit dem Reputationsmodell des Addons: 14 Klassen, je nach Ruf und Bekanntheit (bis 2500), siehe unten. Ohne das Modell: Data Centers 5 Klassen bei 150/350/600/850 Punkten (bis ×1,45). Ab Mittelstand braucht es auch die passende Zertifizierung des Raums, die obersten drei Klassen Tier IV. Racks haben eine maximale Klasse. |
 | Raum-Zertifizierung | 1,00 / 1,05 / 1,15 / 1,30 / **1,50** | Tier I–IV im Serverraum |
 | Reputation → Reichweite | Bestellungen ×1 bis **×3** | Uptime, keine Ausfälle, keine Überlast-Beschwerden |
 | Betriebssystem | 0,85 bis 1,18 | Hypervisor (ESXi 1,18, VMware ESX 1,15) oder Windows 1,08. Bei VPS zählt der OS-Bonus **nicht**. Veraltete OS verlieren 3 % pro Jahr. |
@@ -121,8 +121,33 @@ hinauszukommen.
 | Angriffe, Politik | ≤ 1 | |
 | `economy.hostingIncomeMultiplier` | Standard 1,0 | Server-Config |
 
-Volle Klasse und Tier IV ergeben zusammen **×2,2**, mit OS und Grünstrom etwa ×2,8. Das ist viel,
-aber auf einer kleinen Basis.
+Volle Klasse und Tier IV ergeben zusammen **×3,0** (mit Data Centers eigenen Klassen ×2,2), mit OS
+und Grünstrom etwa ×3,8. Das ist viel, aber auf einer kleinen Basis.
+
+### Kundenklassen des Addons
+
+| Klasse | Gruppe in Data Center | Ruf | Bekanntheit | Raum | Einnahmen |
+|---|---|---|---|---|---|
+| Hobbyisten | Privatkunden | – | 0 | – | ×1,00 |
+| Freiberufler | Privatkunden | 75 % | 50 | – | ×1,04 |
+| Kleinunternehmen | Kleingewerbe | 80 % | 100 | – | ×1,08 |
+| Start-ups | Kleingewerbe | 85 % | 150 | – | ×1,12 |
+| Mittelstand | Mittelstand | 90 % | 200 | Tier I | ×1,18 |
+| Onlinehandel | Mittelstand | 92 % | 300 | Tier I | ×1,24 |
+| Großunternehmen | Großkunden | 95 % | 400 | Tier II | ×1,30 |
+| Konzerne | Großkunden | 96 % | 500 | Tier II | ×1,37 |
+| Finanzsektor | Kritische Branchen | 98 % | 600 | Tier III | ×1,45 |
+| Gesundheitswesen | Kritische Branchen | 98,5 % | 850 | Tier III | ×1,55 |
+| Behörden | Kritische Branchen | 99 % | 1150 | Tier III | ×1,65 |
+| Telekommunikation | Kritische Branchen | 99 % | 1500 | Tier IV | ×1,76 |
+| Hyperscaler | Kritische Branchen | 99,3 % | 1950 | Tier IV | ×1,88 |
+| Kritische Infrastruktur | Kritische Branchen | 99,5 % | 2400 | Tier IV | ×2,00 |
+
+Data Center selbst sieht nur die Gruppe: Sie entscheidet über seine Fortschritte und die maximale
+Klasse eines Racks. Jede Klasse öffnet einen eigenen Teil des Markts (15 % des Hobbyisten-Markts
+für die unteren Klassen, bis 5 % für die oberste). Aufträge und Lieferungen höherer Klassen zahlen
+mehr und bringen mehr Bekanntheit. Über 1000 Bekanntheit wächst die Reichweite weiter, bis ×2,5 bei
+2500.
 
 ## 5. Tipps & Tricks
 

@@ -12,7 +12,8 @@ import java.util.UUID;
 
 /**
  * Bekanntheit (renown): how well known the account is. It is Data Center's reputation points (0 to
- * 1000), but with the reputation model on they only grow through what the account does:
+ * 1000; up to {@link ClassRules#MAX_RENOWN} with the reputation model on), but with the reputation model
+ * on they only grow through what the account does:
  * <ul>
  *   <li>finished contracts and delivery orders,</li>
  *   <li>new customers: {@link #PER_CUSTOMER} for every customer above the most it ever had, once that

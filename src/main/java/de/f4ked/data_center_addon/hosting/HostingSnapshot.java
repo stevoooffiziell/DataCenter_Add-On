@@ -19,6 +19,7 @@ import java.util.List;
  * Every record carries its own {@code STREAM_CODEC}.
  *
  * @param connected    whether a cable is plugged into the manager
+ * @param customerClass the account's {@code CustomerTier} ordinal
  * @param foreignRacks racks in the network the player may not control (not listed)
  * @param network      state of the compute network the manager is plugged into
  * @param market       the hosting market of the viewer's account (Market tab)
@@ -443,7 +444,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param rivalFactor factor of the reach from the competitors
      * @param sharing     factor of the reach from sharing the pool with other players
      * @param accounts    accounts sharing the pool (1 alone)
-     * @param nextClass   {@code CustomerClass} ordinal of the next class to unlock (-1: the highest is reached)
+     * @param nextClass   {@code CustomerTier} ordinal of the next class to unlock (-1: the highest is reached)
      * @param nextGain    reachable customers the next class would add (its reputation and sub-pool)
      */
     public record MarketRow(int product, double pool, double market, double potential, double repFactor, double awareFactor,

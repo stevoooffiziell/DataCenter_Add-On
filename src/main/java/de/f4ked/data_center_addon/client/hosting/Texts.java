@@ -1,7 +1,7 @@
 package de.f4ked.data_center_addon.client.hosting;
 
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import com.example.datacenter.client.screen.GuiText;
-import com.example.datacenter.hosting.CustomerClass;
 import com.example.datacenter.hosting.HostingMode;
 import com.example.datacenter.hosting.HostingProduct;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
@@ -60,7 +60,7 @@ final class Texts {
             return Component.translatable("data_center_addon.market.summary.top", product, pool, reach, have);
         }
         return Component.translatable("data_center_addon.market.summary", product, pool, reach, have,
-                Component.translatable(CustomerClass.ofOrdinal(row.nextClass()).translationKey()),
+                Component.translatable(CustomerTier.of(row.nextClass()).translationKey()),
                 "+" + GuiText.compactNumber(Math.round(row.nextGain())));
     }
 
