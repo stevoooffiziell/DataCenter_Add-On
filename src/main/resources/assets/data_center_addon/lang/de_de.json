@@ -747,5 +747,7 @@
   "item.data_center_addon.prebuilt.dedicated.lore": "Dedizierte Miete: die meiste Rechenleistung pro Dollar",
   "item.data_center_addon.prebuilt.storage": "Storage-Server - %s",
   "item.data_center_addon.prebuilt.storage.lore": "Speichermiete: alle Schächte belegt",
-  "data_center_addon.contract.msg.no_places": "Der Kunde möchte %s× %s, du hast aber nur %s Plätze frei. Mach zuerst Plätze frei."
+  "data_center_addon.contract.msg.no_places": "Der Kunde möchte %s× %s, du hast aber nur %s Plätze frei. Mach zuerst Plätze frei.",
+  "shop.tab.flux": "Flux",
+  "shop.vendor.flux": "Flux Networks"
 }

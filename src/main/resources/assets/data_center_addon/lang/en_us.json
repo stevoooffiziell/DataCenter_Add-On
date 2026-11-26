@@ -747,5 +747,7 @@
   "item.data_center_addon.prebuilt.dedicated.lore": "Dedicated rent: the most compute per dollar",
   "item.data_center_addon.prebuilt.storage": "Storage Server - %s",
   "item.data_center_addon.prebuilt.storage.lore": "Storage rent: every bay filled",
-  "data_center_addon.contract.msg.no_places": "A client wants %s× %s, but you only have %s places free. Free up places first."
+  "data_center_addon.contract.msg.no_places": "A client wants %s× %s, but you only have %s places free. Free up places first.",
+  "shop.tab.flux": "Flux",
+  "shop.vendor.flux": "Flux Networks"
 }
