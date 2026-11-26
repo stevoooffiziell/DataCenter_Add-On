@@ -732,5 +732,19 @@
   "data_center_addon.jei.info.plastic_pellets": "Bought at the Purchase Terminal. The Press makes plastic parts from it.",
   "generator.data_center_addon.skyblock": "Data Center SkyBlock",
   "biome.data_center_addon.skyblock": "SkyBlock Island",
-  "data_center_addon.skyblock.welcome": "Welcome to your island! The chest in the server room holds a guide."
+  "data_center_addon.skyblock.welcome": "Welcome to your island! The chest in the server room holds a guide.",
+  "item.data_center_addon.prebuilt.starter": "Starter Server - %s",
+  "item.data_center_addon.prebuilt.starter.lore": "Early game: the most web hosting customers per dollar",
+  "item.data_center_addon.prebuilt.eco": "Eco Server - %s",
+  "item.data_center_addon.prebuilt.eco.lore": "Early game: the most customers per watt of power",
+  "item.data_center_addon.prebuilt.web": "Web Hosting Server - %s",
+  "item.data_center_addon.prebuilt.web.lore": "Shared hosting: many customers per server, RAM and disks matched to the CPUs",
+  "item.data_center_addon.prebuilt.vps": "VPS Host - %s",
+  "item.data_center_addon.prebuilt.vps.lore": "Virtual servers: the most VPS per dollar",
+  "item.data_center_addon.prebuilt.game": "Game Server - %s",
+  "item.data_center_addon.prebuilt.game.lore": "Game servers: the most slots per dollar",
+  "item.data_center_addon.prebuilt.dedicated": "Dedicated Server - %s",
+  "item.data_center_addon.prebuilt.dedicated.lore": "Dedicated rent: the most compute per dollar",
+  "item.data_center_addon.prebuilt.storage": "Storage Server - %s",
+  "item.data_center_addon.prebuilt.storage.lore": "Storage rent: every bay filled"
 }

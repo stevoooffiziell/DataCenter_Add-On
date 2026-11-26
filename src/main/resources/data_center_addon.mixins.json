@@ -8,13 +8,17 @@
     "ComputeNetInvoker",
     "ComputeNetMixin",
     "ComputeNetsAccessor",
+    "EarlyServersMixin",
     "HostingCustomersMixin",
     "HostingRackBlockEntityMixin",
     "HostingReputationInvoker",
     "HostingReputationMixin",
     "NetNodeAccessor",
     "NewsEventsMixin",
+    "PrebuiltServersMixin",
+    "ShopCatalogMixin",
     "ShopEntryMixin",
+    "ShopMenuMixin",
     "StarterKitMixin"
   ],
   "client": [
