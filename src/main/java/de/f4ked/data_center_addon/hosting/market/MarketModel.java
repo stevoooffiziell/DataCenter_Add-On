@@ -208,7 +208,7 @@ public final class MarketModel {
      *   <li>Customers cancel as in Data Center (by segment and year), scaled by the quality of the service
      *       ({@link ServiceQuality}): 1 % a month with good service up to 8 % with bad.</li>
      *   <li>New customers close the gap to the potential: {@code (potential − customers − waiting) ×
-     *       closeRate} a month. With no places offered or none free no new customers come at all.</li>
+     *       closeRate} a month.</li>
      *   <li>Word of mouth: every customer brings {@code wordOfMouth} new ones a month, less the closer the
      *       customers are to the potential ({@code × (1 − customers / potential)}, logistic growth).</li>
      *   <li>New customers only take free places, those on the waiting list first. They come in Data
@@ -248,15 +248,13 @@ public final class MarketModel {
             total -= total * leaveShare;
         }
         double interested = total + entry.waiting;
-        double free = Math.max(0, places - total);
-        // no places offered or none free: no new customers ask (they would only queue up and give up)
-        boolean open = free > 1.0E-9;
-        double gap = !open ? 0 : Config.closeRate() * Math.max(0, reach.potential() - interested);
-        double word = !open || reach.potential() <= 0 ? 0
+        double gap = Config.closeRate() * Math.max(0, reach.potential() - interested);
+        double word = reach.potential() <= 0 ? 0
                 : Config.wordOfMouth() * total * Math.max(0, 1 - interested / reach.potential());
         entry.ordersGap = gap;
         entry.ordersWord = word;
         double orders = gap + word;
+        double free = Math.max(0, places - total);
         double fromList = Math.min(free, entry.waiting);
         double newcomers = orders * dtMonths;
         double placed = Math.min(free - fromList, newcomers);
