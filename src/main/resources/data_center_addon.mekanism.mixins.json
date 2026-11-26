@@ -1,0 +1,19 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "de.f4ked.data_center_addon.mixin.mekanism",
+  "plugin": "de.f4ked.data_center_addon.mixin.mekanism.MekanismMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "TileComponentUpgradeMixin",
+    "TileEntityGeneratorInvoker",
+    "TileEntityMekanismMixin",
+    "TileEntityWindGeneratorMixin"
+  ],
+  "client": [
+    "GuiUpgradeWindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

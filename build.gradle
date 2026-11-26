@@ -34,6 +34,18 @@ repositories {
             includeGroup 'mezz.jei'
         }
     }
+    // ModMaven: Mekanism and Mekanism Generators for the optional wind generator upgrades
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'ModMaven'
+                url = 'https://modmaven.dev'
+            }
+        }
+        filter {
+            includeGroup 'mekanism'
+        }
+    }
     // Modrinth Maven: the Jade API for the optional look-at tooltips
     exclusiveContent {
         forRepository {
@@ -144,6 +156,11 @@ dependencies {
     // Only compiled against; the plugin is found by JEI itself, so the add-on runs without it.
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+
+    // Mekanism Generators (optional): Speed Upgrades for the Wind Generator.
+    // Only compiled against; the mixins only apply when Mekanism Generators is installed.
+    compileOnly "mekanism:Mekanism:${mekanism_version}"
+    compileOnly "mekanism:Mekanism:${mekanism_version}:generators"
 
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

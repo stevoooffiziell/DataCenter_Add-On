@@ -80,6 +80,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue HARDWARE_COST;
     private static final ModConfigSpec.BooleanValue MEKANISM_TIERS;
     private static final ModConfigSpec.BooleanValue AC_UNITS;
+    private static final ModConfigSpec.IntValue WIND_SPEED_UPGRADES;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -261,6 +262,14 @@ public final class Config {
                 .comment("Sell the AC Indoor Unit and AC Outdoor Unit (split air conditioning), which Data Center no longer",
                         "lists and which cannot be crafted.")
                 .define("acUnits", true);
+        builder.pop();
+
+        builder.comment("Changes to other mods' machines.").push("mekanism");
+        WIND_SPEED_UPGRADES = builder
+                .comment("How many Speed Upgrades a Mekanism Wind Generator takes (Mekanism's machines take 8). Each one",
+                        "raises its generation like a machine's speed: x maxUpgradeMultiplier^(upgrades / 8), so x3.16 with",
+                        "4 upgrades and Mekanism's default multiplier of 10. 0 = no Speed Upgrades. Needs a restart.")
+                .defineInRange("windSpeedUpgrades", 4, 0, 8);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -484,6 +493,10 @@ public final class Config {
 
     public static boolean acUnits() {
         return !SPEC.isLoaded() || AC_UNITS.get();
+    }
+
+    public static int windSpeedUpgrades() {
+        return SPEC.isLoaded() ? WIND_SPEED_UPGRADES.get() : 4;
     }
 
     public static double hostingStorageBoost() {

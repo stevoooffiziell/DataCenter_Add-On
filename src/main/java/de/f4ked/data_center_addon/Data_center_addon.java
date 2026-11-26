@@ -72,6 +72,9 @@ public class Data_center_addon {
         NetworkContent.register(modEventBus);
         HostingContent.register(modEventBus);
         de.f4ked.data_center_addon.shop.ShopExtras.register();
+        if (net.neoforged.fml.ModList.get().isLoaded("mekanismgenerators")) {
+            de.f4ked.data_center_addon.compat.mekanism.WindUpgrades.register(modEventBus);
+        }
         IndustryContent.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
