@@ -729,5 +729,8 @@
   "data_center_addon.jei.sales.note": "Preis sinkt, wenn du viel verkaufst (Nachfrage)",
   "data_center_addon.jei.info.chip_fab": "Teil der Chip-Fertigungsstraße: eine Steuerung und alle Reinraum-Wände und Belichter, die sie oder einander berühren. Die Straße braucht %s Wände und einen Belichter; jeder Belichter macht sie eine Stufe schneller, braucht aber %s Wände (höchstens %s zählen).",
   "data_center_addon.jei.info.factory_manager": "Zeigt die Fabrik im Umkreis von 32 Blöcken: jede Maschine mit Status und Strom, das Budget deiner Einkaufsterminals und Einkäufe, Verkäufe und Marge deiner Firma der letzten 30 Spieltage.",
-  "data_center_addon.jei.info.plastic_pellets": "Gibt es am Einkaufsterminal. Die Presse macht daraus Kunststoffteile."
+  "data_center_addon.jei.info.plastic_pellets": "Gibt es am Einkaufsterminal. Die Presse macht daraus Kunststoffteile.",
+  "generator.data_center_addon.skyblock": "Data Center SkyBlock",
+  "biome.data_center_addon.skyblock": "SkyBlock-Insel",
+  "data_center_addon.skyblock.welcome": "Willkommen auf deiner Insel! Die Truhe im Serverraum hat ein Handbuch."
 }

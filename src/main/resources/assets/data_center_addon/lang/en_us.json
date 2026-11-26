@@ -729,5 +729,8 @@
   "data_center_addon.jei.sales.note": "Price falls when you sell a lot (demand)",
   "data_center_addon.jei.info.chip_fab": "Part of the chip production line: a Chip Fab Controller and every Cleanroom Wall and Lithography Unit touching it or each other. The line needs %s walls and one lithography unit; each unit makes it one step faster but needs %s walls (at most %s units count).",
   "data_center_addon.jei.info.factory_manager": "Shows the factory within 32 blocks: every machine with its state and power, the budget in your Purchase Terminals, and your company's purchases, sales and margin of the last 30 game days.",
-  "data_center_addon.jei.info.plastic_pellets": "Bought at the Purchase Terminal. The Press makes plastic parts from it."
+  "data_center_addon.jei.info.plastic_pellets": "Bought at the Purchase Terminal. The Press makes plastic parts from it.",
+  "generator.data_center_addon.skyblock": "Data Center SkyBlock",
+  "biome.data_center_addon.skyblock": "SkyBlock Island",
+  "data_center_addon.skyblock.welcome": "Welcome to your island! The chest in the server room holds a guide."
 }

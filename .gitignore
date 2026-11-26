@@ -23,5 +23,3 @@ run
 # Python
 __pycache__/
 
-# SkyBlock map output (tools/generate-skyblock.py)
-maps/

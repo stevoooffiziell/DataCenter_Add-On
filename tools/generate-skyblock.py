@@ -1,8 +1,8 @@
 """
-Builds the Data Center SkyBlock starter map as a datapack (maps/DataCenter-SkyBlock.zip).
-
-The datapack turns the overworld into a void and, on the first tick, places a small island with a
-Data Center style server room at the world spawn. Add it under "Data Packs" when creating a world.
+Builds the starter island of the "Data Center SkyBlock" world type: a small island with a Data
+Center style server room, written as a structure into the add-on's resources
+(data/data_center_addon/structure/skyblock_island.nbt). The add-on places it on the first start of a
+world of that type (SkyblockIsland).
 
     python tools/generate-skyblock.py
 """
@@ -10,17 +10,11 @@ import gzip
 import io
 import json
 import os
-import shutil
 import struct
-import zipfile
 from collections import deque
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, 'maps')
-PACK = os.path.join(OUT, 'DataCenter-SkyBlock')
-NS = 'dcsb'
 DATA_VERSION = 3955  # Minecraft 1.21.1
-PACK_FORMAT = 48     # Minecraft 1.21.1
 DC = 'datacenter:'
 
 
@@ -260,55 +254,10 @@ for (x, y, z), (name, props, nbt) in sorted(blocks.items(), key=lambda kv: (kv[0
 size = [max(p[i] for p in blocks) + 1 for i in range(3)]
 structure = {'DataVersion': DATA_VERSION, 'size': size, 'palette': palette, 'blocks': out_blocks, 'entities': []}
 
-# the island is placed so that its middle lies at 0, 0; the top of the grass at y 64
-OX, OY, OZ = -(W // 2), 60, -(D // 2)
-SPAWN = (OX + 5, OY + FLOOR + 1, OZ + 8)
-
-if os.path.exists(PACK):
-    shutil.rmtree(PACK)
-files = {
-    'pack.mcmeta': json.dumps({'pack': {'pack_format': PACK_FORMAT,
-                                        'description': 'Data Center SkyBlock: a starter island with a small server room'}},
-                              indent=2),
-    'data/minecraft/dimension/overworld.json': json.dumps({
-        'type': 'minecraft:overworld',
-        'generator': {'type': 'minecraft:flat', 'settings': {
-            'biome': 'minecraft:plains', 'lakes': False, 'features': False,
-            'layers': [{'block': 'minecraft:air', 'height': 1}], 'structure_overrides': []}}}, indent=2),
-    'data/minecraft/tags/function/load.json': json.dumps({'values': [f'{NS}:load']}, indent=2),
-    'data/minecraft/tags/function/tick.json': json.dumps({'values': [f'{NS}:tick']}, indent=2),
-    f'data/{NS}/function/load.mcfunction': '\n'.join([
-        f'# Data Center SkyBlock: the island is placed once, on the first tick its chunk is loaded',
-        f'execute unless data storage {NS}:state {{placed:1b}} run forceload add {OX} {OZ} {OX + W} {OZ + D}',
-    ]) + '\n',
-    f'data/{NS}/function/tick.mcfunction':
-        f'execute unless data storage {NS}:state {{placed:1b}} if loaded {OX} {OY} {OZ} if loaded {OX + W - 1} {OY} {OZ + D - 1} '
-        f'run function {NS}:setup\n',
-    f'data/{NS}/function/setup.mcfunction': '\n'.join([
-        f'place template {NS}:island {OX} {OY} {OZ}',
-        f'setworldspawn {SPAWN[0]} {SPAWN[1]} {SPAWN[2]}',
-        'gamerule spawnRadius 0',
-        f'forceload remove {OX} {OZ} {OX + W} {OZ + D}',
-        f'tp @a {SPAWN[0] + 0.5} {SPAWN[1]} {SPAWN[2] + 0.5} -90 0',
-        f'spawnpoint @a {SPAWN[0]} {SPAWN[1]} {SPAWN[2]}',
-        f'data modify storage {NS}:state placed set value 1b',
-        'tellraw @a [{"text":"Data Center SkyBlock: ","color":"aqua"},{"text":"Willkommen auf deiner Insel! Die Truhe im Serverraum hat ein Handbuch. / Welcome to your island! The chest in the server room holds a guide.","color":"gray"}]',
-    ]) + '\n',
-}
-for rel, text in files.items():
-    path = os.path.join(PACK, rel)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write(text)
-struct_path = os.path.join(PACK, 'data', NS, 'structure', 'island.nbt')
-os.makedirs(os.path.dirname(struct_path), exist_ok=True)
-with open(struct_path, 'wb') as f:
+# the add-on places it at -7 60 -5 (its middle at 0, 0) and sets the spawn on the grass at +5 +5 +8
+# (SkyblockIsland); a change of the size or the spawn has to go there too
+out = os.path.join(ROOT, 'src', 'main', 'resources', 'data', 'data_center_addon', 'structure', 'skyblock_island.nbt')
+os.makedirs(os.path.dirname(out), exist_ok=True)
+with open(out, 'wb') as f:
     f.write(nbt_file(structure))
-
-zip_path = os.path.join(OUT, 'DataCenter-SkyBlock.zip')
-with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
-    for dirpath, _, names in os.walk(PACK):
-        for n in names:
-            full = os.path.join(dirpath, n)
-            z.write(full, os.path.relpath(full, PACK).replace(os.sep, '/'))
-print(f'{len(blocks)} blocks, size {size}, {len(palette)} states -> {zip_path}')
+print(f'{len(blocks)} blocks, size {size}, {len(palette)} states -> {out}')
