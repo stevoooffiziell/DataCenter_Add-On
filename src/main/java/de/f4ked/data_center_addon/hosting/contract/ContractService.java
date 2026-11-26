@@ -39,7 +39,9 @@ import java.util.UUID;
  * <ul>
  *   <li>Offers appear in the Hosting Manager (up to {@link #MAX_OFFERS}, one new per day, each open for
  *       {@link #OFFER_DAYS} days). Their size, length and pay grow with the customer class the
- *       account's reputation has unlocked.</li>
+ *       account's reputation has unlocked. Clients only ask for products the account has free places
+ *       of, never for more places than are free; with no free places no offers come, and an offer can
+ *       only be accepted while its places are free.</li>
  *   <li>A running contract is checked once a second: are enough places of its product free (capacity
  *       of the account's racks minus their customers, the same figures Data Center's market uses)?
  *       A day counts if they were free {@link #DAY_SHARE} of the time; it is paid. A missed day is a
@@ -195,7 +197,10 @@ public final class ContractService {
         }
         account.offers.removeIf(offer -> offer.expiresDay < day);
         if (account.offers.size() < MAX_OFFERS) {
-            account.offers.add(newOffer(level, accountId, account, LocalDate.ofEpochDay(day), level.getRandom()));
+            ContractBook.Contract offer = newOffer(level, accountId, account, LocalDate.ofEpochDay(day), level.getRandom());
+            if (offer != null) {
+                account.offers.add(offer);
+            }
         }
     }
 
@@ -217,7 +222,10 @@ public final class ContractService {
         if (Config.contractsEnabled() && account.offers.isEmpty() && account.active.isEmpty() && account.lastDay < 0) {
             LocalDate today = DataCenterApi.currentDate(level);
             for (int i = 0; i < MAX_OFFERS; i++) {
-                account.offers.add(newOffer(level.getServer().overworld(), accountId, account, today, level.getRandom()));
+                ContractBook.Contract offer = newOffer(level.getServer().overworld(), accountId, account, today, level.getRandom());
+                if (offer != null) {
+                    account.offers.add(offer);
+                }
             }
             account.lastDay = today.toEpochDay();
             book.setDirty();
@@ -225,6 +233,11 @@ public final class ContractService {
         return account;
     }
 
+    /**
+     * A new offer, or null when the account has no free places of any product: clients only ask for
+     * places the account offers and has free (beyond its running contracts), and never for more.
+     */
+    @org.jetbrains.annotations.Nullable
     private static ContractBook.Contract newOffer(ServerLevel level, UUID accountId, ContractBook.Account account,
                                                   LocalDate today, RandomSource random) {
         CustomerTier unlocked = ClassRules.tier(level.getServer(), accountId);
@@ -234,18 +247,24 @@ public final class ContractService {
         // size, duration and client follow Data Center's class the add-on's class belongs to
         int cls = tier.base.ordinal();
 
-        // products the account already sells come up four times as often
+        // only products with free places, the more free places the more often
         List<HostingProduct> products = new ArrayList<>();
-        HostingCustomers customers = HostingCustomers.get(level);
+        Map<HostingProduct, Integer> required = required(account);
+        Map<HostingProduct, Integer> spare = new EnumMap<>(HostingProduct.class);
         for (HostingProduct p : HostingProduct.values()) {
             if (p.mode().existsOn(today) && p.offer().existsOn(today)) {
-                int weight = customers.placesTotal(accountId, p) > 0 ? 4 : 1;
-                for (int i = 0; i < weight; i++) {
+                int free = (int) Math.floor(freePlaces(level, accountId, p) - required.getOrDefault(p, 0));
+                if (free >= 1) {
+                    spare.put(p, free);
                     products.add(p);
                 }
             }
         }
-        HostingProduct product = products.isEmpty() ? HostingProduct.SHARED_WEB : products.get(random.nextInt(products.size()));
+        if (products.isEmpty()) {
+            return null;
+        }
+        HostingProduct product = products.get(random.nextInt(products.size()));
+        int free = spare.get(product);
 
         // hobbyist accounts often get mini orders; any account now and then an emergency order
         boolean mini = unlocked.base == CustomerClass.HOBBYISTS && random.nextFloat() < MINI_CHANCE;
@@ -260,6 +279,7 @@ public final class ContractService {
         } else if (urgent) {
             days = 2 + random.nextInt(3);
         }
+        accounts = Math.max(1, Math.min(accounts, free));
         double monthlyUsd = accounts * HostingModeRates.unitUsd(product, today) * PAY_SHARE
                 * tier.income * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
         long perDay = Math.max(25, Math.round(monthlyUsd / 30.0 * 100));
@@ -311,6 +331,13 @@ public final class ContractService {
             case ACCEPT -> {
                 ContractBook.Contract offer = find(account.offers, contractId);
                 if (offer == null) {
+                    return;
+                }
+                double free = freePlaces(level, accountId, offer.product) - required(account).getOrDefault(offer.product, 0);
+                if (free < offer.accounts) {
+                    OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.no_places",
+                            offer.accounts, Component.translatable(offer.product.translationKey()), (int) Math.max(0, Math.floor(free)))
+                            .withStyle(ChatFormatting.GOLD));
                     return;
                 }
                 if (account.active.size() >= MAX_ACTIVE) {

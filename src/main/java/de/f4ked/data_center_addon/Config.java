@@ -78,6 +78,8 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue SALES_RECOVERY_DAYS;
     private static final ModConfigSpec.DoubleValue SALES_DEMAND_FLOOR;
     private static final ModConfigSpec.DoubleValue HARDWARE_COST;
+    private static final ModConfigSpec.BooleanValue MEKANISM_TIERS;
+    private static final ModConfigSpec.BooleanValue AC_UNITS;
 
     /** How the start bonus ends. */
     public enum StartBonusMode { TIME, REVENUE }
@@ -247,6 +249,18 @@ public final class Config {
                 .comment("Hardware Fab: components a part needs, as a multiple of half its Shop price. 1.0 = components",
                         "worth about 50 % of the Shop price, 2.0 = 100 %.")
                 .defineInRange("hardwareCost", 1.0, 0.1, 4.0);
+        builder.pop();
+
+        builder.comment("What the Shop sells beyond Data Center's own range.").push("shop");
+        MEKANISM_TIERS = builder
+                .comment("Sell every Mekanism transport tier (universal cables, pipes, tubes, transporters and conductors,",
+                        "basic to ultimate) even with Data Center's shop.arcadeCatalog off. The add-on also sells the",
+                        "bigger Mekanism energy cubes and the parts of the induction matrix either way.")
+                .define("mekanismTiers", true);
+        AC_UNITS = builder
+                .comment("Sell the AC Indoor Unit and AC Outdoor Unit (split air conditioning), which Data Center no longer",
+                        "lists and which cannot be crafted.")
+                .define("acUnits", true);
         builder.pop();
 
         builder.comment("Network cables (CAT, fibre) and switches added by this add-on.").push("network");
@@ -462,6 +476,14 @@ public final class Config {
 
     public static double hardwareCost() {
         return SPEC.isLoaded() ? HARDWARE_COST.get() : 1.0;
+    }
+
+    public static boolean mekanismTiers() {
+        return !SPEC.isLoaded() || MEKANISM_TIERS.get();
+    }
+
+    public static boolean acUnits() {
+        return !SPEC.isLoaded() || AC_UNITS.get();
     }
 
     public static double hostingStorageBoost() {

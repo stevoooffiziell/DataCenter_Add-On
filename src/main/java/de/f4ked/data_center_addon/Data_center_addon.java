@@ -71,6 +71,7 @@ public class Data_center_addon {
     public Data_center_addon(IEventBus modEventBus, ModContainer modContainer) {
         NetworkContent.register(modEventBus);
         HostingContent.register(modEventBus);
+        de.f4ked.data_center_addon.shop.ShopExtras.register();
         IndustryContent.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
