@@ -79,6 +79,7 @@ public final class Config {
     private static final ModConfigSpec.DoubleValue HARDWARE_COST;
     private static final ModConfigSpec.BooleanValue MEKANISM_TIERS;
     private static final ModConfigSpec.BooleanValue AC_UNITS;
+    private static final ModConfigSpec.BooleanValue ROOM_FAN;
     private static final ModConfigSpec.IntValue WIND_SPEED_UPGRADES;
 
     /** How the start bonus ends. */
@@ -257,6 +258,9 @@ public final class Config {
                 .comment("Sell the AC Indoor Unit and AC Outdoor Unit (split air conditioning), which Data Center no longer",
                         "lists and which cannot be crafted.")
                 .define("acUnits", true);
+        ROOM_FAN = builder
+                .comment("Sell the Room Fan, which Data Center no longer lists and which cannot be crafted.")
+                .define("roomFan", true);
         builder.pop();
 
         builder.comment("Changes to other mods' machines.").push("mekanism");
@@ -484,6 +488,10 @@ public final class Config {
 
     public static boolean acUnits() {
         return !SPEC.isLoaded() || AC_UNITS.get();
+    }
+
+    public static boolean roomFan() {
+        return !SPEC.isLoaded() || ROOM_FAN.get();
     }
 
     public static int windSpeedUpgrades() {

@@ -23,8 +23,8 @@ import java.util.function.Supplier;
  *       the basic energy cube). They show only with Mekanism installed.</li>
  *   <li>Every Mekanism transport tier, which Data Center only shows with its arcade catalog
  *       ({@link Config#mekanismTiers()}, {@code ShopCatalogMixin}).</li>
- *   <li>The AC Indoor and Outdoor Unit, which Data Center retired from the shop and which have no recipe
- *       ({@link Config#acUnits()}).</li>
+ *   <li>The AC Indoor and Outdoor Unit ({@link Config#acUnits()}) and the Room Fan ({@link Config#roomFan()}),
+ *       which Data Center retired from the shop and which have no recipe.</li>
  *   <li>The devices of Flux Networks, for wireless power from the generators to the server rooms: Flux Plug
  *       and Point, Controller, the three Flux Storages and the Configurator. In their own partner tab
  *       ({@link AddonCategories#flux()}), which only shows with Flux Networks installed.</li>
@@ -56,7 +56,10 @@ public final class ShopExtras {
             60_000L, 300_000L, 1_500_000L,
             25_000L};
 
-    private static final Map<ShopEntry, Boolean> AC_CACHE = new IdentityHashMap<>();
+    /** Retired Data Center entries the add-on can sell again, each behind its own config option. */
+    private enum Retired { NONE, AC_UNIT, ROOM_FAN }
+
+    private static final Map<ShopEntry, Retired> RETIRED_CACHE = new IdentityHashMap<>();
 
     private ShopExtras() {
     }
@@ -88,16 +91,28 @@ public final class ShopExtras {
         return entry.category() == ShopCategory.MEKANISM && Config.mekanismTiers();
     }
 
-    /** Whether a retired entry is sold anyway: the split air conditioning units, with the config on. */
+    /**
+     * Whether a retired entry is sold anyway: the split air conditioning units and the Room Fan, each with its
+     * config on.
+     */
     public static boolean unretires(ShopEntry entry) {
-        if (entry.category() != ShopCategory.INFRASTRUCTURE || !Config.acUnits()) {
+        if (entry.category() != ShopCategory.INFRASTRUCTURE) {
             return false;
         }
-        synchronized (AC_CACHE) {
-            return AC_CACHE.computeIfAbsent(entry, e -> {
+        Retired kind;
+        synchronized (RETIRED_CACHE) {
+            kind = RETIRED_CACHE.computeIfAbsent(entry, e -> {
                 Item item = e.createStack().getItem();
-                return item == ModBlocks.AC_INDOOR_UNIT.get().asItem() || item == ModBlocks.AC_OUTDOOR_UNIT.get().asItem();
+                if (item == ModBlocks.AC_INDOOR_UNIT.get().asItem() || item == ModBlocks.AC_OUTDOOR_UNIT.get().asItem()) {
+                    return Retired.AC_UNIT;
+                }
+                return item == ModBlocks.ROOM_FAN.get().asItem() ? Retired.ROOM_FAN : Retired.NONE;
             });
         }
+        return switch (kind) {
+            case AC_UNIT -> Config.acUnits();
+            case ROOM_FAN -> Config.roomFan();
+            case NONE -> false;
+        };
     }
 }
