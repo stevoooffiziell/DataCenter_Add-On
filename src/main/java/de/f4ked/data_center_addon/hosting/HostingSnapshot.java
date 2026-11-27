@@ -166,10 +166,11 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param expiresIn days an offer stays open
      * @param urgent    emergency order: short, well paid, open for one day
      * @param mini      small hobbyist order: no penalty, no reputation lost
+     * @param rarity    {@code ContractRarity} ordinal (Common .. Legendary)
      */
     public record Contract(int id, boolean offer, int client, int product, int accounts, int days, int daysDone, int strikes,
                            long centsPerDay, long bonusCents, long penaltyCents, int reputation, double free, int required,
-                           float metToday, int expiresIn, boolean urgent, boolean mini) {
+                           float metToday, int expiresIn, boolean urgent, boolean mini, int rarity) {
         public boolean covered() {
             return free >= required;
         }
@@ -199,11 +200,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(c.expiresIn);
                     buf.writeBoolean(c.urgent);
                     buf.writeBoolean(c.mini);
+                    buf.writeVarInt(c.rarity);
                 },
                 buf -> new Contract(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
                         buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
                         buf.readVarInt(), buf.readDouble(), buf.readVarInt(), buf.readFloat(), buf.readVarInt(), buf.readBoolean(),
-                        buf.readBoolean()));
+                        buf.readBoolean(), buf.readVarInt()));
     }
 
     /**
@@ -281,10 +283,9 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
     public record Startup(boolean started, boolean veteran, double bonusFactor, int bonusMode, int bonusDaysLeft,
                           long bonusRevenueLeft, long bonusPaidCents, long grantCents, long grantOfferCents, long feesPaidCents,
                           long loanOfferCents, boolean loanTaken, long loanOutstandingCents, int loanGraceDays,
-                          long loanInstalmentCents, long milestones, List<Long> milestoneRewards, List<Ticket> tickets,
-                          Prepay prepay) {
+                          long loanInstalmentCents, long milestones, List<Long> milestoneRewards, Prepay prepay) {
         public static final Startup NONE = new Startup(false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, false, 0, 0, 0, 0, List.of(),
-                List.of(), Prepay.NONE);
+                Prepay.NONE);
 
         public boolean reached(Milestone milestone) {
             return (milestones & milestone.bit()) != 0;
@@ -312,13 +313,12 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarLong(s.loanInstalmentCents);
                     buf.writeLong(s.milestones);
                     writeList(buf, s.milestoneRewards, REWARD);
-                    writeList(buf, s.tickets, Ticket.STREAM_CODEC);
                     Prepay.STREAM_CODEC.encode(buf, s.prepay);
                 },
                 buf -> new Startup(buf.readBoolean(), buf.readBoolean(), buf.readDouble(), buf.readVarInt(), buf.readVarInt(),
                         buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(), buf.readVarLong(),
                         buf.readBoolean(), buf.readVarLong(), buf.readVarInt(), buf.readVarLong(), buf.readLong(),
-                        readList(buf, REWARD, 64), readList(buf, Ticket.STREAM_CODEC, 16), Prepay.STREAM_CODEC.decode(buf)));
+                        readList(buf, REWARD, 64), Prepay.STREAM_CODEC.decode(buf)));
     }
 
     /**
@@ -344,19 +344,6 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                 },
                 buf -> new Prepay(buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), buf.readVarInt(), buf.readVarLong(),
                         buf.readVarLong(), buf.readVarInt()));
-    }
-
-    /** A service ticket: right-click the rack at {@code pos} before it runs out. */
-    public record Ticket(int id, BlockPos pos, int kind, long rewardCents, int daysLeft) {
-        public static final StreamCodec<FriendlyByteBuf, Ticket> STREAM_CODEC = StreamCodec.of(
-                (buf, t) -> {
-                    buf.writeVarInt(t.id);
-                    buf.writeBlockPos(t.pos);
-                    buf.writeVarInt(t.kind);
-                    buf.writeVarLong(t.rewardCents);
-                    buf.writeVarInt(t.daysLeft);
-                },
-                buf -> new Ticket(buf.readVarInt(), buf.readBlockPos(), buf.readVarInt(), buf.readVarLong(), buf.readVarInt()));
     }
 
     // ------------------------------------------------------------------ market

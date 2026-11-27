@@ -43,8 +43,7 @@ import java.util.UUID;
  *   <li><b>Founding loan</b>: interest-free, taken once in the Hosting Manager, repaid in daily
  *       instalments after a grace period.</li>
  *   <li><b>Setup fees</b>: every new customer pays a one-time fee.</li>
- *   <li><b>Prepayment</b> ({@link Prepayments}), <b>milestones</b> ({@link Milestones}) and
- *       <b>service tickets</b> ({@link ServiceTickets}).</li>
+ *   <li><b>Prepayment</b> ({@link Prepayments}) and <b>milestones</b> ({@link Milestones}).</li>
  * </ul>
  * The racks report their income through {@code HostingRackBlockEntityMixin}; everything else runs once
  * a second and once per in-game day. Accounts that already had reputation when the add-on first saw
@@ -82,11 +81,6 @@ public final class StartupService {
         if (cents > 0) {
             INCOME.merge(owner, cents, Double::sum);
         }
-    }
-
-    /** The account's racks and the server tick each last reported. */
-    static Map<GlobalPos, Integer> racksOf(UUID id) {
-        return RACKS.getOrDefault(id, Map.of());
     }
 
     @SubscribeEvent
@@ -138,7 +132,6 @@ public final class StartupService {
     private static void settleDay(ServerLevel level, UUID id, StartupBook.Account a, long day, boolean today) {
         Prepayments.settleDay(level, id, a);
         settleLoan(level, id, a, day, today);
-        ServiceTickets.settleDay(level, id, a, day, today);
     }
 
     // ------------------------------------------------------------------ start bonus and grant
@@ -342,7 +335,7 @@ public final class StartupService {
         }
         return new HostingSnapshot.Startup(started, veteran, factor, Config.startBonusMode().ordinal(), daysLeft, revenueLeft,
                 a.bonusPaidCents, a.grantCents, veteran ? 0 : Config.foundingGrantCents(), a.feesPaidCents, loanOffer, a.loanTaken,
-                a.loanOutstandingCents, grace, instalment, a.milestones, List.copyOf(rewards), ServiceTickets.snapshot(a, today),
+                a.loanOutstandingCents, grace, instalment, a.milestones, List.copyOf(rewards),
                 Prepayments.snapshot(a));
     }
 }

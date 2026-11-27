@@ -233,36 +233,6 @@
 		{
 			dependencies: ["566E73DAA26CC95E"]
 			icon: {
-				id: "minecraft:compass"
-			}
-			id: "5BB5BCF0188E00A9"
-			rewards: [
-				{
-					id: "2F461640168CD60F"
-					item: {
-						components: {
-							"datacenter:payment_cents": 20000
-						}
-						count: 1
-						id: "datacenter:payment_voucher"
-					}
-					type: "item"
-				}
-			]
-			shape: "circle"
-			size: 1.0d
-			tasks: [
-				{
-					id: "73101D80F5A00D30"
-					type: "checkmark"
-				}
-			]
-			x: 12.25d
-			y: 1.25d
-		}
-		{
-			dependencies: ["5BB5BCF0188E00A9"]
-			icon: {
 				id: "data_center_addon:powered_server_panel"
 			}
 			id: "222027F73A08570E"
@@ -292,8 +262,8 @@
 					type: "item"
 				}
 			]
-			x: 14.0d
-			y: 0.0d
+			x: 12.25d
+			y: 1.25d
 		}
 	]
 }

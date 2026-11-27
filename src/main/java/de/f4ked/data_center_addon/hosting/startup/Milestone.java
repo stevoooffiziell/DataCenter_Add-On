@@ -4,7 +4,7 @@ import java.util.Locale;
 
 /**
  * One-time rewards for a young hosting company ({@link StartupService}): customer counts, customer
- * classes and the first finished contract, delivery and service ticket. Paid once per account; an
+ * classes and the first finished contract and delivery. Paid once per account; an
  * account that already meets one when the add-on first sees it gets it marked without the reward.
  */
 public enum Milestone {
@@ -18,8 +18,7 @@ public enum Milestone {
     CLASS_ENTERPRISE(Kind.CLASS, 3, 7_500, 0),
     CLASS_FINANCE(Kind.CLASS, 4, 15_000, 0),
     FIRST_CONTRACT(Kind.EVENT, 1, 500, 10),
-    FIRST_DELIVERY(Kind.EVENT, 1, 500, 10),
-    FIRST_TICKET(Kind.EVENT, 1, 250, 5);
+    FIRST_DELIVERY(Kind.EVENT, 1, 500, 10);
 
     public enum Kind { CUSTOMERS, CLASS, EVENT }
 

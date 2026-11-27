@@ -4,7 +4,9 @@ import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.contract.ContractRarity;
 import de.f4ked.data_center_addon.hosting.contract.ContractService;
+import de.f4ked.data_center_addon.hosting.reputation.CustomerTier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
@@ -17,7 +19,11 @@ import java.util.function.Supplier;
 import static de.f4ked.data_center_addon.client.hosting.Panel.ROW_H;
 import static de.f4ked.data_center_addon.client.hosting.Panel.TEXT_DY;
 
-/** Hosting reservations: running contracts (with cancel) and offers (with accept). */
+/**
+ * Hosting reservations: running contracts (with cancel) and offers (with accept). Every contract shows its
+ * rarity in the colours of the computer parts' tiers; the header tells how many can run and, on hover, when
+ * the next place comes and what the chances of each rarity are.
+ */
 final class ReservationsView implements ManagerTab {
     private static final int BUTTON_W = 58;
     private static final int NOTE_H = 20;
@@ -41,9 +47,13 @@ final class ReservationsView implements ManagerTab {
         }
         int[] col = Panel.columns(x, w - BUTTON_W - 6, 0, 0.27, 0.53, 0.75, 0.88);
         int ty = y;
+        int maxActive = ContractService.maxActive(s.customerClass());
 
         // running contracts
-        ty = sectionHeader(g, Component.translatable("data_center_addon.contract.active", active.size(), ContractService.MAX_ACTIVE)
+        if (panel.hover(x, ty, w, ROW_H)) {
+            panel.tooltip(headerTooltip(s.customerClass()));
+        }
+        ty = sectionHeader(g, Component.translatable("data_center_addon.contract.active", active.size(), maxActive)
                 .getString(), x, ty, w);
         if (active.isEmpty()) {
             panel.line(g, Texts.contract("no_active"), x, ty + TEXT_DY, w, TechPanel.TEXT_MUTED);
@@ -63,7 +73,7 @@ final class ReservationsView implements ManagerTab {
 
         // offers
         ty = sectionHeader(g, Texts.contract("offers"), x, ty + 6, w);
-        boolean full = active.size() >= ContractService.MAX_ACTIVE;
+        boolean full = active.size() >= maxActive;
         for (int i = 0; i < offers.size() && ty + ROW_H <= y + h - NOTE_H; i++) {
             HostingSnapshot.Contract c = offers.get(i);
             contractRow(g, c, x, ty, w, col, i);
@@ -95,7 +105,10 @@ final class ReservationsView implements ManagerTab {
         } else {
             Panel.stripe(g, x, ty, w, index);
         }
-        panel.cell(g, label(c), col, 0, ty, c.urgent() ? TechPanel.WARN : TechPanel.TEXT);
+        // a bar in the rarity's colour at the left edge, the client's name in it
+        int color = 0xFF000000 | ContractService.color(ContractRarity.of(c.rarity()));
+        g.fill(x - 4, ty + 1, x - 2, ty + ROW_H - 1, color);
+        panel.cell(g, label(c), col, 0, ty, color);
         panel.cell(g, c.accounts() + "× " + Texts.productName(c.product()).getString(), col, 1, ty, TechPanel.TEXT);
         coverage(g, c, col[2], ty, col[3] - col[2] - 8);
         panel.cell(g, GuiText.compactUsd(c.centsPerDay()), col, 4, ty, TechPanel.GOOD);
@@ -118,7 +131,10 @@ final class ReservationsView implements ManagerTab {
 
     private static List<Component> tooltip(HostingSnapshot.Contract c) {
         List<Component> lines = new ArrayList<>();
-        lines.add(ContractService.clientName(c.client()).copy().withStyle(ChatFormatting.AQUA));
+        ContractRarity rarity = ContractRarity.of(c.rarity());
+        lines.add(ContractService.clientName(c.client()).copy().withColor(ContractService.color(rarity)));
+        lines.add(Component.translatable("data_center_addon.contract.tip.rarity", Component.translatable(rarity.translationKey()))
+                .withColor(ContractService.color(rarity)));
         if (c.urgent()) {
             lines.add(Component.translatable("data_center_addon.contract.tip.urgent").withStyle(ChatFormatting.GOLD));
         } else if (c.mini()) {
@@ -136,6 +152,35 @@ final class ReservationsView implements ManagerTab {
         } else {
             lines.add(Component.translatable("data_center_addon.contract.tip.today", Math.round(c.metToday() * 100),
                     ContractService.DAY_SHARE_PERCENT).withStyle(ChatFormatting.GRAY));
+        }
+        return lines;
+    }
+
+    /** How many contracts can run, when the next place comes, and the chances of each rarity. */
+    private static List<Component> headerTooltip(int customerClass) {
+        CustomerTier tier = CustomerTier.of(customerClass);
+        List<Component> lines = new ArrayList<>();
+        int max = ContractService.maxActive(tier.ordinal());
+        lines.add(Component.translatable("data_center_addon.contract.tip.slots", max).withStyle(ChatFormatting.AQUA));
+        CustomerTier next = null;
+        for (CustomerTier t = tier.next(); t != null; t = t.next()) {
+            if (ContractService.maxActive(t.ordinal()) > max) {
+                next = t;
+                break;
+            }
+        }
+        lines.add(next == null
+                ? Component.translatable("data_center_addon.contract.tip.slots_max").withStyle(ChatFormatting.GRAY)
+                : Component.translatable("data_center_addon.contract.tip.slots_next", Component.translatable(next.translationKey()))
+                .withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("data_center_addon.contract.tip.chances").withStyle(ChatFormatting.GRAY));
+        double[] chances = ContractRarity.chances(tier);
+        for (ContractRarity r : ContractRarity.values()) {
+            lines.add(Component.literal("  ").append(Component.translatable(r.translationKey()))
+                    .append(String.format(java.util.Locale.ROOT, ": %.0f %%  ·  ", chances[r.ordinal()]))
+                    .append(Component.translatable("data_center_addon.contract.tip.rarity_effect",
+                            Math.round(r.pay * 100), String.format(java.util.Locale.ROOT, "%.1f", r.reputation)))
+                    .withColor(ContractService.color(r)));
         }
         return lines;
     }

@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 /**
  * Startup: start bonus, grant, setup fees, prepayment and founding loan on the left, milestones on the
- * right, service tickets at the bottom.
+ * right.
  */
 final class StartupTab implements ManagerTab {
     private static final int LOAN_BUTTON_W = 64;
@@ -39,8 +39,7 @@ final class StartupTab implements ManagerTab {
     @Override
     public void render(GuiGraphics g, HostingSnapshot s, int x, int y, int w, int h) {
         HostingSnapshot.Startup st = s.startup();
-        int ticketsH = ROW_H + 2 + Math.max(1, st.tickets().size()) * ROW_H;
-        int topH = h - ticketsH - 8;
+        int topH = h;
         int leftW = (int) (w * 0.56);
         int rightX = x + leftW + 10;
 
@@ -48,7 +47,6 @@ final class StartupTab implements ManagerTab {
         loan(g, st, x, ty + 6, leftW);
         g.fill(rightX - 6, y, rightX - 5, y + topH, Panel.HEADER_LINE);
         milestones(g, st, rightX, y, w - leftW - 10, topH);
-        tickets(g, st, x, y + h - ticketsH, w);
     }
 
     /** Start bonus, grant, setup fees and prepayment; returns the y below them. */
@@ -164,30 +162,6 @@ final class StartupTab implements ManagerTab {
                     done ? TechPanel.TEXT_MUTED : TechPanel.TEXT);
             g.drawString(panel.font, rewardText, x + w - rewardW, my, done ? TechPanel.TEXT_MUTED : TechPanel.GOOD, false);
             my += MILESTONE_H;
-        }
-    }
-
-    /** The open service tickets: what, which rack, reward, deadline. */
-    private void tickets(GuiGraphics g, HostingSnapshot.Startup st, int x, int by, int w) {
-        g.fill(x - 4, by - 5, x + w + 4, by - 4, TechPanel.ACCENT);
-        int[] col = Panel.columns(x, w, 0, 0.30, 0.62, 0.84);
-        panel.header(g, x, by, w, col, "column.ticket", "column.rack", "column.reward", "column.due");
-        int ry = by + ROW_H + 2;
-        if (st.tickets().isEmpty()) {
-            panel.line(g, Texts.startup("tickets.none"), x, ry + TEXT_DY, w, TechPanel.TEXT_MUTED);
-        }
-        for (int i = 0; i < st.tickets().size(); i++) {
-            HostingSnapshot.Ticket t = st.tickets().get(i);
-            Component kind = Component.translatable("data_center_addon.startup.ticket.kind." + t.kind());
-            Panel.stripe(g, x, ry, w, i);
-            panel.cell(g, kind.getString(), col, 0, ry, TechPanel.TEXT);
-            panel.cell(g, Texts.pos(t.pos()), col, 1, ry, TechPanel.TEXT_MUTED);
-            panel.cell(g, GuiText.compactUsd(t.rewardCents()), col, 2, ry, TechPanel.GOOD);
-            panel.cell(g, Texts.days(t.daysLeft()), col, 3, ry, t.daysLeft() <= 1 ? TechPanel.WARN : TechPanel.TEXT_MUTED);
-            if (panel.hover(x, ry, w, ROW_H)) {
-                panel.tooltip(List.of(kind, Component.translatable("data_center_addon.startup.tickets.hint").withStyle(ChatFormatting.GRAY)));
-            }
-            ry += ROW_H;
         }
     }
 

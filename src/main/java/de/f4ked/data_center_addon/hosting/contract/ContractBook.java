@@ -72,6 +72,8 @@ public final class ContractBook extends SavedData {
         boolean urgent;
         /** Small hobbyist order: a few places, no penalty, no reputation lost when it fails. */
         boolean mini;
+        /** How rare (and how lucrative) the contract is; contracts from before the rarities are Common. */
+        ContractRarity rarity = ContractRarity.COMMON;
 
         Contract(int id, int client, HostingProduct product, int accounts, int days, long centsPerDay, long bonusCents,
                  long penaltyCents, int reputation, long expiresDay) {
@@ -105,6 +107,7 @@ public final class ContractBook extends SavedData {
             tag.putInt("met", samplesMet);
             tag.putBoolean("urgent", urgent);
             tag.putBoolean("mini", mini);
+            tag.putInt("rarity", rarity.ordinal());
             return tag;
         }
 
@@ -126,6 +129,7 @@ public final class ContractBook extends SavedData {
             c.samplesMet = tag.getInt("met");
             c.urgent = tag.getBoolean("urgent");
             c.mini = tag.getBoolean("mini");
+            c.rarity = ContractRarity.of(tag.getInt("rarity"));
             return c;
         }
     }

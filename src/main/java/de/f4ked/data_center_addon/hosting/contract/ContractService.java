@@ -37,8 +37,9 @@ import java.util.UUID;
  * Hosting contracts: clients that want a number of places of one product kept free for them for a
  * number of in-game days.
  * <ul>
- *   <li>Offers appear in the Hosting Manager (up to {@link #MAX_OFFERS}, one new per day, each open for
- *       {@link #OFFER_DAYS} days). Their size, length and pay grow with the customer class the
+ *   <li>Offers appear in the Hosting Manager (up to {@link #maxOffers}, one new per day, each open for
+ *       {@link #OFFER_DAYS} days). Every offer has a {@link ContractRarity} (grey Common to orange
+ *       Legendary); the better the customer class, the more often rare ones come. Their size, length and pay grow with the customer class the
  *       account's reputation has unlocked. Clients only ask for products the account has free places
  *       of, never for more places than are free; with no free places no offers come, and an offer can
  *       only be accepted while its places are free.</li>
@@ -46,14 +47,20 @@ import java.util.UUID;
  *       of the account's racks minus their customers, the same figures Data Center's market uses)?
  *       A day counts if they were free {@link #DAY_SHARE} of the time; it is paid. A missed day is a
  *       strike; {@link #MAX_STRIKES} strikes end the contract with a penalty.</li>
+ *   <li>How many contracts can run at once ({@link #maxActive}) and how many offers wait
+ *       ({@link #maxOffers}) grows with the customer class the reputation has unlocked.</li>
  *   <li>A contract served to the end pays a bonus and raises the reputation; one that fails or is
  *       cancelled costs the penalty and reputation.</li>
  * </ul>
  */
 @EventBusSubscriber(modid = Data_center_addon.MODID)
 public final class ContractService {
-    public static final int MAX_ACTIVE = 3;
-    public static final int MAX_OFFERS = 3;
+    /** Contracts that can run at once with the first customer class; one more every {@link #CLASSES_PER_SLOT} classes. */
+    public static final int BASE_ACTIVE = 3;
+    public static final int CLASSES_PER_SLOT = 3;
+    /** Offers waiting with the first customer class; one more every {@link #CLASSES_PER_OFFER} classes. */
+    public static final int BASE_OFFERS = 3;
+    static final int CLASSES_PER_OFFER = 4;
     public static final int MAX_STRIKES = 3;
     static final int OFFER_DAYS = 4;
     /** Share of a day the places must be free for the day to count, in percent. */
@@ -81,6 +88,24 @@ public final class ContractService {
     public enum Action { ACCEPT, CANCEL }
 
     private ContractService() {
+    }
+
+    /** Contracts that can run at once for an account of this customer class ({@code CustomerTier} ordinal). */
+    public static int maxActive(int customerTier) {
+        return BASE_ACTIVE + Math.max(0, customerTier) / CLASSES_PER_SLOT;
+    }
+
+    /** Offers that wait at once for an account of this customer class ({@code CustomerTier} ordinal). */
+    public static int maxOffers(int customerTier) {
+        return BASE_OFFERS + Math.max(0, customerTier) / CLASSES_PER_OFFER;
+    }
+
+    private static int maxActive(MinecraftServer server, UUID accountId) {
+        return maxActive(ClassRules.tier(server, accountId).ordinal());
+    }
+
+    private static int maxOffers(MinecraftServer server, UUID accountId) {
+        return maxOffers(ClassRules.tier(server, accountId).ordinal());
     }
 
     /** Places per account a contract of this product asks for, relative to shared web hosting. */
@@ -196,7 +221,7 @@ public final class ContractService {
             }
         }
         account.offers.removeIf(offer -> offer.expiresDay < day);
-        if (account.offers.size() < MAX_OFFERS) {
+        if (account.offers.size() < maxOffers(server, accountId)) {
             ContractBook.Contract offer = newOffer(level, accountId, account, LocalDate.ofEpochDay(day), level.getRandom());
             if (offer != null) {
                 account.offers.add(offer);
@@ -221,7 +246,7 @@ public final class ContractService {
         ContractBook.Account account = book.account(accountId);
         if (Config.contractsEnabled() && account.offers.isEmpty() && account.active.isEmpty() && account.lastDay < 0) {
             LocalDate today = DataCenterApi.currentDate(level);
-            for (int i = 0; i < MAX_OFFERS; i++) {
+            for (int i = 0, n = maxOffers(level.getServer(), accountId); i < n; i++) {
                 ContractBook.Contract offer = newOffer(level.getServer().overworld(), accountId, account, today, level.getRandom());
                 if (offer != null) {
                     account.offers.add(offer);
@@ -269,9 +294,11 @@ public final class ContractService {
         // hobbyist accounts often get mini orders; any account now and then an emergency order
         boolean mini = unlocked.base == CustomerClass.HOBBYISTS && random.nextFloat() < MINI_CHANCE;
         boolean urgent = !mini && random.nextFloat() < URGENT_CHANCE;
+        // mini orders are always common; every other offer rolls its rarity
+        ContractRarity rarity = mini ? ContractRarity.COMMON : ContractRarity.roll(unlocked, random);
 
         double size = SIZE_MIN[cls] + random.nextDouble() * (SIZE_MAX[cls] - SIZE_MIN[cls]);
-        int accounts = nice(Math.max(1, (int) Math.round(size * sizeScale(product))));
+        int accounts = nice(Math.max(1, (int) Math.round(size * rarity.size * sizeScale(product))));
         int days = DAYS_MIN[cls] + random.nextInt(DAYS_MAX[cls] - DAYS_MIN[cls] + 1);
         if (mini) {
             accounts = 1 + random.nextInt(sizeScale(product) >= 0.5 ? 5 : 2);
@@ -281,17 +308,19 @@ public final class ContractService {
         }
         accounts = Math.max(1, Math.min(accounts, free));
         double monthlyUsd = accounts * HostingModeRates.unitUsd(product, today) * PAY_SHARE
-                * tier.income * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
+                * tier.income * rarity.pay * Config.contractPayMultiplier() * (urgent ? URGENT_PAY : 1);
         long perDay = Math.max(25, Math.round(monthlyUsd / 30.0 * 100));
         long bonus = perDay * days / 2;
-        long penalty = mini ? 0 : perDay * (urgent ? 3 : 5);
-        int reputation = (int) Math.round((mini ? 1 : 3 + t * 2 + (urgent ? 2 : 0)) * Config.orderRenown());
+        // the pay already grows with the rarity; the penalty grows by the rarity's own (smaller) factor
+        long penalty = mini ? 0 : Math.round(perDay * (urgent ? 3 : 5) * rarity.penalty / rarity.pay);
+        int reputation = (int) Math.round((mini ? 1 : (3 + t * 2 + (urgent ? 2 : 0)) * rarity.reputation) * Config.orderRenown());
 
         int client = pickClient(cls, product, random);
         ContractBook.Contract contract = new ContractBook.Contract(account.nextId++, client, product, accounts, days, perDay, bonus,
                 penalty, reputation, today.toEpochDay() + (urgent ? 0 : OFFER_DAYS - 1));
         contract.urgent = urgent;
         contract.mini = mini;
+        contract.rarity = rarity;
         return contract;
     }
 
@@ -340,15 +369,16 @@ public final class ContractService {
                             .withStyle(ChatFormatting.GOLD));
                     return;
                 }
-                if (account.active.size() >= MAX_ACTIVE) {
-                    OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.full", MAX_ACTIVE)
+                int maxActive = maxActive(server, accountId);
+                if (account.active.size() >= maxActive) {
+                    OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.full", maxActive)
                             .withStyle(ChatFormatting.GOLD));
                     return;
                 }
                 account.offers.remove(offer);
                 account.active.add(offer);
                 OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.contract.msg.accepted",
-                        clientName(offer), offer.accounts, Component.translatable(offer.product.translationKey()), offer.days));
+                        clientName(offer).copy().withColor(color(offer.rarity)), offer.accounts, Component.translatable(offer.product.translationKey()), offer.days));
             }
             case CANCEL -> {
                 ContractBook.Contract running = find(account.active, contractId);
@@ -390,14 +420,14 @@ public final class ContractService {
             float metToday = c.samples == 0 ? 1f : (float) c.samplesMet / c.samples;
             list.add(new HostingSnapshot.Contract(c.id, false, c.client, c.product.ordinal(), c.accounts, c.days, c.daysDone,
                     c.strikes, c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, required.get(c.product), metToday, 0,
-                    c.urgent, c.mini));
+                    c.urgent, c.mini, c.rarity.ordinal()));
         }
         for (ContractBook.Contract c : account.offers) {
             double f = free.computeIfAbsent(c.product, p -> freePlaces(level, accountId, p));
             int need = required.getOrDefault(c.product, 0) + c.accounts;
             list.add(new HostingSnapshot.Contract(c.id, true, c.client, c.product.ordinal(), c.accounts, c.days, 0, 0,
                     c.centsPerDay, c.bonusCents, c.penaltyCents, c.reputation, f, need, 1f, (int) Math.max(0, c.expiresDay - today + 1),
-                    c.urgent, c.mini));
+                    c.urgent, c.mini, c.rarity.ordinal()));
         }
         return List.copyOf(list);
     }
@@ -406,6 +436,17 @@ public final class ContractService {
 
     private static Component clientName(ContractBook.Contract c) {
         return clientName(c.client);
+    }
+
+    /** Text colour of a rarity, the same as the computer parts' tiers (grey, green, blue, purple, orange). */
+    public static int color(ContractRarity rarity) {
+        return switch (rarity) {
+            case COMMON -> 0xC6C6C6;
+            case UNCOMMON -> 0x62D96B;
+            case RARE -> 0x4FA3FF;
+            case EPIC -> 0xBF73FF;
+            case LEGENDARY -> 0xFFAE3D;
+        };
     }
 
     /** A client's name (contracts and delivery orders share the clients). */

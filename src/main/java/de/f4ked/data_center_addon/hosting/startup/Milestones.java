@@ -16,14 +16,14 @@ import java.util.UUID;
 
 /**
  * Checks and pays the {@link Milestone}s. Customer and class milestones are checked once a second;
- * event milestones (first contract, delivery, ticket) are awarded by the code that finishes them. The
+ * event milestones (first contract, delivery) are awarded by the code that finishes them. The
  * first check of an account marks what it already has without paying, so an update brings no windfall.
  */
 public final class Milestones {
     private Milestones() {
     }
 
-    /** Marks an event milestone (first contract, delivery, ticket) as reached and pays it. */
+    /** Marks an event milestone (first contract, delivery) as reached and pays it. */
     public static void award(ServerLevel level, UUID id, Milestone milestone) {
         StartupBook book = StartupBook.get(level.getServer());
         StartupBook.Account a = book.account(id);

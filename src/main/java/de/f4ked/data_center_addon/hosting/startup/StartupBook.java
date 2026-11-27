@@ -19,7 +19,7 @@ import java.util.UUID;
 
 /**
  * The founding phase of each account's hosting company ({@link StartupService}): start bonus, grant,
- * founding loan, milestones, setup fees and service tickets. Stored with the overworld.
+ * founding loan, milestones, setup fees and prepayments. Stored with the overworld.
  */
 public final class StartupBook extends SavedData {
     private static final String NAME = "data_center_addon_startup";
@@ -51,8 +51,6 @@ public final class StartupBook extends SavedData {
         /** Milestones reached ({@link Milestone#bit()}), and whether the first check has run. */
         long milestones;
         boolean milestonesSeeded;
-        final List<Ticket> tickets = new ArrayList<>();
-        int nextTicketId = 1;
         /** Prepayment: whether new customers are offered annual plans, and the plans running. */
         boolean prepayEnabled = true;
         /** New customers per product that will book a plan once a whole one has come together. */
@@ -106,42 +104,6 @@ public final class StartupBook extends SavedData {
         }
     }
 
-    /** A service ticket: a client wants someone to look at one of the account's racks before {@code lastDay}. */
-    public static final class Ticket {
-        final int id;
-        final ResourceLocation dimension;
-        final BlockPos pos;
-        final int kind;
-        final long rewardCents;
-        final long lastDay;
-
-        Ticket(int id, ResourceLocation dimension, BlockPos pos, int kind, long rewardCents, long lastDay) {
-            this.id = id;
-            this.dimension = dimension;
-            this.pos = pos;
-            this.kind = kind;
-            this.rewardCents = rewardCents;
-            this.lastDay = lastDay;
-        }
-
-        CompoundTag save() {
-            CompoundTag tag = new CompoundTag();
-            tag.putInt("id", id);
-            tag.putString("dim", dimension.toString());
-            tag.putLong("pos", pos.asLong());
-            tag.putInt("kind", kind);
-            tag.putLong("reward", rewardCents);
-            tag.putLong("lastDay", lastDay);
-            return tag;
-        }
-
-        static Ticket load(CompoundTag tag) {
-            ResourceLocation dim = ResourceLocation.tryParse(tag.getString("dim"));
-            return dim == null ? null : new Ticket(tag.getInt("id"), dim, BlockPos.of(tag.getLong("pos")), tag.getInt("kind"),
-                    tag.getLong("reward"), tag.getLong("lastDay"));
-        }
-    }
-
     public static StartupBook get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
                 new SavedData.Factory<>(StartupBook::new, StartupBook::load, null), NAME);
@@ -187,12 +149,6 @@ public final class StartupBook extends SavedData {
             t.putLong("loanStart", a.loanStartDay);
             t.putLong("milestones", a.milestones);
             t.putBoolean("milestonesSeeded", a.milestonesSeeded);
-            ListTag tickets = new ListTag();
-            for (Ticket ticket : a.tickets) {
-                tickets.add(ticket.save());
-            }
-            t.put("tickets", tickets);
-            t.putInt("nextTicket", a.nextTicketId);
             t.putBoolean("prepayEnabled", a.prepayEnabled);
             ListTag pending = new ListTag();
             for (double p : a.prepayPending) {
@@ -256,13 +212,6 @@ public final class StartupBook extends SavedData {
             a.loanStartDay = t.getLong("loanStart");
             a.milestones = t.getLong("milestones");
             a.milestonesSeeded = t.getBoolean("milestonesSeeded");
-            for (Tag rt : t.getList("tickets", Tag.TAG_COMPOUND)) {
-                Ticket ticket = Ticket.load((CompoundTag) rt);
-                if (ticket != null) {
-                    a.tickets.add(ticket);
-                }
-            }
-            a.nextTicketId = Math.max(1, t.getInt("nextTicket"));
             a.prepayEnabled = !t.contains("prepayEnabled") || t.getBoolean("prepayEnabled");
             ListTag pending = t.getList("prepayPending", Tag.TAG_COMPOUND);
             for (int i = 0; i < pending.size() && i < a.prepayPending.length; i++) {

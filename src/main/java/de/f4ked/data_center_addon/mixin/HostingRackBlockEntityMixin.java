@@ -44,7 +44,7 @@ import java.util.UUID;
  *       (dedicated mode) and once for the shared capacity pool. Both reads go through
  *       {@link HostingStorageBoost}, which raises the capacity of the add-on's storage parts.</li>
  *   <li>At its end the rack's income of the tick is reported to {@link StartupService} (start bonus,
- *       service tickets). This hook only reads.</li>
+ *       setup fees). This hook only reads.</li>
  *   <li>Shared, VPS and colocation customers pay the owner's price ({@code MarketService#priceFactor}).</li>
  *   <li>With the market model on, Data Center's market mood no longer scales shared and VPS income; it
  *       changes the markets' size instead.</li>
@@ -206,7 +206,7 @@ public abstract class HostingRackBlockEntityMixin {
         }
     }
 
-    /** Reports the rack and its income of this tick to the founding phase (start bonus, service tickets). */
+    /** Reports the rack and its income of this tick to the founding phase (start bonus, setup fees). */
     @Inject(method = "runLoadout", at = @At("TAIL"), require = 0)
     private void data_center_addon$reportIncome(MachineBlockEntity.TickContext context, CallbackInfo ci) {
         StartupService.onRackTick((HostingRackBlockEntity) (Object) this);

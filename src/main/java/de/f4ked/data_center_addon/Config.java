@@ -56,7 +56,6 @@ public final class Config {
     private static final ModConfigSpec.IntValue VETERAN_REPUTATION;
     private static final ModConfigSpec.DoubleValue SETUP_FEE;
     private static final ModConfigSpec.DoubleValue MILESTONE_REWARDS;
-    private static final ModConfigSpec.BooleanValue SERVICE_TICKETS;
     private static final ModConfigSpec.DoubleValue PREPAY_SHARE;
     private static final ModConfigSpec.DoubleValue PREPAY_DISCOUNT;
     private static final ModConfigSpec.BooleanValue MARKET_MODEL;
@@ -166,10 +165,6 @@ public final class Config {
         PREPAY_DISCOUNT = builder
                 .comment("Discount a prepaying customer gets.")
                 .defineInRange("prepayDiscount", 0.05, 0.0, 0.5);
-        SERVICE_TICKETS = builder
-                .comment("Service tickets: clients ask you to look at one of your racks. Right-click the rack before the",
-                        "deadline to be paid.")
-                .define("serviceTickets", true);
         builder.pop();
 
         builder.comment("The hosting market: where new customers come from.").push("market");
@@ -401,10 +396,6 @@ public final class Config {
 
     public static double prepayDiscount() {
         return SPEC.isLoaded() ? PREPAY_DISCOUNT.get() : 0.05;
-    }
-
-    public static boolean serviceTickets() {
-        return !SPEC.isLoaded() || SERVICE_TICKETS.get();
     }
 
     public static boolean marketModel() {
