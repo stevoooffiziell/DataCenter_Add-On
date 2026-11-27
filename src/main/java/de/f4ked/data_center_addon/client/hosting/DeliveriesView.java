@@ -4,6 +4,7 @@ import com.example.datacenter.client.screen.GuiText;
 import com.example.datacenter.client.screen.TechPanel;
 import de.f4ked.data_center_addon.hosting.HostingManagerPayloads;
 import de.f4ked.data_center_addon.hosting.HostingSnapshot;
+import de.f4ked.data_center_addon.hosting.contract.ContractRarity;
 import de.f4ked.data_center_addon.hosting.contract.ContractService;
 import de.f4ked.data_center_addon.hosting.contract.DeliveryService;
 import net.minecraft.ChatFormatting;
@@ -21,7 +22,10 @@ import static de.f4ked.data_center_addon.client.hosting.Panel.LINE_H;
 import static de.f4ked.data_center_addon.client.hosting.Panel.ROW_H;
 import static de.f4ked.data_center_addon.client.hosting.Panel.TEXT_DY;
 
-/** Delivery orders: running ones and offers on the left, the selected one in detail on the right. */
+/**
+ * Delivery orders: running ones and offers on the left, the selected one in detail on the right. Every order
+ * shows its rarity in the colours of the computer parts' tiers.
+ */
 final class DeliveriesView implements ManagerTab {
     private final Panel panel;
     private final Supplier<BlockPos> manager;
@@ -48,7 +52,11 @@ final class DeliveriesView implements ManagerTab {
         int detailW = Math.max(150, (int) (w * 0.42));
         int listW = w - detailW - 8;
         int[] col = Panel.columns(x, listW, 0, 0.50, 0.68, 0.82);
-        int ty = sectionHeader(g, Component.translatable("data_center_addon.delivery.running", running.size(), DeliveryService.MAX_ACTIVE)
+        int maxActive = DeliveryService.maxActive(s.customerClass());
+        if (panel.hover(x, y, listW, ROW_H)) {
+            panel.tooltip(ReservationsView.headerTooltip(s.customerClass()));
+        }
+        int ty = sectionHeader(g, Component.translatable("data_center_addon.delivery.running", running.size(), maxActive)
                 .getString(), x, y, listW);
         if (running.isEmpty()) {
             panel.line(g, Texts.delivery("no_running"), x, ty + TEXT_DY, listW, TechPanel.TEXT_MUTED);
@@ -65,7 +73,7 @@ final class DeliveriesView implements ManagerTab {
         }
         panel.line(g, Texts.delivery("note"), x, y + h - 9, listW, TechPanel.TEXT_MUTED);
 
-        detail(g, current, running.size() >= DeliveryService.MAX_ACTIVE, x + listW + 8, y, detailW, h);
+        detail(g, current, running.size() >= maxActive, x + listW + 8, y, detailW, h);
     }
 
     /** A blue title with a line under it; returns the y of the first row. */
@@ -77,7 +85,10 @@ final class DeliveriesView implements ManagerTab {
 
     private void row(GuiGraphics g, HostingSnapshot.Delivery d, int x, int y, int w, int[] col, int index) {
         panel.row(g, x, y, w, index, d.id() == selected);
-        panel.cell(g, ContractService.clientName(d.client()).getString(), col, 0, y, TechPanel.TEXT);
+        // a bar in the rarity's colour at the left edge, the client's name in it
+        int color = rarityColor(d);
+        g.fill(x - 4, y + 1, x - 2, y + ROW_H - 1, color);
+        panel.cell(g, ContractService.clientName(d.client()).getString(), col, 0, y, color);
         panel.cell(g, d.offer() ? "—" : d.delivered() + "/" + d.total(), col, 1, y,
                 !d.offer() && d.canDeliver() ? TechPanel.GOOD : TechPanel.TEXT_MUTED);
         panel.cell(g, Texts.days(d.daysLeft()), col, 2, y, d.daysLeft() <= 1 ? TechPanel.WARN : TechPanel.TEXT_MUTED);
@@ -92,7 +103,10 @@ final class DeliveriesView implements ManagerTab {
         g.fill(x, y, x + w, y + h, 0x60000000);
         g.fill(x, y, x + 1, y + h, Panel.HEADER_LINE);
         int px = x + 6, pw = w - 12, ty = y + 4;
-        panel.line(g, ContractService.clientName(d.client()).getString(), px, ty, pw, TechPanel.ACCENT);
+        panel.line(g, ContractService.clientName(d.client()).getString(), px, ty, pw, rarityColor(d));
+        ty += LINE_H;
+        panel.line(g, Component.translatable("data_center_addon.contract.tip.rarity",
+                Component.translatable(ContractRarity.of(d.rarity()).translationKey())).getString(), px, ty, pw, rarityColor(d));
         ty += LINE_H;
         String status = d.offer()
                 ? Component.translatable("data_center_addon.delivery.detail.offer", d.daysLeft(), d.days()).getString()
@@ -149,6 +163,10 @@ final class DeliveriesView implements ManagerTab {
             panel.tooltip(List.of(goalName(goal, icon), Component.translatable("data_center_addon.delivery.goal.hint."
                     + goalKind(goal).name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY)));
         }
+    }
+
+    private static int rarityColor(HostingSnapshot.Delivery d) {
+        return 0xFF000000 | ContractService.color(ContractRarity.of(d.rarity()));
     }
 
     private static DeliveryService.GoalKind goalKind(HostingSnapshot.Goal goal) {

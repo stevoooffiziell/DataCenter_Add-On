@@ -52,8 +52,12 @@ import java.util.function.Predicate;
 /**
  * Delivery orders (preview): clients that want goods delivered to a Hosting Manager before a deadline.
  * <ul>
- *   <li>Offers appear next to the hosting contracts (up to {@link #MAX_OFFERS}, one new per in-game day,
+ *   <li>Offers appear next to the hosting contracts (up to {@link #maxOffers}, one new per in-game day,
  *       each open for {@link #OFFER_DAYS} days). Size and pay grow with the unlocked customer class.</li>
+ *   <li>Every offer has a {@link ContractRarity}, like the hosting contracts: a rarer order wants more goods
+ *       and gives more time, but pays much more and brings more reputation (and costs more when it fails).
+ *       The better the customer class, the more often rare ones come, and the more orders can run at once
+ *       ({@link #maxActive}).</li>
  *   <li>Goods are assembled servers, computer parts of a kind, defective parts (scrap), or this
  *       add-on's cables and switches that exist at the current date.</li>
  *   <li>A young company ({@link StartupService#earlyPhase}) gets simpler orders: one goal of cables or
@@ -65,9 +69,7 @@ import java.util.function.Predicate;
  * Days are settled by {@link ContractService}'s daily tick.
  */
 public final class DeliveryService {
-    public static final int MAX_ACTIVE = 3;
-    public static final int MAX_OFFERS = 3;
-    /** Offers a young company can have; it also gets two new offers a day. */
+    /** Offers a young company can have at least; it also gets two new offers a day. */
     public static final int MAX_OFFERS_EARLY = 4;
     static final int OFFER_DAYS = 3;
     /** Pay for cables and switches as a multiple of their price (they are cheap to make). */
@@ -107,6 +109,21 @@ public final class DeliveryService {
     }
 
     private DeliveryService() {
+    }
+
+    /** Orders that can run at once for an account of this customer class: as many as hosting contracts. */
+    public static int maxActive(int customerTier) {
+        return ContractService.maxActive(customerTier);
+    }
+
+    /** Offers that wait at once for an account of this customer class; a young company gets at least four. */
+    public static int maxOffers(int customerTier, boolean early) {
+        int max = ContractService.maxOffers(customerTier);
+        return early ? Math.max(MAX_OFFERS_EARLY, max) : max;
+    }
+
+    private static int tierOf(ServerLevel level, UUID accountId) {
+        return ClassRules.tier(level.getServer(), accountId).ordinal();
     }
 
     // ------------------------------------------------------------------ matching
@@ -184,13 +201,10 @@ public final class DeliveryService {
         }
         account.deliveryOffers.removeIf(offer -> offer.lastDay < day);
         boolean early = StartupService.earlyPhase(level, accountId);
-        for (int i = 0; i < (early ? 2 : 1) && account.deliveryOffers.size() < maxOffers(early); i++) {
+        int max = maxOffers(tierOf(level, accountId), early);
+        for (int i = 0; i < (early ? 2 : 1) && account.deliveryOffers.size() < max; i++) {
             account.deliveryOffers.add(newOffer(level, accountId, account, LocalDate.ofEpochDay(day), level.getRandom()));
         }
-    }
-
-    private static int maxOffers(boolean early) {
-        return early ? MAX_OFFERS_EARLY : MAX_OFFERS;
     }
 
     /** The first offers, made once per account when one of its players opens a Hosting Manager. */
@@ -199,7 +213,7 @@ public final class DeliveryService {
             return;
         }
         LocalDate today = DataCenterApi.currentDate(level);
-        int max = maxOffers(StartupService.earlyPhase(level, accountId));
+        int max = maxOffers(tierOf(level, accountId), StartupService.earlyPhase(level, accountId));
         while (account.deliveryOffers.size() < max) {
             account.deliveryOffers.add(newOffer(level, accountId, account, today, level.getRandom()));
         }
@@ -216,8 +230,9 @@ public final class DeliveryService {
         CustomerTier tier = CustomerTier.of(t);
         // the goals and the client follow Data Center's class the add-on's class belongs to
         int cls = tier.base.ordinal();
-        double scale = 1 + t * 0.4;
         boolean early = StartupService.earlyPhase(level, accountId);
+        ContractRarity rarity = ContractRarity.roll(unlocked, random);
+        double scale = (1 + t * 0.4) * rarity.size;
 
         List<ContractBook.Goal> goals = new ArrayList<>();
         int wanted = !early && random.nextFloat() < 0.35f ? 2 : 1;
@@ -235,13 +250,17 @@ public final class DeliveryService {
         for (ContractBook.Goal goal : goals) {
             usd += goal.count * unitUsd(goal, today);
         }
-        usd *= tier.income * Config.contractPayMultiplier();
+        usd *= tier.income * rarity.pay * Config.contractPayMultiplier();
         long pay = Math.max(100, Math.round(usd) * 100);
-        int days = 4 + t + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0);
-        int reputation = (int) Math.round((2 + t * 1.5) * Config.orderRenown());
+        // more goods want more time: +1 day for Uncommon and Rare, +2 for Epic, +3 for Legendary
+        int days = 4 + t + random.nextInt(3) + (goals.size() - 1) * 2 + (early ? 2 : 0)
+                + (int) Math.round((rarity.size - 1) * 4);
+        int reputation = (int) Math.round((2 + t * 1.5) * rarity.reputation * Config.orderRenown());
         int client = ContractService.pickClient(cls, null, random);
-        return new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days,
+        ContractBook.Delivery delivery = new ContractBook.Delivery(account.nextId++, client, goals, pay, reputation, days,
                 today.toEpochDay() + OFFER_DAYS - 1);
+        delivery.rarity = rarity;
+        return delivery;
     }
 
     private static ContractBook.Goal newGoal(int cls, double scale, LocalDate today, RandomSource random) {
@@ -402,8 +421,9 @@ public final class DeliveryService {
                 if (offer == null) {
                     return;
                 }
-                if (account.deliveries.size() >= MAX_ACTIVE) {
-                    OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.full", MAX_ACTIVE)
+                int maxActive = maxActive(tierOf(level, accountId));
+                if (account.deliveries.size() >= maxActive) {
+                    OwnerMessages.toOwner(server, accountId, Component.translatable("data_center_addon.delivery.msg.full", maxActive)
                             .withStyle(ChatFormatting.GOLD));
                     return;
                 }
@@ -514,7 +534,8 @@ public final class DeliveryService {
             }
             goals.add(new HostingSnapshot.Goal(g.kind.ordinal(), g.item, g.count, g.delivered, inBag));
         }
-        return new HostingSnapshot.Delivery(d.id, offer, d.client, List.copyOf(goals), d.payCents, d.reputation, d.days, daysLeft);
+        return new HostingSnapshot.Delivery(d.id, offer, d.client, List.copyOf(goals), d.payCents, d.reputation, d.days, daysLeft,
+                d.rarity.ordinal());
     }
 
     private static Component clientName(ContractBook.Delivery d) {

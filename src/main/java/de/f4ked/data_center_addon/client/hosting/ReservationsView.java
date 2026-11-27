@@ -156,8 +156,11 @@ final class ReservationsView implements ManagerTab {
         return lines;
     }
 
-    /** How many contracts can run, when the next place comes, and the chances of each rarity. */
-    private static List<Component> headerTooltip(int customerClass) {
+    /**
+     * How many contracts can run, when the next place comes, and the chances of each rarity (delivery orders
+     * follow the same numbers).
+     */
+    static List<Component> headerTooltip(int customerClass) {
         CustomerTier tier = CustomerTier.of(customerClass);
         List<Component> lines = new ArrayList<>();
         int max = ContractService.maxActive(tier.ordinal());

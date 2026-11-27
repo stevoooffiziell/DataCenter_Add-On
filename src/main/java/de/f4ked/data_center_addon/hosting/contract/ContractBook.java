@@ -192,6 +192,8 @@ public final class ContractBook extends SavedData {
         final int days;
         /** Offer: last epoch day it can be taken. Running: last epoch day to deliver. */
         long lastDay;
+        /** How rare (and how lucrative) the order is; orders from before the rarities are Common. */
+        ContractRarity rarity = ContractRarity.COMMON;
 
         Delivery(int id, int client, List<Goal> goals, long payCents, int reputation, int days, long lastDay) {
             this.id = id;
@@ -225,6 +227,7 @@ public final class ContractBook extends SavedData {
             tag.putInt("reputation", reputation);
             tag.putInt("days", days);
             tag.putLong("lastDay", lastDay);
+            tag.putInt("rarity", rarity.ordinal());
             return tag;
         }
 
@@ -239,8 +242,10 @@ public final class ContractBook extends SavedData {
             if (goals.isEmpty()) {
                 return null;
             }
-            return new Delivery(tag.getInt("id"), tag.getInt("client"), goals, tag.getLong("pay"), tag.getInt("reputation"),
+            Delivery d = new Delivery(tag.getInt("id"), tag.getInt("client"), goals, tag.getLong("pay"), tag.getInt("reputation"),
                     tag.getInt("days"), tag.getLong("lastDay"));
+            d.rarity = ContractRarity.of(tag.getInt("rarity"));
+            return d;
         }
     }
 

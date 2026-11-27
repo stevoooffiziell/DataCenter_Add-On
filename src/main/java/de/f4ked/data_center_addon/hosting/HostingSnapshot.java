@@ -215,7 +215,7 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
      * @param daysLeft running: days left to deliver (1 = today is the last); offer: days it stays open
      */
     public record Delivery(int id, boolean offer, int client, List<Goal> goals, long payCents, int reputation, int days,
-                           int daysLeft) {
+                           int daysLeft, int rarity) {
         public int delivered() {
             return goals.stream().mapToInt(Goal::delivered).sum();
         }
@@ -239,9 +239,10 @@ public record HostingSnapshot(boolean connected, int reputation, int customerCla
                     buf.writeVarInt(d.reputation);
                     buf.writeVarInt(d.days);
                     buf.writeVarInt(d.daysLeft);
+                    buf.writeVarInt(d.rarity);
                 },
                 buf -> new Delivery(buf.readVarInt(), buf.readBoolean(), buf.readVarInt(), readList(buf, Goal.STREAM_CODEC, 8),
-                        buf.readVarLong(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
+                        buf.readVarLong(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
     }
 
     /**
