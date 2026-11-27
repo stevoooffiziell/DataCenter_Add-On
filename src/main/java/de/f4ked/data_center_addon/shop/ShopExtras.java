@@ -43,15 +43,18 @@ public final class ShopExtras {
             150_000L, 100_000L,
             600_000L, 400_000L};
 
-    /** Flux Networks items and their prices in US cents (a Flux Plug or Point moves 800,000 FE/t). */
+    /**
+     * Flux Networks items and their base prices in US cents (a Flux Plug or Point moves 800,000 FE/t). These are
+     * the prices up to the end of 2008; from then on they rise every year ({@link FluxPricing}).
+     */
     private static final String[] FLUX_ITEMS = {
             "flux_plug", "flux_point", "flux_controller",
             "basic_flux_storage", "herculean_flux_storage", "gargantuan_flux_storage",
             "flux_configurator"};
     private static final long[] FLUX_PRICES = {
-            75_000L, 75_000L, 250_000L,
-            15_000L, 80_000L, 400_000L,
-            10_000L};
+            250_000L, 250_000L, 750_000L,
+            60_000L, 300_000L, 1_500_000L,
+            25_000L};
 
     private static final Map<ShopEntry, Boolean> AC_CACHE = new IdentityHashMap<>();
 

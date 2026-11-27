@@ -21,6 +21,7 @@
     "ShopEntryMixin",
     "ShopGroupMixin",
     "ShopMenuMixin",
+    "ShopPricingMixin",
     "StarterKitMixin"
   ],
   "client": [
